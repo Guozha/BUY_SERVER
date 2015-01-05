@@ -93,4 +93,15 @@ PUBLIC "-//ibatis.apache.org//DTD Mapper 3.0//EN"
 		    SECOND_FRONT_TYPE_ID = #{secondFrontTypeId}
 		     AND GOODS_PROP = '02'
 	</select>
+	
+	<select id="findByIds"  parameterType="map" resultMap="rm">
+		SELECT 
+			<include refid="BASE_COLUMN_LIST" />
+		FROM GOO_GOODS
+		WHERE
+		    GOODS_ID IN
+		     <foreach item="item" index="index" collection="goodsId" open="(" separator="," close=")">  
+			  #{item}  
+		   </foreach>
+	</select>
 </mapper>
