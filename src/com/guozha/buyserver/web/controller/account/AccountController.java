@@ -58,8 +58,8 @@ public class AccountController extends BaseController {
 	}
 	
 	@RequestMapping(value="/checkCodeForRegister")
-	public void checkCodeForRegister(CheckCodeRequest vo, HttpServletResponse response) {
-		this.responseJson(accountService.getCheckCodeForReg(vo), response);
+	public void checkCodeForRegister(String mobileNo, HttpServletResponse response) {
+		this.responseJson(accountService.getCheckCodeForReg(mobileNo), response);
 	}
 	
 	@RequestMapping(value="/register")
@@ -73,8 +73,8 @@ public class AccountController extends BaseController {
 	}
 	
 	@RequestMapping(value="/logout")
-	public void logout(LogoutRequest vo, HttpServletResponse response) {
-		this.responseJson(accountService.logout(vo), response);
+	public void logout(String token, HttpServletResponse response) {
+		this.responseJson(accountService.logout(token), response);
 	}
 	
 	/**

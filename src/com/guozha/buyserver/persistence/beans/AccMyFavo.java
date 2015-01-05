@@ -6,8 +6,10 @@ public class AccMyFavo extends AbstractDO {
 	
 	private Integer myFavoId;
 	private Integer userId;
+	private String dirFlag;
+	private Integer menuId;
 	private String favoName;
-	private Integer sort;
+	private Integer parentId;
 	
 	public Integer getMyFavoId() {
 		return myFavoId;
@@ -21,17 +23,29 @@ public class AccMyFavo extends AbstractDO {
 	public void setUserId(Integer userId) {
 		this.userId = userId;
 	}
+	public Integer getMenuId() {
+		return menuId;
+	}
+	public void setMenuId(Integer menuId) {
+		this.menuId = menuId;
+	}
 	public String getFavoName() {
 		return favoName;
 	}
 	public void setFavoName(String favoName) {
 		this.favoName = favoName;
 	}
-	public Integer getSort() {
-		return sort;
+	public String getDirFlag() {
+		return dirFlag;
 	}
-	public void setSort(Integer sort) {
-		this.sort = sort;
+	public void setDirFlag(String dirFlag) {
+		this.dirFlag = dirFlag;
+	}
+	public Integer getParentId() {
+		return parentId;
+	}
+	public void setParentId(Integer parentId) {
+		this.parentId = parentId;
 	}
 
 }

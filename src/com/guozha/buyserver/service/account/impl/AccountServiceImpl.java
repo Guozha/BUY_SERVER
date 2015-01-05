@@ -1,5 +1,6 @@
 package com.guozha.buyserver.service.account.impl;
 
+import java.sql.Timestamp;
 import java.util.Date;
 import java.util.List;
 
@@ -31,18 +32,13 @@ import com.guozha.buyserver.web.controller.account.AccountInfoResponse;
 import com.guozha.buyserver.web.controller.account.AddressRequest;
 import com.guozha.buyserver.web.controller.account.AddressResponse;
 import com.guozha.buyserver.web.controller.account.BalanceResponse;
-import com.guozha.buyserver.web.controller.account.CheckCodeRequest;
-import com.guozha.buyserver.web.controller.account.CheckCodeResponse;
 import com.guozha.buyserver.web.controller.account.InviteResponse;
 import com.guozha.buyserver.web.controller.account.LoginRequest;
 import com.guozha.buyserver.web.controller.account.LoginResponse;
-import com.guozha.buyserver.web.controller.account.LogoutRequest;
 import com.guozha.buyserver.web.controller.account.PasswdRequest;
 import com.guozha.buyserver.web.controller.account.PasswdResponse;
 import com.guozha.buyserver.web.controller.account.RegisterRequest;
 import com.guozha.buyserver.web.controller.account.TicketRequest;
-
-import java.sql.Timestamp;
 
 @Transactional(rollbackFor = Exception.class)
 @Service("accountService")
@@ -54,16 +50,13 @@ public class AccountServiceImpl extends AbstractBusinessObjectServiceMgr impleme
 	private AccountMapper accountMapper;
 	
 	@Override
-	public CheckCodeResponse getCheckCodeForReg(CheckCodeRequest vo) {
+	public MsgResponse getCheckCodeForReg(String mobileNo) {
 		
 		Object[] arr = new Object[1];
 		arr[0] = RandomStringUtils.randomNumeric(6);
-		SmsUtil.sendSms("01", vo.getMobileNo(), arr);// SMS_TYPE 01-注册获取验证码
+		SmsUtil.sendSms("01", mobileNo, arr);// SMS_TYPE 01-注册获取验证码
 		
-		CheckCodeResponse bo = new CheckCodeResponse();
-		bo.setReturnCode("1");
-		
-		return bo;
+		return new MsgResponse();
 	}
 	
 	@Override
@@ -74,15 +67,15 @@ public class AccountServiceImpl extends AbstractBusinessObjectServiceMgr impleme
 			return new MsgResponse("0","验证码错误");
 		}
 		
-		SysUser sysUser = sysUserMapper.getUserByMobileNo(vo.getMobileNo());
-		if(sysUser == null){
+		SysUser po = sysUserMapper.getUserByMobileNo(vo.getMobileNo());
+		if(po == null){
 			
-			sysUser = new SysUser();
-			sysUser.setMobileNo(vo.getMobileNo());
-			sysUser.setPasswd(vo.getPasswd());
-			sysUser.setRegTime(new Date());
-			sysUser.setStatus("1");// USER_STATUS 1-可用
-			sysUserMapper.insert(sysUser);
+			po = new SysUser();
+			po.setMobileNo(vo.getMobileNo());
+			po.setPasswd(vo.getPasswd());
+			po.setRegTime(new Date());
+			po.setStatus("1");// USER_STATUS 1-可用
+			sysUserMapper.insert(po);
 			
 			SmsUtil.removeCheckCode(vo.getMobileNo());
 			
@@ -98,12 +91,12 @@ public class AccountServiceImpl extends AbstractBusinessObjectServiceMgr impleme
 		
 		LoginResponse bo = new LoginResponse();
 		
-		SysUser sysUser = sysUserMapper.getLoginUser(vo);
-		if(sysUser == null){
+		SysUser po = sysUserMapper.getLoginUser(vo);
+		if(po == null){
 			bo.setReturnCode("0");
 			bo.setMsg("用户名或密码错误");
 		}else{
-			if("3".equals(sysUser.getStatus())){// USER_STATUS 3-停用
+			if("3".equals(po.getStatus())){// USER_STATUS 3-停用
 				bo.setMobileNo(vo.getMobileNo());
 				bo.setReturnCode("0");
 				bo.setMsg("该账户已被停用");
@@ -111,7 +104,7 @@ public class AccountServiceImpl extends AbstractBusinessObjectServiceMgr impleme
 				String token = RandomStringUtils.randomAlphanumeric(32);
 				
 				bo.setToken(token);
-				bo.setUserId(sysUser.getUserId());
+				bo.setUserId(po.getUserId());
 				bo.setMobileNo(vo.getMobileNo());
 				bo.setReturnCode("1");
 				bo.setMsg("登录成功");
@@ -124,8 +117,8 @@ public class AccountServiceImpl extends AbstractBusinessObjectServiceMgr impleme
 	}
 
 	@Override
-	public MsgResponse logout(LogoutRequest vo) {
-		ParameterUtil.removeToken(vo.getToken());
+	public MsgResponse logout(String token) {
+		ParameterUtil.removeToken(token);
 		return new MsgResponse();
 	}
 	

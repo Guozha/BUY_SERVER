@@ -10,12 +10,9 @@ import com.guozha.buyserver.web.controller.account.AccountInfoResponse;
 import com.guozha.buyserver.web.controller.account.AddressRequest;
 import com.guozha.buyserver.web.controller.account.AddressResponse;
 import com.guozha.buyserver.web.controller.account.BalanceResponse;
-import com.guozha.buyserver.web.controller.account.CheckCodeRequest;
-import com.guozha.buyserver.web.controller.account.CheckCodeResponse;
 import com.guozha.buyserver.web.controller.account.InviteResponse;
 import com.guozha.buyserver.web.controller.account.LoginRequest;
 import com.guozha.buyserver.web.controller.account.LoginResponse;
-import com.guozha.buyserver.web.controller.account.LogoutRequest;
 import com.guozha.buyserver.web.controller.account.PasswdRequest;
 import com.guozha.buyserver.web.controller.account.PasswdResponse;
 import com.guozha.buyserver.web.controller.account.RegisterRequest;
@@ -32,13 +29,13 @@ public interface AccountService extends BusinessObjectServiceMgr {
 	// 修改密码
 	PasswdResponse updatePasswd(PasswdRequest request);
 
-	CheckCodeResponse getCheckCodeForReg(CheckCodeRequest vo);
+	MsgResponse getCheckCodeForReg(String mobileNo);
 
 	MsgResponse register(RegisterRequest vo);
 
 	LoginResponse login(LoginRequest vo);
 
-	MsgResponse logout(LogoutRequest vo);
+	MsgResponse logout(String token);
 
 	// 汇总邀请信息
 	InviteResponse listInvite(SysUser user);

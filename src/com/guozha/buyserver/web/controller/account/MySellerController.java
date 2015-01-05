@@ -17,8 +17,8 @@ public class MySellerController extends BaseController {
 	private MySellerService mySellerService;
 	
 	@RequestMapping(value="/list")
-	public void list(ListMySellerRequest vo, HttpServletResponse response) {
-		this.responseJson(mySellerService.findMySeller(vo), response);
+	public void list(int userId, HttpServletResponse response) {
+		this.responseJson(mySellerService.findMySeller(userId), response);
 	}
 	
 	@RequestMapping(value="/update")

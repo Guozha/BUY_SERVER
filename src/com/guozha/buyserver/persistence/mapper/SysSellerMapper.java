@@ -6,10 +6,11 @@ import org.springframework.stereotype.Repository;
 
 import com.guozha.buyserver.dal.BaseMapper;
 import com.guozha.buyserver.persistence.beans.SysSeller;
+import com.guozha.buyserver.web.controller.account.SearchMySellerResponse;
 
 @Repository
 public interface SysSellerMapper extends BaseMapper<SysSeller, Integer> {
 	
-	List<SysSeller> findByUserId(Integer userId);
+	List<SearchMySellerResponse> findByUserId(Integer userId);
 	
 }

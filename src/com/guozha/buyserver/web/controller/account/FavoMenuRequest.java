@@ -1,9 +1,10 @@
 package com.guozha.buyserver.web.controller.account;
 
-public class ListMySellerRequest {
+public class FavoMenuRequest {
 	
 	private String token;
 	private Integer userId;
+	private String menuIds;
 	
 	public String getToken() {
 		return token;
@@ -16,6 +17,12 @@ public class ListMySellerRequest {
 	}
 	public void setUserId(Integer userId) {
 		this.userId = userId;
+	}
+	public String getMenuIds() {
+		return menuIds;
+	}
+	public void setMenuIds(String menuIds) {
+		this.menuIds = menuIds;
 	}
 
 }
