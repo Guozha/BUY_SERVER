@@ -13,7 +13,7 @@ PUBLIC "-//ibatis.apache.org//DTD Mapper 3.0//EN"
 	</resultMap>
 	
 	<sql id="BASE_COLUMN_LIST">
-	GOODS_PRICE_ID,GOODS_ID,WEIGHT,PRICE
+		GOODS_PRICE_ID,GOODS_ID,WEIGHT,PRICE
 	</sql>
 	
 	<!-- 商品详情 -->
