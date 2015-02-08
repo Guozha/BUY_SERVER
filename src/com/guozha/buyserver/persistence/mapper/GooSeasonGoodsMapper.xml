@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//ibatis.apache.org//DTD Mapper 3.0//EN"
+"http://ibatis.apache.org/dtd/ibatis-3-mapper.dtd">
+
+<mapper namespace="com.guozha.buyserver.persistence.mapper.GooSeasonGoodsMapper">
+	
+	<resultMap id="rm" type="com.guozha.buyserver.persistence.beans.GooSeasonGoods">
+        <result property="seasonGoodsId" jdbcType="INTEGER" column="SEASON_GOODS_ID"/>
+        <result property="season" jdbcType="VARCHAR" column="SEASON"/>
+        <result property="seasonPicUrl" jdbcType="VARCHAR" column="SEASON_PIC_URL"/>
+        <result property="firstGoodsId" jdbcType="INTEGER" column="FIRST_GOODS_ID"/>
+        <result property="secondGoodsId" jdbcType="INTEGER" column="SECOND_GOODS_ID"/>
+        <result property="thirdGoodsId" jdbcType="INTEGER" column="THIRD_GOODS_ID"/>
+        <result property="fourGoodsId" jdbcType="INTEGER" column="FOUR_GOODS_ID"/>
+        <result property="fiveGoodsId" jdbcType="INTEGER" column="FIVE_GOODS_ID"/>
+	</resultMap>
+	
+	<sql id="BASE_COLUMN_LIST">
+		SEASON_GOODS_ID,SEASON,SEASON_PIC_URL,FIRST_GOODS_ID,SECOND_GOODS_ID,THIRD_GOODS_ID,FOUR_GOODS_ID,FIVE_GOODS_ID
+	</sql>
+	
+</mapper>
