@@ -9,6 +9,8 @@ public class GoodsResponse {
 	private byte[] goodsImg;//商品图片URL
 	private Integer price;//单价
 	private String unit;//计量单位
+	private String goodsProp;   //商品性质
+	
 	
 	public GoodsResponse() {
 		
@@ -20,6 +22,7 @@ public class GoodsResponse {
 		this.goodsImg = po.getGoodsImg();
 		this.price = po.getPrice();
 		this.unit = po.getUnit();
+		this.goodsProp = po.getGoodsProp();
 	}
 	public Integer getGoodsId() {
 		return goodsId;
@@ -50,5 +53,12 @@ public class GoodsResponse {
 	}
 	public void setUnit(String unit) {
 		this.unit = unit;
+	}
+	
+	public String getGoodsProp() {
+		return goodsProp;
+	}
+	public void setGoodsProp(String goodsProp) {
+		this.goodsProp = goodsProp;
 	}
 }

@@ -71,7 +71,7 @@ PUBLIC "-//ibatis.apache.org//DTD Mapper 3.0//EN"
 			<include refid="BASE_COLUMN_LIST" />
 		FROM GOO_GOODS
 		WHERE
-		    GOODS_PROP = '02'
+		     GOODS_PROP IN ('02','03')
 	</select>
 	
 	<!-- 查询一级类目商品列表 (仅特供) -->
@@ -81,7 +81,7 @@ PUBLIC "-//ibatis.apache.org//DTD Mapper 3.0//EN"
 		FROM GOO_GOODS
 		WHERE
 		    FIRST_FRONT_TYPE_ID = #{firstFrontTypeId}
-		    AND GOODS_PROP = '02'
+		    AND GOODS_PROP IN ('02','03')
 	</select>
 	
 	<!-- 查询二级类目商品列表(仅特供) -->
@@ -91,7 +91,7 @@ PUBLIC "-//ibatis.apache.org//DTD Mapper 3.0//EN"
 		FROM GOO_GOODS
 		WHERE
 		    SECOND_FRONT_TYPE_ID = #{secondFrontTypeId}
-		     AND GOODS_PROP = '02'
+		     AND GOODS_PROP IN ('02','03')
 	</select>
 	
 	<!-- 查询多个指定商品 -->
