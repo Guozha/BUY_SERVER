@@ -35,6 +35,11 @@ public class ParameterUtil {
 	 */
 	private static Set<String> resurceUrlSet = new HashSet<String>();
 	
+	/**
+	 * 商品价格缓存
+	 */
+	private static Map<Integer,List<Object>> goodPriceCache = new HashMap<Integer, List<Object>>();
+	
 	
 	/**
 	 * 缓存列数据

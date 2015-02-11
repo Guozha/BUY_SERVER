@@ -2,7 +2,7 @@ package com.guozha.buyserver.service.cart.impl;
 
 
 import java.util.ArrayList;
-import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -21,6 +21,7 @@ import com.guozha.buyserver.service.cart.CartService;
 import com.guozha.buyserver.web.controller.MsgResponse;
 import com.guozha.buyserver.web.controller.cart.CartRequest;
 import com.guozha.buyserver.web.controller.cart.CartResponse;
+import com.guozha.buyserver.web.controller.cart.ProductTypeResponse;
 
 @Transactional(rollbackFor = Exception.class)
 @Service("cartService")
@@ -50,10 +51,10 @@ public class CartServiceImpl extends AbstractBusinessObjectServiceMgr implements
 			po.setUserId(vo.getUserId());
 			po.setGoodsOrMenuId(vo.getId());
 			po.setSplitType(vo.getProductType());
-			po.setAmount(vo.getAmount());
+			po.setAmount(vo.getAmount()[0]);
 			this.buyCartMapper.insert(po);
 		}else{  //修改购物车信息
-			po.setAmount(vo.getAmount());
+			po.setAmount(vo.getAmount()[0]);
 			this.buyCartMapper.update(po);
 		}
 		return new MsgResponse(MsgResponse.SUCC, "添加购物车成功");
@@ -61,10 +62,15 @@ public class CartServiceImpl extends AbstractBusinessObjectServiceMgr implements
 
 	@Override
 	public MsgResponse update(CartRequest vo) {
-		BuyCart po = new BuyCart();
-		po.setCartId(vo.getCartId()[0]);
-		po.setAmount(vo.getAmount());
-		this.buyCartMapper.update(po);
+		//更新购物车
+		for(int i=0;i<vo.getCartId().length;i++){
+			BuyCart po = new BuyCart();
+			po.setCartId(vo.getCartId()[i]);
+			po.setAmount(vo.getAmount()[i]);
+			this.buyCartMapper.update(po);
+		}
+		//删除已被用户移除的购物车信息
+		this.buyCartMapper.deletesNotIn(vo.getUserId(), vo.getCartId());
 		return new MsgResponse(MsgResponse.SUCC, "修改购物车成功");
 	}
 
@@ -81,10 +87,11 @@ public class CartServiceImpl extends AbstractBusinessObjectServiceMgr implements
 	}
 
 	@Override
-	public Map<String, List<CartResponse>> find(CartRequest vo) {
+	public List<ProductTypeResponse> find(CartRequest vo) {
 		List<BuyCart> pos = this.buyCartMapper.findByUserId(vo.getUserId());
-		Map<String, List<CartResponse>> map = new HashMap<String, List<CartResponse>>();
+		Map<String, List<CartResponse>> map = new LinkedHashMap<String, List<CartResponse>>();
 		List<CartResponse> list = null;
+		//分组去重
 		for(BuyCart po:pos){
 			if(map.containsKey(po.getSplitType())){
 				map.get(po.getSplitType()).add(new CartResponse(po));
@@ -94,7 +101,15 @@ public class CartServiceImpl extends AbstractBusinessObjectServiceMgr implements
 				map.put(po.getSplitType(), list);
 			}
 		}
-		return map;
+		
+		//设置结果集
+		List<ProductTypeResponse> bos = new ArrayList<ProductTypeResponse>();
+		for (String productType : map.keySet()) {
+			ProductTypeResponse bo = new ProductTypeResponse(productType);
+			bo.setCartList(map.get(productType));
+			bos.add(bo);
+		}
+		return bos;
 	}
 
 	

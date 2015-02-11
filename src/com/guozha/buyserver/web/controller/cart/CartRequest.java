@@ -6,8 +6,8 @@ public class CartRequest extends CommonRequest{
 	
 	private Integer id;  //菜谱、菜品ID
 	private String productType; //菜谱、菜品标记类型 constans.xml
-	private Integer amount;  //份量
-	private Integer[] cartId;  //购物车ID
+	private Integer [] amount;  //份量
+	private Integer [] cartId;  //购物车ID
 	
 	
 	public Integer getId() {
@@ -22,10 +22,10 @@ public class CartRequest extends CommonRequest{
 	public void setProductType(String productType) {
 		this.productType = productType;
 	}
-	public Integer getAmount() {
+	public Integer[] getAmount() {
 		return amount;
 	}
-	public void setAmount(Integer amount) {
+	public void setAmount(Integer[] amount) {
 		this.amount = amount;
 	}
 	

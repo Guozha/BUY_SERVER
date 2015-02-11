@@ -7,6 +7,7 @@ import com.guozha.buyserver.framework.sys.business.BusinessObjectServiceMgr;
 import com.guozha.buyserver.web.controller.MsgResponse;
 import com.guozha.buyserver.web.controller.cart.CartRequest;
 import com.guozha.buyserver.web.controller.cart.CartResponse;
+import com.guozha.buyserver.web.controller.cart.ProductTypeResponse;
 
 /**
  * 购物车service
@@ -43,7 +44,7 @@ public interface CartService  extends BusinessObjectServiceMgr{
 	 * @param vo
 	 * @return
 	 */
-	Map<String, List<CartResponse>> find(CartRequest vo);
+	List<ProductTypeResponse> find(CartRequest vo);
 	
 	/**
 	 * 添加购物车

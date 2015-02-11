@@ -32,6 +32,12 @@ public interface BuyCartMapper extends BaseMapper<BuyCart, Integer> {
 	void deleteByUserId(int userId);
 	
 	/**
+	 * 删除已被用户移除的购物信息
+	 * @param userId
+	 */
+	void deletesNotIn(@Param("userId") int userId,@Param("cartId") Integer [] cardId);
+	
+	/**
 	 * 多购物车信息删除
 	 * @param cardId
 	 */

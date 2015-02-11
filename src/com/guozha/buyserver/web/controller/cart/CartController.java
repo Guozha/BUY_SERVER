@@ -10,7 +10,13 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import com.guozha.buyserver.service.cart.CartService;
 import com.guozha.buyserver.web.controller.BaseController;
 
-
+/**
+ * 购物车
+ * @Package com.guozha.buyserver.web.controller.cart
+ * @Description: TODO(用一句话描述该文件做什么)
+ * @author txf
+ * @date 2015-2-11 上午9:36:47
+ */
 @Controller
 @RequestMapping(value="/cart")
 public class CartController extends BaseController {

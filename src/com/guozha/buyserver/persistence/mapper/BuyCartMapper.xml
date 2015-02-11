@@ -44,6 +44,16 @@ PUBLIC "-//ibatis.apache.org//DTD Mapper 3.0//EN"
 	   </foreach>
 	</delete>
 	
+	<!-- 删除已被用户移除的购物车信息 -->
+	<delete id="deleteNotIn" parameterType="map">
+	   DELETE FROM BUY_CART 
+	   WHERE CART_ID NOT IN
+	   <foreach item="item" index="index" collection="cartId" open="(" separator="," close=")">  
+		  #{item}  
+	   </foreach>
+	       AND USER_ID = #{userId}
+	</delete>
+	
 	<!-- 清空用户购物车 -->
 	<delete id="deleteByUserId" parameterType="int">
 	    DELETE FROM BUY_CART WHERE USER_ID = #{userId}  
