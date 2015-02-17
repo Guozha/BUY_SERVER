@@ -7,6 +7,7 @@ import org.springframework.stereotype.Repository;
 
 import com.guozha.buyserver.dal.BaseMapper;
 import com.guozha.buyserver.persistence.beans.GooGoods;
+import com.guozha.buyserver.web.controller.goods.GoodsResponse;
 
 /**
  * 产品
@@ -17,20 +18,27 @@ import com.guozha.buyserver.persistence.beans.GooGoods;
  */
 @Repository
 public interface GooGoodsMapper extends BaseMapper<GooGoods, Integer> {
+	
+	/**
+	 * 查询农贸市场的商品
+	 * @param marketId
+	 * @return
+	 */
+	List<GoodsResponse> findByMarketId(int marketId);
     
 	/**
 	 * 查询一级类目商品（不区分特供等商品属性）
 	 * @param firstFrontTypeId 一级类目ID
 	 * @return
 	 */
-	List<GooGoods> findFirst(int firstFrontTypeId);
+	List<GoodsResponse> findFirst(@Param("marketId") int marketId,@Param("firstFrontTypeId") int firstFrontTypeId);
 	
 	/**
 	 * 查询二级类目商品 （不区分特供等商品属性）
 	 * @param secondFrontTypeId 二级类目ID
 	 * @return
 	 */
-	List<GooGoods> findSecond(int secondFrontTypeId);
+	List<GoodsResponse> findSecond(@Param("marketId") int marketId,@Param("secondFrontTypeId") int secondFrontTypeId);
 	
 	/**
 	 * 查询指定几个ID的商品

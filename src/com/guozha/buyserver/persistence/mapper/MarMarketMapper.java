@@ -1,27 +1,24 @@
 package com.guozha.buyserver.persistence.mapper;
 
-import java.util.List;
-
 import org.springframework.stereotype.Repository;
 
 import com.guozha.buyserver.dal.BaseMapper;
-import com.guozha.buyserver.persistence.beans.GooGoodsPrice;
+import com.guozha.buyserver.persistence.beans.MarMarket;
 
 /**
- * 价格配置映射
+ * 农贸市场
  * @Package com.guozha.buyserver.persistence.mapper
  * @Description: TODO(用一句话描述该文件做什么)
  * @author txf
- * @date 2015-3-11 上午9:58:43
+ * @date 2015-2-17 下午3:05:06
  */
 @Repository
-public interface GooGoodsPriceMapper extends BaseMapper<GooGoodsPrice, Integer> {
+public interface MarMarketMapper extends BaseMapper<MarMarket, Integer> {
 	
 	/**
-	 * 单商品价格配置查询
-	 * @param goodsId
+	 * 查询用户对应的农贸市场
+	 * @param userId
 	 * @return
 	 */
-	List<GooGoodsPrice> findByGoodsId(int goodsId);
-
+	public MarMarket findDefaultByUserId(int userId);
 }

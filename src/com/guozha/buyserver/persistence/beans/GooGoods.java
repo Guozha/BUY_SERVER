@@ -22,7 +22,6 @@ public class GooGoods extends AbstractDO {
 	private Integer backTypeId;//后台类目ID
 	private byte[] goodsImg;//商品图片 
 
-	private Integer price;//单价
 	private String unit;//计量单位
 	private String memo;//商品备注
 	private Date prepareEndDate;//预售截止日期
@@ -79,12 +78,6 @@ public class GooGoods extends AbstractDO {
 	}
 	public void setGoodsImg(byte[] goodsImg) {
 		this.goodsImg = goodsImg;
-	}
-	public Integer getPrice() {
-		return price;
-	}
-	public void setPrice(Integer price) {
-		this.price = price;
 	}
 	public String getUnit() {
 		return unit;

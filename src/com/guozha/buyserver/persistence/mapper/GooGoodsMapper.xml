@@ -14,7 +14,6 @@ PUBLIC "-//ibatis.apache.org//DTD Mapper 3.0//EN"
         <result property="secondFrontTypeId" jdbcType="INTEGER" column="SECOND_FRONT_TYPE_ID"/>
         <result property="backTypeId" jdbcType="INTEGER" column="BACK_TYPE_ID"/>
         <result property="goodsImg" jdbcType="BLOB" column="GOODS_IMG"/>
-        <result property="price" jdbcType="INTEGER" column="PRICE"/>
         <result property="unit" jdbcType="VARCHAR" column="UNIT"/>
         <result property="memo" jdbcType="VARCHAR" column="MEMO"/>
         <result property="prepareEndDate" jdbcType="TIMESTAMP" column="PREPARE_END_DATE"/>
@@ -26,42 +25,51 @@ PUBLIC "-//ibatis.apache.org//DTD Mapper 3.0//EN"
 	</resultMap>
 	
 	<sql id="BASE_COLUMN_LIST">
-		GOODS_ID,GOODS_NAME,BELONG_ORG_ID,GOODS_PROP,FIRST_FRONT_TYPE_ID,SECOND_FRONT_TYPE_ID,
-		BACK_TYPE_ID,GOODS_IMG,PRICE,UNIT,MEMO,PREPARE_END_DATE,ARRIVAL_DAYS,PIC_DESC,OTHER_NAMES,SORT,STATUS
+		T.GOODS_ID,T.GOODS_NAME,T.BELONG_ORG_ID,T.GOODS_PROP,T.FIRST_FRONT_TYPE_ID,T.SECOND_FRONT_TYPE_ID,
+		T.BACK_TYPE_ID,T.GOODS_IMG,T.UNIT,T.MEMO,T.PREPARE_END_DATE,T.ARRIVAL_DAYS,T.PIC_DESC,T.OTHER_NAMES,T.SORT,T.STATUS
 	</sql>
 	
 	<!-- 商品详情 -->
 	<select id="load" parameterType="int" resultMap="rm">
 		SELECT 
 			<include refid="BASE_COLUMN_LIST" />
-		FROM GOO_GOODS
+		FROM GOO_GOODS T
 		WHERE 
 			GOODS_ID = #{goodsId} 
 	</select>
-	
     <!-- 所有商品 -->
-	<select id="findAll" resultMap="rm">
+	<select id="findByMarketId" parameterType="int" resultType="com.guozha.buyserver.web.controller.goods.GoodsResponse" >
 		SELECT 
-			<include refid="BASE_COLUMN_LIST" />
-		FROM GOO_GOODS
+			T.GOODS_ID goodsId,T.GOODS_NAME goodsName,T.GOODS_PROP goodsProp,T.GOODS_IMG goodsImg,T.UNIT,B.PRICE price
+		FROM GOO_GOODS T,MAR_MARKET_GOODS B
+		WHERE
+		    T.GOODS_ID = B.GOODS_ID 
+		    AND B.OPEN_BUY_FLAG='1'
+		    AND B.MARKET_ID=#{marketId}
 	</select>
 	
 	<!-- 查询一级类目商品列表 (不区分特供等类型) -->
-	<select id="findFirst"  parameterType="int" resultMap="rm">
+	<select id="findFirst"  parameterType="map" resultType="com.guozha.buyserver.web.controller.goods.GoodsResponse">
 		SELECT 
-			<include refid="BASE_COLUMN_LIST" />
-		FROM GOO_GOODS
+			T.GOODS_ID goodsId,T.GOODS_NAME goodsName,T.GOODS_PROP goodsProp,T.GOODS_IMG goodsImg,T.UNIT,B.PRICE price
+		FROM GOO_GOODS T,MAR_MARKET_GOODS B
 		WHERE
-		    FIRST_FRONT_TYPE_ID = #{firstFrontTypeId}
+		    T.GOODS_ID = B.GOODS_ID 
+		    AND T.FIRST_FRONT_TYPE_ID = #{firstFrontTypeId}
+		    AND B.OPEN_BUY_FLAG='1'
+		    AND B.MARKET_ID = #{marketId}
 	</select>
 	
 	<!-- 查询二级类目商品列表(不区分特供等类型) -->
-	<select id="findSecond"  parameterType="int" resultMap="rm">
+	<select id="findSecond"  parameterType="map" resultType="com.guozha.buyserver.web.controller.goods.GoodsResponse">
 		SELECT 
-			<include refid="BASE_COLUMN_LIST" />
-		FROM GOO_GOODS
+			T.GOODS_ID goodsId,T.GOODS_NAME goodsName,T.GOODS_PROP goodsProp,T.GOODS_IMG goodsImg,T.UNIT,B.PRICE price
+		FROM GOO_GOODS T,MAR_MARKET_GOODS B
 		WHERE
-		    SECOND_FRONT_TYPE_ID = #{secondFrontTypeId}
+		    T.GOODS_ID = B.GOODS_ID 
+		    AND T.SECOND_FRONT_TYPE_ID = #{secondFrontTypeId}
+		    AND B.OPEN_BUY_FLAG='1'
+		    AND B.MARKET_ID = #{marketId}
 	</select>
 	
 	
@@ -69,38 +77,38 @@ PUBLIC "-//ibatis.apache.org//DTD Mapper 3.0//EN"
 	<select id="findAllSpecial" resultMap="rm">
 		SELECT 
 			<include refid="BASE_COLUMN_LIST" />
-		FROM GOO_GOODS
+		FROM GOO_GOODS T
 		WHERE
-		     GOODS_PROP IN ('02','03')
+		     T.GOODS_PROP IN ('02','03')
 	</select>
 	
 	<!-- 查询一级类目商品列表 (仅特供) -->
 	<select id="findFirstSpecial"  parameterType="int" resultMap="rm">
 		SELECT 
 			<include refid="BASE_COLUMN_LIST" />
-		FROM GOO_GOODS
+		FROM GOO_GOODS T
 		WHERE
-		    FIRST_FRONT_TYPE_ID = #{firstFrontTypeId}
-		    AND GOODS_PROP IN ('02','03')
+		    T.FIRST_FRONT_TYPE_ID = #{firstFrontTypeId}
+		    T.AND GOODS_PROP IN ('02','03')
 	</select>
 	
 	<!-- 查询二级类目商品列表(仅特供) -->
 	<select id="findSecondSpecial"  parameterType="int" resultMap="rm">
 		SELECT 
 			<include refid="BASE_COLUMN_LIST" />
-		FROM GOO_GOODS
+		FROM GOO_GOODS T
 		WHERE
-		    SECOND_FRONT_TYPE_ID = #{secondFrontTypeId}
-		     AND GOODS_PROP IN ('02','03')
+		    T.SECOND_FRONT_TYPE_ID = #{secondFrontTypeId}
+		    AND T.GOODS_PROP IN ('02','03')
 	</select>
 	
 	<!-- 查询多个指定商品 -->
 	<select id="findByIds"  parameterType="map" resultMap="rm">
 		SELECT 
 			<include refid="BASE_COLUMN_LIST" />
-		FROM GOO_GOODS
+		FROM GOO_GOODS T
 		WHERE
-		    GOODS_ID IN
+		    T.GOODS_ID IN
 		     <foreach item="item" index="index" collection="goodsId" open="(" separator="," close=")">  
 			  #{item}  
 		   </foreach>

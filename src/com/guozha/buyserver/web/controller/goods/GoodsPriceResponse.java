@@ -1,6 +1,6 @@
 package com.guozha.buyserver.web.controller.goods;
 
-import com.guozha.buyserver.persistence.beans.GooGoodsPrice;
+import com.guozha.buyserver.persistence.beans.MarMarketGoodsPrice;
 
 /**
  * 商品價格BO
@@ -18,13 +18,11 @@ public class GoodsPriceResponse {
 	
 	
 
-	public GoodsPriceResponse(GooGoodsPrice po,String unit) {
+	public GoodsPriceResponse(MarMarketGoodsPrice po) {
 		super();
 		this.goodsPriceId = po.getGoodsPriceId();
-		this.goodsId = po.getGoodsId();
 		this.weight = po.getWeight();
 		this.price = po.getPrice();
-		this.unit = unit;
 	}
 
 	public Integer getGoodsPriceId() {

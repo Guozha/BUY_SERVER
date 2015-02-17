@@ -20,7 +20,6 @@ public class GoodsResponse {
 		this.goodsId = po.getGoodsId();
 		this.goodsName = po.getGoodsName();
 		this.goodsImg = po.getGoodsImg();
-		this.price = po.getPrice();
 		this.unit = po.getUnit();
 		this.goodsProp = po.getGoodsProp();
 	}

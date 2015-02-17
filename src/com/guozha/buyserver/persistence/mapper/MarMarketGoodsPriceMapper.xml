@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//ibatis.apache.org//DTD Mapper 3.0//EN"
+"http://ibatis.apache.org/dtd/ibatis-3-mapper.dtd">
+
+<mapper namespace="com.guozha.buyserver.persistence.mapper.MarMarketGoodsPriceMapper">
+
+	<resultMap id="rm" type="com.guozha.buyserver.persistence.beans.MarMarketGoodsPrice">
+        <result property="goodsPriceId" jdbcType="INTEGER" column="GOODS_PRICE_ID"/>
+        <result property="marketGoodsId" jdbcType="INTEGER" column="MARKET_GOODS_ID"/>
+        <result property="weight" jdbcType="INTEGER" column="WEIGHT"/>
+        <result property="price" jdbcType="INTEGER" column="PRICE"/>
+	</resultMap>
+	
+	<sql id="BASE_COLUMN_LIST">
+		GOODS_PRICE_ID,MARKET_GOODS_ID,WEIGHT,PRICE
+	</sql>
+	
+	
+    <!-- 商品价格配置 -->
+	<select id="findByGoodsId" resultMap="rm">
+		SELECT 
+			T.GOODS_PRICE_ID,T.MARKET_GOODS_ID,T.WEIGHT,T.PRICE
+		FROM MAR_MARKET_GOODS_PRICE T, MAR_MARKET_GOODS b
+		WHERE 
+		    T.MARKET_GOODS_ID = B.MARKET_GOODS_ID
+		    AND B.GOODS_ID = #{goodsId} 
+		    AND B.MARKET_ID = #{marketId}
+		ORDER BY T.PRICE ASC
+	</select>
+</mapper>

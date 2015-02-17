@@ -9,7 +9,17 @@ package com.guozha.buyserver.web.controller.goods;
  */
 public class GoodsRequest {
 	
-	private Integer frontTypeId;
+	private Integer frontTypeId; //类目ID
+	
+	private Integer addressId; //用户地址id
+
+	public Integer getAddressId() {
+		return addressId;
+	}
+
+	public void setAddressId(Integer addressId) {
+		this.addressId = addressId;
+	}
 
 	public Integer getFrontTypeId() {
 		return frontTypeId;

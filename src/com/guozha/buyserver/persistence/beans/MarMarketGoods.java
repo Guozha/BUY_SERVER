@@ -8,7 +8,14 @@ public class MarMarketGoods extends AbstractDO {
 	private Integer marketId;
 	private Integer goodsId;
 	private String openBuyFlag;
+	private Integer price; //单价
 	
+	public Integer getPrice() {
+		return price;
+	}
+	public void setPrice(Integer price) {
+		this.price = price;
+	}
 	public Integer getMarketGoodsId() {
 		return marketGoodsId;
 	}

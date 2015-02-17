@@ -16,6 +16,7 @@ import com.guozha.buyserver.persistence.beans.GooGoods;
 import com.guozha.buyserver.persistence.beans.MnuMenu;
 import com.guozha.buyserver.persistence.mapper.BuyCartMapper;
 import com.guozha.buyserver.persistence.mapper.GooGoodsMapper;
+import com.guozha.buyserver.persistence.mapper.MarMarketGoodsMapper;
 import com.guozha.buyserver.persistence.mapper.MnuMenuMapper;
 import com.guozha.buyserver.service.cart.CartService;
 import com.guozha.buyserver.web.controller.MsgResponse;
@@ -33,6 +34,12 @@ public class CartServiceImpl extends AbstractBusinessObjectServiceMgr implements
 	private MnuMenuMapper mnuMenuMapper;
     @Autowired
 	private BuyCartMapper buyCartMapper;
+    
+	@Autowired
+	private MarMarketGoodsMapper marMarketGoodsMapper;
+    
+    //农贸市场ID 临时参数需调整 农贸市场ID = 用户地址对应的菜场id
+    private int marketId=1;
 	@Override
 	public MsgResponse add(CartRequest vo) {
 		BuyCart po = this.buyCartMapper.selectByGoodsOrMenuId(vo.getUserId(), vo.getId(),vo.getProductType());
@@ -44,9 +51,9 @@ public class CartServiceImpl extends AbstractBusinessObjectServiceMgr implements
 				po.setUnit("08");//constants.xml 
 			}else if("02".equals(vo.getProductType())){ //单品  constants.xml
 				GooGoods goods = this.gooGoodsMapper.load(vo.getId());
-				po.setPrice(goods.getPrice());
+				po.setPrice(marMarketGoodsMapper.findByGoodsId(marketId, goods.getGoodsId()).getPrice());
 				po.setDisplayName(goods.getGoodsName());
-				po.setUnit("01");//constants.xml 
+				po.setUnit(goods.getUnit());//constants.xml 
 			}
 			po.setUserId(vo.getUserId());
 			po.setGoodsOrMenuId(vo.getId());

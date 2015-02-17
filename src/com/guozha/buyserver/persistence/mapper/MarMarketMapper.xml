@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//ibatis.apache.org//DTD Mapper 3.0//EN"
+"http://ibatis.apache.org/dtd/ibatis-3-mapper.dtd">
+
+<mapper namespace="com.guozha.buyserver.persistence.mapper.MarMarketMapper">
+
+	<resultMap id="rm" type="com.guozha.buyserver.persistence.beans.MarMarket">
+        <result property="marketId" jdbcType="INTEGER" column="MARKET_ID"/>
+        <result property="marketName" jdbcType="VARCHAR" column="MARKET_NAME"/>
+        <result property="shortName" jdbcType="VARCHAR" column="SHORT_NAME"/>
+        <result property="provinceId" jdbcType="INTEGER" column="PROVINCE_ID"/>
+        <result property="cityId" jdbcType="INTEGER" column="CITY_ID"/>
+        <result property="countyId" jdbcType="INTEGER" column="COUNTY_ID"/>
+        <result property="detailAddr" jdbcType="VARCHAR" column="DETAIL_ADDR"/>
+        <result property="status" jdbcType="VARCHAR" column="STATUS"/>
+	</resultMap>
+	
+	<sql id="BASE_COLUMN_LIST">
+		T.MARKET_ID,T.MARKET_NAME,T.SHORT_NAME,T.PROVINCE_ID,T.CITY_ID,T.COUNTY_ID,T.DETAIL_ADDR,T.STATUS
+	</sql>
+	
+	
+    <!--用户默认农贸市场 -->
+	<select id="findDefaultByUserId" resultMap="rm">
+		SELECT 
+			C.MARKET_ID
+		FROM ACC_ADDRESS T, BAS_BUILDING C
+		WHERE
+		    AND T.BUILDING_ID = C.BUILDING_ID
+		    AND T.DEFAULT_FLAG = '1'
+		    AND T.USER_ID = #{userId}
+		    
+	</select>
+</mapper>

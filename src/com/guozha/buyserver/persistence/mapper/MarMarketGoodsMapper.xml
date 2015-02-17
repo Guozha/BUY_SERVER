@@ -10,10 +10,15 @@ PUBLIC "-//ibatis.apache.org//DTD Mapper 3.0//EN"
         <result property="marketId" jdbcType="INTEGER" column="MARKET_ID"/>
         <result property="goodsId" jdbcType="INTEGER" column="GOODS_ID"/>
         <result property="openBuyFlag" jdbcType="VARCHAR" column="OPEN_BUY_FLAG"/>
+        <result property="price" jdbcType="INTEGER" column="PRICE"/>
 	</resultMap>
 
     <select id="getGoodIdsInMarket" parameterType="java.util.Map" resultMap="rm">
         SELECT T.GOODS_ID FROM MAR_MARKET_GOODS T WHERE T.MARKET_ID = #{marketId} AND T.OPEN_BUY_FLAG = #{openBuyFlag}
     </select>
 	
+	<!-- 查询农贸市场商品单价 -->
+	<select id="findByGoodsId" parameterType="java.util.Map" resultMap="rm">
+        SELECT T.* FROM MAR_MARKET_GOODS T WHERE T.MARKET_ID = #{marketId} AND T.GOODS_ID = #{goodsId}
+    </select>
 </mapper>

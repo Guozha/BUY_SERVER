@@ -36,6 +36,7 @@ public interface GeneralService extends BusinessObjectServiceMgr{
 	
 	/**
 	 * 商品查询
+	 * 所有的商品均来自某个农贸市场。
 	 * @param vo
 	 * @return
 	 */

@@ -1,7 +1,5 @@
 package com.guozha.buyserver.service.common.impl;
 
-import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -9,12 +7,9 @@ import org.dom4j.Document;
 import org.dom4j.DocumentException;
 import org.dom4j.Element;
 import org.dom4j.io.SAXReader;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.guozha.buyserver.persistence.beans.GooGoodsPrice;
-import com.guozha.buyserver.persistence.mapper.GooGoodsPriceMapper;
 import com.guozha.buyserver.service.common.CacheServiceMgr;
 import com.guozha.buyserver.common.util.ParameterUtil;
 import com.guozha.buyserver.framework.sys.business.AbstractBusinessObjectServiceMgr;
@@ -24,8 +19,6 @@ import com.guozha.buyserver.framework.sys.business.AbstractBusinessObjectService
 public class CacheServiceMgrImpl extends AbstractBusinessObjectServiceMgr
 		implements CacheServiceMgr {
 	
-	@Autowired
-	private GooGoodsPriceMapper gooGoodsPriceMapper;
 	
 	@SuppressWarnings("unchecked")
 	@Override
@@ -54,27 +47,4 @@ public class CacheServiceMgrImpl extends AbstractBusinessObjectServiceMgr
 			e.printStackTrace();
 		}
 	}
-
-	@Override
-	public void cacheGoodsPriceData() {
-       List<GooGoodsPrice> priceList = this.gooGoodsPriceMapper.findAll();
-       Map<Integer, List<GooGoodsPrice>> map = new HashMap<Integer, List<GooGoodsPrice>>();
-       List<GooGoodsPrice>  list = null;
-       for(GooGoodsPrice po:priceList){
-    	   if(map.containsKey(po.getGoodsId())){
-    		   map.get(po.getGoodsId()).add(po);
-    	   }else{
-    		   list = new ArrayList<GooGoodsPrice>();
-    		   list.add(po);
-    	   }
-       }
-       for(Integer key:map.keySet()){
-    	  getMemCacheManager().delete("GOODSPRICE_"+key);
-          getMemCacheManager().add("GOODSPRICE_"+key, list);
-       }
-	}
-	
-	
-	
-
 }

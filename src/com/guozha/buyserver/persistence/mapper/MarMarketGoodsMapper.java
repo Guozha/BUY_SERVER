@@ -11,5 +11,13 @@ public interface MarMarketGoodsMapper extends
 		BaseMapper<MarMarketGoods, Integer> {
 	
 	List<Integer> getGoodIdsInMarket(@Param("marketId")int marketId, @Param("openBuyFlag")String openBuyFlag);
+	
+	/**
+	 * 查询商品单价
+	 * @param marketId 所在农贸市场ID
+	 * @param goodsId 商品ID
+	 * @return
+	 */
+	MarMarketGoods findByGoodsId(@Param("marketId")int marketId, @Param("goodsId")int goodsId);
 
 }

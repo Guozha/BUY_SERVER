@@ -10,11 +10,12 @@ import org.springframework.transaction.annotation.Transactional;
 import com.guozha.buyserver.framework.sys.business.AbstractBusinessObjectServiceMgr;
 import com.guozha.buyserver.persistence.beans.BasFrontType;
 import com.guozha.buyserver.persistence.beans.GooGoods;
-import com.guozha.buyserver.persistence.beans.GooGoodsPrice;
+import com.guozha.buyserver.persistence.beans.MarMarketGoodsPrice;
 import com.guozha.buyserver.persistence.beans.MnuMenu;
 import com.guozha.buyserver.persistence.mapper.BasFrontTypeMapper;
 import com.guozha.buyserver.persistence.mapper.GooGoodsMapper;
-import com.guozha.buyserver.persistence.mapper.GooGoodsPriceMapper;
+import com.guozha.buyserver.persistence.mapper.MarMarketGoodsMapper;
+import com.guozha.buyserver.persistence.mapper.MarMarketGoodsPriceMapper;
 import com.guozha.buyserver.persistence.mapper.MnuMenuMapper;
 import com.guozha.buyserver.service.goods.GeneralService;
 import com.guozha.buyserver.web.controller.goods.FrontTypeRequest;
@@ -35,9 +36,15 @@ public class GeneralServiceImpl extends AbstractBusinessObjectServiceMgr impleme
 	@Autowired
 	private GooGoodsMapper gooGoodsMapper;
 	@Autowired
-	private GooGoodsPriceMapper gooGoodsPriceMapper;
+	private MarMarketGoodsPriceMapper marMarketGoodsPriceMapper;
 	@Autowired
 	private MnuMenuMapper mnuMenuMapper;
+	
+	@Autowired
+	private MarMarketGoodsMapper marMarketGoodsMapper;
+	
+	//农贸市场ID 临时参数需调整
+	private int marketId=1;
 	
 	@Override
 	public List<FrontTypeResponse> findFrontType(FrontTypeRequest vo) {
@@ -48,21 +55,6 @@ public class GeneralServiceImpl extends AbstractBusinessObjectServiceMgr impleme
 		}
 		return bos;
 	}
-	/*
-	@Override
-	public Map<FrontTypeResponse,List<FrontTypeResponse>> findFrontType() {
-		List<BasFrontType> firstPos = this.basFrontTypeMapper.findFirst();
-		Map<FrontTypeResponse,List<FrontTypeResponse>> map = new LinkedHashMap<FrontTypeResponse, List<FrontTypeResponse>>();
-		for(BasFrontType po:firstPos){
-			List<FrontTypeResponse> list = new ArrayList<FrontTypeResponse>();
-			List<BasFrontType> secondPos = basFrontTypeMapper.findSecond(po.getFrontTypeId());
-			for(BasFrontType secondPo:secondPos){
-				list.add(new FrontTypeResponse(secondPo));
-			}
-			map.put(new FrontTypeResponse(po), list);
-		}
-		return map;
-	}*/
 	
 	@Override
 	public List<FrontTypeResponse> findFrontType() {
@@ -84,41 +76,46 @@ public class GeneralServiceImpl extends AbstractBusinessObjectServiceMgr impleme
 	
 	@Override
 	public List<GoodsResponse> findGoods(GoodsRequest vo) {
-		List<GooGoods> pos = null;
+		
+		//根据商户地址获得农贸市场？？？？？？
+		
+		List<GoodsResponse> list = null;
 		Integer frontTypeId = vo.getFrontTypeId();
 		if(frontTypeId==null){
-			pos = this.gooGoodsMapper.findAll();
+			list = this.gooGoodsMapper.findByMarketId(marketId);
 		}else{
 			BasFrontType bft = this.basFrontTypeMapper.load(vo.getFrontTypeId());
 			switch (bft.getLevel()) {
 			case 1: //一级类目商品
-				pos = this.gooGoodsMapper.findFirst(frontTypeId);
+				list = this.gooGoodsMapper.findFirst(marketId,frontTypeId);
 				break;
 			case 2: //二级类目商品
-				pos = this.gooGoodsMapper.findSecond(frontTypeId);
+				list = this.gooGoodsMapper.findSecond(marketId,frontTypeId);
 				break;
 			}
 		}
-		List<GoodsResponse> bos = new ArrayList<GoodsResponse>();
-		for(GooGoods po:pos){
-			bos.add(new GoodsResponse(po));
-		}
-		return bos;
+		return list;
 	}
 	
 	@Override
 	public GoodsInfoResponse findGoodsById(int goodsId) {
 		GooGoods po = this.gooGoodsMapper.load(goodsId);
-		return new GoodsInfoResponse(po);
+		GoodsInfoResponse response = new GoodsInfoResponse(po);
+		response.setPrice(marMarketGoodsMapper.findByGoodsId(marketId, goodsId).getPrice());
+		return response;
 	}
 
 	@Override
 	public List<GoodsPriceResponse> findGoodsPriceByGoodsId(int goodsId) {
-		List<GooGoodsPrice> pos = this.gooGoodsPriceMapper.findByGoodsId(goodsId);
+		//List<GooGoodsPrice> pos = this.gooGoodsPriceMapper.findByGoodsId(goodsId);
+		List<MarMarketGoodsPrice> pos = this.marMarketGoodsPriceMapper.findByGoodsId(marketId, goodsId);
 		GooGoods goodPo =this.gooGoodsMapper.load(goodsId);
 		List<GoodsPriceResponse> bos = new ArrayList<GoodsPriceResponse>();
-	    for(GooGoodsPrice po:pos){
-	    	bos.add(new GoodsPriceResponse(po,goodPo.getUnit()));
+	    for(MarMarketGoodsPrice po:pos){
+	    	GoodsPriceResponse res = new GoodsPriceResponse(po);
+	    	res.setUnit(goodPo.getUnit());
+	    	res.setGoodsId(goodsId);
+	    	bos.add(res);
 	    }
 		return bos;
 	}

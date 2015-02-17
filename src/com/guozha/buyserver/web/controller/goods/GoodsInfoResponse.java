@@ -24,7 +24,6 @@ public class GoodsInfoResponse {
 		this.goodsName = po.getGoodsName();
 		this.goodsProp = po.getGoodsProp();
 		this.goodsImg = po.getGoodsImg();
-		this.price = po.getPrice();
 		this.unit = po.getUnit();
 		this.memo = po.getMemo();
 		this.prepareEndDate = DateUtil.date2String(po.getPrepareEndDate(), DateUtil.PATTERN_DATE);
