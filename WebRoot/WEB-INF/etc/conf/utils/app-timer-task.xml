@@ -10,4 +10,14 @@
 		<runnable>false</runnable>
 	</timer-task>
 	
+	<timer-task>
+		<name>constantCache</name>
+		<period>1 DAY</period>
+		<priority>low</priority>
+		<class>com.guozha.buyserver.service.task.ConstantCacheTask</class>
+		<delay>0</delay>
+		<start-time>0</start-time>
+		<runnable>true</runnable>
+	</timer-task>
+	
 </timer-task-set>

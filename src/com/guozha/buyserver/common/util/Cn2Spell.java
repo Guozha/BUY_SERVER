@@ -8,7 +8,7 @@ import net.sourceforge.pinyin4j.format.exception.BadHanyuPinyinOutputFormatCombi
 
 /**
  * 汉字转换位汉语拼音，英文字符不变
- * @author xuke
+ * @author zhutx
  *
  */
 public class Cn2Spell {
