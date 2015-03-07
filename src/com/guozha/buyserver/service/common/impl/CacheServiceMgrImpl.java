@@ -43,7 +43,6 @@ public class CacheServiceMgrImpl extends AbstractBusinessObjectServiceMgr
 					ParameterUtil.cacheConstantData(constantDef, constantValue, constantName);
 				}
 			}
-			System.out.println(constantCache);
 		} catch (DocumentException e) {
 			e.printStackTrace();
 		}
