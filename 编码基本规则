@@ -1,0 +1,23 @@
+1.参考功能模块清单，
+     如果存在三级模块，则用一级模块建包，用二级模块建类。
+     如果不存在三级模块，则同时用一级模块建包并建类。
+2.请求数据必须封装到***Request类中
+3.返回数据必须封装到***Response类中
+4.***Controller类必须继承BaseController
+5.***Service业务接口必须继承BusinessObjectServiceMgr
+6.***ServiceImpl业务接口实现类除了实现业务接口外，还必须继承AbstractBusinessObjectServiceMgr
+7.***Mapper类必须继承BaseMapper
+8.数据库中的一张表，对应一个***Mapper.xml
+9.beans包中类，全是po类，必须是数据库的字段。绝不允许将业务辅助属性定义进来。业务对象直接创建到具体的service的业务包中去
+比如beans包下的SysUser，是持久化对象，属性跟数据库字段严格对应。查询返回SysUser，必须包装成业务对象User，可以在业务对象User中增加额外的编码辅助属性。
+10.常量数据全部定义于WEB-INF/etc/conf/constant.xml中
+  编码时，可直接使用已固化的常量值，但必须严格按规则进行备注。比如添加用户：
+    SysUser po = new SysUser();
+	po.setMobileNo(vo.getMobileNo());
+	po.setPasswd(vo.getPasswd());
+	po.setRegTime(new Date());
+	po.setStatus("1");// USER_STATUS 1-可用  [这里使用了常量值。必须严格备注上constant.xml中的常量定义。埋个点，便于开发阶段常量值有所所调整时的统一替换]
+	userMapper.insert(po);
+11.导入SERVER_TEST进行接口调用测试；
+
+  
