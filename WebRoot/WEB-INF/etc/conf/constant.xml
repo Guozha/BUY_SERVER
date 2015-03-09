@@ -153,4 +153,17 @@
     	<constantName value="3">省公司</constantName>
     	<constantName value="4">市公司</constantName>
 	</constant>
+	<constant constantDef="UNIT">
+    	<constantName value="01">500克</constantName>
+    	<constantName value="02">盒</constantName>
+    	<constantName value="03">块</constantName>
+    	<constantName value="04">袋</constantName>
+    	<constantName value="05">包</constantName>
+    	<constantName value="06">瓶</constantName>
+    	<constantName value="07">篮</constantName>
+	</constant>
+	<constant constantDef="TIME_SCOPE">
+    	<constantName value="1">上午</constantName>
+    	<constantName value="2">下午</constantName>
+	</constant>
 </constants>
