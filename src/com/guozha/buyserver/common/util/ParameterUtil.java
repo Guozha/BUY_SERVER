@@ -16,6 +16,16 @@ import com.ibm.icu.text.SimpleDateFormat;
 public class ParameterUtil {
 	
 	/**
+	 * token缓存
+	 */
+	private static List<String> tokenCache = new ArrayList<String>();
+	
+	/**
+	 * 校验码缓存
+	 */
+	private static Map<String, String> checkCodeCache = new HashMap<String, String>();
+	
+	/**
 	 * 数据库列数据缓存
 	 */
 	private static Map<String,Map<String,String>> columnCache = new HashMap<String, Map<String, String>>();
@@ -191,6 +201,35 @@ public class ParameterUtil {
 			result = str;
 		}
 		return result;
+	}
+	
+	public static void cacheCheckCode(String mobileNo, String checkCode){
+		checkCodeCache.put(mobileNo, checkCode);
+	}
+	
+	public static String getCheckCode(String mobileNo){
+		if(checkCodeCache.containsKey(mobileNo)){
+			return checkCodeCache.get(mobileNo);
+		}
+		return null;
+	}
+	
+	public static void removeCheckCode(String mobileNo){
+		if(checkCodeCache.containsKey(mobileNo)){
+			checkCodeCache.remove(mobileNo);
+		}
+	}
+	
+	public static boolean containToken(String token){
+		if(tokenCache.contains(token)){
+			return true;
+		}else{
+			return false;
+		}
+	}
+	
+	public static void removeToken(String token){
+		tokenCache.remove(token);
 	}
 	
 }

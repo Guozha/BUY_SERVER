@@ -41,4 +41,8 @@ PUBLIC "-//ibatis.apache.org//DTD Mapper 3.0//EN"
 	    SELECT * FROM SYS_USER T WHERE T.MOBILE_NO = #{mobileNo}
 	</select>
 	
+	<select id="getLoginUser" parameterType="com.guozha.buyserver.web.controller.account.LoginRequest" resultMap="rm">
+	    SELECT * FROM SYS_USER T WHERE T.MOBILE_NO = #{mobileNo} AND T.PASSWD = #{passwd}
+	</select>
+	
 </mapper>

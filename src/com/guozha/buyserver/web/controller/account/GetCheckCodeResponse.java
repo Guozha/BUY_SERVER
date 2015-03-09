@@ -1,10 +1,10 @@
 package com.guozha.buyserver.web.controller.account;
 
-public class RegisterResponse {
+public class GetCheckCodeResponse {
 	
 	private String returnCode;
 	private String mobileNo;
-	private String msg;
+	private String checkCode;
 	
 	public String getReturnCode() {
 		return returnCode;
@@ -18,11 +18,11 @@ public class RegisterResponse {
 	public void setMobileNo(String mobileNo) {
 		this.mobileNo = mobileNo;
 	}
-	public String getMsg() {
-		return msg;
+	public String getCheckCode() {
+		return checkCode;
 	}
-	public void setMsg(String msg) {
-		this.msg = msg;
+	public void setCheckCode(String checkCode) {
+		this.checkCode = checkCode;
 	}
 
 }

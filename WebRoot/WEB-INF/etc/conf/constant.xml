@@ -143,4 +143,14 @@
     	<constantName value="3">区县级</constantName>
     	<constantName value="4">乡镇级</constantName>
 	</constant>
+	<constant constantDef="ORG_TYPE">
+    	<constantName value="1">自有组织</constantName>
+    	<constantName value="2">合作商户</constantName>
+	</constant>
+	<constant constantDef="OWN_ORG_LEVEL">
+    	<constantName value="1">总部</constantName>
+    	<constantName value="2">大区</constantName>
+    	<constantName value="3">省公司</constantName>
+    	<constantName value="4">市公司</constantName>
+	</constant>
 </constants>
