@@ -8,7 +8,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.google.gson.Gson;
 import com.guozha.buyserver.framework.sys.business.AbstractBusinessObjectServiceMgr;
 import com.guozha.buyserver.persistence.beans.BasFrontType;
 import com.guozha.buyserver.persistence.beans.GooGoods;
@@ -18,7 +17,6 @@ import com.guozha.buyserver.persistence.mapper.BasFrontTypeMapper;
 import com.guozha.buyserver.persistence.mapper.GooGoodsMapper;
 import com.guozha.buyserver.persistence.mapper.GooGoodsPriceMapper;
 import com.guozha.buyserver.persistence.mapper.MnuMenuMapper;
-import com.guozha.buyserver.service.account.User;
 import com.guozha.buyserver.service.goods.GeneralService;
 import com.guozha.buyserver.web.controller.goods.FrontTypeRequest;
 import com.guozha.buyserver.web.controller.goods.FrontTypeResponse;

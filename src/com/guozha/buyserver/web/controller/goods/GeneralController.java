@@ -1,6 +1,5 @@
 package com.guozha.buyserver.web.controller.goods;
 
-import java.util.List;
 
 import javax.servlet.http.HttpServletResponse;
 
