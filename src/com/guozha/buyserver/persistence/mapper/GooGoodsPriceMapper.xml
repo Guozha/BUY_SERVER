@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//ibatis.apache.org//DTD Mapper 3.0//EN"
+"http://ibatis.apache.org/dtd/ibatis-3-mapper.dtd">
+
+<mapper namespace="com.guozha.buyserver.persistence.mapper.GooGoodsPriceMapper">
+
+	<resultMap id="rm" type="com.guozha.buyserver.persistence.beans.GooGoodsPrice">
+        <result property="goodsPriceId" jdbcType="INTEGER" column="GOODS_PRICE_ID"/>
+        <result property="goodsId" jdbcType="INTEGER" column="GOODS_ID"/>
+        <result property="weight" jdbcType="INTEGER" column="WEIGHT"/>
+        <result property="price" jdbcType="INTEGER" column="PRICE"/>
+	</resultMap>
+	
+	<sql id="BASE_COLUMN_LIST">
+	GOODS_PRICE_ID,GOODS_ID,WEIGHT,PRICE
+	</sql>
+	
+	<!-- 商品详情 -->
+	<select id="load" parameterType="int" resultMap="rm">
+		SELECT 
+			<include refid="BASE_COLUMN_LIST" />
+		FROM GOO_GOODS_PRICE
+		WHERE 
+			GOODS_ID = #{goodsId} 
+	</select>
+	
+    <!-- 商品价格配置 -->
+	<select id="findByGoodsId" resultMap="rm">
+		SELECT 
+			<include refid="BASE_COLUMN_LIST" />
+		FROM GOO_GOODS_PRICE
+		WHERE 
+		    GOODS_ID = #{goodsId} 
+		ORDER BY PRICE ASC
+	</select>
+</mapper>

@@ -3,11 +3,11 @@
   type="WEB"
   name="BUY_SERVER"
   id="myeclipse.1398442332690"
-  context-root="/MPOSS"
+  context-root="/BUY_SERVER"
   j2ee-spec="5.0"
   archive="BUY_SERVER.war">
   <attributes>
-    <attribute name="webrootdir" value="/WebRoot" />
+    <attribute name="webrootdir" value="WebRoot" />
   </attributes>
 </project-module>
 

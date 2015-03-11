@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//ibatis.apache.org//DTD Mapper 3.0//EN"
+"http://ibatis.apache.org/dtd/ibatis-3-mapper.dtd">
+
+<mapper namespace="com.guozha.buyserver.persistence.mapper.GooGoodsMapper">
+
+	<resultMap id="rm" type="com.guozha.buyserver.persistence.beans.GooGoods">
+        <result property="goodsId" jdbcType="INTEGER" column="GOODS_ID"/>
+        <result property="goodsName" jdbcType="VARCHAR" column="GOODS_NAME"/>
+        <result property="belongOrgId" jdbcType="INTEGER" column="BELONG_ORG_ID"/>
+        <result property="goodsProp" jdbcType="VARCHAR" column="GOODS_PROP"/>
+        <result property="firstFrontTypeId" jdbcType="INTEGER" column="FIRST_FRONT_TYPE_ID"/>
+        <result property="secondFrontTypeId" jdbcType="INTEGER" column="SECOND_FRONT_TYPE_ID"/>
+        <result property="backTypeId" jdbcType="INTEGER" column="BACK_TYPE_ID"/>
+        <result property="goodsUrl" jdbcType="VARCHAR" column="GOODS_URL"/>
+        <result property="price" jdbcType="INTEGER" column="PRICE"/>
+        <result property="unit" jdbcType="VARCHAR" column="UNIT"/>
+        <result property="memo" jdbcType="VARCHAR" column="MEMO"/>
+        <result property="prepareEndDate" jdbcType="TIMESTAMP" column="PREPARE_END_DATE"/>
+        <result property="arrivalDays" jdbcType="INTEGER" column="ARRIVAL_DAYS"/>
+        <result property="picDesc" jdbcType="VARCHAR" column="PIC_DESC"/>
+        <result property="otherNames" jdbcType="VARCHAR" column="OTHER_NAMES"/>
+        <result property="sort" jdbcType="INTEGER" column="SORT"/>
+        <result property="status" jdbcType="VARCHAR" column="STATUS"/>
+	</resultMap>
+	
+	<sql id="BASE_COLUMN_LIST">
+		GOODS_ID,GOODS_NAME,BELONG_ORG_ID,GOODS_PROP,FIRST_FRONT_TYPE_ID,SECOND_FRONT_TYPE_ID,
+		BACK_TYPE_ID,GOODS_URL,PRICE,UNIT,MEMO,PREPARE_END_DATE,ARRIVAL_DAYS,PIC_DESC,OTHER_NAMES,SORT,STATUS
+	</sql>
+	
+	<!-- 商品详情 -->
+	<select id="load" parameterType="int" resultMap="rm">
+		SELECT 
+			<include refid="BASE_COLUMN_LIST" />
+		FROM GOO_GOODS
+		WHERE 
+			GOODS_ID = #{goodsId} 
+	</select>
+	
+    <!-- 所有商品 -->
+	<select id="findAll" resultMap="rm">
+		SELECT 
+			<include refid="BASE_COLUMN_LIST" />
+		FROM GOO_GOODS
+	</select>
+	
+	<!-- 查询一级类目商品列表 (不区分特供等类型) -->
+	<select id="findFirst"  parameterType="int" resultMap="rm">
+		SELECT 
+			<include refid="BASE_COLUMN_LIST" />
+		FROM GOO_GOODS
+		WHERE
+		    FIRST_FRONT_TYPE_ID = #{firstFrontTypeId}
+	</select>
+	
+	<!-- 查询二级类目商品列表(不区分特供等类型) -->
+	<select id="findSecond"  parameterType="int" resultMap="rm">
+		SELECT 
+			<include refid="BASE_COLUMN_LIST" />
+		FROM GOO_GOODS
+		WHERE
+		    SECOND_FRONT_TYPE_ID = #{secondFrontTypeId}
+	</select>
+	
+	
+	   <!-- 所有商品  (仅特供)-->
+	<select id="findAllSpecial" resultMap="rm">
+		SELECT 
+			<include refid="BASE_COLUMN_LIST" />
+		FROM GOO_GOODS
+		WHERE
+		    GOODS_PROP = '02'
+	</select>
+	
+	<!-- 查询一级类目商品列表 (仅特供) -->
+	<select id="findFirstSpecial"  parameterType="int" resultMap="rm">
+		SELECT 
+			<include refid="BASE_COLUMN_LIST" />
+		FROM GOO_GOODS
+		WHERE
+		    FIRST_FRONT_TYPE_ID = #{firstFrontTypeId}
+		    AND GOODS_PROP = '02'
+	</select>
+	
+	<!-- 查询二级类目商品列表(仅特供) -->
+	<select id="findSecondSpecial"  parameterType="int" resultMap="rm">
+		SELECT 
+			<include refid="BASE_COLUMN_LIST" />
+		FROM GOO_GOODS
+		WHERE
+		    SECOND_FRONT_TYPE_ID = #{secondFrontTypeId}
+		     AND GOODS_PROP = '02'
+	</select>
+</mapper>

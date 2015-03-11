@@ -96,6 +96,7 @@
 	
 		<bean id="localeChangeInterceptor" class="org.springframework.web.servlet.i18n.LocaleChangeInterceptor" />
 		
+		<!--  
 		<bean id="loginInterceptor" class="com.guozha.buyserver.web.adapter.interceptor.LoginInterceptor">
             <property name="uncheckUrls"> 
                 <list> 
@@ -104,7 +105,7 @@
                    <value>/BUY_SERVER/account/login</value>
                 </list> 
             </property> 
-        </bean>
+        </bean>-->
 		
 	</mvc:interceptors>
 	
