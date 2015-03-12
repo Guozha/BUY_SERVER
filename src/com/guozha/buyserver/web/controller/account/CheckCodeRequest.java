@@ -1,6 +1,6 @@
 package com.guozha.buyserver.web.controller.account;
 
-public class GetCheckCodeRequest {
+public class CheckCodeRequest {
 	
 	private String mobileNo;
 

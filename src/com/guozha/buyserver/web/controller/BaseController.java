@@ -20,7 +20,6 @@ import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.support.RequestContextUtils;
 
 import com.google.gson.Gson;
-import com.guozha.buyserver.web.controller.account.Session;
 import com.guozha.buyserver.web.controller.editor.DateEditor;
 import com.guozha.buyserver.web.controller.editor.DoubleEditor;
 import com.guozha.buyserver.web.controller.editor.IntegerEditor;
@@ -85,12 +84,6 @@ public abstract class BaseController {
 		Locale locale = localeResolver.resolveLocale(request);
 
 		return _res.getMessage(code, args, locale);
-	}
-	
-	protected Session getSession(){
-		HttpServletRequest request = ((ServletRequestAttributes)RequestContextHolder.getRequestAttributes()).getRequest();
-		HttpSession session = request.getSession();
-		return (Session)session.getAttribute("session");
 	}
 	
 	public void responseJson(Object obj,HttpServletResponse response){

@@ -9,18 +9,18 @@ import org.springframework.transaction.annotation.Transactional;
 import com.guozha.buyserver.framework.sys.business.AbstractBusinessObjectServiceMgr;
 import com.guozha.buyserver.persistence.beans.SysUser;
 import com.guozha.buyserver.persistence.mapper.UserMapper;
-import com.guozha.buyserver.service.account.RegisterService;
+import com.guozha.buyserver.service.account.AccountService;
 import com.guozha.buyserver.service.account.User;
+import com.guozha.buyserver.web.controller.account.LoginRequest;
 import com.guozha.buyserver.web.controller.account.RegisterRequest;
 
 @Transactional(rollbackFor = Exception.class)
-@Service("registerService")
-public class RegisterServiceImpl extends AbstractBusinessObjectServiceMgr
-		implements RegisterService {
+@Service("accountService")
+public class AccountServiceImpl extends AbstractBusinessObjectServiceMgr implements AccountService {
 	
 	@Autowired
 	private UserMapper userMapper;
-
+	
 	@Override
 	public User getRegUser(String mobileNo) {
 		SysUser po = userMapper.getUserByMobileNo(mobileNo);
@@ -38,5 +38,11 @@ public class RegisterServiceImpl extends AbstractBusinessObjectServiceMgr
 		userMapper.insert(po);
 		
 	}
-
+	
+	@Override
+	public User getLoginUser(LoginRequest vo) {
+		SysUser po = userMapper.getLoginUser(vo);
+		return new User(po);
+	}
+	
 }
