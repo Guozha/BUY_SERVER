@@ -166,4 +166,8 @@
     	<constantName value="1">上午</constantName>
     	<constantName value="2">下午</constantName>
 	</constant>
+	<constant constantDef="SMS_TYPE">
+    	<constantName value="01">注册获取验证码</constantName>
+    	<constantName value="02">密码重置获取验证码</constantName>
+	</constant>
 </constants>

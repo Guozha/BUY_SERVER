@@ -2,10 +2,10 @@ package com.guozha.buyserver.web.controller.account;
 
 public class LoginResponse {
 	
+	private String returnCode;
 	private String token;
 	private Integer userId;
 	private String mobileNo;
-	private String returnCode;
 	private String msg;
 	
 	public String getReturnCode() {
