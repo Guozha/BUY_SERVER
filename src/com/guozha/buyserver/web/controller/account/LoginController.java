@@ -37,7 +37,7 @@ public class LoginController extends BaseController {
 				String token = RandomStringUtils.randomAlphanumeric(32);
 				
 				bo.setToken(token);
-				bo.setUserId(String.valueOf(user.getUserId()));
+				bo.setUserId(user.getUserId());
 				bo.setMobileNo(vo.getMobileNo());
 				bo.setReturnCode("1");
 				bo.setMsg("登录成功");

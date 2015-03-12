@@ -3,7 +3,7 @@ package com.guozha.buyserver.web.controller.account;
 public class LoginResponse {
 	
 	private String token;
-	private String userId;
+	private Integer userId;
 	private String mobileNo;
 	private String returnCode;
 	private String msg;
@@ -20,10 +20,10 @@ public class LoginResponse {
 	public void setToken(String token) {
 		this.token = token;
 	}
-	public String getUserId() {
+	public Integer getUserId() {
 		return userId;
 	}
-	public void setUserId(String userId) {
+	public void setUserId(Integer userId) {
 		this.userId = userId;
 	}
 	public String getMobileNo() {
