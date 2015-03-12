@@ -4,6 +4,7 @@ import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
+
 /**
  * <strong>ArrayUtils</strong><br>
  * <br> 
@@ -37,4 +38,34 @@ public class ArrayUtils {
 		return m;
 	}
 	
+	/** 
+     * 对象转数组 
+     * @param obj 
+     * @return 
+    
+	public static byte[] toByteArray(byte[] bytes){
+		if(bytes==null){
+			return null;
+		}
+        byte2image(bytes, "E:\\maicai\\jd.png");
+        return bytes;   
+	}
+	
+	 public static void byte2image(byte[] data,String path){
+		    if(data.length<3||path.equals("")) return;
+		    try{
+		    	File file = new File(path);
+		    	if(!file.isFile()){
+		    		file.createNewFile();
+		    	}
+		    FileImageOutputStream imageOutput = new FileImageOutputStream(file);
+		    imageOutput.write(data, 0, data.length);
+		    imageOutput.close();
+		    System.out.println("Make Picture success,Please find image in " + path);
+		    } catch(Exception ex) {
+		      System.out.println("Exception: " + ex);
+		      ex.printStackTrace();
+		    }
+		}
+	 */  
 }

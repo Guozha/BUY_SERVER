@@ -20,7 +20,8 @@ public class GooGoods extends AbstractDO {
 	private Integer firstFrontTypeId; //前台一级类目ID
 	private Integer secondFrontTypeId;//前台二级类目ID
 	private Integer backTypeId;//后台类目ID
-	private String goodsUrl;//商品图片URL
+	private byte[] goodsImg;//商品图片 
+
 	private Integer price;//单价
 	private String unit;//计量单位
 	private String memo;//商品备注
@@ -73,11 +74,11 @@ public class GooGoods extends AbstractDO {
 	public void setBackTypeId(Integer backTypeId) {
 		this.backTypeId = backTypeId;
 	}
-	public String getGoodsUrl() {
-		return goodsUrl;
+	public byte[]  getGoodsImg() {
+		return goodsImg;
 	}
-	public void setGoodsUrl(String goodsUrl) {
-		this.goodsUrl = goodsUrl;
+	public void setGoodsImg(byte[] goodsImg) {
+		this.goodsImg = goodsImg;
 	}
 	public Integer getPrice() {
 		return price;
@@ -133,4 +134,24 @@ public class GooGoods extends AbstractDO {
 	public void setStatus(String status) {
 		this.status = status;
 	}
+	
+	/*
+	public static void main(String[] args)  {
+		try{
+		Class.forName("com.mysql.jdbc.Driver");
+		Connection coon = (Connection) DriverManager.getConnection("jdbc:mysql://127.0.0.1:3306/wymc","root","root");
+		PreparedStatement state = (PreparedStatement) coon.prepareStatement("update  GOO_GOODS set goods_img=? where goods_id=?" );
+		
+		File file = new File("d:\\jd.png");
+		BufferedInputStream in = new BufferedInputStream(new FileInputStream(file));  
+		state.setBlob(1, in);
+		state.setInt(2, 30);
+		int flag = state.executeUpdate();
+		state.close();
+		coon.close();
+		System.out.println(flag);
+		}catch(Exception e){
+			e.printStackTrace();
+		}
+	}*/
 }

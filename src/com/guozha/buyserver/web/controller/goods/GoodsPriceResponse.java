@@ -1,5 +1,7 @@
 package com.guozha.buyserver.web.controller.goods;
 
+import com.guozha.buyserver.persistence.beans.GooGoodsPrice;
+
 /**
  * 商品價格BO
  * @Package com.guozha.buyserver.web.controller.goods
@@ -15,12 +17,12 @@ public class GoodsPriceResponse {
     
 	
 	
-	public GoodsPriceResponse(Integer goodsPriceId, Integer goodsId,Integer weight, Integer price) {
+	public GoodsPriceResponse(GooGoodsPrice po) {
 		super();
-		this.goodsPriceId = goodsPriceId;
-		this.goodsId = goodsId;
-		this.weight = weight;
-		this.price = price;
+		this.goodsPriceId = po.getGoodsPriceId();
+		this.goodsId = po.getGoodsId();
+		this.weight = po.getWeight();
+		this.price = po.getPrice();
 	}
 
 	public Integer getGoodsPriceId() {

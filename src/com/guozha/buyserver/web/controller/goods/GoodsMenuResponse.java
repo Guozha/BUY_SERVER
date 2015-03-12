@@ -6,7 +6,7 @@ public class GoodsMenuResponse {
 	
 	private Integer menuId;
 	private String menuName;
-	private String menuUrl;
+	private byte[] menuImg;
 	private String menuDesc;
 	private Integer useTime;
 	private String cookieWay;
@@ -17,7 +17,7 @@ public class GoodsMenuResponse {
 	public GoodsMenuResponse(MnuMenu po){
 		this.menuId = po.getMenuId();
 		this.menuName = po.getMenuName();
-		this.menuUrl = po.getMenuUrl();
+		this.menuImg = po.getMenuImg();
 		this.menuDesc = po.getMenuDesc();
 		this.useTime = po.getUseTime();
 		this.cookieWay = po.getCookieWay();
@@ -37,11 +37,12 @@ public class GoodsMenuResponse {
 	public void setMenuName(String menuName) {
 		this.menuName = menuName;
 	}
-	public String getMenuUrl() {
-		return menuUrl;
+	public byte[] getMenuImg() {
+		return menuImg;
 	}
-	public void setMenuUrl(String menuUrl) {
-		this.menuUrl = menuUrl;
+
+	public void setMenuImg(byte[] menuImg) {
+		this.menuImg = menuImg;
 	}
 	public String getMenuDesc() {
 		return menuDesc;

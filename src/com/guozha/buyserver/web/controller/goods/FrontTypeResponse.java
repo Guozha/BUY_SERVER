@@ -1,23 +1,25 @@
 package com.guozha.buyserver.web.controller.goods;
 
+import com.guozha.buyserver.persistence.beans.BasFrontType;
+
 public class FrontTypeResponse {
 	
-	    private Integer frontTypeId; //类目ID
+	    private String frontTypeId; //类目ID
 	    private String shortName;    //类目简称
-	    private Integer level;       //层级
+	    private String level;       //层级
 	    
 	    
 	    
-		public FrontTypeResponse(Integer frontTypeId, String shortName,Integer level) {
+		public FrontTypeResponse(BasFrontType po) {
 			super();
-			this.frontTypeId = frontTypeId;
-			this.shortName = shortName;
-			this.level = level;
+			this.frontTypeId = po.getFrontTypeId().toString();
+			this.shortName = po.getShortName();
+			this.level = po.getLevel().toString();
 		}
-		public Integer getFrontTypeId() {
+		public String getFrontTypeId() {
 			return frontTypeId;
 		}
-		public void setFrontTypeId(Integer frontTypeId) {
+		public void setFrontTypeId(String frontTypeId) {
 			this.frontTypeId = frontTypeId;
 		}
 		public String getShortName() {
@@ -26,10 +28,10 @@ public class FrontTypeResponse {
 		public void setShortName(String shortName) {
 			this.shortName = shortName;
 		}
-		public Integer getLevel() {
+		public String getLevel() {
 			return level;
 		}
-		public void setLevel(Integer level) {
+		public void setLevel(String level) {
 			this.level = level;
 		}
 

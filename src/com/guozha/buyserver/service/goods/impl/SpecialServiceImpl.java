@@ -46,8 +46,7 @@ public class SpecialServiceImpl extends AbstractBusinessObjectServiceMgr impleme
 		}
 		List<GoodsResponse> bos = new ArrayList<GoodsResponse>();
 		for(GooGoods po:pos){
-			GoodsResponse bo = new GoodsResponse(po.getGoodsId(), po.getGoodsName(), po.getGoodsUrl(), po.getPrice(), po.getUnit());
-			bos.add(bo);
+			bos.add(new GoodsResponse(po));
 		}
 		return bos;
 	}

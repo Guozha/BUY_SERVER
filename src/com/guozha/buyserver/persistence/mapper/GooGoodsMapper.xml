@@ -13,7 +13,7 @@ PUBLIC "-//ibatis.apache.org//DTD Mapper 3.0//EN"
         <result property="firstFrontTypeId" jdbcType="INTEGER" column="FIRST_FRONT_TYPE_ID"/>
         <result property="secondFrontTypeId" jdbcType="INTEGER" column="SECOND_FRONT_TYPE_ID"/>
         <result property="backTypeId" jdbcType="INTEGER" column="BACK_TYPE_ID"/>
-        <result property="goodsUrl" jdbcType="VARCHAR" column="GOODS_URL"/>
+        <result property="goodsImg" jdbcType="BLOB" column="GOODS_IMG"/>
         <result property="price" jdbcType="INTEGER" column="PRICE"/>
         <result property="unit" jdbcType="VARCHAR" column="UNIT"/>
         <result property="memo" jdbcType="VARCHAR" column="MEMO"/>
@@ -27,7 +27,7 @@ PUBLIC "-//ibatis.apache.org//DTD Mapper 3.0//EN"
 	
 	<sql id="BASE_COLUMN_LIST">
 		GOODS_ID,GOODS_NAME,BELONG_ORG_ID,GOODS_PROP,FIRST_FRONT_TYPE_ID,SECOND_FRONT_TYPE_ID,
-		BACK_TYPE_ID,GOODS_URL,PRICE,UNIT,MEMO,PREPARE_END_DATE,ARRIVAL_DAYS,PIC_DESC,OTHER_NAMES,SORT,STATUS
+		BACK_TYPE_ID,GOODS_IMG,PRICE,UNIT,MEMO,PREPARE_END_DATE,ARRIVAL_DAYS,PIC_DESC,OTHER_NAMES,SORT,STATUS
 	</sql>
 	
 	<!-- 商品详情 -->

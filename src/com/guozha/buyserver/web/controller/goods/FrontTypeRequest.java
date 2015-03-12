@@ -9,14 +9,16 @@ package com.guozha.buyserver.web.controller.goods;
  */
 public class FrontTypeRequest {
 	
-	private Integer parentId;
+	private Integer frontTypeId;
 
-	public Integer getParentId() {
-		return parentId;
+	public Integer getFrontTypeId() {
+		return frontTypeId;
 	}
 
-	public void setParentId(Integer parentId) {
-		this.parentId = parentId;
+	public void setFrontTypeId(Integer frontTypeId) {
+		this.frontTypeId = frontTypeId;
 	}
+
+	
 
 }

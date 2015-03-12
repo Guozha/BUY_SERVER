@@ -32,7 +32,8 @@ public class DateUtil {
 
 	public static String date2String(java.util.Date date, String pattern) {
 		if (date == null) {
-			throw new java.lang.IllegalArgumentException("timestamp null illegal");
+			return "";
+			//throw new java.lang.IllegalArgumentException("timestamp null illegal");
 		}
 		if (pattern == null || pattern.equals("")) {
 			pattern = PATTERN_STANDARD;

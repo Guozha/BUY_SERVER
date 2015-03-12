@@ -1,21 +1,37 @@
 package com.guozha.buyserver.web.controller.goods;
 
-import java.util.Date;
+
+import com.guozha.buyserver.common.util.DateUtil;
+import com.guozha.buyserver.persistence.beans.GooGoods;
 
 public class GoodsInfoResponse {
 	
 	private Integer goodsId;   //商品ID
 	private String goodsName;  //商品名
 	private String goodsProp;   //商品性质
-	private String goodsUrl;//商品图片URL
+	private byte[] goodsImg;//商品图片
+	
 	private Integer price;//单价
 	private String unit;//计量单位
 	private String memo;//商品备注
-	private Date prepareEndDate;//预售截止日期
+	private String prepareEndDate;//预售截止日期
 	private Integer arrivalDays;//送达天数
 	private String picDesc;//图文介绍
 	private String otherNames;//别名
-	private String status;//状态（参考constant.xml)
+	
+	public GoodsInfoResponse(GooGoods po){
+		this.goodsId = po.getGoodsId();
+		this.goodsName = po.getGoodsName();
+		this.goodsProp = po.getGoodsProp();
+		this.goodsImg = po.getGoodsImg();
+		this.price = po.getPrice();
+		this.unit = po.getUnit();
+		this.memo = po.getMemo();
+		this.prepareEndDate = DateUtil.date2String(po.getPrepareEndDate(), DateUtil.PATTERN_DATE);
+		this.arrivalDays = po.getArrivalDays();
+		this.picDesc = po.getPicDesc();
+		this.otherNames = po.getOtherNames();
+	}
 	
 	public Integer getGoodsId() {
 		return goodsId;
@@ -35,11 +51,11 @@ public class GoodsInfoResponse {
 	public void setGoodsProp(String goodsProp) {
 		this.goodsProp = goodsProp;
 	}
-	public String getGoodsUrl() {
-		return goodsUrl;
+	public byte[] getGoodsImg() {
+		return goodsImg;
 	}
-	public void setGoodsUrl(String goodsUrl) {
-		this.goodsUrl = goodsUrl;
+	public void setGoodsImg(byte[] goodsImg) {
+		this.goodsImg = goodsImg;
 	}
 	public Integer getPrice() {
 		return price;
@@ -59,10 +75,10 @@ public class GoodsInfoResponse {
 	public void setMemo(String memo) {
 		this.memo = memo;
 	}
-	public Date getPrepareEndDate() {
+	public String getPrepareEndDate() {
 		return prepareEndDate;
 	}
-	public void setPrepareEndDate(Date prepareEndDate) {
+	public void setPrepareEndDate(String prepareEndDate) {
 		this.prepareEndDate = prepareEndDate;
 	}
 	public Integer getArrivalDays() {
@@ -82,12 +98,6 @@ public class GoodsInfoResponse {
 	}
 	public void setOtherNames(String otherNames) {
 		this.otherNames = otherNames;
-	}
-	public String getStatus() {
-		return status;
-	}
-	public void setStatus(String status) {
-		this.status = status;
 	}
 
 }

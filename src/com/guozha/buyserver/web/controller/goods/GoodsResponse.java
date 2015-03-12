@@ -1,23 +1,22 @@
 package com.guozha.buyserver.web.controller.goods;
 
+import com.guozha.buyserver.persistence.beans.GooGoods;
 
 public class GoodsResponse {
 	
 	private Integer goodsId;   //商品ID
 	private String goodsName;  //商品名
-	private String goodsUrl;//商品图片URL
+	private byte[] goodsImg;//商品图片URL
 	private Integer price;//单价
 	private String unit;//计量单位
 	
-	
-	
-	public GoodsResponse(Integer goodsId, String goodsName, String goodsUrl,Integer price, String unit) {
+	public GoodsResponse(GooGoods po) {
 		super();
-		this.goodsId = goodsId;
-		this.goodsName = goodsName;
-		this.goodsUrl = goodsUrl;
-		this.price = price;
-		this.unit = unit;
+		this.goodsId = po.getGoodsId();
+		this.goodsName = po.getGoodsName();
+		this.goodsImg = po.getGoodsImg();
+		this.price = po.getPrice();
+		this.unit = po.getUnit();
 	}
 	public Integer getGoodsId() {
 		return goodsId;
@@ -31,11 +30,11 @@ public class GoodsResponse {
 	public void setGoodsName(String goodsName) {
 		this.goodsName = goodsName;
 	}
-	public String getGoodsUrl() {
-		return goodsUrl;
+	public byte[] getGoodsImg() {
+		return goodsImg;
 	}
-	public void setGoodsUrl(String goodsUrl) {
-		this.goodsUrl = goodsUrl;
+	public void setGoodsImg(byte[] goodsImg) {
+		this.goodsImg = goodsImg;
 	}
 	public Integer getPrice() {
 		return price;

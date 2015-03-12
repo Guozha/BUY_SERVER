@@ -3,7 +3,6 @@ package com.guozha.buyserver.service.goods.impl;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -42,10 +41,10 @@ public class GeneralServiceImpl extends AbstractBusinessObjectServiceMgr impleme
 	
 	@Override
 	public List<FrontTypeResponse> findFrontType(FrontTypeRequest vo) {
-		List<BasFrontType> pos = null==vo.getParentId()?basFrontTypeMapper.findFirst():basFrontTypeMapper.findSecond(vo.getParentId());
+		List<BasFrontType> pos = null==vo.getFrontTypeId()?basFrontTypeMapper.findFirst():basFrontTypeMapper.findSecond(vo.getFrontTypeId());
 		List<FrontTypeResponse> bos = new ArrayList<FrontTypeResponse>();
 		for(BasFrontType po:pos){
-			bos.add(new FrontTypeResponse(po.getFrontTypeId(), po.getShortName(), po.getLevel()));
+			bos.add(new FrontTypeResponse(po));
 		}
 		return bos;
 	}
@@ -69,8 +68,7 @@ public class GeneralServiceImpl extends AbstractBusinessObjectServiceMgr impleme
 		}
 		List<GoodsResponse> bos = new ArrayList<GoodsResponse>();
 		for(GooGoods po:pos){
-			GoodsResponse bo = new GoodsResponse(po.getGoodsId(), po.getGoodsName(), po.getGoodsUrl(), po.getPrice(), po.getUnit());
-			bos.add(bo);
+			bos.add(new GoodsResponse(po));
 		}
 		return bos;
 	}
@@ -78,9 +76,7 @@ public class GeneralServiceImpl extends AbstractBusinessObjectServiceMgr impleme
 	@Override
 	public GoodsInfoResponse findGoodsById(int goodsId) {
 		GooGoods po = this.gooGoodsMapper.load(goodsId);
-		GoodsInfoResponse bo = new GoodsInfoResponse();
-		BeanUtils.copyProperties(po, bo);
-		return bo;
+		return new GoodsInfoResponse(po);
 	}
 
 	@Override
@@ -88,7 +84,7 @@ public class GeneralServiceImpl extends AbstractBusinessObjectServiceMgr impleme
 		List<GooGoodsPrice> pos = this.gooGoodsPriceMapper.findByGoodsId(goodsId);
 		List<GoodsPriceResponse> bos = new ArrayList<GoodsPriceResponse>();
 	    for(GooGoodsPrice po:pos){
-	    	bos.add(new GoodsPriceResponse(po.getGoodsPriceId(), po.getGoodsId(), po.getWeight(), po.getPrice()));
+	    	bos.add(new GoodsPriceResponse(po));
 	    }
 		return bos;
 	}
