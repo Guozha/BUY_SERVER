@@ -14,7 +14,7 @@ import com.guozha.buyserver.framework.sys.lang.enums.BaseEnum;
  */
 public enum YesNo implements BaseEnum<Integer>
 {
-	Yes("是",0),No("否",1);
+	Yes("是",1),No("否",0);
 	
 	private String desc;
 	private Integer code;
