@@ -32,14 +32,12 @@ public class AccountServiceImpl extends AbstractBusinessObjectServiceMgr impleme
 	@Override
 	public CheckCodeResponse getCheckCodeForReg(CheckCodeRequest vo) {
 		
-		String checkCode = RandomStringUtils.randomNumeric(6);
-		
 		Object[] arr = new Object[1];
-		arr[0] = checkCode;
+		arr[0] = RandomStringUtils.randomNumeric(6);
 		SmsUtil.sendSms("01", vo.getMobileNo(), arr);// SMS_TYPE 01-注册获取验证码
 		
 		CheckCodeResponse bo = new CheckCodeResponse();
-		bo.setCheckCode(checkCode);
+		bo.setReturnCode("1");
 		
 		return bo;
 	}
