@@ -176,4 +176,10 @@
     	<constantName value="2">黑名单</constantName>
     	<constantName value="3">正常</constantName>
 	</constant>
+	<constant constantDef="SEQ_TYPE">
+    	<constantName value="1">注册生成菜票</constantName>
+    	<constantName value="2">好友赠送生成菜票</constantName>
+    	<constantName value="3">推广赠送生成菜票</constantName>
+    	<constantName value="4">售后赠送生成菜票</constantName>
+	</constant>
 </constants>

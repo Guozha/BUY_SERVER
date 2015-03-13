@@ -1,0 +1,112 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//ibatis.apache.org//DTD Mapper 3.0//EN"
+"http://ibatis.apache.org/dtd/ibatis-3-mapper.dtd">
+
+<mapper namespace="com.guozha.buyserver.persistence.mapper.AccountMapper">
+
+<!--我的地址查询  -->
+<select id="getMyAddress" parameterType="int"  resultType="com.guozha.buyserver.web.controller.account.AddressResponse">
+SELECT a.address_id AS addressId, a.mobile_no AS mobileNo, a.receive_name AS receiveName,
+	   p.area_name AS provinceName, c.area_name AS cityName, d.area_name AS countyName,
+	   t.area_name AS townName, a.building_name AS buildingName, a.detail_addr AS detailAddr,
+	   a.default_flag AS defaultFlag
+FROM ACC_ADDRESS a, SYS_USER u, BAS_AREA p, BAS_AREA c, BAS_AREA d, BAS_AREA t
+WHERE
+	a.user_id = u.user_id AND a.province_id = p.area_id AND a.city_ID = c.area_id AND c.parent_area_id = p.area_id
+    AND a.county_id = d.area_id AND a.town_id = t.area_id AND t.parent_area_id = d.area_id
+    AND d.parent_area_id = c.area_id AND p.area_level = '1' AND c.area_level = '2' AND d.area_level = '3'
+    AND t.area_level = '4' AND a.user_id =#{userId}
+</select>
+
+
+<!--获取行区列表  -->
+<select id="listArea" parameterType="int" resultType="com.guozha.buyserver.web.controller.account.AddressResponse">
+  SELECT area_id AS areaId,area_name AS areaName FROM BAS_AREA WHERE parent_area_id =#{parentAreaId}
+</select>
+
+
+<!--获取小区列表  -->
+<select id="listBuilding" parameterType="int" resultType="com.guozha.buyserver.web.controller.account.AddressResponse">
+  SELECT building_id AS buildingId, building_name AS buildingName
+  FROM BAS_BUILDING d WHERE town_id = #{townId} AND status = '1'
+</select>
+
+
+<!--新增地址  -->
+<insert id="insert" useGeneratedKeys="true" keyProperty="addressId" parameterType="com.guozha.buyserver.web.controller.account.AddressRequest">  
+   INSERT INTO ACC_ADDRESS(user_id,receive_name,mobile_no,province_id,city_id,county_id,town_id,building_id,building_name)
+	VALUES(#{userId},#{receiveName},#{mobileNo},#{provinceId},#{cityId},#{countyId},#{townId},#{buildingId},#{buildingName})
+</insert>  
+
+
+<!-- 删除地址 -->
+<delete id="delete" parameterType="int">
+  DELETE FROM ACC_ADDRESS WHERE address_id=#{addressId}
+</delete>
+
+
+<!--设置默认地址  -->
+<update id="defaultAddress" parameterType="int">
+   UPDATE ACC_ADDRESS SET default_flag = '1'
+   WHERE  address_id = #{addressId}
+</update>
+
+
+<!-- 我的菜票查询 -->
+<select id="listTicket" parameterType="int" resultType="com.guozha.buyserver.persistence.beans.AccMyTicket">
+  SELECT my_ticket_id AS myTicketId, ticket_type AS ticketType, par_value AS parValue,
+	     for_price forPrice, valid_date AS validDate
+  FROM ACC_MY_TICKET WHERE user_id =#{userId} AND status= '1' 
+</select>
+
+<!-- 获取账户余额 -->
+<select id="getMyBalance" parameterType="int" resultType="com.guozha.buyserver.web.controller.account.BalanceResponse">
+  SELECT balance AS balance FROM SYS_USER WHERE user_id=#{userId}
+</select>
+
+<!--我的账户信息  -->
+<select id="getMyAccountInfo" parameterType="int" resultType="com.guozha.buyserver.web.controller.account.AccountInfoResponse">
+  SELECT mobile_no AS mobileNo, head_url AS headImg, balance AS BALANCE, bean_amount AS beanAmount,
+	(SELECT COUNT(*) FROM ACC_MY_TICKET t WHERE t.USER_ID = u.USER_ID AND t.status = '1' ) AS ticketAmount
+  FROM SYS_USER u WHERE u.user_id =#{userId}
+</select>
+
+<!--修改密码  -->
+<update id="updatePasswd" parameterType="com.guozha.buyserver.web.controller.account.PasswdRequest">
+  UPDATE SYS_USER SET passwd=#{passwd} WHERE mobile_no=#{mobileNo}
+</update>
+
+<!--获取用户领用菜票数量  -->
+<select id="countDrawTicket" parameterType="int" resultType="int">
+  SELECT count(*) FROM ACC_MY_INVITE
+  WHERE user_id=#{userId} AND draw_flag='1'
+</select>
+
+<!--获取使用的菜票数量  -->
+<select id="countUsedTicket" parameterType="int" resultType="int">
+  SELECT count(*) FROM ACC_MY_INVITE
+  WHERE user_id=#{userId} AND use_flag='1'
+</select>
+
+<!--当前最大菜票编号  -->
+<select id="getCurrentNo" parameterType="String" resultType="String">
+ SELECT  seq_no ticketNo FROM SYS_SEQ WHERE seq_type=#{ticketType}
+</select>
+
+<!-- 插入流水表 -->
+<insert id="insertSeqNo" useGeneratedKeys="true" keyProperty="seqId" parameterType="com.guozha.buyserver.persistence.beans.SysSeq">
+  INSERT INTO SYS_SEQ(seq_no,seq_type)VALUES(#{seqNo},#{seqType})
+</insert>
+
+<!-- 更新流水表 -->
+<update id="updateSeqNo" parameterType="com.guozha.buyserver.persistence.beans.SysSeq">
+ UPDATE SYS_SEQ SET seq_No=#{seqNo} WHERE seq_type=#{seqType}
+</update>
+
+<!--生成邀请  -->
+<insert id="insertInvite" useGeneratedKeys="true" keyProperty="myInviteId" parameterType="com.guozha.buyserver.persistence.beans.AccMyInvite">
+  INSERT INTO ACC_MY_INVITE(MY_INVITE_ID,USER_ID,INVITE_TIME,TICKET_NO,PAR_VALUE,DRAW_FLAG,USE_FLAG)
+  VALUES(#{myInviteId},#{userId},#{inviteTime},#{ticketNo},#{parValue},#{drawFlag},#{useFlag})
+</insert>
+</mapper>

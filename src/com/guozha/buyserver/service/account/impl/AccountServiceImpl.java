@@ -1,25 +1,48 @@
 package com.guozha.buyserver.service.account.impl;
 
 import java.util.Date;
+import java.util.List;
 
 import org.apache.commons.lang.RandomStringUtils;
+import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.guozha.buyserver.common.util.DateUtil;
 import com.guozha.buyserver.common.util.ParameterUtil;
 import com.guozha.buyserver.common.util.SmsUtil;
+import com.guozha.buyserver.common.util.SystemResource;
+import com.guozha.buyserver.framework.enums.ReturnCodeEnum;
+import com.guozha.buyserver.framework.enums.TicketRewardEnum;
+import com.guozha.buyserver.framework.enums.TicketTypeEnum;
+import com.guozha.buyserver.framework.enums.YesNo;
 import com.guozha.buyserver.framework.sys.business.AbstractBusinessObjectServiceMgr;
+import com.guozha.buyserver.persistence.beans.AccMyInvite;
+import com.guozha.buyserver.persistence.beans.AccMyTicket;
+import com.guozha.buyserver.persistence.beans.SysSeq;
 import com.guozha.buyserver.persistence.beans.SysUser;
+import com.guozha.buyserver.persistence.mapper.AccountMapper;
 import com.guozha.buyserver.persistence.mapper.SysUserMapper;
 import com.guozha.buyserver.service.account.AccountService;
+import com.guozha.buyserver.service.account.ReturnCode;
 import com.guozha.buyserver.web.controller.MsgResponse;
+import com.guozha.buyserver.web.controller.account.AccountInfoResponse;
+import com.guozha.buyserver.web.controller.account.AddressRequest;
+import com.guozha.buyserver.web.controller.account.AddressResponse;
+import com.guozha.buyserver.web.controller.account.BalanceResponse;
 import com.guozha.buyserver.web.controller.account.CheckCodeRequest;
 import com.guozha.buyserver.web.controller.account.CheckCodeResponse;
+import com.guozha.buyserver.web.controller.account.InviteResponse;
 import com.guozha.buyserver.web.controller.account.LoginRequest;
 import com.guozha.buyserver.web.controller.account.LoginResponse;
 import com.guozha.buyserver.web.controller.account.LogoutRequest;
+import com.guozha.buyserver.web.controller.account.PasswdRequest;
+import com.guozha.buyserver.web.controller.account.PasswdResponse;
 import com.guozha.buyserver.web.controller.account.RegisterRequest;
+import com.guozha.buyserver.web.controller.account.TicketRequest;
+
+import java.sql.Timestamp;
 
 @Transactional(rollbackFor = Exception.class)
 @Service("accountService")
@@ -27,6 +50,8 @@ public class AccountServiceImpl extends AbstractBusinessObjectServiceMgr impleme
 	
 	@Autowired
 	private SysUserMapper sysUserMapper;
+	@Autowired
+	private AccountMapper accountMapper;
 	
 	@Override
 	public CheckCodeResponse getCheckCodeForReg(CheckCodeRequest vo) {
@@ -102,6 +127,286 @@ public class AccountServiceImpl extends AbstractBusinessObjectServiceMgr impleme
 	public MsgResponse logout(LogoutRequest vo) {
 		ParameterUtil.removeToken(vo.getToken());
 		return new MsgResponse();
+	}
+	
+	/**
+	 * 获取账户余额
+	 * 
+	 * @author sunhanbin
+	 * @date 2015-03-13
+	 */
+	public BalanceResponse balance(SysUser user) {
+		BalanceResponse response = null;
+		if (user != null && user.getUserId() > 0) {
+			response = accountMapper.getMyBalance(user.getUserId());
+		}
+		return response;
+	}
+
+	/**
+	 * 获取账户信息
+	 * 
+	 * @author sunhanbin
+	 * @date 2015-03-13
+	 */
+	public AccountInfoResponse info(SysUser user) {
+		AccountInfoResponse response = null;
+		if (user != null && user.getUserId() > 0) {
+			response = accountMapper.getMyAccountInfo(user.getUserId());
+		}
+		return response;
+	}
+
+	/**
+	 * 修改密码
+	 * 
+	 * @author sunhanbin
+	 * @date 2015-03-13
+	 */
+	public PasswdResponse updatePasswd(PasswdRequest request) {
+		PasswdResponse response = new PasswdResponse();
+		int count = 0;
+		if (request != null) {
+			if (StringUtils.isNotEmpty(request.getPasswd())) {
+				String checkCode = SmsUtil.getCheckCode(request.getMobileNo());// 获取服务端缓存的验证码
+				String in_checkcode = request.getCheckCode();
+				if (StringUtils.isEmpty(in_checkcode)) {
+					response.setReturnCode(ReturnCodeEnum.FAILED.status);
+					response.setMsg("验证码为空");
+					return response;
+				} else if (!(in_checkcode.equals(checkCode))) {
+					response.setReturnCode(ReturnCodeEnum.FAILED.status);
+					response.setMsg("验证码错误");
+					return response;
+				}
+				if (StringUtils.isEmpty(request.getPasswd())) {
+					response.setReturnCode(ReturnCodeEnum.FAILED.status);
+					response.setMsg("密码为空");
+					return response;
+				}
+				count = accountMapper.updatePasswd(request);
+			}
+		}
+		if (count == 1) {
+			response.setReturnCode(ReturnCodeEnum.SUCCESS.status);
+			response.setMsg("密码修改成功");
+		} else {
+			response.setReturnCode(ReturnCodeEnum.FAILED.status);
+			response.setMsg("密码修改失败");
+		}
+		return response;
+	}
+
+	/**
+	 * 汇总邀请信息
+	 * 
+	 * @author sunhanbin
+	 * @date 2015-03-13
+	 */
+	public InviteResponse listInvite(SysUser user) {
+		InviteResponse response = null;
+		if (user != null) {
+			int userId = user.getUserId();
+			if (userId > 0) {
+				int drawCount = accountMapper.countDrawTicket(userId);
+				int usedCount = accountMapper.countUsedTicket(userId);
+				int money = drawCount * TicketRewardEnum.drawReward.getReward() + drawCount * TicketRewardEnum.usedReward.getReward();
+				response = new InviteResponse();
+				response.setDrawAmount(drawCount);
+				response.setUsedAmount(usedCount);
+				response.setAwardPrice(money);
+			}
+		}
+		return response;
+	}
+
+	/**
+	 * 生成邀请
+	 * 
+	 * @author sunhanbin
+	 * @date 2015-03-13
+	 */
+	public ReturnCode invite(SysUser user) {
+		ReturnCode returncode = new ReturnCode();
+		returncode.setReturnCode(ReturnCodeEnum.FAILED.status);
+		if (user != null) {
+			int userId = user.getUserId();
+			if (userId > 0) {
+				AccMyInvite invite = new AccMyInvite();
+				invite.setUserId(userId);
+				invite.setTicketNo(generateTicketNo(TicketTypeEnum.share.getCode()));// 推广获得菜票
+				invite.setParValue(Integer.parseInt(SystemResource.getConfig(TicketTypeEnum.share.getType())));
+				invite.setInviteTime(Timestamp.valueOf(DateUtil.date2String(new Date(), DateUtil.PATTERN_STANDARD)));
+				invite.setUseFlag(String.valueOf(YesNo.No.getCode()));
+				invite.setDrawFlag(String.valueOf(YesNo.No.getCode()));
+				int inviteId = accountMapper.insertInvite(invite);
+				if (inviteId > 0) {
+					returncode.setReturnCode(ReturnCodeEnum.SUCCESS.status);
+				}
+			}
+		}
+		return returncode;
+	}
+
+	/**
+	 * 菜票编号生成规则
+	 * 
+	 * @author sunhanbin
+	 * @date 2015-03-13
+	 */
+	public String generateTicketNo(String ticketType) {
+		int maxLen = 8;
+		String current_no = accountMapper.getCurrentNo(ticketType);
+		SysSeq seq = new SysSeq();
+		seq.setSeqType(ticketType);
+		String seqNo = "", temp = "", final_no = "";
+		if (StringUtils.isEmpty(current_no) || Integer.parseInt(current_no) <= 0) {
+			// 不存在則新增数据
+			seqNo = StringUtils.leftPad(String.valueOf("1"), 8, "0");
+			seq.setSeqNo(seqNo);
+			int seqId = accountMapper.insertSeqNo(seq);
+			if (seqId > 0) {
+				temp = StringUtils.leftPad(seqNo, 22, DateUtil.date2String(new Date(), "yyyyMMddHHmmss"));
+				final_no = ticketType + "00" + temp;
+			}
+		} else {
+			int nextSeqNo = Integer.parseInt(current_no) + 1;
+			if (String.valueOf(nextSeqNo).length() > maxLen) {
+				throw new RuntimeException("编号长度超限");
+			}
+			// 更新记录
+			String s_nextSeqNo=StringUtils.leftPad(String.valueOf(nextSeqNo), 8, "0");
+			seq.setSeqNo(String.valueOf(s_nextSeqNo));
+			int count = accountMapper.updateSeqNo(seq);
+			if (count == 1) {
+				temp = StringUtils.leftPad(s_nextSeqNo, 22, DateUtil.date2String(new Date(), "yyyyMMddHHmmss"));
+				final_no = ticketType + "00" + temp;
+			}
+		}
+		//System.out.println("final_no==========" + final_no);
+		return final_no;
+	}
+	
+
+	/**
+	 * 我的地址查询
+	 * 
+	 * @author sunhanbin
+	 * @date 2015-03-10
+	 */
+	public List<AddressResponse> list(AddressRequest request) {
+		List<AddressResponse> reponse = null;
+		if (request != null) {
+			int userId = request.getUserId();
+			if (userId > 0)
+				reponse = accountMapper.getMyAddress(userId);
+		}
+		return reponse;
+	}
+
+	/**
+	 * 获取行区列表
+	 * 
+	 * @author sunhanbin
+	 * @date 2015-03-10
+	 */
+	public List<AddressResponse> listArea(AddressRequest request) {
+		List<AddressResponse> reponse = null;
+		if (request != null) {
+			int parentAreaId = request.getParentAreaId();
+			if (parentAreaId > 0)
+				reponse = accountMapper.listArea(parentAreaId);
+		}
+		return reponse;
+	}
+
+	/**
+	 * 获取小区列表
+	 * 
+	 * @author sunhanbin
+	 * @date 2015-03-10
+	 */
+	public List<AddressResponse> listBuilding(AddressRequest request) {
+		List<AddressResponse> reponse = null;
+		if (request != null) {
+			int townId = request.getTownId();
+			if (townId > 0)
+				reponse = accountMapper.listBuilding(townId);
+		}
+		return reponse;
+	}
+
+	/**
+	 * 新增地址
+	 * 
+	 * @author sunhanbin
+	 * @date 2015-03-10
+	 */
+	public ReturnCode insert(AddressRequest request) {
+		String returncode = "";
+		ReturnCode result = new ReturnCode();
+		if (request != null) {
+			int addressId = accountMapper.insert(request);
+			returncode = addressId <= 0 ? ReturnCodeEnum.FAILED.status : ReturnCodeEnum.SUCCESS.status;
+			result.setReturnCode(returncode);
+		}
+		return result;
+	}
+
+	/**
+	 * 删除地址
+	 * 
+	 * @author sunhanbin
+	 * @date 2015-03-10
+	 */
+	public ReturnCode delete(AddressRequest address) {
+		String returncode = "";
+		ReturnCode result = new ReturnCode();
+		int count = 0;
+		if (address != null) {
+			int addressId = address.getAddressId();
+			if (addressId > 0)
+				count = accountMapper.delete(addressId);
+			returncode = count == 1 ? ReturnCodeEnum.SUCCESS.status : ReturnCodeEnum.FAILED.status;
+			result.setReturnCode(returncode);
+		}
+		return result;
+	}
+	
+	/**
+	 * 设置默认地址
+	 * 
+	 * @author sunhanbin
+	 * @date 2015-03-10
+	 */
+	public ReturnCode defaultAddress(AddressRequest address) {
+		String returncode = "";
+		ReturnCode result = new ReturnCode();
+		int count = 0;
+		if (address != null) {
+			int addressId = address.getAddressId();
+			if (addressId > 0)
+				count = accountMapper.defaultAddress(addressId);
+			returncode = count == 1 ? ReturnCodeEnum.SUCCESS.status : ReturnCodeEnum.FAILED.status;
+			result.setReturnCode(returncode);
+		}
+		return result;
+	}
+	
+	/**
+	 * 我的菜票查询
+	 * 
+	 * @author sunhanbin
+	 * @date 2015-03-10
+	 */
+	public List<AccMyTicket> list(TicketRequest ticket) {
+		List<AccMyTicket> response = null;
+		if (ticket != null) {
+			int userId = ticket.getUserId();
+			if (userId > 0)
+				response = accountMapper.listTicket(userId);
+		}
+		return response;
 	}
 
 }
