@@ -11,7 +11,7 @@ import com.guozha.buyserver.common.util.ParameterUtil;
 import com.guozha.buyserver.common.util.SmsUtil;
 import com.guozha.buyserver.framework.sys.business.AbstractBusinessObjectServiceMgr;
 import com.guozha.buyserver.persistence.beans.SysUser;
-import com.guozha.buyserver.persistence.mapper.UserMapper;
+import com.guozha.buyserver.persistence.mapper.SysUserMapper;
 import com.guozha.buyserver.service.account.AccountService;
 import com.guozha.buyserver.web.controller.account.CheckCodeRequest;
 import com.guozha.buyserver.web.controller.account.CheckCodeResponse;
@@ -27,7 +27,7 @@ import com.guozha.buyserver.web.controller.account.RegisterResponse;
 public class AccountServiceImpl extends AbstractBusinessObjectServiceMgr implements AccountService {
 	
 	@Autowired
-	private UserMapper userMapper;
+	private SysUserMapper sysUserMapper;
 	
 	@Override
 	public CheckCodeResponse getCheckCodeForReg(CheckCodeRequest vo) {
@@ -53,7 +53,7 @@ public class AccountServiceImpl extends AbstractBusinessObjectServiceMgr impleme
 			bo.setMsg("验证码错误");
 		}
 		
-		SysUser sysUser = userMapper.getUserByMobileNo(vo.getMobileNo());
+		SysUser sysUser = sysUserMapper.getUserByMobileNo(vo.getMobileNo());
 		if(sysUser == null){
 			
 			sysUser = new SysUser();
@@ -61,7 +61,7 @@ public class AccountServiceImpl extends AbstractBusinessObjectServiceMgr impleme
 			sysUser.setPasswd(vo.getPasswd());
 			sysUser.setRegTime(new Date());
 			sysUser.setStatus("1");// USER_STATUS 1-可用
-			userMapper.insert(sysUser);
+			sysUserMapper.insert(sysUser);
 			
 			SmsUtil.removeCheckCode(vo.getMobileNo());
 			
@@ -81,7 +81,7 @@ public class AccountServiceImpl extends AbstractBusinessObjectServiceMgr impleme
 		
 		LoginResponse bo = new LoginResponse();
 		
-		SysUser sysUser = userMapper.getLoginUser(vo);
+		SysUser sysUser = sysUserMapper.getLoginUser(vo);
 		if(sysUser == null){
 			bo.setReturnCode("0");
 			bo.setMsg("用户名或密码错误");
