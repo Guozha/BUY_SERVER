@@ -56,7 +56,7 @@ public class CartServiceImpl extends AbstractBusinessObjectServiceMgr implements
 			po.setAmount(vo.getAmount());
 			this.buyCartMapper.update(po);
 		}
-		return new MsgResponse("1", "添加购物车成功");
+		return new MsgResponse(MsgResponse.SUCC, "添加购物车成功");
 	}
 
 	@Override
@@ -65,19 +65,19 @@ public class CartServiceImpl extends AbstractBusinessObjectServiceMgr implements
 		po.setCartId(vo.getCartId()[0]);
 		po.setAmount(vo.getAmount());
 		this.buyCartMapper.update(po);
-		return new MsgResponse("1", "修改购物车成功");
+		return new MsgResponse(MsgResponse.SUCC, "修改购物车成功");
 	}
 
 	@Override
 	public MsgResponse del(CartRequest vo) {
 		this.buyCartMapper.deletes(vo.getCartId());
-		return new MsgResponse("1", "删除购物车成功");
+		return new MsgResponse(MsgResponse.SUCC, "删除购物车成功");
 	}
 
 	@Override
 	public MsgResponse clear(CartRequest vo) {
 		this.buyCartMapper.deleteByUserId(vo.getUserId());
-		return new MsgResponse("1", "清空购物车成功");
+		return new MsgResponse(MsgResponse.SUCC, "清空购物车成功");
 	}
 
 	@Override

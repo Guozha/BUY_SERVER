@@ -9,6 +9,9 @@ package com.guozha.buyserver.web.controller;
  */
 public class MsgResponse {
 	
+	public static final String SUCC = "1";
+	public static final String FAIL = "0";
+	
 	private String returnCode; //应答码 constants.xml
 	private String msg;        //提示消息 自定义业务需要
 	
