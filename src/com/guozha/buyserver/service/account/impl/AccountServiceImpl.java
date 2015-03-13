@@ -13,14 +13,13 @@ import com.guozha.buyserver.framework.sys.business.AbstractBusinessObjectService
 import com.guozha.buyserver.persistence.beans.SysUser;
 import com.guozha.buyserver.persistence.mapper.SysUserMapper;
 import com.guozha.buyserver.service.account.AccountService;
+import com.guozha.buyserver.web.controller.MsgResponse;
 import com.guozha.buyserver.web.controller.account.CheckCodeRequest;
 import com.guozha.buyserver.web.controller.account.CheckCodeResponse;
 import com.guozha.buyserver.web.controller.account.LoginRequest;
 import com.guozha.buyserver.web.controller.account.LoginResponse;
 import com.guozha.buyserver.web.controller.account.LogoutRequest;
-import com.guozha.buyserver.web.controller.account.LogoutResponse;
 import com.guozha.buyserver.web.controller.account.RegisterRequest;
-import com.guozha.buyserver.web.controller.account.RegisterResponse;
 
 @Transactional(rollbackFor = Exception.class)
 @Service("accountService")
@@ -43,14 +42,11 @@ public class AccountServiceImpl extends AbstractBusinessObjectServiceMgr impleme
 	}
 	
 	@Override
-	public RegisterResponse register(RegisterRequest vo) {
-		
-		RegisterResponse bo = new RegisterResponse();
+	public MsgResponse register(RegisterRequest vo) {
 		
 		String checkCode = SmsUtil.getCheckCode(vo.getMobileNo());//获取服务端缓存的验证码
 		if(!(vo.getCheckCode().equals(checkCode))){
-			bo.setReturnCode("0");
-			bo.setMsg("验证码错误");
+			return new MsgResponse("0","验证码错误");
 		}
 		
 		SysUser sysUser = sysUserMapper.getUserByMobileNo(vo.getMobileNo());
@@ -65,14 +61,10 @@ public class AccountServiceImpl extends AbstractBusinessObjectServiceMgr impleme
 			
 			SmsUtil.removeCheckCode(vo.getMobileNo());
 			
-			bo.setReturnCode("1");
-			bo.setMsg("注册成功");
+			return new MsgResponse("1","注册成功");
 		}else{
-			bo.setReturnCode("0");
-			bo.setMsg("该手机已经注册过了");
+			return new MsgResponse("0","该手机已注册过了");
 		}
-		
-		return bo;
 		
 	}
 	
@@ -107,14 +99,9 @@ public class AccountServiceImpl extends AbstractBusinessObjectServiceMgr impleme
 	}
 
 	@Override
-	public LogoutResponse logout(LogoutRequest vo) {
-		
-		LogoutResponse bo = new LogoutResponse();
-		
+	public MsgResponse logout(LogoutRequest vo) {
 		ParameterUtil.removeToken(vo.getToken());
-		
-		bo.setReturnCode("1");
-		return bo;
+		return new MsgResponse();
 	}
 
 }

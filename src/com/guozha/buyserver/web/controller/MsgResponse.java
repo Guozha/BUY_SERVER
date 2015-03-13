@@ -13,7 +13,15 @@ public class MsgResponse {
 	public static final String FAIL = "0";
 	
 	private String returnCode; //应答码 constants.xml
-	private String msg;        //提示消息 自定义业务需要
+	private String msg = "操作成功";        //提示消息 自定义业务需要
+	
+	public MsgResponse(){
+		this.returnCode = MsgResponse.SUCC;
+	}
+	
+	public MsgResponse(String returnCode){
+		this.returnCode = returnCode;
+	}
 	
 	public MsgResponse(String returnCode,String msg){
 		this.returnCode = returnCode;
