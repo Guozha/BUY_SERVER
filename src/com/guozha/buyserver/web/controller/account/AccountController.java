@@ -17,8 +17,8 @@ public class AccountController extends BaseController {
 	@Autowired
 	private AccountService accountService;
 	
-	@RequestMapping(value="/checkCodeOfRegister")
-	public void getRegCheckCode(CheckCodeRequest vo, HttpServletResponse response) {
+	@RequestMapping(value="/checkCodeForRegister")
+	public void checkCodeForRegister(CheckCodeRequest vo, HttpServletResponse response) {
 		this.responseJson(accountService.getCheckCodeForReg(vo), response);
 	}
 	

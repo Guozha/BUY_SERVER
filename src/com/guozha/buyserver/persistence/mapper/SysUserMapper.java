@@ -7,7 +7,7 @@ import com.guozha.buyserver.persistence.beans.SysUser;
 import com.guozha.buyserver.web.controller.account.LoginRequest;
 
 @Repository
-public interface UserMapper extends BaseMapper<SysUser, Integer>{
+public interface SysUserMapper extends BaseMapper<SysUser, Integer>{
 	
 	SysUser getUserByMobileNo(String mobileNo);
 	

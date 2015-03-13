@@ -171,4 +171,9 @@
     	<constantName value="01">注册获取验证码</constantName>
     	<constantName value="02">密码重置获取验证码</constantName>
 	</constant>
+	<constant constantDef="SELLER_TAG">
+    	<constantName value="1">首选</constantName>
+    	<constantName value="2">黑名单</constantName>
+    	<constantName value="3">正常</constantName>
+	</constant>
 </constants>
