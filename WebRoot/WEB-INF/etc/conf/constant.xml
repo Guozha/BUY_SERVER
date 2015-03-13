@@ -86,9 +86,9 @@
     	<constantName value="1">可用</constantName>
     	<constantName value="2">停用</constantName>
 	</constant>
-	<constant constantDef="THINGS_TYPE">
-    	<constantName value="1">商品</constantName>
-    	<constantName value="2">菜谱</constantName>
+	<constant constantDef="PRODUCT_TYPE">
+		<constantName value="01">菜谱</constantName>
+    	<constantName value="02">商品</constantName>
 	</constant>
 	<constant constantDef="ORDER_TYPE">
     	<constantName value="1">普通订单</constantName>
@@ -161,6 +161,7 @@
     	<constantName value="05">包</constantName>
     	<constantName value="06">瓶</constantName>
     	<constantName value="07">篮</constantName>
+    	<constantName value="08">份</constantName>
 	</constant>
 	<constant constantDef="TIME_SCOPE">
     	<constantName value="1">上午</constantName>
