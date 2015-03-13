@@ -16,7 +16,8 @@ public class MnuMenu extends AbstractDO {
 	private byte[] menuImg;
 	
 	private String menuDesc;
-	private Integer useTime;
+	private Integer cookieTime;
+
 	private String cookieWay;
 	private String cookieStep;
 	private String seasonings;
@@ -53,11 +54,11 @@ public class MnuMenu extends AbstractDO {
 	public void setMenuDesc(String menuDesc) {
 		this.menuDesc = menuDesc;
 	}
-	public Integer getUseTime() {
-		return useTime;
+	public Integer getCookieTime() {
+		return cookieTime;
 	}
-	public void setUseTime(Integer useTime) {
-		this.useTime = useTime;
+	public void setCookieTime(Integer cookieTime) {
+		this.cookieTime = cookieTime;
 	}
 	public String getCookieWay() {
 		return cookieWay;

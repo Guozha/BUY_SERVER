@@ -9,7 +9,7 @@ PUBLIC "-//ibatis.apache.org//DTD Mapper 3.0//EN"
         <result property="menuName" jdbcType="VARCHAR" column="MENU_NAME"/>
         <result property="menuImg" jdbcType="BLOB" column="MENU_IMG"/>
         <result property="menuDesc" jdbcType="VARCHAR" column="MENU_DESC"/>
-        <result property="useTime" jdbcType="INTEGER" column="USE_TIME"/>
+        <result property="cookieTime" jdbcType="INTEGER" column="COOKIE_TIME"/>
         <result property="cookieWay" jdbcType="VARCHAR" column="COOKIE_WAY"/>
         <result property="cookieStep" jdbcType="VARCHAR" column="COOKIE_STEP"/>
         <result property="seasonings" jdbcType="VARCHAR" column="SEASONINGS"/>
@@ -18,7 +18,7 @@ PUBLIC "-//ibatis.apache.org//DTD Mapper 3.0//EN"
 	</resultMap>
 	
 	<sql id="BASE_COLUMN_LIST">
-		MENU_ID,MENU_NAME,MENU_IMG,MENU_DESC,USE_TIME,COOKIE_WAY,COOKIE_STEP,SEASONINGS,STATUS
+		MENU_ID,MENU_NAME,MENU_IMG,MENU_DESC,COOKIE_TIME,COOKIE_WAY,COOKIE_STEP,SEASONINGS,STATUS
 	</sql>
 	
 	<!-- 菜谱详情 -->
@@ -33,7 +33,7 @@ PUBLIC "-//ibatis.apache.org//DTD Mapper 3.0//EN"
     <!-- 商品菜谱-->
 	<select id="findByGoodsId" resultMap="rm">
 		SELECT 
-			A.MENU_ID,A.MENU_NAME,A.MENU_IMG,A.MENU_DESC,A.USE_TIME,A.COOKIE_WAY,A.COOKIE_STEP,A.SEASONINGS,A.STATUS
+			A.MENU_ID,A.MENU_NAME,A.MENU_IMG,A.MENU_DESC,A.COOKIE_TIME,A.COOKIE_WAY,A.COOKIE_STEP,A.SEASONINGS,A.STATUS
 		FROM MNU_MENU A,MNU_MENU_GOODS B
 		WHERE 
 		    A.MENU_ID = B.MENU_ID 
