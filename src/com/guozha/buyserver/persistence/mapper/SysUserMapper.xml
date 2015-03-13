@@ -3,7 +3,7 @@
 PUBLIC "-//ibatis.apache.org//DTD Mapper 3.0//EN"
 "http://ibatis.apache.org/dtd/ibatis-3-mapper.dtd">
 
-<mapper namespace="com.guozha.buyserver.persistence.mapper.UserMapper">
+<mapper namespace="com.guozha.buyserver.persistence.mapper.SysUserMapper">
 
 	<resultMap id="rm" type="com.guozha.buyserver.persistence.beans.SysUser">
         <result property="userId" jdbcType="INTEGER" column="USER_ID"/>
