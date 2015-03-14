@@ -62,6 +62,10 @@ public class AccountServiceImpl extends AbstractBusinessObjectServiceMgr impleme
 	@Override
 	public MsgResponse register(RegisterRequest vo) {
 		
+		if(vo.getMyInviteId() != null){
+			// TODO
+		}
+		
 		String checkCode = SmsUtil.getCheckCode(vo.getMobileNo());//获取服务端缓存的验证码
 		if(!(vo.getCheckCode().equals(checkCode))){
 			return new MsgResponse("0","验证码错误");
@@ -76,6 +80,10 @@ public class AccountServiceImpl extends AbstractBusinessObjectServiceMgr impleme
 			po.setRegTime(new Date());
 			po.setStatus("1");// USER_STATUS 1-可用
 			sysUserMapper.insert(po);
+			
+			if(vo.getMyInviteId() != null){
+				// TODO
+			}
 			
 			SmsUtil.removeCheckCode(vo.getMobileNo());
 			
