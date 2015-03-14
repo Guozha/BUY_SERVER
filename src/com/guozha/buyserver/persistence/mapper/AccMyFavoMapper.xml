@@ -5,7 +5,7 @@ PUBLIC "-//ibatis.apache.org//DTD Mapper 3.0//EN"
 
 <mapper namespace="com.guozha.buyserver.persistence.mapper.AccMyFavoMapper">
 
-    <resultMap id="findFavoRM" type="com.guozha.buyserver.web.controller.account.ListFavoResponse">
+    <resultMap id="findFavoRM" type="com.guozha.buyserver.web.controller.account.SearchFavoResponse">
         <result property="myFavoId" jdbcType="INTEGER" column="MY_FAVO_ID"/>
         <result property="dirFlag" jdbcType="VARCHAR" column="DIR_FLAG"/>
         <result property="menuId" jdbcType="INTEGER" column="MENU_ID"/>

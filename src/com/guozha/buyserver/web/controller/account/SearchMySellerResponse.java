@@ -1,34 +1,31 @@
 package com.guozha.buyserver.web.controller.account;
 
-import com.guozha.buyserver.persistence.beans.SysSeller;
 
-public class ListMySellerResponse {
+public class SearchMySellerResponse {
 	
 	private Integer mySellerId;
 	private Integer sellerId;
 	private String sellerName;
 	private byte[] logo;
 	private String mainBusi;
-	
-	public ListMySellerResponse(){
-		
-	}
-	
-	public ListMySellerResponse(SysSeller po){
-		super();
-		this.mySellerId = po.getMySellerId();
-		this.sellerId = po.getSellerId();
-		this.sellerName = po.getSellerName();
-		this.logo = po.getLogo();
-		this.mainBusi = po.getMainBusi();
-	}
+	private String sellerTag;
 	
 	public Integer getMySellerId() {
 		return mySellerId;
 	}
+	
 	public void setMySellerId(Integer mySellerId) {
 		this.mySellerId = mySellerId;
 	}
+	
+	public String getSellerTag() {
+		return sellerTag;
+	}
+
+	public void setSellerTag(String sellerTag) {
+		this.sellerTag = sellerTag;
+	}
+
 	public Integer getSellerId() {
 		return sellerId;
 	}

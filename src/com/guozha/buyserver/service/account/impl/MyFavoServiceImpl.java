@@ -1,6 +1,5 @@
 package com.guozha.buyserver.service.account.impl;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,7 +13,7 @@ import com.guozha.buyserver.persistence.mapper.MnuMenuMapper;
 import com.guozha.buyserver.service.account.MyFavoService;
 import com.guozha.buyserver.web.controller.MsgResponse;
 import com.guozha.buyserver.web.controller.account.FavoMenuRequest;
-import com.guozha.buyserver.web.controller.account.ListFavoResponse;
+import com.guozha.buyserver.web.controller.account.SearchFavoResponse;
 
 @Transactional(rollbackFor = Exception.class)
 @Service("myFavoService")
@@ -43,7 +42,7 @@ public class MyFavoServiceImpl extends AbstractBusinessObjectServiceMgr
 	}
 
 	@Override
-	public List<ListFavoResponse> findFavo(int userId) {
+	public List<SearchFavoResponse> findFavo(int userId) {
 		return accMyFavoMapper.findFavo(userId);
 	}
 

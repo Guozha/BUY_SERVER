@@ -16,8 +16,6 @@ public class SysSeller extends AbstractDO {
 	private Integer marketId;
 	private String status;
 	
-	private Integer mySellerId;
-	
 	public Integer getSellerId() {
 		return sellerId;
 	}
@@ -71,13 +69,6 @@ public class SysSeller extends AbstractDO {
 	}
 	public void setStatus(String status) {
 		this.status = status;
-	}
-	
-	public Integer getMySellerId() {
-		return mySellerId;
-	}
-	public void setMySellerId(Integer mySellerId) {
-		this.mySellerId = mySellerId;
 	}
 
 }

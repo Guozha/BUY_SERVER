@@ -5,12 +5,12 @@ import java.util.List;
 import com.guozha.buyserver.framework.sys.business.BusinessObjectServiceMgr;
 import com.guozha.buyserver.web.controller.MsgResponse;
 import com.guozha.buyserver.web.controller.account.FavoMenuRequest;
-import com.guozha.buyserver.web.controller.account.ListFavoResponse;
+import com.guozha.buyserver.web.controller.account.SearchFavoResponse;
 
 public interface MyFavoService extends BusinessObjectServiceMgr {
 	
 	MsgResponse favoMenu(FavoMenuRequest vo);
 	
-	List<ListFavoResponse> findFavo(int userId);
+	List<SearchFavoResponse> findFavo(int userId);
 
 }

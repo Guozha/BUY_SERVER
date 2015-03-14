@@ -1,7 +1,7 @@
 package com.guozha.buyserver.web.controller.account;
 
 
-public class ListFavoResponse {
+public class SearchFavoResponse {
 	
 	private Integer myFavoId;
 	private String dirFlag;

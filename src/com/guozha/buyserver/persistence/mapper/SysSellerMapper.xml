@@ -5,15 +5,16 @@ PUBLIC "-//ibatis.apache.org//DTD Mapper 3.0//EN"
 
 <mapper namespace="com.guozha.buyserver.persistence.mapper.SysSellerMapper">
 
-    <resultMap id="rm" type="com.guozha.buyserver.persistence.beans.SysSeller">
+    <resultMap id="findByUserIdRM" type="com.guozha.buyserver.web.controller.account.SearchMySellerResponse">
+        <result property="mySellerId" jdbcType="INTEGER" column="MY_SELLER_ID"/>
         <result property="sellerId" jdbcType="INTEGER" column="SELLER_ID"/>
         <result property="sellerName" jdbcType="VARCHAR" column="SELLER_NAME"/>
         <result property="logo" jdbcType="BLOB" column="LOGO"/>
         <result property="mainBusi" jdbcType="VARCHAR" column="MAIN_BUSI"/>
-        <result property="mySellerId" jdbcType="INTEGER" column="MY_SELLER_ID"/>
+        <result property="sellerTag" jdbcType="VARCHAR" column="SELLER_TAG"/>
 	</resultMap>
 
-    <select id="findByUserId" parameterType="java.lang.Integer" resultMap="rm">
+    <select id="findByUserId" parameterType="java.lang.Integer" resultMap="findByUserIdRM">
         SELECT 
             T1.SELLER_ID,
             T1.SELLER_NAME,
