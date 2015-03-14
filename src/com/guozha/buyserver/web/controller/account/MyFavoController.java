@@ -25,5 +25,25 @@ public class MyFavoController extends BaseController {
 	public void list(int userId, HttpServletResponse response) {
 		this.responseJson(myFavoService.findFavo(userId), response);
 	}
+	
+	@RequestMapping(value="/insertDir")
+	public void insertDir(InsertDirRequest vo, HttpServletResponse response) {
+		this.responseJson(myFavoService.insertDir(vo), response);
+	}
+	
+	@RequestMapping(value="/adjust")
+	public void adjust(AdjustFavoRequest vo, HttpServletResponse response) {
+		this.responseJson(myFavoService.adjustFavo(vo), response);
+	}
+	
+	@RequestMapping(value="/delete")
+	public void delete(DeleteFavoRequest vo, HttpServletResponse response) {
+		this.responseJson(myFavoService.deleteFavo(vo), response);
+	}
+	
+	@RequestMapping(value="/seeDir")
+	public void seeDir(int parentId, HttpServletResponse response) {
+		this.responseJson(myFavoService.findMenuByDir(parentId), response);
+	}
 
 }

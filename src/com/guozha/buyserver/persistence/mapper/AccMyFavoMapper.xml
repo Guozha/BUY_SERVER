@@ -14,6 +14,8 @@ PUBLIC "-//ibatis.apache.org//DTD Mapper 3.0//EN"
         <result property="cookieTime" jdbcType="INTEGER" column="COOKIE_TIME"/>
         <result property="cookieWay" jdbcType="VARCHAR" column="COOKIE_WAY"/>
 	</resultMap>
+	
+	<sql id="LIST_FAVO_COLUMN">T1.MY_FAVO_ID,T1.DIR_FLAG,T1.MENU_ID,T1.FAVO_NAME,T2.MENU_IMG,T2.COOKIE_TIME,T2.COOKIE_WAY</sql>
 
     <insert id="insert" useGeneratedKeys="true" keyProperty="myFavoId">
         INSERT INTO ACC_MY_FAVO (MY_FAVO_ID,USER_ID,DIR_FLAG,MENU_ID,FAVO_NAME,PARENT_ID) VALUES (#{myFavoId},#{userId},#{dirFlag},#{menuId},#{favoName},#{parentId})
@@ -28,9 +30,11 @@ PUBLIC "-//ibatis.apache.org//DTD Mapper 3.0//EN"
 	        WHERE 
 	            T1.USER_ID = #{userId}
 	            AND T1.DIR_FLAG = '1'
+	            
 	        UNION ALL
+	        
 	        SELECT 
-	            T1.MY_FAVO_ID,T1.DIR_FLAG,T1.MENU_ID,T1.FAVO_NAME,T2.MENU_IMG,T2.COOKIE_TIME,T2.COOKIE_WAY 
+	            <include refid="LIST_FAVO_COLUMN"/>
 	        FROM 
 	            ACC_MY_FAVO T1,MNU_MENU T2
 	        WHERE 
@@ -39,6 +43,31 @@ PUBLIC "-//ibatis.apache.org//DTD Mapper 3.0//EN"
 	            AND T1.MENU_ID = T2.MENU_ID
         ) T
         ORDER BY T.DIR_FLAG DESC,T.MY_FAVO_ID
+    </select>
+    
+    <update id="adjustFavo" parameterType="com.guozha.buyserver.web.controller.account.AdjustFavoRequest">
+        UPDATE ACC_MY_FAVO T SET T.PARENT_ID = #{parentId} WHERE T.MY_FAVO_ID = #{myFavoId}
+    </update>
+    
+    <delete id="delete" parameterType="java.lang.Integer">
+        DELETE FROM ACC_MY_FAVO T WHERE T.MY_FAVO_ID = #{myFavoId}
+    </delete>
+    
+    <update id="adjustFavoByDirDel" parameterType="java.lang.Integer">
+        UPDATE ACC_MY_FAVO T SET T.PARENT_ID = 0 WHERE T.PARENT_ID = #{parentId}
+    </update>
+    
+    <select id="findMenuByDir" parameterType="java.lang.Integer" resultMap="findFavoRM">
+        SELECT 
+            <include refid="LIST_FAVO_COLUMN"/>
+        FROM 
+            ACC_MY_FAVO T1,
+            MNU_MENU T2
+        WHERE 
+            T1.MENU_ID = T2.MENU_ID 
+            AND T1.PARENT_ID = #{parentId}
+        ORDER BY 
+            T1.MY_FAVO_ID
     </select>
 
 </mapper>

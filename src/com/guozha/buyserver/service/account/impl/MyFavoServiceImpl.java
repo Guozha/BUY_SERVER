@@ -12,7 +12,10 @@ import com.guozha.buyserver.persistence.mapper.AccMyFavoMapper;
 import com.guozha.buyserver.persistence.mapper.MnuMenuMapper;
 import com.guozha.buyserver.service.account.MyFavoService;
 import com.guozha.buyserver.web.controller.MsgResponse;
+import com.guozha.buyserver.web.controller.account.AdjustFavoRequest;
+import com.guozha.buyserver.web.controller.account.DeleteFavoRequest;
 import com.guozha.buyserver.web.controller.account.FavoMenuRequest;
+import com.guozha.buyserver.web.controller.account.InsertDirRequest;
 import com.guozha.buyserver.web.controller.account.SearchFavoResponse;
 
 @Transactional(rollbackFor = Exception.class)
@@ -44,6 +47,38 @@ public class MyFavoServiceImpl extends AbstractBusinessObjectServiceMgr
 	@Override
 	public List<SearchFavoResponse> findFavo(int userId) {
 		return accMyFavoMapper.findFavo(userId);
+	}
+
+	@Override
+	public MsgResponse insertDir(InsertDirRequest vo) {
+		AccMyFavo model = new AccMyFavo();
+		model.setUserId(vo.getUserId());
+		model.setDirFlag("1");
+		model.setMenuId(null);
+		model.setFavoName(vo.getFavoName());
+		model.setParentId(0);
+		accMyFavoMapper.insert(model);
+		return new MsgResponse();
+	}
+
+	@Override
+	public MsgResponse adjustFavo(AdjustFavoRequest vo) {
+		accMyFavoMapper.adjustFavo(vo);
+		return new MsgResponse();
+	}
+
+	@Override
+	public MsgResponse deleteFavo(DeleteFavoRequest vo) {
+		accMyFavoMapper.delete(vo.getMyFavoId());// 删除菜谱收藏或删除文件夹
+		if("1".equals(vo.getDirFlag())){// 如果是删除文件夹,将其下的所有菜谱移出
+			accMyFavoMapper.adjustFavoByDirDel(vo.getMyFavoId());
+		}
+		return new MsgResponse();
+	}
+
+	@Override
+	public List<SearchFavoResponse> findMenuByDir(int parentId) {
+		return accMyFavoMapper.findMenuByDir(parentId);
 	}
 
 }
