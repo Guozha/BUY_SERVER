@@ -20,4 +20,16 @@ PUBLIC "-//ibatis.apache.org//DTD Mapper 3.0//EN"
 		SEASON_GOODS_ID,SEASON,SEASON_PIC_URL,FIRST_GOODS_ID,SECOND_GOODS_ID,THIRD_GOODS_ID,FOUR_GOODS_ID,FIVE_GOODS_ID
 	</sql>
 	
+	<!-- 查询三节气食材 -->
+	<select id="findBySeason"  parameterType="map" resultMap="rm">
+	    SELECT 
+	      	<include refid="BASE_COLUMN_LIST" />
+		FROM GOO_SEASON_GOODS
+		WHERE 
+			SEASON IN
+		   <foreach item="item" index="index" collection="season" open="(" separator="," close=")">  
+			  #{item}  
+		   </foreach>
+	</select>
+	
 </mapper>

@@ -2,6 +2,7 @@ package com.guozha.buyserver.persistence.mapper;
 
 import java.util.List;
 
+import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Repository;
 
 import com.guozha.buyserver.dal.BaseMapper;
@@ -31,8 +32,12 @@ public interface GooGoodsMapper extends BaseMapper<GooGoods, Integer> {
 	 */
 	List<GooGoods> findSecond(int secondFrontTypeId);
 	
-	
-	
+	/**
+	 * 查询指定几个ID的商品
+	 * @param goodsId
+	 * @return
+	 */
+	List<GooGoods> findByIds(@Param("goodsId")int [] goodsId);
 	
 	
 	/*--------------------------------------------------------------------------------

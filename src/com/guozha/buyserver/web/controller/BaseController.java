@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.Date;
 import java.util.Locale;
+import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -20,6 +21,7 @@ import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.support.RequestContextUtils;
 
 import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 import com.guozha.buyserver.web.controller.editor.DateEditor;
 import com.guozha.buyserver.web.controller.editor.DoubleEditor;
 import com.guozha.buyserver.web.controller.editor.IntegerEditor;
@@ -87,10 +89,17 @@ public abstract class BaseController {
 	}
 	
 	public void responseJson(Object obj,HttpServletResponse response){
-		Gson gson = new Gson();
+		
 		String result = "";
-		if(null != obj)
+		if(null != obj){
+			 Gson gson = null;
+			if(obj instanceof Map){
+				gson = new GsonBuilder().enableComplexMapKeySerialization().create();  
+			}else{
+			  gson = new Gson();
+			}
 			result = gson.toJson(obj);
+		}
 
 		response.setContentType("application/json; charset=utf-8");
 		response.setHeader("Cache-Control", "no-cache");

@@ -33,6 +33,7 @@ PUBLIC "-//ibatis.apache.org//DTD Mapper 3.0//EN"
 			<include refid="BASE_COLUMN_LIST" />
 		FROM BAS_FRONT_TYPE
 	</select>
+	
 	<!-- 查询一级类目 -->
 	<select id="findFirst" resultMap="rm">
 		SELECT 
@@ -42,6 +43,7 @@ PUBLIC "-//ibatis.apache.org//DTD Mapper 3.0//EN"
 		    PARENT_ID = 0
 		    ORDER BY SORT ASC
 	</select>
+	
 	<!-- 查询二级类目 -->
 	<select id="findSecond"  parameterType="int" resultMap="rm">
 		SELECT 

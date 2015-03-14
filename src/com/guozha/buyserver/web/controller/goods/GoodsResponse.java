@@ -10,6 +10,9 @@ public class GoodsResponse {
 	private Integer price;//单价
 	private String unit;//计量单位
 	
+	public GoodsResponse() {
+		
+	}
 	public GoodsResponse(GooGoods po) {
 		super();
 		this.goodsId = po.getGoodsId();
