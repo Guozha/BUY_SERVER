@@ -2,6 +2,7 @@ package com.guozha.buyserver.service.season.impl;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.TreeMap;
@@ -17,6 +18,7 @@ import com.guozha.buyserver.persistence.mapper.GooGoodsMapper;
 import com.guozha.buyserver.persistence.mapper.GooSeasonGoodsMapper;
 import com.guozha.buyserver.service.season.SeasonService;
 import com.guozha.buyserver.web.controller.goods.GoodsResponse;
+import com.guozha.buyserver.web.controller.season.SeasonResponse;
 
 @Transactional(rollbackFor = Exception.class)
 @Service("seasonService")
@@ -29,11 +31,11 @@ public class SeasonServiceImpl  extends AbstractBusinessObjectServiceMgr impleme
 	private GooGoodsMapper gooGoodsMapper;
 	
 	@Override
-	public Map<String, List<GoodsResponse>> find() {
+	public Map<SeasonResponse, List<GoodsResponse>> find() {
 		String [] seasons={"01","02","03"};
 		List<GooSeasonGoods> pos = this.gooSeasonGoodsMapper.findBySeason(seasons);
 		
-		Map<String, List<GoodsResponse>> map = new TreeMap<String, List<GoodsResponse>>();
+		Map<SeasonResponse, List<GoodsResponse>> map = new LinkedHashMap<SeasonResponse, List<GoodsResponse>>();
 		List<GoodsResponse> bos = null;
 		for(GooSeasonGoods po:pos){
 			bos = new ArrayList<GoodsResponse>();
@@ -41,13 +43,30 @@ public class SeasonServiceImpl  extends AbstractBusinessObjectServiceMgr impleme
             for(GooGoods goodsPo:goodsPos){
             	bos.add(new GoodsResponse(goodsPo));
             }
-			if(map.containsKey(po.getSeason())){
-				map.get(po.getSeason()).addAll(bos);
-			}else{
-				map.put(po.getSeason(), bos);
-			}
+			map.put(new SeasonResponse(po), bos);
 		}
 		return map;
 	}
-
+	
+	/*
+	public List<SeasonResponse> finds() {
+		String [] seasons={"01","02","03"};
+		List<GooSeasonGoods> pos = this.gooSeasonGoodsMapper.findBySeason(seasons);
+		
+		List<SeasonResponse> list = new ArrayList<SeasonResponse>();
+		for(GooSeasonGoods po:pos){
+			SeasonResponse  sp  = new SeasonResponse(po);
+			List<GoodsResponse> bos = new ArrayList<GoodsResponse>();
+			List<GooGoods> goodsPos =gooGoodsMapper.findByIds(new int[]{po.getFirstGoodsId(),po.getSecondGoodsId(),po.getThirdGoodsId(),po.getFourGoodsId(),po.getFiveGoodsId()});
+			for(GooGoods goodsPo:goodsPos){
+            	bos.add(new GoodsResponse(goodsPo));
+            }
+			
+			sp.setList(bos);
+			list.add(sp);
+		
+		}
+		return list;
+	}
+    */
 }
