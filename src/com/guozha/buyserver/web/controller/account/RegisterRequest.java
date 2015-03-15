@@ -5,7 +5,6 @@ public class RegisterRequest {
 	private String mobileNo;
 	private String passwd;
 	private String checkCode;
-	private Integer myInviteId;
 	
 	public String getMobileNo() {
 		return mobileNo;
@@ -24,12 +23,6 @@ public class RegisterRequest {
 	}
 	public void setCheckCode(String checkCode) {
 		this.checkCode = checkCode;
-	}
-	public Integer getMyInviteId() {
-		return myInviteId;
-	}
-	public void setMyInviteId(Integer myInviteId) {
-		this.myInviteId = myInviteId;
 	}
 
 }
