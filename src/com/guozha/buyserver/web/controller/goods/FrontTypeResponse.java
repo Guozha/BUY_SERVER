@@ -4,22 +4,23 @@ import com.guozha.buyserver.persistence.beans.BasFrontType;
 
 public class FrontTypeResponse {
 	
-	    private String frontTypeId; //类目ID
+	    private Integer frontTypeId; //类目ID
+	    private String typeName;     //类目名称
 	    private String shortName;    //类目简称
-	    private String level;       //层级
-	    
-	    
-	    
+	    private Integer level;       //层级
+	
 		public FrontTypeResponse(BasFrontType po) {
 			super();
-			this.frontTypeId = po.getFrontTypeId().toString();
+			this.frontTypeId = po.getFrontTypeId();
+			this.typeName = po.getTypeName();
 			this.shortName = po.getShortName();
-			this.level = po.getLevel().toString();
+			this.level = po.getLevel();
+			
 		}
-		public String getFrontTypeId() {
+		public Integer getFrontTypeId() {
 			return frontTypeId;
 		}
-		public void setFrontTypeId(String frontTypeId) {
+		public void setFrontTypeId(Integer frontTypeId) {
 			this.frontTypeId = frontTypeId;
 		}
 		public String getShortName() {
@@ -28,11 +29,17 @@ public class FrontTypeResponse {
 		public void setShortName(String shortName) {
 			this.shortName = shortName;
 		}
-		public String getLevel() {
+		public Integer getLevel() {
 			return level;
 		}
-		public void setLevel(String level) {
+		public void setLevel(Integer level) {
 			this.level = level;
+		}
+		public String getTypeName() {
+			return typeName;
+		}
+		public void setTypeName(String typeName) {
+			this.typeName = typeName;
 		}
 
 }

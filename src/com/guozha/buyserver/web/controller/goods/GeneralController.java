@@ -26,13 +26,23 @@ public class GeneralController extends BaseController {
 	private GeneralService generalService;
 	
 	/**
-	 * 类目列表
+	 * 类目列表 仅一级(一或者二)
 	 * @param vo
 	 * @param response
 	 */
 	@RequestMapping(value="/frontType")
 	public void frontType(FrontTypeRequest vo,HttpServletResponse response){
 		responseJson(generalService.findFrontType(vo), response);
+	}
+	
+	/**
+	 * 类目列表 所有
+	 * @param vo
+	 * @param response
+	 */
+	@RequestMapping(value="/frontTypes")
+	public void frontTypes(HttpServletResponse response){
+		responseJson(generalService.findFrontType(), response);
 	}
 	
 	/**

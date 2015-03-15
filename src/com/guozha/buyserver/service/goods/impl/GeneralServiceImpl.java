@@ -1,7 +1,9 @@
 package com.guozha.buyserver.service.goods.impl;
 
 import java.util.ArrayList;
+import java.util.LinkedHashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -47,6 +49,21 @@ public class GeneralServiceImpl extends AbstractBusinessObjectServiceMgr impleme
 			bos.add(new FrontTypeResponse(po));
 		}
 		return bos;
+	}
+	
+	@Override
+	public Map<FrontTypeResponse,List<FrontTypeResponse>> findFrontType() {
+		List<BasFrontType> firstPos = this.basFrontTypeMapper.findFirst();
+		Map<FrontTypeResponse,List<FrontTypeResponse>> map = new LinkedHashMap<FrontTypeResponse, List<FrontTypeResponse>>();
+		for(BasFrontType po:firstPos){
+			List<FrontTypeResponse> list = new ArrayList<FrontTypeResponse>();
+			List<BasFrontType> secondPos = basFrontTypeMapper.findSecond(po.getFrontTypeId());
+			for(BasFrontType secondPo:secondPos){
+				list.add(new FrontTypeResponse(secondPo));
+			}
+			map.put(new FrontTypeResponse(po), list);
+		}
+		return map;
 	}
 	
 	@Override

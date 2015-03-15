@@ -1,11 +1,9 @@
 package com.guozha.buyserver.service.season.impl;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.TreeMap;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -17,7 +15,7 @@ import com.guozha.buyserver.persistence.beans.GooSeasonGoods;
 import com.guozha.buyserver.persistence.mapper.GooGoodsMapper;
 import com.guozha.buyserver.persistence.mapper.GooSeasonGoodsMapper;
 import com.guozha.buyserver.service.season.SeasonService;
-import com.guozha.buyserver.web.controller.goods.GoodsResponse;
+import com.guozha.buyserver.web.controller.season.SeasonGoodsResponse;
 import com.guozha.buyserver.web.controller.season.SeasonResponse;
 
 @Transactional(rollbackFor = Exception.class)
@@ -31,17 +29,17 @@ public class SeasonServiceImpl  extends AbstractBusinessObjectServiceMgr impleme
 	private GooGoodsMapper gooGoodsMapper;
 	
 	@Override
-	public Map<SeasonResponse, List<GoodsResponse>> find() {
+	public Map<SeasonResponse, List<SeasonGoodsResponse>> find() {
 		String [] seasons={"01","02","03"};
 		List<GooSeasonGoods> pos = this.gooSeasonGoodsMapper.findBySeason(seasons);
 		
-		Map<SeasonResponse, List<GoodsResponse>> map = new LinkedHashMap<SeasonResponse, List<GoodsResponse>>();
-		List<GoodsResponse> bos = null;
+		Map<SeasonResponse, List<SeasonGoodsResponse>> map = new LinkedHashMap<SeasonResponse, List<SeasonGoodsResponse>>();
+		List<SeasonGoodsResponse> bos = null;
 		for(GooSeasonGoods po:pos){
-			bos = new ArrayList<GoodsResponse>();
+			bos = new ArrayList<SeasonGoodsResponse>();
 			List<GooGoods> goodsPos =gooGoodsMapper.findByIds(new int[]{po.getFirstGoodsId(),po.getSecondGoodsId(),po.getThirdGoodsId(),po.getFourGoodsId(),po.getFiveGoodsId()});
             for(GooGoods goodsPo:goodsPos){
-            	bos.add(new GoodsResponse(goodsPo));
+            	bos.add(new SeasonGoodsResponse(goodsPo));
             }
 			map.put(new SeasonResponse(po), bos);
 		}

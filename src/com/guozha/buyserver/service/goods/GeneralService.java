@@ -1,6 +1,7 @@
 package com.guozha.buyserver.service.goods;
 
 import java.util.List;
+import java.util.Map;
 
 import com.guozha.buyserver.framework.sys.business.BusinessObjectServiceMgr;
 import com.guozha.buyserver.web.controller.goods.FrontTypeRequest;
@@ -21,10 +22,17 @@ import com.guozha.buyserver.web.controller.goods.GoodsResponse;
 public interface GeneralService extends BusinessObjectServiceMgr{
 	
 	/**
-	 * 类目查询
+	 * 类目查询 按级别
 	 * @return
 	 */
 	List<FrontTypeResponse> findFrontType(FrontTypeRequest vo);
+	
+	/**
+	 * 类目查询 所有
+	 * @return
+	 */
+	Map<FrontTypeResponse,List<FrontTypeResponse>> findFrontType();
+	
 	
 	/**
 	 * 商品查询
