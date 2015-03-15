@@ -20,6 +20,8 @@ public class MnuMenuPlan extends AbstractDO {
 	private Integer thirdMenuId;
 	private Integer fourMenuId;
 	private Integer fiveMenuId;
+	private Integer sixMenuId;
+	
 	public Integer getMenuPlanId() {
 		return menuPlanId;
 	}
@@ -68,8 +70,11 @@ public class MnuMenuPlan extends AbstractDO {
 	public void setFiveMenuId(Integer fiveMenuId) {
 		this.fiveMenuId = fiveMenuId;
 	}
+	public Integer getSixMenuId() {
+		return sixMenuId;
+	}
+	public void setSixMenuId(Integer sixMenuId) {
+		this.sixMenuId = sixMenuId;
+	}
 	
-	
-	
-
 }
