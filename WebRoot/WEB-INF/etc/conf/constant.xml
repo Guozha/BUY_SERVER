@@ -182,4 +182,8 @@
     	<constantName value="3">推广赠送生成菜票</constantName>
     	<constantName value="4">售后赠送生成菜票</constantName>
 	</constant>
+	<constant constantDef="FAVO_TYPE">
+	    <constantName value="1">食材收藏</constantName>
+    	<constantName value="2">菜谱收藏</constantName>
+	</constant>
 </constants>

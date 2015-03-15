@@ -1,7 +1,7 @@
 package com.guozha.buyserver.web.controller.account;
 
 
-public class SearchFavoResponse {
+public class SearchMenuFavoResponse {
 	
 	private Integer myFavoId;
 	private String dirFlag;
@@ -10,6 +10,7 @@ public class SearchFavoResponse {
 	private byte[] menuImg;
 	private Integer cookieTime;
 	private String cookieWay;
+	private String activeFlag;
 	
 	public Integer getMyFavoId() {
 		return myFavoId;
@@ -52,6 +53,12 @@ public class SearchFavoResponse {
 	}
 	public void setCookieWay(String cookieWay) {
 		this.cookieWay = cookieWay;
+	}
+	public String getActiveFlag() {
+		return activeFlag;
+	}
+	public void setActiveFlag(String activeFlag) {
+		this.activeFlag = activeFlag;
 	}
 
 }

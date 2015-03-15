@@ -16,14 +16,24 @@ public class MyFavoController extends BaseController {
 	@Autowired
 	private MyFavoService myFavoService;
 	
-	@RequestMapping(value="/insert")
-	public void insert(FavoMenuRequest vo, HttpServletResponse response) {
+	@RequestMapping(value="/insertGoodsFavo")
+	public void insertGoodsFavo(FavoGoodsRequest vo, HttpServletResponse response) {
+		this.responseJson(myFavoService.favoGoods(vo), response);
+	}
+	
+	@RequestMapping(value="/insertMenuFavo")
+	public void insertMenuFavo(FavoMenuRequest vo, HttpServletResponse response) {
 		this.responseJson(myFavoService.favoMenu(vo), response);
 	}
 	
-	@RequestMapping(value="/list")
-	public void list(int userId, HttpServletResponse response) {
-		this.responseJson(myFavoService.findFavo(userId), response);
+	@RequestMapping(value="/listGoodsFavo")
+	public void listGoodsFavo(SearchFavoRequest vo, HttpServletResponse response) {
+		this.responseJson(myFavoService.findGoodsFavo(vo), response);
+	}
+	
+	@RequestMapping(value="/listMenuFavo")
+	public void listMenuFavo(SearchFavoRequest vo, HttpServletResponse response) {
+		this.responseJson(myFavoService.findMenuFavo(vo), response);
 	}
 	
 	@RequestMapping(value="/insertDir")
@@ -31,8 +41,13 @@ public class MyFavoController extends BaseController {
 		this.responseJson(myFavoService.insertDir(vo), response);
 	}
 	
-	@RequestMapping(value="/adjust")
-	public void adjust(AdjustFavoRequest vo, HttpServletResponse response) {
+	@RequestMapping(value="/listDir")
+	public void listDir(int userId, HttpServletResponse response) {
+		this.responseJson(myFavoService.findDir(userId), response);
+	}
+	
+	@RequestMapping(value="/adjustMenuFavo")
+	public void adjustMenuFavo(AdjustFavoRequest vo, HttpServletResponse response) {
 		this.responseJson(myFavoService.adjustFavo(vo), response);
 	}
 	

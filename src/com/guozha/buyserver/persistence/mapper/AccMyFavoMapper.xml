@@ -5,7 +5,7 @@ PUBLIC "-//ibatis.apache.org//DTD Mapper 3.0//EN"
 
 <mapper namespace="com.guozha.buyserver.persistence.mapper.AccMyFavoMapper">
 
-    <resultMap id="findFavoRM" type="com.guozha.buyserver.web.controller.account.SearchFavoResponse">
+    <resultMap id="findMenuFavoRM" type="com.guozha.buyserver.web.controller.account.SearchMenuFavoResponse">
         <result property="myFavoId" jdbcType="INTEGER" column="MY_FAVO_ID"/>
         <result property="dirFlag" jdbcType="VARCHAR" column="DIR_FLAG"/>
         <result property="menuId" jdbcType="INTEGER" column="MENU_ID"/>
@@ -18,10 +18,10 @@ PUBLIC "-//ibatis.apache.org//DTD Mapper 3.0//EN"
 	<sql id="LIST_FAVO_COLUMN">T1.MY_FAVO_ID,T1.DIR_FLAG,T1.MENU_ID,T1.FAVO_NAME,T2.MENU_IMG,T2.COOKIE_TIME,T2.COOKIE_WAY</sql>
 
     <insert id="insert" useGeneratedKeys="true" keyProperty="myFavoId">
-        INSERT INTO ACC_MY_FAVO (MY_FAVO_ID,USER_ID,DIR_FLAG,MENU_ID,FAVO_NAME,PARENT_ID) VALUES (#{myFavoId},#{userId},#{dirFlag},#{menuId},#{favoName},#{parentId})
+        INSERT INTO ACC_MY_FAVO (MY_FAVO_ID,USER_ID,FAVO_TYPE,DIR_FLAG,MENU_OR_GOODS_ID,FAVO_NAME,PARENT_ID) VALUES (#{myFavoId},#{userId},#{favoType},#{dirFlag},#{menuOrGoodsId},#{favoName},#{parentId})
     </insert>
     
-    <select id="findFavo" parameterType="java.lang.Integer" resultMap="findFavoRM">
+    <select id="findMenuFavo" parameterType="java.util.Map" resultMap="findMenuFavoRM">
         SELECT * FROM (
 	        SELECT 
 	            T1.MY_FAVO_ID,T1.DIR_FLAG,T1.MENU_ID,T1.FAVO_NAME,'' MENU_IMG,'' COOKIE_TIME,'' COOKIE_WAY 
@@ -29,6 +29,7 @@ PUBLIC "-//ibatis.apache.org//DTD Mapper 3.0//EN"
 	            ACC_MY_FAVO T1
 	        WHERE 
 	            T1.USER_ID = #{userId}
+	            AND T1.FAVO_TYPE = #{favoType}
 	            AND T1.DIR_FLAG = '1'
 	            
 	        UNION ALL
@@ -39,10 +40,20 @@ PUBLIC "-//ibatis.apache.org//DTD Mapper 3.0//EN"
 	            ACC_MY_FAVO T1,MNU_MENU T2
 	        WHERE 
 	            T1.USER_ID = #{userId}
+	            AND T1.FAVO_TYPE = #{favoType}
 	            AND T1.DIR_FLAG = '0'
 	            AND T1.MENU_ID = T2.MENU_ID
         ) T
         ORDER BY T.DIR_FLAG DESC,T.MY_FAVO_ID
+    </select>
+    
+    <resultMap id="findDirRM" type="com.guozha.buyserver.web.controller.account.SearchDirResponse">
+        <result property="myFavoId" jdbcType="INTEGER" column="MY_FAVO_ID"/>
+        <result property="favoName" jdbcType="VARCHAR" column="FAVO_NAME"/>
+	</resultMap>
+    
+    <select id="findDir" parameterType="java.lang.Integer" resultMap="findDirRM">
+        SELECT T.MY_FAVO_ID,T.FAVO_NAME FROM ACC_MY_FAVO T WHERE T.USER_ID = #{userId} AND T.DIR_FLAG = '1' ORDER BY T.MY_FAVO_ID
     </select>
     
     <update id="adjustFavo" parameterType="com.guozha.buyserver.web.controller.account.AdjustFavoRequest">
