@@ -1,15 +1,18 @@
 package com.guozha.buyserver.web.controller.season;
 
 
+import java.util.List;
+
 import com.guozha.buyserver.persistence.beans.GooSeasonGoods;
+import com.guozha.buyserver.web.controller.goods.GoodsResponse;
 
 public class SeasonResponse {
 	
 	private String season;
 	private String seasonPicUrl;
+	private List<SeasonGoodsResponse> goodsList; 
 	
-	//private List<GoodsResponse> list = new ArrayList<GoodsResponse>(); 
-	
+
 	public SeasonResponse(GooSeasonGoods po) {
 		super();
 		this.season = po.getSeason();
@@ -28,6 +31,11 @@ public class SeasonResponse {
 		this.seasonPicUrl = seasonPicUrl;
 	}
 	
-
+	public List<SeasonGoodsResponse> getGoodsList() {
+		return goodsList;
+	}
+	public void setGoodsList(List<SeasonGoodsResponse> goodsList) {
+		this.goodsList = goodsList;
+	}
 
 }

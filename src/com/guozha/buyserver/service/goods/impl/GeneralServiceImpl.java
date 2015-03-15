@@ -50,7 +50,7 @@ public class GeneralServiceImpl extends AbstractBusinessObjectServiceMgr impleme
 		}
 		return bos;
 	}
-	
+	/*
 	@Override
 	public Map<FrontTypeResponse,List<FrontTypeResponse>> findFrontType() {
 		List<BasFrontType> firstPos = this.basFrontTypeMapper.findFirst();
@@ -64,7 +64,25 @@ public class GeneralServiceImpl extends AbstractBusinessObjectServiceMgr impleme
 			map.put(new FrontTypeResponse(po), list);
 		}
 		return map;
+	}*/
+	
+	@Override
+	public List<FrontTypeResponse> findFrontType() {
+		List<BasFrontType> firstPos = this.basFrontTypeMapper.findFirst();
+		List<FrontTypeResponse>  list1 = new ArrayList<FrontTypeResponse>();
+		for(BasFrontType po:firstPos){
+			List<FrontTypeResponse> list2 = new ArrayList<FrontTypeResponse>();
+			List<BasFrontType> secondPos = basFrontTypeMapper.findSecond(po.getFrontTypeId());
+			for(BasFrontType secondPo:secondPos){
+				list2.add(new FrontTypeResponse(secondPo));
+			}
+			FrontTypeResponse f = new FrontTypeResponse(po);
+			f.setFrontTypeList(list2);
+			list1.add(f);
+		}
+		return list1;
 	}
+	
 	
 	@Override
 	public List<GoodsResponse> findGoods(GoodsRequest vo) {
@@ -99,9 +117,10 @@ public class GeneralServiceImpl extends AbstractBusinessObjectServiceMgr impleme
 	@Override
 	public List<GoodsPriceResponse> findGoodsPriceByGoodsId(int goodsId) {
 		List<GooGoodsPrice> pos = this.gooGoodsPriceMapper.findByGoodsId(goodsId);
+		GooGoods goodPo =this.gooGoodsMapper.load(goodsId);
 		List<GoodsPriceResponse> bos = new ArrayList<GoodsPriceResponse>();
 	    for(GooGoodsPrice po:pos){
-	    	bos.add(new GoodsPriceResponse(po));
+	    	bos.add(new GoodsPriceResponse(po,goodPo.getUnit()));
 	    }
 		return bos;
 	}

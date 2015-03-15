@@ -14,15 +14,17 @@ public class GoodsPriceResponse {
 	private Integer goodsId;
 	private Integer weight;
 	private Integer price;
-    
+    private String unit;
 	
 	
-	public GoodsPriceResponse(GooGoodsPrice po) {
+
+	public GoodsPriceResponse(GooGoodsPrice po,String unit) {
 		super();
 		this.goodsPriceId = po.getGoodsPriceId();
 		this.goodsId = po.getGoodsId();
 		this.weight = po.getWeight();
 		this.price = po.getPrice();
+		this.unit = unit;
 	}
 
 	public Integer getGoodsPriceId() {
@@ -57,4 +59,11 @@ public class GoodsPriceResponse {
 		this.price = price;
 	}
 
+	public String getUnit() {
+		return unit;
+	}
+
+	public void setUnit(String unit) {
+		this.unit = unit;
+	}
 }

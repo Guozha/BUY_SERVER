@@ -1,11 +1,8 @@
 package com.guozha.buyserver.service.season;
 
 import java.util.List;
-import java.util.Map;
 
 import com.guozha.buyserver.framework.sys.business.BusinessObjectServiceMgr;
-import com.guozha.buyserver.web.controller.goods.GoodsResponse;
-import com.guozha.buyserver.web.controller.season.SeasonGoodsResponse;
 import com.guozha.buyserver.web.controller.season.SeasonResponse;
 
 
@@ -21,7 +18,7 @@ public interface SeasonService extends BusinessObjectServiceMgr{
 	 * 三节气食材
 	 * @return
 	 */
-	Map<SeasonResponse, List<SeasonGoodsResponse>> find();
+	List<SeasonResponse> find();
 	
 	
 

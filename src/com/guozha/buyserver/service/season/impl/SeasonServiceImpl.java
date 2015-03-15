@@ -1,9 +1,7 @@
 package com.guozha.buyserver.service.season.impl;
 
 import java.util.ArrayList;
-import java.util.LinkedHashMap;
 import java.util.List;
-import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -15,6 +13,7 @@ import com.guozha.buyserver.persistence.beans.GooSeasonGoods;
 import com.guozha.buyserver.persistence.mapper.GooGoodsMapper;
 import com.guozha.buyserver.persistence.mapper.GooSeasonGoodsMapper;
 import com.guozha.buyserver.service.season.SeasonService;
+import com.guozha.buyserver.web.controller.goods.GoodsResponse;
 import com.guozha.buyserver.web.controller.season.SeasonGoodsResponse;
 import com.guozha.buyserver.web.controller.season.SeasonResponse;
 
@@ -28,6 +27,7 @@ public class SeasonServiceImpl  extends AbstractBusinessObjectServiceMgr impleme
 	@Autowired
 	private GooGoodsMapper gooGoodsMapper;
 	
+	/*
 	@Override
 	public Map<SeasonResponse, List<SeasonGoodsResponse>> find() {
 		String [] seasons={"01","02","03"};
@@ -45,26 +45,25 @@ public class SeasonServiceImpl  extends AbstractBusinessObjectServiceMgr impleme
 		}
 		return map;
 	}
+	*/
 	
-	/*
-	public List<SeasonResponse> finds() {
+	public List<SeasonResponse> find() {
 		String [] seasons={"01","02","03"};
 		List<GooSeasonGoods> pos = this.gooSeasonGoodsMapper.findBySeason(seasons);
 		
 		List<SeasonResponse> list = new ArrayList<SeasonResponse>();
 		for(GooSeasonGoods po:pos){
 			SeasonResponse  sp  = new SeasonResponse(po);
-			List<GoodsResponse> bos = new ArrayList<GoodsResponse>();
+			List<SeasonGoodsResponse> bos = new ArrayList<SeasonGoodsResponse>();
 			List<GooGoods> goodsPos =gooGoodsMapper.findByIds(new int[]{po.getFirstGoodsId(),po.getSecondGoodsId(),po.getThirdGoodsId(),po.getFourGoodsId(),po.getFiveGoodsId()});
 			for(GooGoods goodsPo:goodsPos){
-            	bos.add(new GoodsResponse(goodsPo));
+            	bos.add(new SeasonGoodsResponse(goodsPo));
             }
-			
-			sp.setList(bos);
+			sp.setGoodsList(bos);
 			list.add(sp);
 		
 		}
 		return list;
 	}
-    */
+   
 }

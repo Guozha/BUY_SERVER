@@ -29,7 +29,7 @@ public class SeasonController extends BaseController {
 	 */
 	@RequestMapping(value="/list")
 	public void list(HttpServletResponse response){
-		
+		/*
 		 Gson gson = new GsonBuilder().enableComplexMapKeySerialization().create();  
 		 
 		 String jsonStr = gson.toJson(seasonService.find());
@@ -49,10 +49,9 @@ public class SeasonController extends BaseController {
 		 		"{'goodsId':13,'goodsName':'猪肝','memo':'增强人体的免疫反应，抗氧化、防衰老。'},{'goodsId':14,'goodsName':'牛肉（腿肉）','memo':'牛肉蛋白质含量高，而脂肪含量低，所以味道鲜美，受人喜爱，享有“肉中骄子”的美称'}," +
 		 		"{'goodsId':15,'goodsName':'牛排','memo':'补血益气'}]]]";
 		 // map = gson.fromJson(jsonStr2,  new TypeToken<Map<SeasonResponse, List<SeasonGoodsResponse>>>() {  }.getType());
-		 // Gson g2 = new Gson();
-		 // SeasonResponse list = g2.fromJson(jsonStr2,  SeasonResponse.class);
-		 // System.out.println(list);
-		
+		 Gson g2 = new Gson();
+		 Object list = g2.fromJson(jsonStr2, new TypeToken<Object>() {  }.getType());
+		*/
 		responseJson(seasonService.find(), response);
 	}
 

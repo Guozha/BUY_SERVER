@@ -13,7 +13,7 @@ public class SeasonGoodsResponse {
 		super();
 		this.goodsId = po.getGoodsId();
 		this.goodsName = po.getGoodsName();
-		this.goodsImg = po.getGoodsImg();
+		//this.goodsImg = po.getGoodsImg();
 		this.memo = po.getMemo();
 	}
 	public Integer getGoodsId() {

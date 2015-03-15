@@ -31,7 +31,7 @@ public interface GeneralService extends BusinessObjectServiceMgr{
 	 * 类目查询 所有
 	 * @return
 	 */
-	Map<FrontTypeResponse,List<FrontTypeResponse>> findFrontType();
+	List<FrontTypeResponse> findFrontType();
 	
 	
 	/**
