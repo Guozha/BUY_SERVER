@@ -10,6 +10,7 @@ import com.guozha.buyserver.web.controller.account.AccountInfoResponse;
 import com.guozha.buyserver.web.controller.account.AddressRequest;
 import com.guozha.buyserver.web.controller.account.AddressResponse;
 import com.guozha.buyserver.web.controller.account.BalanceResponse;
+import com.guozha.buyserver.web.controller.account.GenerateInviteResponse;
 import com.guozha.buyserver.web.controller.account.InviteResponse;
 import com.guozha.buyserver.web.controller.account.LoginRequest;
 import com.guozha.buyserver.web.controller.account.LoginResponse;
@@ -44,7 +45,7 @@ public interface AccountService extends BusinessObjectServiceMgr {
 	InviteResponse listInvite(SysUser user);
 
 	// 生成邀请
-	ReturnCode invite(SysUser user);
+	GenerateInviteResponse invite(SysUser user);
 
 	// 菜票编号生成生成公共规则
 	String generateTicketNo(String ticketType);

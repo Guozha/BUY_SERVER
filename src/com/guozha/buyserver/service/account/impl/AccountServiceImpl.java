@@ -32,6 +32,7 @@ import com.guozha.buyserver.web.controller.account.AccountInfoResponse;
 import com.guozha.buyserver.web.controller.account.AddressRequest;
 import com.guozha.buyserver.web.controller.account.AddressResponse;
 import com.guozha.buyserver.web.controller.account.BalanceResponse;
+import com.guozha.buyserver.web.controller.account.GenerateInviteResponse;
 import com.guozha.buyserver.web.controller.account.InviteResponse;
 import com.guozha.buyserver.web.controller.account.LoginRequest;
 import com.guozha.buyserver.web.controller.account.LoginResponse;
@@ -219,9 +220,9 @@ public class AccountServiceImpl extends AbstractBusinessObjectServiceMgr impleme
 	 * @author sunhanbin
 	 * @date 2015-03-13
 	 */
-	public ReturnCode invite(SysUser user) {
-		ReturnCode returncode = new ReturnCode();
-		returncode.setReturnCode(ReturnCodeEnum.FAILED.status);
+	public GenerateInviteResponse invite(SysUser user) {
+		GenerateInviteResponse inviteResponse = new GenerateInviteResponse();
+		inviteResponse.setReturnCode(ReturnCodeEnum.FAILED.status);
 		if (user != null) {
 			int userId = user.getUserId();
 			if (userId > 0) {
@@ -232,13 +233,15 @@ public class AccountServiceImpl extends AbstractBusinessObjectServiceMgr impleme
 				invite.setInviteTime(Timestamp.valueOf(DateUtil.date2String(new Date(), DateUtil.PATTERN_STANDARD)));
 				invite.setUseFlag(String.valueOf(YesNo.No.getCode()));
 				invite.setDrawFlag(String.valueOf(YesNo.No.getCode()));
-				int inviteId = accountMapper.insertInvite(invite);
+				accountMapper.insertInvite(invite);
+				int inviteId = invite.getMyInviteId();
 				if (inviteId > 0) {
-					returncode.setReturnCode(ReturnCodeEnum.SUCCESS.status);
+					inviteResponse.setInviteId(inviteId);
+					inviteResponse.setReturnCode(ReturnCodeEnum.SUCCESS.status);
 				}
 			}
 		}
-		return returncode;
+		return inviteResponse;
 	}
 
 	/**
