@@ -10,7 +10,7 @@ import com.guozha.buyserver.web.controller.account.FavoGoodsRequest;
 import com.guozha.buyserver.web.controller.account.FavoMenuRequest;
 import com.guozha.buyserver.web.controller.account.InsertDirRequest;
 import com.guozha.buyserver.web.controller.account.SearchDirResponse;
-import com.guozha.buyserver.web.controller.account.SearchFavoRequest;
+import com.guozha.buyserver.web.controller.account.SearchGoodsFavoRequest;
 import com.guozha.buyserver.web.controller.account.SearchGoodsFavoResponse;
 import com.guozha.buyserver.web.controller.account.SearchMenuFavoResponse;
 
@@ -20,9 +20,9 @@ public interface MyFavoService extends BusinessObjectServiceMgr {
 	
 	MsgResponse favoMenu(FavoMenuRequest vo);
 	
-	List<SearchGoodsFavoResponse> findGoodsFavo(SearchFavoRequest vo);
+	List<SearchGoodsFavoResponse> findGoodsFavo(SearchGoodsFavoRequest vo);
 	
-	List<SearchMenuFavoResponse> findMenuFavo(SearchFavoRequest vo);
+	List<SearchMenuFavoResponse> findMenuFavo(int userId);
 	
 	MsgResponse insertDir(InsertDirRequest vo);
 	

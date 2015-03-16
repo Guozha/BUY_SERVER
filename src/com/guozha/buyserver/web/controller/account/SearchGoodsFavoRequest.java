@@ -1,6 +1,6 @@
 package com.guozha.buyserver.web.controller.account;
 
-public class SearchFavoRequest {
+public class SearchGoodsFavoRequest {
 	
 	private Integer userId;
 	private Integer marketId;

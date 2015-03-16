@@ -8,23 +8,51 @@ PUBLIC "-//ibatis.apache.org//DTD Mapper 3.0//EN"
     <resultMap id="findMenuFavoRM" type="com.guozha.buyserver.web.controller.account.SearchMenuFavoResponse">
         <result property="myFavoId" jdbcType="INTEGER" column="MY_FAVO_ID"/>
         <result property="dirFlag" jdbcType="VARCHAR" column="DIR_FLAG"/>
-        <result property="menuId" jdbcType="INTEGER" column="MENU_ID"/>
+        <result property="menuId" jdbcType="INTEGER" column="MENU_OR_GOODS_ID"/>
         <result property="favoName" jdbcType="VARCHAR" column="FAVO_NAME"/>
         <result property="menuImg" jdbcType="BLOB" column="MENU_IMG"/>
         <result property="cookieTime" jdbcType="INTEGER" column="COOKIE_TIME"/>
         <result property="cookieWay" jdbcType="VARCHAR" column="COOKIE_WAY"/>
 	</resultMap>
 	
-	<sql id="LIST_FAVO_COLUMN">T1.MY_FAVO_ID,T1.DIR_FLAG,T1.MENU_ID,T1.FAVO_NAME,T2.MENU_IMG,T2.COOKIE_TIME,T2.COOKIE_WAY</sql>
+	<sql id="LIST_FAVO_COLUMN">T1.MY_FAVO_ID,T1.DIR_FLAG,T1.MENU_OR_GOODS_ID,T1.FAVO_NAME,T2.MENU_IMG,T2.COOKIE_TIME,T2.COOKIE_WAY</sql>
 
     <insert id="insert" useGeneratedKeys="true" keyProperty="myFavoId">
         INSERT INTO ACC_MY_FAVO (MY_FAVO_ID,USER_ID,FAVO_TYPE,DIR_FLAG,MENU_OR_GOODS_ID,FAVO_NAME,PARENT_ID) VALUES (#{myFavoId},#{userId},#{favoType},#{dirFlag},#{menuOrGoodsId},#{favoName},#{parentId})
     </insert>
     
+    <resultMap id="findGoodsFavoRM" type="com.guozha.buyserver.web.controller.account.SearchGoodsFavoResponse">
+        <result property="myFavoId" jdbcType="INTEGER" column="MY_FAVO_ID"/>
+        <result property="goodsId" jdbcType="INTEGER" column="GOODS_ID"/>
+        <result property="goodsName" jdbcType="VARCHAR" column="GOODS_NAME"/>
+        <result property="goodsImg" jdbcType="BLOB" column="GOODS_IMG"/>
+        <result property="price" jdbcType="INTEGER" column="PRICE"/>
+        <result property="unit" jdbcType="VARCHAR" column="UNIT"/>
+	</resultMap>
+    
+    <select id="findGoodsFavo" parameterType="java.util.Map" resultMap="findGoodsFavoRM">
+        SELECT 
+            T1.MY_FAVO_ID,
+            T2.GOODS_ID,
+            T2.GOODS_NAME,
+            T2.GOODS_IMG,
+            T2.PRICE,
+            T2.UNIT 
+        FROM 
+            ACC_MY_FAVO T1,
+            GOO_GOODS T2 
+        WHERE 
+            T1.MENU_OR_GOODS_ID = T2.GOODS_ID 
+            AND T1.USER_ID = #{userId}
+            AND T1.FAVO_TYPE = #{favoType}
+        ORDER BY 
+            T1.MY_FAVO_ID
+    </select>
+    
     <select id="findMenuFavo" parameterType="java.util.Map" resultMap="findMenuFavoRM">
         SELECT * FROM (
 	        SELECT 
-	            T1.MY_FAVO_ID,T1.DIR_FLAG,T1.MENU_ID,T1.FAVO_NAME,'' MENU_IMG,'' COOKIE_TIME,'' COOKIE_WAY 
+	            T1.MY_FAVO_ID,T1.DIR_FLAG,T1.MENU_OR_GOODS_ID,T1.FAVO_NAME,'' MENU_IMG,'' COOKIE_TIME,'' COOKIE_WAY 
 	        FROM 
 	            ACC_MY_FAVO T1
 	        WHERE 
@@ -42,7 +70,7 @@ PUBLIC "-//ibatis.apache.org//DTD Mapper 3.0//EN"
 	            T1.USER_ID = #{userId}
 	            AND T1.FAVO_TYPE = #{favoType}
 	            AND T1.DIR_FLAG = '0'
-	            AND T1.MENU_ID = T2.MENU_ID
+	            AND T1.MENU_OR_GOODS_ID = T2.MENU_ID
         ) T
         ORDER BY T.DIR_FLAG DESC,T.MY_FAVO_ID
     </select>
@@ -75,7 +103,7 @@ PUBLIC "-//ibatis.apache.org//DTD Mapper 3.0//EN"
             ACC_MY_FAVO T1,
             MNU_MENU T2
         WHERE 
-            T1.MENU_ID = T2.MENU_ID 
+            T1.MENU_OR_GOODS_ID = T2.MENU_ID 
             AND T1.PARENT_ID = #{parentId}
         ORDER BY 
             T1.MY_FAVO_ID

@@ -4,6 +4,7 @@ package com.guozha.buyserver.web.controller.account;
 public class SearchGoodsFavoResponse {
 	
 	private Integer myFavoId;
+	private Integer goodsId;
 	private String goodsName;
 	private byte[] goodsImg;
 	private Integer price;
@@ -15,6 +16,12 @@ public class SearchGoodsFavoResponse {
 	}
 	public void setMyFavoId(Integer myFavoId) {
 		this.myFavoId = myFavoId;
+	}
+	public Integer getGoodsId() {
+		return goodsId;
+	}
+	public void setGoodsId(Integer goodsId) {
+		this.goodsId = goodsId;
 	}
 	public String getGoodsName() {
 		return goodsName;

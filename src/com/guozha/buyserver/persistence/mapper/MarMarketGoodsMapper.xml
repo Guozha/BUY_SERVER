@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//ibatis.apache.org//DTD Mapper 3.0//EN"
+"http://ibatis.apache.org/dtd/ibatis-3-mapper.dtd">
+
+<mapper namespace="com.guozha.buyserver.persistence.mapper.MarMarketGoodsMapper">
+
+    <resultMap id="rm" type="com.guozha.buyserver.persistence.beans.MarMarketGoods">
+        <result property="marketGoodsId" jdbcType="INTEGER" column="MARKET_GOODS_ID"/>
+        <result property="marketId" jdbcType="INTEGER" column="MARKET_ID"/>
+        <result property="goodsId" jdbcType="INTEGER" column="GOODS_ID"/>
+        <result property="openBuyFlag" jdbcType="VARCHAR" column="OPEN_BUY_FLAG"/>
+	</resultMap>
+
+    <select id="getGoodIdsInMarket" parameterType="java.util.Map" resultMap="rm">
+        SELECT T.GOODS_ID FROM MAR_MARKET_GOODS T WHERE T.MARKET_ID = #{marketId} AND T.OPEN_BUY_FLAG = #{openBuyFlag}
+    </select>
+	
+</mapper>
