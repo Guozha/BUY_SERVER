@@ -11,6 +11,7 @@ public class GenerateInviteResponse {
 
 	private Integer inviteId;// 邀请ID
 	private String returnCode;
+	private String msg;
 
 	public Integer getInviteId() {
 		return inviteId;
@@ -26,6 +27,14 @@ public class GenerateInviteResponse {
 
 	public void setReturnCode(String returnCode) {
 		this.returnCode = returnCode;
+	}
+
+	public String getMsg() {
+		return msg;
+	}
+
+	public void setMsg(String msg) {
+		this.msg = msg;
 	}
 
 }

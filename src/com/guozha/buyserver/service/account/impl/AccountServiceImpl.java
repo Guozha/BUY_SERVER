@@ -238,6 +238,7 @@ public class AccountServiceImpl extends AbstractBusinessObjectServiceMgr impleme
 				if (inviteId > 0) {
 					inviteResponse.setInviteId(inviteId);
 					inviteResponse.setReturnCode(ReturnCodeEnum.SUCCESS.status);
+					inviteResponse.setMsg("生成邀请成功");
 				}
 			}
 		}
