@@ -55,5 +55,29 @@ public class OrderController extends BaseController {
 	public void send(int orderId) {
 		orderService.sendOrder(orderId);
 	}
+	
+	/**
+	 * 订单商品评价
+	 * @author sunhanbin
+	 * @date 2015-03-26
+	 * @param request
+	 * @param response
+	 */
+	@RequestMapping(value = "/goodsMark")
+	public void goodsMark(MarkRequest request, HttpServletResponse response){
+		responseJson(orderService.goodsMark(request),response);
+	}
+	
+	/**
+	 * 订单商品评价
+	 * @author sunhanbin
+	 * @date 2015-03-26
+	 * @param request
+	 * @param response
+	 */
+	@RequestMapping(value = "/orderMark")
+	public void orderMark(MarkRequest request, HttpServletResponse response){
+		responseJson(orderService.orderMark(request),response);
+	}
 
 }

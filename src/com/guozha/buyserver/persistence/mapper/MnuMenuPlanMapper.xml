@@ -46,11 +46,19 @@ PUBLIC "-//ibatis.apache.org//DTD Mapper 3.0//EN"
 	</insert>
 	
 	<!--菜谱随机推荐  -->
-	<select id="listRandMenu" resultType="com.guozha.buyserver.persistence.beans.MnuMenu">
-		SELECT menu_id AS menuId,menu_name AS menuName,menu_img AS menuImg
-	    FROM MNU_MENU
-	    WHERE status = '1'
-	    ORDER BY rand() LIMIT 6
+	<select id="listMenuPlan"   resultType="com.guozha.buyserver.web.controller.menuplan.MenuPlanResponse">
+		SELECT 
+          DATE_FORMAT(plan_date,'%Y-%m-%d') planDate,
+          first_menu_id firstMenuId,
+          second_menu_id secondMenuId,
+          third_menu_id thirdMenuId,
+          four_menu_id fourMenuId,
+          five_menu_id fiveMenuId,
+          six_menu_id sixMenuId
+       FROM
+          MNU_MENU_PLAN  
+       WHERE plan_date BETWEEN CURDATE()
+             AND DATE_ADD(CURDATE(), INTERVAL 6 DAY) ;
 	</select>
 	
 	

@@ -16,7 +16,7 @@ public class BuyOrderMenuGoods extends AbstractDO {
 	private Integer unitPrice;
 	private Integer amount;
 	private Integer price;
-	private String goodsStar;
+	private Integer goodsStar;
 	
 	public Integer getOrderMenuGoodsId() {
 		return orderMenuGoodsId;
@@ -60,12 +60,6 @@ public class BuyOrderMenuGoods extends AbstractDO {
 	public void setGoodsImg(byte[] goodsImg) {
 		this.goodsImg = goodsImg;
 	}
-	public String getGoodsStar() {
-		return goodsStar;
-	}
-	public void setGoodsStar(String goodsStar) {
-		this.goodsStar = goodsStar;
-	}
 	public Integer getBackTypeId() {
 		return backTypeId;
 	}
@@ -95,6 +89,12 @@ public class BuyOrderMenuGoods extends AbstractDO {
 	}
 	public void setPrice(Integer price) {
 		this.price = price;
+	}
+	public Integer getGoodsStar() {
+		return goodsStar;
+	}
+	public void setGoodsStar(Integer goodsStar) {
+		this.goodsStar = goodsStar;
 	}
 
 }

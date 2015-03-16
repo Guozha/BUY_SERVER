@@ -8,7 +8,7 @@ public class GoodsInfo {
 	private Integer unitPrice;
 	private Integer amount;
 	private Integer price;
-	private String goodsStar;
+	private Integer goodsStar;
 	
 	public Integer getGoodsId() {
 		return goodsId;
@@ -46,10 +46,10 @@ public class GoodsInfo {
 	public void setPrice(Integer price) {
 		this.price = price;
 	}
-	public String getGoodsStar() {
+	public Integer getGoodsStar() {
 		return goodsStar;
 	}
-	public void setGoodsStar(String goodsStar) {
+	public void setGoodsStar(Integer goodsStar) {
 		this.goodsStar = goodsStar;
 	}
 

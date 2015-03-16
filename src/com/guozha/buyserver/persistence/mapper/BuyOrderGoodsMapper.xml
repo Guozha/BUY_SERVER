@@ -51,5 +51,14 @@ PUBLIC "-//ibatis.apache.org//DTD Mapper 3.0//EN"
             #{price}
         )
     </insert>
+    
+    <!-- 订单商品打分 -->
+    <update id="markOrderGoods" parameterType="com.guozha.buyserver.persistence.beans.BuyOrderGoods">
+      UPDATE 
+         BUY_ORDER_GOODS
+      SET
+         goods_star = #{goodsStar} 
+      WHERE order_goods_id = #{orderGoodsId}
+    </update>
 
 </mapper>

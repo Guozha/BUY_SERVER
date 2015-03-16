@@ -1,6 +1,10 @@
 package com.guozha.buyserver.service.menuplan.impl;
 
+import java.sql.Timestamp;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -9,8 +13,10 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.guozha.buyserver.common.util.DateUtil;
 import com.guozha.buyserver.framework.enums.ReturnCodeEnum;
+import com.guozha.buyserver.framework.sys.business.AbstractBusinessObjectServiceMgr;
 import com.guozha.buyserver.persistence.beans.MnuMenu;
 import com.guozha.buyserver.persistence.beans.MnuMenuGoods;
+import com.guozha.buyserver.persistence.beans.MnuMenuPlan;
 import com.guozha.buyserver.persistence.beans.MnuMenuStep;
 import com.guozha.buyserver.persistence.beans.MnuUserMenuPlan;
 import com.guozha.buyserver.persistence.mapper.MnuMenuMapper;
@@ -18,6 +24,7 @@ import com.guozha.buyserver.persistence.mapper.MnuMenuPlanMapper;
 import com.guozha.buyserver.service.account.ReturnCode;
 import com.guozha.buyserver.service.menuplan.MenuPlanService;
 import com.guozha.buyserver.web.controller.menuplan.MenuDetailRequest;
+import com.guozha.buyserver.web.controller.menuplan.MenuPlanResponse;
 import com.guozha.buyserver.web.controller.menuplan.MenuResponse;
 import com.guozha.buyserver.web.controller.menuplan.MenuUserPlanRequest;
 
@@ -30,13 +37,12 @@ import com.guozha.buyserver.web.controller.menuplan.MenuUserPlanRequest;
  */
 @Transactional(rollbackFor = Exception.class)
 @Service
-public class MenuPlanServiceImpl implements MenuPlanService {
+public class MenuPlanServiceImpl extends AbstractBusinessObjectServiceMgr implements MenuPlanService {
 
 	@Autowired
 	private MnuMenuPlanMapper menuPlanMapper;
 	@Autowired
 	private MnuMenuMapper mnuMenuMapper;
-	
 
 	/**
 	 * 新增菜谱
@@ -70,8 +76,49 @@ public class MenuPlanServiceImpl implements MenuPlanService {
 	 * @author sunhanbin
 	 * @date 2015-03-15
 	 */
-	public List<MnuMenu> listMenu() {
-		return menuPlanMapper.listRandMenu();
+	public List<MenuPlanResponse> listMenuPlan() {
+		List<MenuPlanResponse> menuPlans = menuPlanMapper.listMenuPlan();
+//		Integer menuId = null;
+//		MnuMenu menu = null;
+//		for (MenuPlanResponse plan : menuPlans) {
+//			menuId = plan.getFirstMenuId();
+//			menu = mnuMenuMapper.load(menuId);
+//			if (menu != null) {
+//				plan.setFirstMenuImg(menu.getMenuImg());
+//				plan.setFirstMenuName(menu.getMenuName());
+//			}
+//			menuId = plan.getSecondMenuId();
+//			menu = mnuMenuMapper.load(menuId);
+//			if (menu != null) {
+//				plan.setSecondMenuImg(menu.getMenuImg());
+//				plan.setSecondMenuName(menu.getMenuName());
+//			}
+//			menuId = plan.getThirdMenuId();
+//			menu = mnuMenuMapper.load(menuId);
+//			if (menu != null) {
+//				plan.setThirdMenuImg(menu.getMenuImg());
+//				plan.setThirdMenuName(menu.getMenuName());
+//			}
+//			menuId = plan.getFourMenuId();
+//			menu = mnuMenuMapper.load(menuId);
+//			if (menu != null) {
+//				plan.setFourMenuImg(menu.getMenuImg());
+//				plan.setFourMenuName(menu.getMenuName());
+//			}
+//			menuId = plan.getFiveMenuId();
+//			menu = mnuMenuMapper.load(menuId);
+//			if (menu != null) {
+//				plan.setFiveMenuImg(menu.getMenuImg());
+//				plan.setFiveMenuName(menu.getMenuName());
+//			}
+//			menuId = plan.getSixMenuId();
+//			menu = mnuMenuMapper.load(menuId);
+//			if (menu != null) {
+//				plan.setSixMenuImg(menu.getMenuImg());
+//				plan.setSixMenuName(menu.getMenuName());
+//			}
+//		}
+		return menuPlans;
 	}
 
 	/**
@@ -94,12 +141,12 @@ public class MenuPlanServiceImpl implements MenuPlanService {
 		}
 		return response;
 	}
-	
+
 	@Override
 	public List<MenuResponse> findByGoodsId(int goodsId) {
 		List<MnuMenu> pos = this.mnuMenuMapper.findByGoodsId(goodsId);
 		List<MenuResponse> response = new ArrayList<MenuResponse>();
-		for(MnuMenu po : pos){
+		for (MnuMenu po : pos) {
 			MenuResponse menuResponse = new MenuResponse();
 			menuResponse.setMenuId(po.getMenuId());
 			menuResponse.setMenuName(po.getMenuName());

@@ -9,6 +9,7 @@ import com.guozha.buyserver.persistence.beans.MnuMenu;
 import com.guozha.buyserver.persistence.beans.MnuMenuPlan;
 import com.guozha.buyserver.persistence.beans.MnuMenuStep;
 import com.guozha.buyserver.persistence.beans.MnuUserMenuPlan;
+import com.guozha.buyserver.web.controller.menuplan.MenuPlanResponse;
 import com.guozha.buyserver.web.controller.menuplan.MenuResponse;
 
 /**
@@ -26,7 +27,7 @@ public interface MnuMenuPlanMapper extends BaseMapper<MnuMenuPlan, Integer> {
 	int insertUserMenuPlan(MnuUserMenuPlan menuUserPlan);
 
 	// 菜谱推荐
-	List<MnuMenu> listRandMenu();
+	List<MenuPlanResponse> listMenuPlan();
 
 	// 查询菜谱详情
 	MenuResponse menuDetail(int menuId);

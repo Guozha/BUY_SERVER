@@ -9,7 +9,10 @@ import com.guozha.buyserver.persistence.beans.BuyOrderGoods;
 
 @Repository
 public interface BuyOrderGoodsMapper extends BaseMapper<BuyOrderGoods, Integer> {
-	
-    List<BuyOrderGoods> findByOrder(int orderId);
+
+	List<BuyOrderGoods> findByOrder(int orderId);
+
+	// 订单商品评价
+	int markOrderGoods(BuyOrderGoods buyOrderGoods);
 
 }

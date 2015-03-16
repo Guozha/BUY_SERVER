@@ -114,5 +114,16 @@ PUBLIC "-//ibatis.apache.org//DTD Mapper 3.0//EN"
         UPDATE BUY_ORDER T SET T.TOTAL_PRICE = #{totalPrice}, T.SERVICE_FEE = #{serviceFee} WHERE T.ORDER_ID = #{orderId}
     </update>
     
+    <!--订单评价  -->
+    <update id="orderMark" parameterType="com.guozha.buyserver.persistence.beans.BuyOrder">
+       UPDATE 
+          BUY_ORDER 
+       SET
+         comment_desc = #{commentDesc},
+         comment_flag = #{commentFlag},
+         service_star = #{serviceStar},
+       WHERE order_id = #{orderId}
+    </update>
+    
 
 </mapper>

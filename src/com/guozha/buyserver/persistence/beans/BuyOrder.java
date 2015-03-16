@@ -33,7 +33,7 @@ public class BuyOrder extends AbstractDO {
 	private Integer senderId;
 	private Date finishTime;
 	private String commentFlag;
-	private String serviceStar;
+	private Integer serviceStar;
 	private String commentDesc;
 	private String finishSettleFlag;
 	private String status;
@@ -200,12 +200,6 @@ public class BuyOrder extends AbstractDO {
 	public void setCommentFlag(String commentFlag) {
 		this.commentFlag = commentFlag;
 	}
-	public String getServiceStar() {
-		return serviceStar;
-	}
-	public void setServiceStar(String serviceStar) {
-		this.serviceStar = serviceStar;
-	}
 	public String getCommentDesc() {
 		return commentDesc;
 	}
@@ -223,6 +217,12 @@ public class BuyOrder extends AbstractDO {
 	}
 	public void setStatus(String status) {
 		this.status = status;
+	}
+	public Integer getServiceStar() {
+		return serviceStar;
+	}
+	public void setServiceStar(Integer serviceStar) {
+		this.serviceStar = serviceStar;
 	}
 	
 	

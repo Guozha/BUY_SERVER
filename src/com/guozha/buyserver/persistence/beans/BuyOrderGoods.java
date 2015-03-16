@@ -15,7 +15,7 @@ public class BuyOrderGoods extends AbstractDO {
 	private Integer unitPrice;
 	private Integer amount;
 	private Integer price;
-	private String goodStar;
+	private Integer goodStar;
 	
 	public Integer getOrderGoodsId() {
 		return orderGoodsId;
@@ -83,10 +83,10 @@ public class BuyOrderGoods extends AbstractDO {
 	public void setPrice(Integer price) {
 		this.price = price;
 	}
-	public String getGoodStar() {
+	public Integer getGoodStar() {
 		return goodStar;
 	}
-	public void setGoodStar(String goodStar) {
+	public void setGoodStar(Integer goodStar) {
 		this.goodStar = goodStar;
 	}
 

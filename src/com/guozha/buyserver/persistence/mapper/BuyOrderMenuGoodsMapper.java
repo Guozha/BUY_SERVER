@@ -8,9 +8,11 @@ import com.guozha.buyserver.dal.BaseMapper;
 import com.guozha.buyserver.persistence.beans.BuyOrderMenuGoods;
 
 @Repository
-public interface BuyOrderMenuGoodsMapper extends
-		BaseMapper<BuyOrderMenuGoods, Integer> {
-	
+public interface BuyOrderMenuGoodsMapper extends BaseMapper<BuyOrderMenuGoods, Integer> {
+
 	List<BuyOrderMenuGoods> findByOrderMenu(int orderMenuId);
+
+	// 菜谱商品打分
+	int markOrderMenuGoods(int orderMenuGoodsId);
 
 }
