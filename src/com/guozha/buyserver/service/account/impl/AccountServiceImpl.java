@@ -43,76 +43,76 @@ import com.guozha.buyserver.web.controller.account.TicketRequest;
 @Transactional(rollbackFor = Exception.class)
 @Service("accountService")
 public class AccountServiceImpl extends AbstractBusinessObjectServiceMgr implements AccountService {
-	
+
 	@Autowired
 	private SysUserMapper sysUserMapper;
 	@Autowired
 	private AccountMapper accountMapper;
-	
+
 	@Override
 	public MsgResponse getCheckCodeForReg(String mobileNo) {
-		
+
 		Object[] arr = new Object[1];
 		arr[0] = RandomStringUtils.randomNumeric(6);
 		SmsUtil.sendSms("01", mobileNo, arr);// SMS_TYPE 01-注册获取验证码
-		
+
 		return new MsgResponse();
 	}
-	
+
 	@Override
 	public MsgResponse register(RegisterRequest vo) {
-		
-		String checkCode = SmsUtil.getCheckCode(vo.getMobileNo());//获取服务端缓存的验证码
-		if(!(vo.getCheckCode().equals(checkCode))){
-			return new MsgResponse("0","验证码错误");
+
+		String checkCode = SmsUtil.getCheckCode(vo.getMobileNo());// 获取服务端缓存的验证码
+		if (!(vo.getCheckCode().equals(checkCode))) {
+			return new MsgResponse("0", "验证码错误");
 		}
-		
+
 		SysUser po = sysUserMapper.getUserByMobileNo(vo.getMobileNo());
-		if(po == null){
-			
+		if (po == null) {
+
 			po = new SysUser();
 			po.setMobileNo(vo.getMobileNo());
 			po.setPasswd(vo.getPasswd());
 			po.setRegTime(new Date());
 			po.setStatus("1");// USER_STATUS 1-可用
 			sysUserMapper.insert(po);
-			
+
 			SmsUtil.removeCheckCode(vo.getMobileNo());
-			
-			return new MsgResponse("1","注册成功");
-		}else{
-			return new MsgResponse("0","该手机已注册过了");
+
+			return new MsgResponse("1", "注册成功");
+		} else {
+			return new MsgResponse("0", "该手机已注册过了");
 		}
-		
+
 	}
-	
+
 	@Override
 	public LoginResponse login(LoginRequest vo) {
-		
+
 		LoginResponse bo = new LoginResponse();
-		
+
 		SysUser po = sysUserMapper.getLoginUser(vo);
-		if(po == null){
+		if (po == null) {
 			bo.setReturnCode("0");
 			bo.setMsg("用户名或密码错误");
-		}else{
-			if("3".equals(po.getStatus())){// USER_STATUS 3-停用
+		} else {
+			if ("3".equals(po.getStatus())) {// USER_STATUS 3-停用
 				bo.setMobileNo(vo.getMobileNo());
 				bo.setReturnCode("0");
 				bo.setMsg("该账户已被停用");
-			}else{
+			} else {
 				String token = RandomStringUtils.randomAlphanumeric(32);
-				
+
 				bo.setToken(token);
 				bo.setUserId(po.getUserId());
 				bo.setMobileNo(vo.getMobileNo());
 				bo.setReturnCode("1");
 				bo.setMsg("登录成功");
-				
+
 			}
-			
+
 		}
-		
+
 		return bo;
 	}
 
@@ -121,7 +121,7 @@ public class AccountServiceImpl extends AbstractBusinessObjectServiceMgr impleme
 		ParameterUtil.removeToken(token);
 		return new MsgResponse();
 	}
-	
+
 	/**
 	 * 获取账户余额
 	 * 
@@ -268,7 +268,7 @@ public class AccountServiceImpl extends AbstractBusinessObjectServiceMgr impleme
 				throw new RuntimeException("编号长度超限");
 			}
 			// 更新记录
-			String s_nextSeqNo=StringUtils.leftPad(String.valueOf(nextSeqNo), 8, "0");
+			String s_nextSeqNo = StringUtils.leftPad(String.valueOf(nextSeqNo), 8, "0");
 			seq.setSeqNo(String.valueOf(s_nextSeqNo));
 			int count = accountMapper.updateSeqNo(seq);
 			if (count == 1) {
@@ -276,10 +276,9 @@ public class AccountServiceImpl extends AbstractBusinessObjectServiceMgr impleme
 				final_no = ticketType + "00" + temp;
 			}
 		}
-		//System.out.println("final_no==========" + final_no);
+		// System.out.println("final_no==========" + final_no);
 		return final_no;
 	}
-	
 
 	/**
 	 * 我的地址查询
@@ -365,7 +364,7 @@ public class AccountServiceImpl extends AbstractBusinessObjectServiceMgr impleme
 		}
 		return result;
 	}
-	
+
 	/**
 	 * 设置默认地址
 	 * 
@@ -385,7 +384,7 @@ public class AccountServiceImpl extends AbstractBusinessObjectServiceMgr impleme
 		}
 		return result;
 	}
-	
+
 	/**
 	 * 我的菜票查询
 	 * 
@@ -400,6 +399,19 @@ public class AccountServiceImpl extends AbstractBusinessObjectServiceMgr impleme
 				response = accountMapper.listTicket(userId);
 		}
 		return response;
+	}
+
+	/**
+	 * 找回密码获取验证码
+	 * 
+	 * @param mobileNo
+	 * @return
+	 */
+	public MsgResponse checkCodeForResetPasswd(String mobileNo) {
+		Object[] arr = new Object[1];
+		arr[0] = RandomStringUtils.randomNumeric(6);
+		SmsUtil.sendSms("02", mobileNo, arr);// SMS_TYPE 02-找回密码获取验证码
+		return new MsgResponse();
 	}
 
 }

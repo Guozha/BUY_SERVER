@@ -25,6 +25,9 @@ public interface AccountService extends BusinessObjectServiceMgr {
 
 	// 我的账户信息
 	AccountInfoResponse info(SysUser user);
+	
+	// 修改密码找回验证码
+	MsgResponse checkCodeForResetPasswd(String mobileNo);
 
 	// 修改密码
 	PasswdResponse updatePasswd(PasswdRequest request);

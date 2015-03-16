@@ -12,12 +12,12 @@ import com.guozha.buyserver.service.account.AccountService;
 import com.guozha.buyserver.web.controller.BaseController;
 
 @Controller
-@RequestMapping(value="/account")
+@RequestMapping(value = "/account")
 public class AccountController extends BaseController {
-	
+
 	@Autowired
 	private AccountService accountService;
-	
+
 	/**
 	 * 获取账户余额
 	 * 
@@ -45,6 +45,19 @@ public class AccountController extends BaseController {
 	}
 
 	/**
+	 * 找回密码获取验证码
+	 * 
+	 * @author sunhanbin
+	 * @date 2015-03-13
+	 * @param vo
+	 * @param response
+	 */
+	@RequestMapping(value = "/checkCodeForResetPasswd")
+	public void checkCodeForResetPasswd(PasswdRequest request, HttpServletResponse response) {
+		responseJson(accountService.checkCodeForResetPasswd(request.getCheckCode()), response);
+	}
+
+	/**
 	 * 修改密码
 	 * 
 	 * @author sunhanbin
@@ -56,27 +69,27 @@ public class AccountController extends BaseController {
 	public void updatePasswd(PasswdRequest vo, HttpServletResponse response) {
 		responseJson(accountService.updatePasswd(vo), response);
 	}
-	
-	@RequestMapping(value="/checkCodeForRegister")
+
+	@RequestMapping(value = "/checkCodeForRegister")
 	public void checkCodeForRegister(String mobileNo, HttpServletResponse response) {
 		this.responseJson(accountService.getCheckCodeForReg(mobileNo), response);
 	}
-	
-	@RequestMapping(value="/register")
+
+	@RequestMapping(value = "/register")
 	public void register(RegisterRequest vo, HttpServletResponse response) {
 		this.responseJson(accountService.register(vo), response);
 	}
-	
-	@RequestMapping(value="/login")
+
+	@RequestMapping(value = "/login")
 	public void login(LoginRequest vo, HttpServletRequest request, HttpServletResponse response) {
 		this.responseJson(accountService.login(vo), response);
 	}
-	
-	@RequestMapping(value="/logout")
+
+	@RequestMapping(value = "/logout")
 	public void logout(String token, HttpServletResponse response) {
 		this.responseJson(accountService.logout(token), response);
 	}
-	
+
 	/**
 	 * 查询我的地址
 	 * 
@@ -104,8 +117,7 @@ public class AccountController extends BaseController {
 	public void listArea(AddressRequest vo, HttpServletRequest request, HttpServletResponse response) {
 		responseJson(accountService.listArea(vo), response);
 	}
-	
-	
+
 	/**
 	 * 获取行区列表
 	 * 
@@ -119,7 +131,6 @@ public class AccountController extends BaseController {
 	public void listBuilding(AddressRequest vo, HttpServletRequest request, HttpServletResponse response) {
 		responseJson(accountService.listBuilding(vo), response);
 	}
-	
 
 	/**
 	 * 添加地址
@@ -134,8 +145,7 @@ public class AccountController extends BaseController {
 	public void insert(AddressRequest vo, HttpServletRequest request, HttpServletResponse response) {
 		responseJson(accountService.insert(vo), response);
 	}
-	
-	
+
 	/**
 	 * 删除地址
 	 * 
@@ -149,7 +159,7 @@ public class AccountController extends BaseController {
 	public void delete(AddressRequest vo, HttpServletRequest request, HttpServletResponse response) {
 		responseJson(accountService.delete(vo), response);
 	}
-	
+
 	/**
 	 * 设置默认地址
 	 * 
@@ -163,8 +173,7 @@ public class AccountController extends BaseController {
 	public void defaultAddress(AddressRequest vo, HttpServletRequest request, HttpServletResponse response) {
 		responseJson(accountService.defaultAddress(vo), response);
 	}
-	
-	
+
 	/**
 	 * 我的菜票查询
 	 * 
@@ -176,7 +185,7 @@ public class AccountController extends BaseController {
 	public void list(TicketRequest ticket, HttpServletRequest request, HttpServletResponse response) {
 		responseJson(accountService.list(ticket), response);
 	}
-	
+
 	/**
 	 * 汇总邀请信息
 	 * 
@@ -202,6 +211,5 @@ public class AccountController extends BaseController {
 	public void invite(SysUser user, HttpServletResponse response) {
 		responseJson(accountService.invite(user), response);
 	}
-	
 
 }
