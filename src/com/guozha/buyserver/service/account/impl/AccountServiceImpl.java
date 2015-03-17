@@ -26,11 +26,8 @@ import com.guozha.buyserver.persistence.beans.SysUser;
 import com.guozha.buyserver.persistence.mapper.AccountMapper;
 import com.guozha.buyserver.persistence.mapper.SysUserMapper;
 import com.guozha.buyserver.service.account.AccountService;
-import com.guozha.buyserver.service.account.ReturnCode;
 import com.guozha.buyserver.web.controller.MsgResponse;
 import com.guozha.buyserver.web.controller.account.AccountInfoResponse;
-import com.guozha.buyserver.web.controller.account.AddressRequest;
-import com.guozha.buyserver.web.controller.account.AddressResponse;
 import com.guozha.buyserver.web.controller.account.BalanceResponse;
 import com.guozha.buyserver.web.controller.account.GenerateInviteResponse;
 import com.guozha.buyserver.web.controller.account.InviteResponse;
@@ -284,111 +281,7 @@ public class AccountServiceImpl extends AbstractBusinessObjectServiceMgr impleme
 		return final_no;
 	}
 
-	/**
-	 * 我的地址查询
-	 * 
-	 * @author sunhanbin
-	 * @date 2015-03-10
-	 */
-	public List<AddressResponse> list(AddressRequest request) {
-		List<AddressResponse> reponse = null;
-		if (request != null) {
-			int userId = request.getUserId();
-			if (userId > 0)
-				reponse = accountMapper.getMyAddress(userId);
-		}
-		return reponse;
-	}
-
-	/**
-	 * 获取行区列表
-	 * 
-	 * @author sunhanbin
-	 * @date 2015-03-10
-	 */
-	public List<AddressResponse> listArea(AddressRequest request) {
-		List<AddressResponse> reponse = null;
-		if (request != null) {
-			int parentAreaId = request.getParentAreaId();
-			if (parentAreaId > 0)
-				reponse = accountMapper.listArea(parentAreaId);
-		}
-		return reponse;
-	}
-
-	/**
-	 * 获取小区列表
-	 * 
-	 * @author sunhanbin
-	 * @date 2015-03-10
-	 */
-	public List<AddressResponse> listBuilding(AddressRequest request) {
-		List<AddressResponse> reponse = null;
-		if (request != null) {
-			int townId = request.getTownId();
-			if (townId > 0)
-				reponse = accountMapper.listBuilding(townId);
-		}
-		return reponse;
-	}
-
-	/**
-	 * 新增地址
-	 * 
-	 * @author sunhanbin
-	 * @date 2015-03-10
-	 */
-	public ReturnCode insert(AddressRequest request) {
-		String returncode = "";
-		ReturnCode result = new ReturnCode();
-		if (request != null) {
-			int addressId = accountMapper.insert(request);
-			returncode = addressId <= 0 ? ReturnCodeEnum.FAILED.status : ReturnCodeEnum.SUCCESS.status;
-			result.setReturnCode(returncode);
-		}
-		return result;
-	}
-
-	/**
-	 * 删除地址
-	 * 
-	 * @author sunhanbin
-	 * @date 2015-03-10
-	 */
-	public ReturnCode delete(AddressRequest address) {
-		String returncode = "";
-		ReturnCode result = new ReturnCode();
-		int count = 0;
-		if (address != null) {
-			int addressId = address.getAddressId();
-			if (addressId > 0)
-				count = accountMapper.delete(addressId);
-			returncode = count == 1 ? ReturnCodeEnum.SUCCESS.status : ReturnCodeEnum.FAILED.status;
-			result.setReturnCode(returncode);
-		}
-		return result;
-	}
-
-	/**
-	 * 设置默认地址
-	 * 
-	 * @author sunhanbin
-	 * @date 2015-03-10
-	 */
-	public ReturnCode defaultAddress(AddressRequest address) {
-		String returncode = "";
-		ReturnCode result = new ReturnCode();
-		int count = 0;
-		if (address != null) {
-			int addressId = address.getAddressId();
-			if (addressId > 0)
-				count = accountMapper.defaultAddress(addressId);
-			returncode = count == 1 ? ReturnCodeEnum.SUCCESS.status : ReturnCodeEnum.FAILED.status;
-			result.setReturnCode(returncode);
-		}
-		return result;
-	}
-
+	
 	/**
 	 * 我的菜票查询
 	 * 

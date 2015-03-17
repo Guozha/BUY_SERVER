@@ -46,10 +46,16 @@ WHERE
 </delete>
 
 
-<!--设置默认地址  -->
+<!--更改地址状态（是否默认地址）  -->
 <update id="defaultAddress" parameterType="int">
    UPDATE ACC_ADDRESS SET default_flag = '1'
    WHERE  address_id = #{addressId}
+</update>
+
+<!--将用户地址改为非默认  -->
+<update id="defaultAddressNo" parameterType="int">
+   UPDATE ACC_ADDRESS SET default_flag = '0'
+   WHERE user_id=#{userId}# And default_flag = '1'
 </update>
 
 

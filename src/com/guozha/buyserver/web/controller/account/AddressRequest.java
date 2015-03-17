@@ -20,8 +20,9 @@ public class AddressRequest {
 	private int buildingId; // 小区id
 	private String buildingName; // 小区名
 	private String detailAddr; // 详细地址
-	
-	private int addressId;//地址ID
+	private String defaultFlag;// 是否默认地址
+
+	private int addressId;// 地址ID
 
 	public String getToken() {
 		return token;
@@ -127,5 +128,12 @@ public class AddressRequest {
 		this.addressId = addressId;
 	}
 
+	public String getDefaultFlag() {
+		return defaultFlag;
+	}
+
+	public void setDefaultFlag(String defaultFlag) {
+		this.defaultFlag = defaultFlag;
+	}
 
 }

@@ -50,23 +50,6 @@ public interface AccountService extends BusinessObjectServiceMgr {
 	// 菜票编号生成生成公共规则
 	String generateTicketNo(String ticketType);
 	
-	// 我的地址查询
-	List<AddressResponse> list(AddressRequest address);
-
-	// 获取行区列表
-	List<AddressResponse> listArea(AddressRequest address);
-
-	// 获取小区列表
-	List<AddressResponse> listBuilding(AddressRequest address);
-
-	// 新增地址
-	ReturnCode insert(AddressRequest address);
-
-	// 删除地址
-	ReturnCode delete(AddressRequest address);
-
-	// 设置默认地址
-	ReturnCode defaultAddress(AddressRequest address);
 	
 	// 我的菜票查询
 	List<AccMyTicket> list(TicketRequest ticket);

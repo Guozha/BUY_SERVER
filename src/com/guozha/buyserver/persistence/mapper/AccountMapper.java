@@ -15,31 +15,13 @@ import com.guozha.buyserver.persistence.beans.AccMyInvite;
 import com.guozha.buyserver.persistence.beans.AccMyTicket;
 import com.guozha.buyserver.persistence.beans.SysSeq;
 import com.guozha.buyserver.web.controller.account.AccountInfoResponse;
-import com.guozha.buyserver.web.controller.account.AddressRequest;
-import com.guozha.buyserver.web.controller.account.AddressResponse;
 import com.guozha.buyserver.web.controller.account.BalanceResponse;
 import com.guozha.buyserver.web.controller.account.PasswdRequest;
 
 @Repository
 public interface AccountMapper extends BaseMapper<AccAddress, Integer> {
 
-	// 我的地址查询
-	List<AddressResponse> getMyAddress(int userId);
 
-	// 获取行区列表
-	List<AddressResponse> listArea(int parentAreaId);
-
-	// 获取小区列表
-	List<AddressResponse> listBuilding(int townId);
-
-	// 新增地址
-	int insert(AddressRequest address);
-
-	// 删除地址
-	int delete(int addressId);
-
-	// 设置默认地址
-	int defaultAddress(int addressId);
 
 	// 我的菜票查询
 	List<AccMyTicket> listTicket(int userId);
