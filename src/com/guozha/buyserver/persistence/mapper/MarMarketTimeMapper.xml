@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//ibatis.apache.org//DTD Mapper 3.0//EN"
+"http://ibatis.apache.org/dtd/ibatis-3-mapper.dtd">
+
+<mapper namespace="com.guozha.buyserver.persistence.mapper.MarMarketTimeMapper">
+
+    <resultMap id="marketTimeRM" type="com.guozha.buyserver.web.controller.order.MarketTimeResponse">
+        <result property="fromTime" jdbcType="INTEGER" column="FROM_TIME"/>
+        <result property="toTime" jdbcType="INTEGER" column="TO_TIME"/>
+    </resultMap>
+
+    <select id="findTimeByMarketId" parameterType="java.lang.Integer" resultMap="marketTimeRM">
+        SELECT * FROM MAR_MARKET_TIME T WHERE T.MARKET_ID = #{marketId}
+    </select>
+
+</mapper>

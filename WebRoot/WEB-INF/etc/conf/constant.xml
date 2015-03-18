@@ -96,6 +96,7 @@
     	<constantName value="3">预售订单</constantName>
 	</constant>
 	<constant constantDef="ORDER_STATUS">
+	    <constantName value="00">已取消</constantName>
     	<constantName value="01">新创建</constantName>
     	<constantName value="02">新订单</constantName>
     	<constantName value="03">已接收</constantName>

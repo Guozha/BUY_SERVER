@@ -5,4 +5,8 @@ PUBLIC "-//ibatis.apache.org//DTD Mapper 3.0//EN"
 
 <mapper namespace="com.guozha.buyserver.persistence.mapper.BuyOrderMapper">
 
+    <update id="updateStatus" parameterType="java.util.Map">
+        UPDATE BUY_ORDER T SET T.STATUS = #{newStatus} WHERE T.ORDER_ID = #{orderId} AND T.STATUS = #{oldStatus} 
+    </update>
+
 </mapper>
