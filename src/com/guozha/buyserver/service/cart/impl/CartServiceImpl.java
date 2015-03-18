@@ -10,9 +10,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.guozha.buyserver.common.util.SystemResource;
 import com.guozha.buyserver.framework.sys.business.AbstractBusinessObjectServiceMgr;
 import com.guozha.buyserver.persistence.beans.BuyCart;
 import com.guozha.buyserver.persistence.beans.GooGoods;
+import com.guozha.buyserver.persistence.beans.MarMarketGoods;
 import com.guozha.buyserver.persistence.beans.MnuMenu;
 import com.guozha.buyserver.persistence.mapper.BuyCartMapper;
 import com.guozha.buyserver.persistence.mapper.GooGoodsMapper;
@@ -49,16 +51,29 @@ public class CartServiceImpl extends AbstractBusinessObjectServiceMgr implements
 				MnuMenu menu = this.mnuMenuMapper.load(vo.getId());
 				po.setDisplayName(menu.getMenuName());
 				po.setUnit("08");//constants.xml 
+				
+				List<MarMarketGoods> marketGoodsList = this.marMarketGoodsMapper.findByMenuId(marketId, vo.getId());
+				String marketGoodsId ="";
+				for(MarMarketGoods marketGoods:marketGoodsList){
+					marketGoodsId += marketGoods.getMarketGoodsId()+",";
+				}
+				marketGoodsId = marketGoodsId.substring(0, marketGoodsId.lastIndexOf(","));
+				po.setMarketGoodsId(marketGoodsId);
 			}else if("02".equals(vo.getProductType())){ //单品  constants.xml
 				GooGoods goods = this.gooGoodsMapper.load(vo.getId());
-				po.setPrice(marMarketGoodsMapper.findByGoodsId(marketId, goods.getGoodsId()).getPrice());
 				po.setDisplayName(goods.getGoodsName());
 				po.setUnit(goods.getUnit());//constants.xml 
+				
+				//存储农贸市场商品ID
+				MarMarketGoods marketGoods = this.marMarketGoodsMapper.findByGoodsId(marketId, vo.getId());
+				po.setMarketGoodsId(marketGoods.getMarketGoodsId().toString());
 			}
 			po.setUserId(vo.getUserId());
 			po.setGoodsOrMenuId(vo.getId());
 			po.setSplitType(vo.getProductType());
 			po.setAmount(vo.getAmount()[0]);
+			
+			po.setMarketId(marketId);
 			this.buyCartMapper.insert(po);
 		}else{  //修改购物车信息
 			po.setAmount(vo.getAmount()[0]);
@@ -92,7 +107,80 @@ public class CartServiceImpl extends AbstractBusinessObjectServiceMgr implements
 		this.buyCartMapper.deleteByUserId(vo.getUserId());
 		return new MsgResponse(MsgResponse.SUCC, "清空购物车成功");
 	}
+    
+	
+	@Override
+	public List<ProductTypeResponse> find(CartRequest vo) {
+		
+		List<BuyCart> menuCartList = new ArrayList<BuyCart>();
+		List<BuyCart> goodsCartList = new ArrayList<BuyCart>();
+		
+		
+		
+		List<BuyCart> pos = this.buyCartMapper.findByUserId(vo.getUserId());
+		int marketId =Integer.valueOf(SystemResource.getConfig("default_market_id"));
+		//获得菜场ID
+		if(!pos.isEmpty()){
+			marketId = pos.get(0).getMarketId();
+		}
+		for(BuyCart cart:pos){
+			if("01".equals(cart.getSplitType())){
+				menuCartList.add(cart);
+			}else if ("02".equals(cart.getSplitType())) {
+				goodsCartList.add(cart);
+			}
+		}
+		
+		
+		for(int i=0;i<menuCartList.size();i++){
+			
+		}
+		
 
+		Map<String, List<CartResponse>> map = new LinkedHashMap<String, List<CartResponse>>();
+		List<CartResponse> list = null;
+		//分组去重
+		for(BuyCart po:pos){
+			if(map.containsKey(po.getSplitType())){
+				map.get(po.getSplitType()).add(new CartResponse(po));
+			}else{
+				list = new ArrayList<CartResponse>();
+				list.add(new CartResponse(po));
+				map.put(po.getSplitType(), list);
+			}
+		}
+		
+		
+		//设置结果集
+		List<ProductTypeResponse> bos = new ArrayList<ProductTypeResponse>();
+		for (String productType : map.keySet()) {
+			ProductTypeResponse bo = new ProductTypeResponse();
+			bo.setProductType(productType);
+			//计算单价
+			if("01".equals(productType)){
+				/*
+				//菜谱单价设置
+				for(int i =0;i<map.get(productType).size();i++){
+					List<MarMarketGoods> marketGoodsList = this.marMarketGoodsMapper.findByMenuId(marketId, map.get(productType).get(i).getId());
+					
+					map.get(productType).get(i).setPrice(marketGoods.getPrice());
+				}
+				*/
+				//map.get(productType).get(0).setPrice(price);
+			}else if("02".equals(productType)){
+				for(int i =0;i<map.get(productType).size();i++){
+					//商品单价设置
+					MarMarketGoods marketGoods = this.marMarketGoodsMapper.findByGoodsId(marketId, map.get(productType).get(i).getId());
+					map.get(productType).get(i).setPrice(marketGoods.getPrice());
+				}
+			}
+			bo.setCartList(map.get(productType));
+			bos.add(bo);
+		}
+		return bos;
+	}
+	
+	/*
 	@Override
 	public List<ProductTypeResponse> find(CartRequest vo) {
 		List<BuyCart> pos = this.buyCartMapper.findByUserId(vo.getUserId());
@@ -109,16 +197,43 @@ public class CartServiceImpl extends AbstractBusinessObjectServiceMgr implements
 			}
 		}
 		
+		int marketId =0;
+		//获得菜场ID
+		if(!pos.isEmpty()){
+			marketId = pos.get(0).getMarketId();
+		}
 		//设置结果集
 		List<ProductTypeResponse> bos = new ArrayList<ProductTypeResponse>();
 		for (String productType : map.keySet()) {
-			ProductTypeResponse bo = new ProductTypeResponse(productType);
+			ProductTypeResponse bo = new ProductTypeResponse();
+			bo.setProductType(productType);
+			//计算单价
+			if("01".equals(productType)){
+				//菜谱单价设置
+				for(int i =0;i<map.get(productType).size();i++){
+					List<MarMarketGoods> marketGoodsList = this.marMarketGoodsMapper.findByMenuId(marketId, map.get(productType).get(i).getId());
+					
+					map.get(productType).get(i).setPrice(marketGoods.getPrice());
+				}
+				
+				//map.get(productType).get(0).setPrice(price);
+			}else if("02".equals(productType)){
+				for(int i =0;i<map.get(productType).size();i++){
+					//商品单价设置
+					MarMarketGoods marketGoods = this.marMarketGoodsMapper.findByGoodsId(marketId, map.get(productType).get(i).getId());
+					map.get(productType).get(i).setPrice(marketGoods.getPrice());
+				}
+			}
 			bo.setCartList(map.get(productType));
 			bos.add(bo);
 		}
+		
+		//设置单价
+		
+		
 		return bos;
 	}
 
-	
+	*/
 
 }

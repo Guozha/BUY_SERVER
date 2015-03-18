@@ -26,6 +26,20 @@ public interface BuyCartMapper extends BaseMapper<BuyCart, Integer> {
 	List<BuyCart> findByUserId(int userId);
 	
 	/**
+	 * 查询购物车菜谱信息
+	 * @param userId
+	 * @return
+	 */
+	List<BuyCart> findMenuByUserId(int userId);
+	
+	/**
+	 * 查询购物车食材信息
+	 * @param userId
+	 * @return
+	 */
+	List<BuyCart> findGoodsByUserId(int userId);
+	
+	/**
 	 * 删除用户所有购物车信息
 	 * @param userId
 	 */

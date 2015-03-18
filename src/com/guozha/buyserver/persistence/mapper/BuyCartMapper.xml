@@ -11,13 +11,14 @@ PUBLIC "-//ibatis.apache.org//DTD Mapper 3.0//EN"
         <result property="splitType" jdbcType="VARCHAR" column="SPLIT_TYPE"/>
         <result property="goodsOrMenuId" jdbcType="INTEGER" column="GOODS_OR_MENU_ID"/>
         <result property="displayName" jdbcType="INTEGER" column="DISPLAY_NAME"/>
-        <result property="price" jdbcType="INTEGER" column="PRICE"/>
         <result property="amount" jdbcType="INTEGER" column="AMOUNT"/>
         <result property="unit" jdbcType="VARCHAR" column="UNIT"/>
+        <result property="marketId" jdbcType="INTEGER" column="MARKET_ID"/>
+        <result property="marketGoodsId" jdbcType="VARCHAR" column="MARKET_GOODS_ID"/>
 	</resultMap>
 	
 	<sql id="BASE_COLUMN_LIST">
-		CART_ID,USER_ID,SPLIT_TYPE,GOODS_OR_MENU_ID,DISPLAY_NAME,PRICE,AMOUNT,UNIT
+		CART_ID,USER_ID,SPLIT_TYPE,GOODS_OR_MENU_ID,DISPLAY_NAME,AMOUNT,UNIT,MARKET_ID,MARKET_GOODS_ID
 	</sql>
 	
     <!-- 所有用户购物车信息 -->
@@ -28,6 +29,28 @@ PUBLIC "-//ibatis.apache.org//DTD Mapper 3.0//EN"
 		WHERE
 		    USER_ID =#{userId}
 		ORDER BY SPLIT_TYPE ASC,CART_ID DESC
+	</select>
+	
+	  <!-- 所有用户菜谱信息 -->
+	<select id="findMenuByUserId" parameterType="int" resultMap="rm">
+		SELECT 
+			<include refid="BASE_COLUMN_LIST" />
+		FROM BUY_CART
+		WHERE
+		    USER_ID =#{userId}
+		    AND SPLIT_TYPE ='01'
+		ORDER BY CART_ID DESC
+	</select>
+	
+	  <!-- 所有用户商品食材信息 -->
+	<select id="findGoodsByUserId" parameterType="int" resultMap="rm">
+		SELECT 
+			<include refid="BASE_COLUMN_LIST" />
+		FROM BUY_CART
+		WHERE
+		    USER_ID =#{userId}
+		    AND SPLIT_TYPE ='02'
+		ORDER BY CART_ID DESC
 	</select>
 	
 	<!-- 删除单个购物车信息 -->
@@ -84,18 +107,20 @@ PUBLIC "-//ibatis.apache.org//DTD Mapper 3.0//EN"
 	        SPLIT_TYPE,
 	        GOODS_OR_MENU_ID,
 	        DISPLAY_NAME,
-	        PRICE,
 	        AMOUNT,
-	        UNIT
+	        UNIT,
+	        MARKET_ID,
+	        MARKET_GOODS_ID
 	   )VALUES(
 	       #{cartId},
 	       #{userId},
 	       #{splitType},
 	       #{goodsOrMenuId},
 	       #{displayName},
-	       #{price,jdbcType=INTEGER},
 	       #{amount},
-	       #{unit}
+	       #{unit},
+	       #{marketId},
+	       #{marketGoodsId}
 	   )
 	</insert>
 	

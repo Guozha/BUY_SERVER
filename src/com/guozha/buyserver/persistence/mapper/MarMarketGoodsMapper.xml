@@ -12,13 +12,32 @@ PUBLIC "-//ibatis.apache.org//DTD Mapper 3.0//EN"
         <result property="openBuyFlag" jdbcType="VARCHAR" column="OPEN_BUY_FLAG"/>
         <result property="price" jdbcType="INTEGER" column="PRICE"/>
 	</resultMap>
-
+     <sql id="BASE_COLUMN_LIST">
+		T.MARKET_GOODS_ID,T.MARKET_ID,T.GOODS_ID,T.OPEN_BUY_FLAG,T.PRICE
+	</sql>
     <select id="getGoodIdsInMarket" parameterType="java.util.Map" resultMap="rm">
         SELECT T.GOODS_ID FROM MAR_MARKET_GOODS T WHERE T.MARKET_ID = #{marketId} AND T.OPEN_BUY_FLAG = #{openBuyFlag}
     </select>
 	
-	<!-- 查询农贸市场商品单价 -->
+	<!-- 查询农贸市场商品-->
 	<select id="findByGoodsId" parameterType="java.util.Map" resultMap="rm">
-        SELECT T.* FROM MAR_MARKET_GOODS T WHERE T.MARKET_ID = #{marketId} AND T.GOODS_ID = #{goodsId}
+        SELECT 
+            <include refid="BASE_COLUMN_LIST"/> 
+        FROM MAR_MARKET_GOODS T 
+        WHERE 
+            T.MARKET_ID = #{marketId} 
+            AND T.GOODS_ID = #{goodsId}
+    </select>
+    
+    <!-- 查询菜谱对应的农贸商品 -->
+    <select id="findByMenuId" parameterType="java.util.Map" resultMap="rm">
+  		  SELECT  
+  		      <include refid="BASE_COLUMN_LIST"/>
+  		  FROM MNU_MENU_GOODS A ,GOO_GOODS B,MAR_MARKET_GOODS T 
+ 		  WHERE 
+ 		     A.GOODS_ID = B.GOODS_ID 
+ 		     AND B.GOODS_ID = T.GOODS_ID
+             AND A.MENU_ID = #{menuId}  
+             AND T.MARKET_ID = #{marketId} 
     </select>
 </mapper>

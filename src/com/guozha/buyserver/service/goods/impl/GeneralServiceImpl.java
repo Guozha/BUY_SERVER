@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.guozha.buyserver.common.util.PriceUtils;
 import com.guozha.buyserver.framework.sys.business.AbstractBusinessObjectServiceMgr;
 import com.guozha.buyserver.persistence.beans.BasFrontType;
 import com.guozha.buyserver.persistence.beans.GooGoods;
@@ -107,14 +108,19 @@ public class GeneralServiceImpl extends AbstractBusinessObjectServiceMgr impleme
 
 	@Override
 	public List<GoodsPriceResponse> findGoodsPriceByGoodsId(int goodsId) {
-		//List<GooGoodsPrice> pos = this.gooGoodsPriceMapper.findByGoodsId(goodsId);
-		List<MarMarketGoodsPrice> pos = this.marMarketGoodsPriceMapper.findByGoodsId(marketId, goodsId);
 		GooGoods goodPo =this.gooGoodsMapper.load(goodsId);
+		//商品单价
+		int unitPrice = this.marMarketGoodsMapper.findByGoodsId(marketId, goodsId).getPrice();
+		//商品重量配置
+		List<MarMarketGoodsPrice> pos = this.marMarketGoodsPriceMapper.findByGoodsId(marketId, goodsId);
 		List<GoodsPriceResponse> bos = new ArrayList<GoodsPriceResponse>();
 	    for(MarMarketGoodsPrice po:pos){
-	    	GoodsPriceResponse res = new GoodsPriceResponse(po);
+	    	GoodsPriceResponse res = new GoodsPriceResponse();
 	    	res.setUnit(goodPo.getUnit());
 	    	res.setGoodsId(goodsId);
+	    	res.setAmount(po.getAmount());
+	    	res.setGoodsPriceId(po.getGoodsPriceId());
+	    	res.setPrice(PriceUtils.getGoodsPrice(unitPrice, po.getAmount(), goodPo.getUnit()));
 	    	bos.add(res);
 	    }
 		return bos;

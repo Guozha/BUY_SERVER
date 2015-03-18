@@ -10,11 +10,6 @@ import java.util.List;
  * @date 2015-2-11 上午9:47:31
  */
 public class ProductTypeResponse {
-	
-	public ProductTypeResponse(String productType) {
-		super();
-		this.productType = productType;
-	}
 
 	private String productType;
 	private List<CartResponse> cartList;

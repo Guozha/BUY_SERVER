@@ -19,5 +19,13 @@ public interface MarMarketGoodsMapper extends
 	 * @return
 	 */
 	MarMarketGoods findByGoodsId(@Param("marketId")int marketId, @Param("goodsId")int goodsId);
+	
+	/**
+	 * 查询菜谱对应的农贸商品 
+	 * @param marketId 市场ID
+	 * @param menuId  菜谱ID
+	 * @return
+	 */
+	List<MarMarketGoods> findByMenuId(@Param("marketId")int marketId, @Param("menuId")int menuId);
 
 }

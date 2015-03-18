@@ -8,24 +8,23 @@ PUBLIC "-//ibatis.apache.org//DTD Mapper 3.0//EN"
 	<resultMap id="rm" type="com.guozha.buyserver.persistence.beans.MarMarketGoodsPrice">
         <result property="goodsPriceId" jdbcType="INTEGER" column="GOODS_PRICE_ID"/>
         <result property="marketGoodsId" jdbcType="INTEGER" column="MARKET_GOODS_ID"/>
-        <result property="weight" jdbcType="INTEGER" column="WEIGHT"/>
-        <result property="price" jdbcType="INTEGER" column="PRICE"/>
+        <result property="amount" jdbcType="INTEGER" column="AMOUNT"/>
 	</resultMap>
 	
 	<sql id="BASE_COLUMN_LIST">
-		GOODS_PRICE_ID,MARKET_GOODS_ID,WEIGHT,PRICE
+		GOODS_PRICE_ID,MARKET_GOODS_ID,AMOUNT
 	</sql>
 	
 	
     <!-- 商品价格配置 -->
 	<select id="findByGoodsId" resultMap="rm">
 		SELECT 
-			T.GOODS_PRICE_ID,T.MARKET_GOODS_ID,T.WEIGHT,T.PRICE
+			T.GOODS_PRICE_ID,T.MARKET_GOODS_ID,T.AMOUNT
 		FROM MAR_MARKET_GOODS_PRICE T, MAR_MARKET_GOODS b
 		WHERE 
 		    T.MARKET_GOODS_ID = B.MARKET_GOODS_ID
 		    AND B.GOODS_ID = #{goodsId} 
 		    AND B.MARKET_ID = #{marketId}
-		ORDER BY T.PRICE ASC
+		ORDER BY T.AMOUNT ASC
 	</select>
 </mapper>

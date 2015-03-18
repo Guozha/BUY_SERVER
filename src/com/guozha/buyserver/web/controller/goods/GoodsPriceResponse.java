@@ -12,18 +12,10 @@ import com.guozha.buyserver.persistence.beans.MarMarketGoodsPrice;
 public class GoodsPriceResponse {
 	private Integer goodsPriceId;
 	private Integer goodsId;
-	private Integer weight;
+	private Integer amount;
 	private Integer price;
     private String unit;
 	
-	
-
-	public GoodsPriceResponse(MarMarketGoodsPrice po) {
-		super();
-		this.goodsPriceId = po.getGoodsPriceId();
-		this.weight = po.getWeight();
-		this.price = po.getPrice();
-	}
 
 	public Integer getGoodsPriceId() {
 		return goodsPriceId;
@@ -41,13 +33,14 @@ public class GoodsPriceResponse {
 		this.goodsId = goodsId;
 	}
 
-	public Integer getWeight() {
-		return weight;
+	public Integer getAmount() {
+		return amount;
 	}
 
-	public void setWeight(Integer weight) {
-		this.weight = weight;
+	public void setAmount(Integer amount) {
+		this.amount = amount;
 	}
+
 
 	public Integer getPrice() {
 		return price;

@@ -22,7 +22,7 @@ public class CartResponse {
 		this.productType = po.getSplitType();
 		this.id = po.getGoodsOrMenuId();
 		this.displayName = po.getDisplayName();
-		this.price = po.getPrice();
+		//this.price = po.getPrice();
 		this.amount = po.getAmount();
 		this.unit  = po.getUnit();
 	}
