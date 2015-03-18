@@ -19,6 +19,7 @@ import com.guozha.buyserver.persistence.mapper.MarMarketGoodsMapper;
 import com.guozha.buyserver.persistence.mapper.MarMarketGoodsPriceMapper;
 import com.guozha.buyserver.persistence.mapper.MnuMenuMapper;
 import com.guozha.buyserver.service.goods.GeneralService;
+import com.guozha.buyserver.service.market.MarketService;
 import com.guozha.buyserver.web.controller.goods.FrontTypeRequest;
 import com.guozha.buyserver.web.controller.goods.FrontTypeResponse;
 import com.guozha.buyserver.web.controller.goods.GoodsInfoResponse;
@@ -44,8 +45,9 @@ public class GeneralServiceImpl extends AbstractBusinessObjectServiceMgr impleme
 	@Autowired
 	private MarMarketGoodsMapper marMarketGoodsMapper;
 	
-	//农贸市场ID 临时参数需调整
-	private int marketId=1;
+	@Autowired
+	private MarketService marketService;
+    
 	
 	@Override
 	public List<FrontTypeResponse> findFrontType(FrontTypeRequest vo) {
@@ -77,8 +79,7 @@ public class GeneralServiceImpl extends AbstractBusinessObjectServiceMgr impleme
 	
 	@Override
 	public List<GoodsResponse> findGoods(GoodsRequest vo) {
-		
-		//根据商户地址获得农贸市场？？？？？？
+		int marketId= this.marketService.findMaketId(vo.getAddressId());
 		
 		List<GoodsResponse> list = null;
 		Integer frontTypeId = vo.getFrontTypeId();
@@ -99,25 +100,27 @@ public class GeneralServiceImpl extends AbstractBusinessObjectServiceMgr impleme
 	}
 	
 	@Override
-	public GoodsInfoResponse findGoodsById(int goodsId) {
-		GooGoods po = this.gooGoodsMapper.load(goodsId);
+	public GoodsInfoResponse findGoodsById(GoodsRequest vo) {
+		int marketId= this.marketService.findMaketId(vo.getAddressId());
+		GooGoods po = this.gooGoodsMapper.load(vo.getGoodsId());
 		GoodsInfoResponse response = new GoodsInfoResponse(po);
-		response.setPrice(marMarketGoodsMapper.findByGoodsId(marketId, goodsId).getPrice());
+		response.setPrice(marMarketGoodsMapper.findByGoodsId(marketId, vo.getGoodsId()).getPrice());
 		return response;
 	}
 
 	@Override
-	public List<GoodsPriceResponse> findGoodsPriceByGoodsId(int goodsId) {
-		GooGoods goodPo =this.gooGoodsMapper.load(goodsId);
+	public List<GoodsPriceResponse> findGoodsPriceByGoodsId(GoodsRequest vo) {
+		int marketId= this.marketService.findMaketId(vo.getAddressId());
+		GooGoods goodPo =this.gooGoodsMapper.load(vo.getGoodsId());
 		//商品单价
-		int unitPrice = this.marMarketGoodsMapper.findByGoodsId(marketId, goodsId).getPrice();
+		int unitPrice = this.marMarketGoodsMapper.findByGoodsId(marketId, vo.getGoodsId()).getPrice();
 		//商品重量配置
-		List<MarMarketGoodsPrice> pos = this.marMarketGoodsPriceMapper.findByGoodsId(marketId, goodsId);
+		List<MarMarketGoodsPrice> pos = this.marMarketGoodsPriceMapper.findByGoodsId(marketId, vo.getGoodsId());
 		List<GoodsPriceResponse> bos = new ArrayList<GoodsPriceResponse>();
 	    for(MarMarketGoodsPrice po:pos){
 	    	GoodsPriceResponse res = new GoodsPriceResponse();
 	    	res.setUnit(goodPo.getUnit());
-	    	res.setGoodsId(goodsId);
+	    	res.setGoodsId(vo.getGoodsId());
 	    	res.setAmount(po.getAmount());
 	    	res.setGoodsPriceId(po.getGoodsPriceId());
 	    	res.setPrice(PriceUtils.getGoodsPrice(unitPrice, po.getAmount(), goodPo.getUnit()));
@@ -127,8 +130,8 @@ public class GeneralServiceImpl extends AbstractBusinessObjectServiceMgr impleme
 	}
 
 	@Override
-	public List<GoodsMenuResponse> findMenuByGoodsId(int goodsId) {
-		List<MnuMenu> pos = this.mnuMenuMapper.findByGoodsId(goodsId);
+	public List<GoodsMenuResponse> findMenuByGoodsId(GoodsRequest vo) {
+		List<MnuMenu> pos = this.mnuMenuMapper.findByGoodsId(vo.getGoodsId());
 		List<GoodsMenuResponse> bos = new ArrayList<GoodsMenuResponse>();
 		for(MnuMenu po : pos){
 			bos.add(new GoodsMenuResponse(po));

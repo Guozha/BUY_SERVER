@@ -1,12 +1,10 @@
 package com.guozha.buyserver.service.cart;
 
 import java.util.List;
-import java.util.Map;
 
 import com.guozha.buyserver.framework.sys.business.BusinessObjectServiceMgr;
 import com.guozha.buyserver.web.controller.MsgResponse;
 import com.guozha.buyserver.web.controller.cart.CartRequest;
-import com.guozha.buyserver.web.controller.cart.CartResponse;
 import com.guozha.buyserver.web.controller.cart.ProductTypeResponse;
 
 /**

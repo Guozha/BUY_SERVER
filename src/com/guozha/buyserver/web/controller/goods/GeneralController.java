@@ -61,8 +61,8 @@ public class GeneralController extends BaseController {
 	 * @param response
 	 */
 	@RequestMapping(value="/info")
-	public void info(GoodsInfoRequest vo,HttpServletResponse response){
-		responseJson(generalService.findGoodsById(vo.getGoodsId()), response);
+	public void info(GoodsRequest vo,HttpServletResponse response){
+		responseJson(generalService.findGoodsById(vo), response);
 	}
 	
 	/**
@@ -71,8 +71,8 @@ public class GeneralController extends BaseController {
 	 * @param response
 	 */
 	@RequestMapping(value="/price")
-	public void price(GoodsPriceRequest vo,HttpServletResponse response){
-		responseJson(generalService.findGoodsPriceByGoodsId(vo.getGoodsId()), response);
+	public void price(GoodsRequest vo,HttpServletResponse response){
+		responseJson(generalService.findGoodsPriceByGoodsId(vo), response);
 	}
     
 	/**
@@ -81,8 +81,8 @@ public class GeneralController extends BaseController {
 	 * @param response
 	 */
 	@RequestMapping(value="/menu")
-	public void menu(GoodsMenuRequest vo,HttpServletResponse response){
-		responseJson(generalService.findMenuByGoodsId(vo.getGoodsId()), response);
+	public void menu(GoodsRequest vo,HttpServletResponse response){
+		responseJson(generalService.findMenuByGoodsId(vo), response);
 	}
 
 }

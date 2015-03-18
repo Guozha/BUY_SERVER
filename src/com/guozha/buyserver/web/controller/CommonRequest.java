@@ -10,6 +10,16 @@ package com.guozha.buyserver.web.controller;
 public class CommonRequest {
 	
 	private Integer userId;
+	
+	private Integer addressId;
+
+	public Integer getAddressId() {
+		return addressId;
+	}
+
+	public void setAddressId(Integer addressId) {
+		this.addressId = addressId;
+	}
 
 	public Integer getUserId() {
 		return userId;

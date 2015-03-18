@@ -21,6 +21,7 @@ import com.guozha.buyserver.persistence.mapper.GooGoodsMapper;
 import com.guozha.buyserver.persistence.mapper.MarMarketGoodsMapper;
 import com.guozha.buyserver.persistence.mapper.MnuMenuMapper;
 import com.guozha.buyserver.service.cart.CartService;
+import com.guozha.buyserver.service.market.MarketService;
 import com.guozha.buyserver.web.controller.MsgResponse;
 import com.guozha.buyserver.web.controller.cart.CartRequest;
 import com.guozha.buyserver.web.controller.cart.CartResponse;
@@ -39,11 +40,13 @@ public class CartServiceImpl extends AbstractBusinessObjectServiceMgr implements
     
 	@Autowired
 	private MarMarketGoodsMapper marMarketGoodsMapper;
+	
+	@Autowired
+	private MarketService marketService;
     
-    //农贸市场ID 临时参数需调整 农贸市场ID = 用户地址对应的菜场id
-    private int marketId=1;
 	@Override
 	public MsgResponse add(CartRequest vo) {
+		int marketId= this.marketService.findMaketId( vo.getAddressId());
 		BuyCart po = this.buyCartMapper.selectByGoodsOrMenuId(vo.getUserId(), vo.getId(),vo.getProductType());
 		if(po==null){  //新的购物车信息
 			po = new BuyCart();

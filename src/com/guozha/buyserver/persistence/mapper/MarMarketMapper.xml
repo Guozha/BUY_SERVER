@@ -21,15 +21,14 @@ PUBLIC "-//ibatis.apache.org//DTD Mapper 3.0//EN"
 	</sql>
 	
 	
-    <!--用户默认农贸市场 -->
-	<select id="findDefaultByUserId" resultMap="rm">
+    <!--配送地址所在的农贸市场 -->
+	<select id="findByAddressId" resultMap="rm" parameterType="map">
 		SELECT 
 			C.MARKET_ID
 		FROM ACC_ADDRESS T, BAS_BUILDING C
 		WHERE
-		    AND T.BUILDING_ID = C.BUILDING_ID
-		    AND T.DEFAULT_FLAG = '1'
-		    AND T.USER_ID = #{userId}
-		    
+		    T.BUILDING_ID = C.BUILDING_ID
+		    AND T.ADDRESS_ID = #{addressId}
+		    LIMIT 1
 	</select>
 </mapper>

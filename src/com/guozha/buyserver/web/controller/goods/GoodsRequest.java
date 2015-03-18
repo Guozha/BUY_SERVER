@@ -1,5 +1,7 @@
 package com.guozha.buyserver.web.controller.goods;
 
+import com.guozha.buyserver.web.controller.CommonRequest;
+
 /**
  * 商品VO
  * @Package com.guozha.buyserver.web.controller.goods
@@ -7,18 +9,18 @@ package com.guozha.buyserver.web.controller.goods;
  * @author txf
  * @date 2015-3-11 下午12:42:42
  */
-public class GoodsRequest {
+public class GoodsRequest extends CommonRequest{
 	
 	private Integer frontTypeId; //类目ID
 	
-	private Integer addressId; //用户地址id
+	private Integer goodsId;
 
-	public Integer getAddressId() {
-		return addressId;
+	public Integer getGoodsId() {
+		return goodsId;
 	}
 
-	public void setAddressId(Integer addressId) {
-		this.addressId = addressId;
+	public void setGoodsId(Integer goodsId) {
+		this.goodsId = goodsId;
 	}
 
 	public Integer getFrontTypeId() {

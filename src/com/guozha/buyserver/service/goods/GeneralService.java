@@ -1,7 +1,6 @@
 package com.guozha.buyserver.service.goods;
 
 import java.util.List;
-import java.util.Map;
 
 import com.guozha.buyserver.framework.sys.business.BusinessObjectServiceMgr;
 import com.guozha.buyserver.web.controller.goods.FrontTypeRequest;
@@ -47,21 +46,21 @@ public interface GeneralService extends BusinessObjectServiceMgr{
 	 * @param goodsId 商品id
 	 * @return
 	 */
-	GoodsInfoResponse findGoodsById(int goodsId);
+	GoodsInfoResponse findGoodsById(GoodsRequest vo);
 	
 	/**
 	 * 商品价格配置详情
 	 * @param goodsId 商品id
 	 * @return
 	 */
-	List<GoodsPriceResponse> findGoodsPriceByGoodsId(int goodsId);
+	List<GoodsPriceResponse> findGoodsPriceByGoodsId(GoodsRequest vo);
     
 	/**
 	 * 商品菜谱查询
 	 * @param goodsId
 	 * @return
 	 */
-	List<GoodsMenuResponse> findMenuByGoodsId(int goodsId);
+	List<GoodsMenuResponse> findMenuByGoodsId(GoodsRequest vo);
 	
 	/**
 	 * 二级类目

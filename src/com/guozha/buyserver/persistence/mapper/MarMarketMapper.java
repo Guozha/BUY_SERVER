@@ -16,9 +16,9 @@ import com.guozha.buyserver.persistence.beans.MarMarket;
 public interface MarMarketMapper extends BaseMapper<MarMarket, Integer> {
 	
 	/**
-	 * 查询用户对应的农贸市场
-	 * @param userId
+	 * 配送地址所在的农贸市场
+	 * @param addressId 
 	 * @return
 	 */
-	public MarMarket findDefaultByUserId(int userId);
+	public MarMarket findByAddressId(int addressId);
 }
