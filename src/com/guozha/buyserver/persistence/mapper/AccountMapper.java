@@ -21,10 +21,11 @@ import com.guozha.buyserver.web.controller.account.PasswdRequest;
 @Repository
 public interface AccountMapper extends BaseMapper<AccAddress, Integer> {
 
+	// 我的菜票查询（所有有效菜票）
+	List<AccMyTicket> listTicketValid(int userId);
 
-
-	// 我的菜票查询
-	List<AccMyTicket> listTicket(int userId);
+	// 菜票查询（一个月内失效菜票）
+	List<AccMyTicket> listTicketInvalid(int userId);
 
 	// 获取账户余额
 	BalanceResponse getMyBalance(int userId);

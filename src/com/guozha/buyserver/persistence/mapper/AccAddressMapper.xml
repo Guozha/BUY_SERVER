@@ -47,16 +47,24 @@ WHERE
 
 
 <!--更改地址状态（是否默认地址）  -->
-<update id="defaultAddress" parameterType="int">
-   UPDATE ACC_ADDRESS SET default_flag = '1'
-   WHERE  address_id = #{addressId}
+<update id="defaultAddress" parameterType="com.guozha.buyserver.web.controller.account.AddressRequest">
+   UPDATE ACC_ADDRESS  SET   default_flag=#{defaultFlag}
+   <where>  
+   <if test="defaultFlag==1">
+     address_id = #{addressId}
+   </if>
+   <if test="defaultFlag==0">
+     user_id=#{userId}
+   </if>
+   </where>
 </update>
 
-<!--将用户地址改为非默认  -->
-<update id="defaultAddressNo" parameterType="int">
-   UPDATE ACC_ADDRESS SET default_flag = '0'
-   WHERE user_id=#{userId} 
-</update>
+
+<!--插入未覆盖区域记录表  -->
+<insert id="insertNoServiceRecord" useGeneratedKeys="true" keyProperty="noServiceRecordId" parameterType="com.guozha.buyserver.persistence.beans.AccNoServiceRecord">
+  	INSERT INTO ACC_NOSERVICE_RECORD 
+  	VALUES(#{noServiceRecordId},#{mobileNo},#{provinceId},#{cityId},#{countyId},#{detailAddr},#{recordTime})
+</insert>
 
 
 </mapper>

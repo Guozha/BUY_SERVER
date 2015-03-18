@@ -4,6 +4,7 @@ import java.util.List;
 
 import com.guozha.buyserver.dal.BaseMapper;
 import com.guozha.buyserver.persistence.beans.AccMyFavo;
+import com.guozha.buyserver.persistence.beans.AccNoServiceRecord;
 import com.guozha.buyserver.web.controller.account.AddressRequest;
 import com.guozha.buyserver.web.controller.account.AddressResponse;
 
@@ -31,9 +32,12 @@ public interface AccAddressMapper extends BaseMapper<AccMyFavo, Integer> {
 	int delete(int addressId);
 
 	// 更改地主状态（是否默认地址）
-	int defaultAddress(int addressId);
+	int defaultAddress(AddressRequest address);
 
 	// 将用户其余地址设置为非默认
 	int defaultAddressNo(int userId);
+
+	// 插入未覆盖区域记录表
+	void insertNoServiceRecord(AccNoServiceRecord noServiceRecord);
 
 }

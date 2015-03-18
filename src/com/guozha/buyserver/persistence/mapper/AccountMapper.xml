@@ -5,65 +5,19 @@ PUBLIC "-//ibatis.apache.org//DTD Mapper 3.0//EN"
 
 <mapper namespace="com.guozha.buyserver.persistence.mapper.AccountMapper">
 
-<!--我的地址查询  -->
-<select id="getMyAddress" parameterType="int"  resultType="com.guozha.buyserver.web.controller.account.AddressResponse">
-SELECT a.address_id AS addressId, a.mobile_no AS mobileNo, a.receive_name AS receiveName,
-	   p.area_name AS provinceName, c.area_name AS cityName, d.area_name AS countyName,
-	   t.area_name AS townName, a.building_name AS buildingName, a.detail_addr AS detailAddr,
-	   a.default_flag AS defaultFlag
-FROM ACC_ADDRESS a, SYS_USER u, BAS_AREA p, BAS_AREA c, BAS_AREA d, BAS_AREA t
-WHERE
-	a.user_id = u.user_id AND a.province_id = p.area_id AND a.city_ID = c.area_id AND c.parent_area_id = p.area_id
-    AND a.county_id = d.area_id AND a.town_id = t.area_id AND t.parent_area_id = d.area_id
-    AND d.parent_area_id = c.area_id AND p.area_level = '1' AND c.area_level = '2' AND d.area_level = '3'
-    AND t.area_level = '4' AND a.user_id =#{userId}
-</select>
 
-
-<!--获取行区列表  -->
-<select id="listArea" parameterType="int" resultType="com.guozha.buyserver.web.controller.account.AddressResponse">
-  SELECT area_id AS areaId,area_name AS areaName FROM BAS_AREA WHERE parent_area_id =#{parentAreaId}
-</select>
-
-
-<!--获取小区列表  -->
-<select id="listBuilding" parameterType="int" resultType="com.guozha.buyserver.web.controller.account.AddressResponse">
-  SELECT building_id AS buildingId, building_name AS buildingName
-  FROM BAS_BUILDING d WHERE town_id = #{townId} AND status = '1'
-</select>
-
-
-<!--新增地址  -->
-<insert id="insert" useGeneratedKeys="true" keyProperty="addressId" parameterType="com.guozha.buyserver.web.controller.account.AddressRequest">  
-   INSERT INTO ACC_ADDRESS(user_id,receive_name,mobile_no,province_id,city_id,county_id,town_id,building_id,building_name)
-	VALUES(#{userId},#{receiveName},#{mobileNo},#{provinceId},#{cityId},#{countyId},#{townId},#{buildingId},#{buildingName})
-</insert>  
-
-
-<!-- 删除地址 -->
-<delete id="delete" parameterType="int">
-  DELETE FROM ACC_ADDRESS WHERE address_id=#{addressId}
-</delete>
-
-
-<!--更改地址状态（是否默认地址）  -->
-<update id="defaultAddress" parameterType="int">
-   UPDATE ACC_ADDRESS SET default_flag = '1'
-   WHERE  address_id = #{addressId}
-</update>
-
-<!--将用户地址改为非默认  -->
-<update id="defaultAddressNo" parameterType="int">
-   UPDATE ACC_ADDRESS SET default_flag = '0'
-   WHERE user_id=#{userId}# And default_flag = '1'
-</update>
-
-
-<!-- 我的菜票查询 -->
-<select id="listTicket" parameterType="int" resultType="com.guozha.buyserver.persistence.beans.AccMyTicket">
+<!-- 我的菜票查询(所有有效菜票) -->
+<select id="listTicketValid" parameterType="int" resultType="com.guozha.buyserver.persistence.beans.AccMyTicket">
   SELECT my_ticket_id AS myTicketId, ticket_type AS ticketType, par_value AS parValue,
-	     for_price forPrice, valid_date AS validDate
+	     for_price forPrice, valid_date AS validDate,status AS status
   FROM ACC_MY_TICKET WHERE user_id =#{userId} AND status= '1' 
+</select>
+
+<!-- 我的菜票查询(一个月内失效菜票) -->
+<select id="listTicketInvalid" parameterType="int" resultType="com.guozha.buyserver.persistence.beans.AccMyTicket">
+   SELECT my_ticket_id AS myTicketId, ticket_type AS ticketType, par_value AS parValue,
+	     for_price forPrice, valid_date AS validDate,status AS status
+  FROM ACC_MY_TICKET WHERE user_id =#{userId}  AND status= '0' AND valid_date >=DATE_SUB(CURDATE(), INTERVAL 30 DAY)
 </select>
 
 <!-- 获取账户余额 -->

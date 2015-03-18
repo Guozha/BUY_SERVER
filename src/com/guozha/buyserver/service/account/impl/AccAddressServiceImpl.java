@@ -1,14 +1,18 @@
 package com.guozha.buyserver.service.account.impl;
 
+import java.sql.Timestamp;
+import java.util.Date;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.guozha.buyserver.common.util.DateUtil;
 import com.guozha.buyserver.framework.enums.ReturnCodeEnum;
 import com.guozha.buyserver.framework.enums.YesNo;
 import com.guozha.buyserver.framework.sys.business.AbstractBusinessObjectServiceMgr;
+import com.guozha.buyserver.persistence.beans.AccNoServiceRecord;
 import com.guozha.buyserver.persistence.mapper.AccAddressMapper;
 import com.guozha.buyserver.service.account.AccAddressService;
 import com.guozha.buyserver.service.account.ReturnCode;
@@ -86,9 +90,25 @@ public class AccAddressServiceImpl extends AbstractBusinessObjectServiceMgr impl
 		ReturnCode result = new ReturnCode();
 		if (request != null) {
 			String defaultFlag = request.getDefaultFlag();
+			// 小区是否已存在
+			Integer buildingId = request.getBuildingId();
+			if (buildingId == null) {// 小区未覆盖
+				// 2、插入未覆盖区域表
+				AccNoServiceRecord noService = new AccNoServiceRecord();
+				noService.setCityId(request.getCityId());
+				noService.setCountyId(request.getCountyId());
+				noService.setDetailAddr(request.getDetailAddr());
+				noService.setMobileNo(request.getMobileNo());
+				noService.setProvinceId(request.getProvinceId());
+				noService.setRecordTime(Timestamp.valueOf(DateUtil.date2String(new Date(), DateUtil.PATTERN_STANDARD)));
+				accAddressMapper.insertNoServiceRecord(noService);
+			}
 			accAddressMapper.insert(request);
 			if (YesNo.Yes.getCode().toString().equals(defaultFlag))// 如果设为默认
 				result = defaultAddress(request);
+			else if (request.getAddressId() > 0) {
+				result.setReturnCode(ReturnCodeEnum.SUCCESS.status);
+			}
 		}
 		return result;
 	}
@@ -127,9 +147,11 @@ public class AccAddressServiceImpl extends AbstractBusinessObjectServiceMgr impl
 			int addressId = address.getAddressId();
 			if (addressId > 0) {
 				// 先将其余地址设置为非默认
-				count = accAddressMapper.defaultAddressNo(address.getUserId());
+				address.setDefaultFlag(YesNo.No.getCode().toString());
+				count = accAddressMapper.defaultAddress(address);
 				// 设置默认地址
-				count = accAddressMapper.defaultAddress(addressId);
+				address.setDefaultFlag(YesNo.Yes.getCode().toString());
+				count = accAddressMapper.defaultAddress(address);
 			}
 			returncode = count == 1 ? ReturnCodeEnum.SUCCESS.status : ReturnCodeEnum.FAILED.status;
 			result.setReturnCode(returncode);

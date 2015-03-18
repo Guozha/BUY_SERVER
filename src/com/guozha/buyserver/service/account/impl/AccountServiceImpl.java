@@ -281,7 +281,6 @@ public class AccountServiceImpl extends AbstractBusinessObjectServiceMgr impleme
 		return final_no;
 	}
 
-	
 	/**
 	 * 我的菜票查询
 	 * 
@@ -292,8 +291,15 @@ public class AccountServiceImpl extends AbstractBusinessObjectServiceMgr impleme
 		List<AccMyTicket> response = null;
 		if (ticket != null) {
 			int userId = ticket.getUserId();
-			if (userId > 0)
-				response = accountMapper.listTicket(userId);
+			if (userId > 0) {
+				// 1.查询所有有效菜票
+				response = accountMapper.listTicketValid(userId);
+				// 2、查询一个月内失效菜票
+				List<AccMyTicket> list_response = accountMapper.listTicketInvalid(userId);
+				for (int i = 0; i < list_response.size(); i++) {
+					response.add(list_response.get(i));
+				}
+			}
 		}
 		return response;
 	}
