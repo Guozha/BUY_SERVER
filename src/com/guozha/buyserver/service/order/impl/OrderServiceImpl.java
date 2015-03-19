@@ -8,12 +8,16 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.guozha.buyserver.framework.sys.business.AbstractBusinessObjectServiceMgr;
+import com.guozha.buyserver.persistence.mapper.BuyOrderGoodsMapper;
 import com.guozha.buyserver.persistence.mapper.BuyOrderMapper;
+import com.guozha.buyserver.persistence.mapper.BuyOrderMenuGoodsMapper;
+import com.guozha.buyserver.persistence.mapper.BuyOrderMenuMapper;
 import com.guozha.buyserver.persistence.mapper.MarMarketTimeMapper;
 import com.guozha.buyserver.service.order.OrderService;
 import com.guozha.buyserver.web.controller.MsgResponse;
 import com.guozha.buyserver.web.controller.order.CancelOrderRequest;
 import com.guozha.buyserver.web.controller.order.MarketTimeResponse;
+import com.guozha.buyserver.web.controller.order.OrderDetailResponse;
 import com.guozha.buyserver.web.controller.order.SearchOrderRequest;
 import com.guozha.buyserver.web.controller.order.SearchOrderResponse;
 
@@ -26,6 +30,12 @@ public class OrderServiceImpl extends AbstractBusinessObjectServiceMgr
 	private MarMarketTimeMapper marMarketTimeMapper;
 	@Autowired
 	private BuyOrderMapper buyOrderMapper;
+	@Autowired
+	private BuyOrderGoodsMapper buyOrderGoodsMapper;
+	@Autowired
+	private BuyOrderMenuMapper buyOrderMenuMapper;
+	@Autowired
+	private BuyOrderMenuGoodsMapper buyOrderMenuGoodsMapper;
 
 	@Override
 	public List<MarketTimeResponse> findMarketTime(int marketId) {
@@ -51,6 +61,11 @@ public class OrderServiceImpl extends AbstractBusinessObjectServiceMgr
 			statusList.add("06");// ORDER_STATUS 06-已签收
 		}
 		return buyOrderMapper.findOrder(vo.getUserId(), statusList, vo.getStartIndex(), vo.getPageSize());
+	}
+
+	@Override
+	public OrderDetailResponse getOrderDetail(int orderId) {
+		return null;
 	}
 
 }
