@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//ibatis.apache.org//DTD Mapper 3.0//EN"
+"http://ibatis.apache.org/dtd/ibatis-3-mapper.dtd">
+
+<mapper namespace="com.guozha.buyserver.persistence.mapper.BasPayWayMapper">
+
+    <resultMap id="payWayRM" type="com.guozha.buyserver.persistence.beans.GooGoods">
+        <result property="payWayId" jdbcType="INTEGER" column="PAY_WAY_ID"/>
+        <result property="payWayName" jdbcType="VARCHAR" column="PAY_WAY_NAME"/>
+        <result property="icon" jdbcType="BLOB" column="ICON"/>
+	</resultMap>
+
+    <select id="findPayWayByStatus" parameterType="java.lang.String" resultMap="payWayRM">
+        SELECT T.PAY_WAY_ID,T.PAY_WAY_NAME,T.ICON FROM BAS_PAY_WAY T WHERE T.STATUS = #{status}
+    </select>
+
+</mapper>
