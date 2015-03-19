@@ -148,7 +148,7 @@ public class GooGoods extends AbstractDO {
 		
 		//菜谱
 		PreparedStatement state = (PreparedStatement) coon.prepareStatement("update MNU_MENU  set MENU_img=?" );
-		File file = new File("E:\\maicai\\WYMC\\01开发库\\040系统设计\\020详细设计\\andriod效果图\\icons\\xhdpi\\main_recipe_img_02.png");
+		File file = new File("E:\\maicai\\WYMC\\01开发库\\040系统设计\\020详细设计\\andriod效果图\\icons\\xhdpi\\main_recipe_img_large_01.png");
 		
 		
 		 int length = (int) file.length();  
