@@ -10,7 +10,7 @@ public class AccountInfoResponse {
 	
 	
 	private String mobileNo;//手机号
-	private Byte[] headImg;//我的头像
+	private byte[] headImg;//我的头像
 	private int balance;//余额
 	private int ticketAmount;//菜票数量
 	private int beanAmount;//菜豆数量
@@ -39,10 +39,10 @@ public class AccountInfoResponse {
 	public void setBeanAmount(int beanAmount) {
 		this.beanAmount = beanAmount;
 	}
-	public Byte[] getHeadImg() {
+	public byte[] getHeadImg() {
 		return headImg;
 	}
-	public void setHeadImg(Byte[] headImg) {
+	public void setHeadImg(byte[] headImg) {
 		this.headImg = headImg;
 	}
 

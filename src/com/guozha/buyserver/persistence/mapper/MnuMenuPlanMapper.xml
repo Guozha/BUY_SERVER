@@ -13,10 +13,11 @@ PUBLIC "-//ibatis.apache.org//DTD Mapper 3.0//EN"
         <result property="thirdMenuId" jdbcType="INTEGER" column="THIRD_MENU_ID"/>
         <result property="fourMenuId" jdbcType="INTEGER" column="FOUR_MENU_ID"/>
         <result property="fiveMenuId" jdbcType="INTEGER" column="FIVE_MENU_ID"/>
+        <result property="sixMenuId" jdbcType="INTEGER" column="SIX_MENU_ID"/>
 	</resultMap>
 	
 	<sql id="BASE_COLUMN_LIST">
-		MENU_PLAN_ID,PLAN_DATE,DAY_DESC,FIRST_MENU_ID,SECOND_MENU_ID,THIRD_MENU_ID,FOUR_MENU_ID,FIVE_MENU_ID
+		MENU_PLAN_ID,PLAN_DATE,DAY_DESC,FIRST_MENU_ID,SECOND_MENU_ID,THIRD_MENU_ID,FOUR_MENU_ID,FIVE_MENU_ID,SIX_MENU_ID
 	</sql>
 	
 	<!-- 菜谱详情 -->
@@ -38,5 +39,56 @@ PUBLIC "-//ibatis.apache.org//DTD Mapper 3.0//EN"
 		    AND B.GOODS_ID = #{goodsId}
 	</select>
 	
+	
+	<!--新增我的菜票计划  -->
+	<insert id="insertUserMenuPlan" useGeneratedKeys="true" keyProperty="userMenuPlanId" parameterType="com.guozha.buyserver.persistence.beans.MnuUserMenuPlan">
+	  INSERT INTO MNU_USER_MENU_PLAN VALUES(#{userMenuPlanId},#{userId},#{planDate},#{firstMenuId},#{secondMenuId},#{thirdMenuId},#{fourMenuId},#{fiveMenuId},#{sixMenuId})
+	</insert>
+	
+	<!--菜谱随机推荐  -->
+	<select id="listRandMenu" resultType="com.guozha.buyserver.persistence.beans.MnuMenu">
+		SELECT menu_id AS menuId,menu_name AS menuName,menu_img AS menuImg
+	    FROM MNU_MENU
+	    WHERE status = '1'
+	    ORDER BY rand() LIMIT 6
+	</select>
+	
+	
+	<!--获取菜票详情  -->
+    <select id="menuDetail" parameterType="int" resultType="com.guozha.buyserver.web.controller.menuplan.MenuResponse">
+      SELECT
+	   m.menu_id AS menuId,
+	   m.menu_name AS menuName,
+	   m.menu_img AS menuImg,
+	   m.menu_desc AS menuDesc,
+	   m.cookie_time AS cookieTime,
+	   m.cookie_way AS cookieWay,
+	   m.seasonings AS seasonings,
+	   s.one_img AS oneImg,
+	   s.one_desc AS oneDesc,
+	   s.two_img AS twoImg,
+	   s.two_desc AS twoDesc,
+	   s.three_img AS threeImg,
+	   s.three_desc AS threeDesc,
+	   s.four_img AS fourImg,
+	   s.four_desc AS fourDesc,
+	   s.five_img AS fiveImg,
+	   s.five_desc AS fiveDesc,
+	   s.six_img AS sixImg,
+	   s.six_desc AS sixDesc,
+	   s.seven_img AS sevenImg,
+	   s.seven_desc AS sevenDesc,
+	   s.eight_img AS eightImg,
+	   s.eight_desc AS eightDesc,
+	   s.nine_img AS nineImg,
+	   s.nine_desc AS nineDesc,
+	   s.ten_img AS tenImg,
+	   s.ten_desc AS tenDesc
+     FROM
+	   MNU_MENU m,
+	   MNU_MENU_STEP s
+     WHERE
+	     m.step_id=s.menu_step_id AND m.menu_id = #{menuId}
+    </select>
 	
 </mapper>

@@ -9,7 +9,7 @@ import java.util.Date;
  * @date 2015-03-15
  * 
  */
-public class MenuPlanRequest {
+public class MenuUserPlanRequest {
 
 	private Integer userId;// 用户ID
 	private Integer firstMenuId;// 菜谱1
@@ -17,7 +17,8 @@ public class MenuPlanRequest {
 	private Integer thirdMenuId;// 菜谱3
 	private Integer fourMenuId;// 菜谱4
 	private Integer fiveMenuId;// 菜谱5
-	private Date date;
+	private Integer sixMenuId;// 菜谱6
+	private String planDate;
 
 	public Integer getUserId() {
 		return userId;
@@ -67,12 +68,21 @@ public class MenuPlanRequest {
 		this.fiveMenuId = fiveMenuId;
 	}
 
-	public Date getDate() {
-		return date;
+
+	public Integer getSixMenuId() {
+		return sixMenuId;
 	}
 
-	public void setDate(Date date) {
-		this.date = date;
+	public void setSixMenuId(Integer sixMenuId) {
+		this.sixMenuId = sixMenuId;
+	}
+
+	public String getPlanDate() {
+		return planDate;
+	}
+
+	public void setPlanDate(String planDate) {
+		this.planDate = planDate;
 	}
 
 }
