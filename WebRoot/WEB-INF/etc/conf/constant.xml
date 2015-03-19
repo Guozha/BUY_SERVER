@@ -104,12 +104,6 @@
     	<constantName value="05">配送中</constantName>
     	<constantName value="06">已签收</constantName>
 	</constant>
-	<constant constantDef="PAY_WAY">
-    	<constantName value="01">支付宝支付</constantName>
-    	<constantName value="02">微信支付</constantName>
-    	<constantName value="03">网银支付</constantName>
-    	<constantName value="04">货到付款</constantName>
-	</constant>
 	<constant constantDef="PAY_INTERFACE_FEE">
     	<constantName value="01">0.03</constantName>
     	<constantName value="02">0.02</constantName>
@@ -163,10 +157,6 @@
     	<constantName value="06">瓶</constantName>
     	<constantName value="07">篮</constantName>
     	<constantName value="08">份</constantName>
-	</constant>
-	<constant constantDef="TIME_SCOPE">
-    	<constantName value="1">上午</constantName>
-    	<constantName value="2">下午</constantName>
 	</constant>
 	<constant constantDef="SMS_TYPE">
     	<constantName value="01">注册获取验证码</constantName>
