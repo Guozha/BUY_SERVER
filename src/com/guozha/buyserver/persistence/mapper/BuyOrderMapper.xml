@@ -29,5 +29,41 @@ PUBLIC "-//ibatis.apache.org//DTD Mapper 3.0//EN"
         ORDER BY T.ORDER_ID DESC
         LIMIT #{startIndex},#{pageSize}
     </select>
+    
+    <resultMap type="com.guozha.buyserver.persistence.beans.BuyOrder" id="rm">
+        <result property="orderId" jdbcType="INTEGER" column="ORDER_ID"/>
+        <result property="orderNo" jdbcType="VARCHAR" column="ORDER_NO"/>
+        <result property="orderType" jdbcType="VARCHAR" column="ORDER_TYPE"/>
+        <result property="userId" jdbcType="INTEGER" column="USER_ID"/>
+        <result property="quantity" jdbcType="INTEGER" column="QUANTITY"/>
+        <result property="receiveMen" jdbcType="VARCHAR" column="RECEIVE_MEN"/>
+        <result property="receiveMobile" jdbcType="VARCHAR" column="RECEIVE_MOBILE"/>
+        <result property="receiveAddr" jdbcType="VARCHAR" column="RECEIVE_ADDR"/>
+        <result property="arrivalTime" jdbcType="TIMESTAMP" column="ARRIVAL_TIME"/>
+        <result property="memo" jdbcType="VARCHAR" column="MEMO"/>
+        <result property="createTime" jdbcType="TIMESTAMP" column="CREATE_TIME"/>
+        <result property="totalPrice" jdbcType="INTEGER" column="TOTAL_PRICE"/>
+        <result property="balanceDecPrice" jdbcType="INTEGER" column="BALANCE_DEC_PRICE"/>
+        <result property="ticketDecPrice" jdbcType="INTEGER" column="TICKET_DEC_PRICE"/>
+        <result property="beanDecPrice" jdbcType="INTEGER" column="BEAN_DEC_PRICE"/>
+        <result property="serviceFee" jdbcType="INTEGER" column="SERVICE_FEE"/>
+        <result property="payPrice" jdbcType="INTEGER" column="PAY_PRICE"/>
+        <result property="payWay" jdbcType="VARCHAR" column="PAY_WAY"/>
+        <result property="arrivalPayFlag" jdbcType="VARCHAR" column="ARRIVAL_PAY_FLAG"/>
+        <result property="inteFeeRate" jdbcType="INTEGER" column="INTE_FEE_RATE"/>
+        <result property="inteFee" jdbcType="INTEGER" column="INTE_FEE"/>
+        <result property="payTime" jdbcType="TIMESTAMP" column="PAY_TIME"/>
+        <result property="senderId" jdbcType="INTEGER" column="SENDER_ID"/>
+        <result property="finishTime" jdbcType="TIMESTAMP" column="FINISH_TIME"/>
+        <result property="commentFlag" jdbcType="VARCHAR" column="COMMENT_FLAG"/>
+        <result property="serviceStar" jdbcType="VARCHAR" column="SERVICE_STAR"/>
+        <result property="commentDesc" jdbcType="VARCHAR" column="COMMENT_DESC"/>
+        <result property="finishSettleFlag" jdbcType="VARCHAR" column="FINISH_SETTLE_FLAG"/>
+        <result property="status" jdbcType="VARCHAR" column="STATUS"/>
+    </resultMap>
+    
+    <select id="load" parameterType="java.lang.Integer" resultMap="rm">
+        SELECT * FROM BUY_ORDER T WHERE T.ORDER_ID = #{orderId}
+    </select>
 
 </mapper>

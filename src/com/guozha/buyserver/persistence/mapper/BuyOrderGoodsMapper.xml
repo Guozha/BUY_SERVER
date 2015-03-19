@@ -5,4 +5,21 @@ PUBLIC "-//ibatis.apache.org//DTD Mapper 3.0//EN"
 
 <mapper namespace="com.guozha.buyserver.persistence.mapper.BuyOrderGoodsMapper">
 
+    <resultMap id="rm" type="com.guozha.buyserver.persistence.beans.BuyOrderGoods">
+        <result property="orderGoodsId" jdbcType="INTEGER" column="ORDER_GOODS_ID"/>
+        <result property="orderId" jdbcType="INTEGER" column="ORDER_ID"/>
+        <result property="goodsId" jdbcType="INTEGER" column="GOODS_ID"/>
+        <result property="goodsName" jdbcType="VARCHAR" column="GOODS_NAME"/>
+        <result property="goodsImg" jdbcType="BLOB" column="GOODS_IMG"/>
+        <result property="backTypeId" jdbcType="INTEGER" column="BACK_TYPE_ID"/>
+        <result property="unitPrice" jdbcType="INTEGER" column="UNIT_PRICE"/>
+        <result property="amount" jdbcType="INTEGER" column="AMOUNT"/>
+        <result property="price" jdbcType="INTEGER" column="PRICE"/>
+        <result property="goodsStar" jdbcType="INTEGER" column="GOODS_STAR"/>
+	</resultMap>
+	
+    <select id="findByOrder" parameterType="java.lang.Integer" resultMap="rm">
+        SELECT * FROM BUY_ORDER_GOODS T WHERE T.ORDER_ID = #{orderId} ORDER BY T.ORDER_GOODS_ID
+    </select>
+
 </mapper>

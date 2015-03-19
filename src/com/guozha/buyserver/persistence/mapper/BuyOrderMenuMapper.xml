@@ -5,4 +5,19 @@ PUBLIC "-//ibatis.apache.org//DTD Mapper 3.0//EN"
 
 <mapper namespace="com.guozha.buyserver.persistence.mapper.BuyOrderMenuMapper">
 
+	<resultMap id="rm" type="com.guozha.buyserver.persistence.beans.BuyOrderMenu">
+        <result property="orderMenuId" jdbcType="INTEGER" column="ORDER_MENU_ID"/>
+        <result property="orderId" jdbcType="INTEGER" column="ORDER_ID"/>
+        <result property="menuId" jdbcType="INTEGER" column="MENU_ID"/>
+        <result property="menuName" jdbcType="VARCHAR" column="MENU_NAME"/>
+        <result property="menuImg" jdbcType="BLOB" column="MENU_IMG"/>
+        <result property="unitPrice" jdbcType="INTEGER" column="UNIT_PRICE"/>
+        <result property="amount" jdbcType="INTEGER" column="AMOUNT"/>
+        <result property="price" jdbcType="INTEGER" column="PRICE"/>
+	</resultMap>
+	
+    <select id="findByOrder" parameterType="java.lang.Integer" resultMap="rm">
+        SELECT * FROM BUY_ORDER_MENU T WHERE T.ORDER_ID = #{orderId} ORDER BY T.ORDER_MENU_ID
+    </select>
+
 </mapper>

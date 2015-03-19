@@ -8,7 +8,7 @@ public class BuyOrderMenu extends AbstractDO {
 	private Integer orderId;
 	private Integer menuId;
 	private String menuName;
-	private String menuUrl;
+	private byte[] menuImg;
 	private Integer unitPrice;
 	private Integer amount;
 	private Integer price;
@@ -37,11 +37,11 @@ public class BuyOrderMenu extends AbstractDO {
 	public void setMenuName(String menuName) {
 		this.menuName = menuName;
 	}
-	public String getMenuUrl() {
-		return menuUrl;
+	public byte[] getMenuImg() {
+		return menuImg;
 	}
-	public void setMenuUrl(String menuUrl) {
-		this.menuUrl = menuUrl;
+	public void setMenuImg(byte[] menuImg) {
+		this.menuImg = menuImg;
 	}
 	public Integer getUnitPrice() {
 		return unitPrice;
