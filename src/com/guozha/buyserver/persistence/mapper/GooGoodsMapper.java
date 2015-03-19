@@ -56,19 +56,19 @@ public interface GooGoodsMapper extends BaseMapper<GooGoods, Integer> {
 	 * 所有商品（仅特供）
 	 * @return
 	 */
-	List<GooGoods> findAllSpecial();
+	List<GoodsResponse> findAllSpecial(int marketId);
 	
 	/**
 	 * 查询一级类目商品（仅特供）
 	 * @param firstFrontTypeId 一级类目ID
 	 * @return
 	 */
-	List<GooGoods> findFirstSpecial(int firstFrontTypeId);
+	List<GoodsResponse> findFirstSpecial(@Param("marketId") int marketId,@Param("firstFrontTypeId") int firstFrontTypeId);
 	
 	/**
 	 * 查询二级类目商品 （仅特供）
 	 * @param secondFrontTypeId 二级类目ID
 	 * @return
 	 */
-	List<GooGoods> findSecondSpecial(int secondFrontTypeId);
+	List<GoodsResponse> findSecondSpecial(@Param("marketId") int marketId,@Param("secondFrontTypeId") int secondFrontTypeId);
 }

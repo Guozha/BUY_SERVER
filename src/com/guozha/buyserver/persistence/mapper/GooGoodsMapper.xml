@@ -74,31 +74,40 @@ PUBLIC "-//ibatis.apache.org//DTD Mapper 3.0//EN"
 	
 	
 	   <!-- 所有商品  (仅特供)-->
-	<select id="findAllSpecial" resultMap="rm">
+	<select id="findAllSpecial"  parameterType="int" resultType="com.guozha.buyserver.web.controller.goods.GoodsResponse" >
 		SELECT 
-			<include refid="BASE_COLUMN_LIST" />
-		FROM GOO_GOODS T
+			T.GOODS_ID goodsId,T.GOODS_NAME goodsName,T.GOODS_PROP goodsProp,T.GOODS_IMG goodsImg,T.UNIT,B.PRICE price
+		FROM GOO_GOODS T,MAR_MARKET_GOODS B
 		WHERE
-		     T.GOODS_PROP IN ('02','03')
+		    T.GOODS_ID = B.GOODS_ID 
+		    AND B.OPEN_BUY_FLAG='1'
+		    AND B.MARKET_ID=#{marketId}
+		    AND T.GOODS_PROP IN ('02','03')
 	</select>
 	
 	<!-- 查询一级类目商品列表 (仅特供) -->
-	<select id="findFirstSpecial"  parameterType="int" resultMap="rm">
+	<select id="findFirstSpecial" parameterType="map" resultType="com.guozha.buyserver.web.controller.goods.GoodsResponse">
 		SELECT 
-			<include refid="BASE_COLUMN_LIST" />
-		FROM GOO_GOODS T
+			T.GOODS_ID goodsId,T.GOODS_NAME goodsName,T.GOODS_PROP goodsProp,T.GOODS_IMG goodsImg,T.UNIT,B.PRICE price
+		FROM GOO_GOODS T,MAR_MARKET_GOODS B
 		WHERE
-		    T.FIRST_FRONT_TYPE_ID = #{firstFrontTypeId}
-		    T.AND GOODS_PROP IN ('02','03')
+		    T.GOODS_ID = B.GOODS_ID 
+		    AND T.FIRST_FRONT_TYPE_ID = #{firstFrontTypeId}
+		    AND B.OPEN_BUY_FLAG='1'
+		    AND B.MARKET_ID = #{marketId}
+		    AND GOODS_PROP IN ('02','03')
 	</select>
 	
 	<!-- 查询二级类目商品列表(仅特供) -->
-	<select id="findSecondSpecial"  parameterType="int" resultMap="rm">
+	<select id="findSecondSpecial"  parameterType="map" resultType="com.guozha.buyserver.web.controller.goods.GoodsResponse">
 		SELECT 
-			<include refid="BASE_COLUMN_LIST" />
-		FROM GOO_GOODS T
+			T.GOODS_ID goodsId,T.GOODS_NAME goodsName,T.GOODS_PROP goodsProp,T.GOODS_IMG goodsImg,T.UNIT,B.PRICE price
+		FROM GOO_GOODS T,MAR_MARKET_GOODS B
 		WHERE
-		    T.SECOND_FRONT_TYPE_ID = #{secondFrontTypeId}
+		    T.GOODS_ID = B.GOODS_ID 
+		    AND T.SECOND_FRONT_TYPE_ID = #{secondFrontTypeId}
+		    AND B.OPEN_BUY_FLAG='1'
+		    AND B.MARKET_ID = #{marketId}
 		    AND T.GOODS_PROP IN ('02','03')
 	</select>
 	
