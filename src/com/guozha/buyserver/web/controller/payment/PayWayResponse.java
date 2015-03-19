@@ -2,15 +2,15 @@ package com.guozha.buyserver.web.controller.payment;
 
 public class PayWayResponse {
 	
-	private String payWay;
+	private String payWayId;
 	private String payWayName;
 	private byte[] icon;
 	
-	public String getPayWay() {
-		return payWay;
+	public String getPayWayId() {
+		return payWayId;
 	}
-	public void setPayWay(String payWay) {
-		this.payWay = payWay;
+	public void setPayWayId(String payWayId) {
+		this.payWayId = payWayId;
 	}
 	public String getPayWayName() {
 		return payWayName;

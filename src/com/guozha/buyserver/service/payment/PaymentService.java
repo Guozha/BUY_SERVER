@@ -7,6 +7,6 @@ import com.guozha.buyserver.web.controller.payment.PayWayResponse;
 
 public interface PaymentService extends BusinessObjectServiceMgr {
 	
-	List<PayWayResponse> findPayWay();
+	List<PayWayResponse> findInUsePayWay();
 
 }
