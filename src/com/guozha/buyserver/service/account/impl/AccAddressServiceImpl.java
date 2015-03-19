@@ -91,20 +91,9 @@ public class AccAddressServiceImpl extends AbstractBusinessObjectServiceMgr impl
 		if (request != null) {
 			String defaultFlag = request.getDefaultFlag();
 			// 小区是否已存在
-			Integer buildingId = request.getBuildingId();
-			if (buildingId == null) {// 小区未覆盖
-				// 2、插入未覆盖区域表
-				AccNoServiceRecord noService = new AccNoServiceRecord();
-				noService.setCityId(request.getCityId());
-				noService.setCountyId(request.getCountyId());
-				noService.setDetailAddr(request.getDetailAddr());
-				noService.setMobileNo(request.getMobileNo());
-				noService.setProvinceId(request.getProvinceId());
-				noService.setRecordTime(Timestamp.valueOf(DateUtil.date2String(new Date(), DateUtil.PATTERN_STANDARD)));
-				accAddressMapper.insertNoServiceRecord(noService);
-			}
+//			Integer buildingId = request.getBuildingId();
 			accAddressMapper.insert(request);
-			if (YesNo.Yes.getCode().toString().equals(defaultFlag))// 如果设为默认
+			if (YesNo.Yes.getCode().toString().equals(defaultFlag))// 如果设为默认地址
 				result = defaultAddress(request);
 			else if (request.getAddressId() > 0) {
 				result.setReturnCode(ReturnCodeEnum.SUCCESS.status);
