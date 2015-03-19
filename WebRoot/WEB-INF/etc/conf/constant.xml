@@ -208,4 +208,9 @@
 	    <constantName value="1">食材收藏</constantName>
     	<constantName value="2">菜谱收藏</constantName>
 	</constant>
+	<!-- 订单查询类型 -->
+	<constant constantDef="ORDER_SEARCH_TYPE">
+	    <constantName value="1">进行中</constantName>
+    	<constantName value="2">已完成</constantName>
+	</constant>
 </constants>
