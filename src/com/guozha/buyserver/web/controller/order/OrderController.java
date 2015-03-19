@@ -25,5 +25,15 @@ public class OrderController extends BaseController {
 	public void cancel(CancelOrderRequest vo, HttpServletResponse response) {
 		responseJson(orderService.cancelOrder(vo), response);
 	}
+	
+	@RequestMapping(value = "/list")
+	public void cancel(SearchOrderRequest vo, HttpServletResponse response) {
+		responseJson(orderService.listOrder(vo), response);
+	}
+	
+	@RequestMapping(value = "/detail")
+	public void detail(int orderId, HttpServletResponse response) {
+		responseJson(orderService.getOrderDetail(orderId), response);
+	}
 
 }

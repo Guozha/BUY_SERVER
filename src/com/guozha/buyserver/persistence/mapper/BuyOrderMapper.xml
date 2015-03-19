@@ -8,5 +8,26 @@ PUBLIC "-//ibatis.apache.org//DTD Mapper 3.0//EN"
     <update id="updateStatus" parameterType="java.util.Map">
         UPDATE BUY_ORDER T SET T.STATUS = #{newStatus} WHERE T.ORDER_ID = #{orderId} AND T.STATUS = #{oldStatus} 
     </update>
+    
+    <resultMap id="findOrderRM" type="com.guozha.buyserver.web.controller.order.SearchOrderResponse">
+        <result property="orderId" jdbcType="INTEGER" column="ORDER_ID"/>
+        <result property="orderNo" jdbcType="VARCHAR" column="ORDER_NO"/>
+        <result property="createTime" jdbcType="TIMESTAMP" column="CREATE_TIME"/>
+        <result property="quantity" jdbcType="INTEGER" column="QUANTITY"/>
+        <result property="totalPrice" jdbcType="INTEGER" column="TOTAL_PRICE"/>
+        <result property="status" jdbcType="VARCHAR" column="STATUS"/>
+	</resultMap>
+    
+    <select id="findOrder" parameterType="java.util.Map" resultMap="findOrderRM">
+        SELECT 
+            T.ORDER_ID,T.ORDER_NO,T.CREATE_TIME,T.QUANTITY,T.TOTAL_PRICE,T.STATUS 
+        FROM 
+            BUY_ORDER T 
+        WHERE 
+            T.USER_ID = #{userId}
+            AND T.STATUS IN <foreach item="item" index="index" collection="statusList" open="(" separator="," close=")">#{item}</foreach>
+        ORDER BY T.ORDER_ID DESC
+        LIMIT #{startIndex},#{pageSize}
+    </select>
 
 </mapper>
