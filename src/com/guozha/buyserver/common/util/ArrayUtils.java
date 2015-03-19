@@ -1,8 +1,11 @@
 package com.guozha.buyserver.common.util;
 
+import java.io.File;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.Map;
+
+import javax.imageio.stream.FileImageOutputStream;
 
 
 /**
@@ -42,7 +45,7 @@ public class ArrayUtils {
      * 对象转数组 
      * @param obj 
      * @return 
-    
+     */  
 	public static byte[] toByteArray(byte[] bytes){
 		if(bytes==null){
 			return null;
@@ -67,5 +70,5 @@ public class ArrayUtils {
 		      ex.printStackTrace();
 		    }
 		}
-	 */  
+	
 }

@@ -21,14 +21,13 @@ public class MnuMenu extends AbstractDO {
 	private String cookieWay;
 	private String cookieStep;
 	private String seasonings;
-	private String status;
-	
 	public String getSeasonings() {
 		return seasonings;
 	}
 	public void setSeasonings(String seasonings) {
 		this.seasonings = seasonings;
 	}
+	private String status;
 	
 	public Integer getMenuId() {
 		return menuId;

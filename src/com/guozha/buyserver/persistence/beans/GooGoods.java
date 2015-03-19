@@ -1,8 +1,16 @@
 package com.guozha.buyserver.persistence.beans;
 
+import java.io.BufferedInputStream;
+import java.io.File;
+import java.io.FileInputStream;
+import java.sql.DriverManager;
+import java.util.ArrayList;
 import java.util.Date;
 
+import com.guozha.buyserver.common.util.ArrayUtils;
 import com.guozha.buyserver.dal.object.AbstractDO;
+import com.mysql.jdbc.Connection;
+import com.mysql.jdbc.PreparedStatement;
 
 /**
  * 商品
@@ -128,23 +136,33 @@ public class GooGoods extends AbstractDO {
 		this.status = status;
 	}
 	
-	/*
+	
 	public static void main(String[] args)  {
 		try{
 		Class.forName("com.mysql.jdbc.Driver");
-		Connection coon = (Connection) DriverManager.getConnection("jdbc:mysql://127.0.0.1:3306/wymc","root","root");
-		PreparedStatement state = (PreparedStatement) coon.prepareStatement("update  GOO_GOODS set goods_img=? where goods_id=?" );
+		Connection coon = (Connection) DriverManager.getConnection("jdbc:mysql://192.168.106.6:3306/wymc","root","root");
+		//商品
+		//PreparedStatement state = (PreparedStatement) coon.prepareStatement("update  GOO_GOODS set goods_img=? where GOODS_PROP=?" );
+		//File file = new File("E:\\maicai\\WYMC\\01开发库\\040系统设计\\020详细设计\\icon\\xhdpi\\main_vegetable_img_01.png");
 		
-		File file = new File("d:\\jd.png");
+		
+		//菜谱
+		PreparedStatement state = (PreparedStatement) coon.prepareStatement("update MNU_MENU  set MENU_img=?" );
+		File file = new File("E:\\maicai\\WYMC\\01开发库\\040系统设计\\020详细设计\\andriod效果图\\icons\\xhdpi\\main_recipe_img_large_01.png");
+		
+		
+		 int length = (int) file.length();  
 		BufferedInputStream in = new BufferedInputStream(new FileInputStream(file));  
-		state.setBlob(1, in);
-		state.setInt(2, 30);
+		 byte[] bytes = new byte[length];  
+        in.read(bytes, 0,length);  
+		state.setBytes(1, bytes);
 		int flag = state.executeUpdate();
 		state.close();
 		coon.close();
 		System.out.println(flag);
+		ArrayUtils.byte2image(bytes, "E:\\maicai\\jd.png");
 		}catch(Exception e){
 			e.printStackTrace();
 		}
-	}*/
+	}
 }
