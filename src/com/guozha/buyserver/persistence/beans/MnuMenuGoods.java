@@ -8,7 +8,7 @@ public class MnuMenuGoods extends AbstractDO {
 	private Integer menuId;
 	private Integer goodsId;
 	private String goodsName;
-	private String otherName;
+	private String otherNames;
 	private Integer amount;
 	
 	public Integer getMenuGoodsId() {
@@ -35,11 +35,11 @@ public class MnuMenuGoods extends AbstractDO {
 	public void setGoodsName(String goodsName) {
 		this.goodsName = goodsName;
 	}
-	public String getOtherName() {
-		return otherName;
+	public String getOtherNames() {
+		return otherNames;
 	}
-	public void setOtherName(String otherName) {
-		this.otherName = otherName;
+	public void setOtherNames(String otherNames) {
+		this.otherNames = otherNames;
 	}
 	public Integer getAmount() {
 		return amount;
@@ -47,4 +47,5 @@ public class MnuMenuGoods extends AbstractDO {
 	public void setAmount(Integer amount) {
 		this.amount = amount;
 	}
+	
 }

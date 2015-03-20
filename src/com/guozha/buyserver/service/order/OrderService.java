@@ -5,6 +5,7 @@ import java.util.List;
 import com.guozha.buyserver.framework.sys.business.BusinessObjectServiceMgr;
 import com.guozha.buyserver.web.controller.MsgResponse;
 import com.guozha.buyserver.web.controller.order.CancelOrderRequest;
+import com.guozha.buyserver.web.controller.order.InsertOrderRequest;
 import com.guozha.buyserver.web.controller.order.MarketTimeResponse;
 import com.guozha.buyserver.web.controller.order.OrderDetailResponse;
 import com.guozha.buyserver.web.controller.order.SearchOrderRequest;
@@ -19,5 +20,7 @@ public interface OrderService extends BusinessObjectServiceMgr {
 	List<SearchOrderResponse> listOrder(SearchOrderRequest vo);
 	
 	OrderDetailResponse getOrderDetail(int orderId);
+	
+	MsgResponse insertOrder(InsertOrderRequest vo);
 
 }

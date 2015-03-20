@@ -6,10 +6,12 @@ public class BuyOrderGoods extends AbstractDO {
 	
 	private Integer orderGoodsId;
 	private Integer orderId;
+	private Integer marketId;
 	private Integer goodsId;
 	private String goodsName;
 	private byte[] goodsImg;
 	private Integer backTypeId;
+	private String unit;
 	private Integer unitPrice;
 	private Integer amount;
 	private Integer price;
@@ -26,6 +28,12 @@ public class BuyOrderGoods extends AbstractDO {
 	}
 	public void setOrderId(Integer orderId) {
 		this.orderId = orderId;
+	}
+	public Integer getMarketId() {
+		return marketId;
+	}
+	public void setMarketId(Integer marketId) {
+		this.marketId = marketId;
 	}
 	public Integer getGoodsId() {
 		return goodsId;
@@ -50,6 +58,12 @@ public class BuyOrderGoods extends AbstractDO {
 	}
 	public void setBackTypeId(Integer backTypeId) {
 		this.backTypeId = backTypeId;
+	}
+	public String getUnit() {
+		return unit;
+	}
+	public void setUnit(String unit) {
+		this.unit = unit;
 	}
 	public Integer getUnitPrice() {
 		return unitPrice;

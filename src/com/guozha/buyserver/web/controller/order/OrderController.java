@@ -35,5 +35,10 @@ public class OrderController extends BaseController {
 	public void detail(int orderId, HttpServletResponse response) {
 		responseJson(orderService.getOrderDetail(orderId), response);
 	}
+	
+	@RequestMapping(value = "/insert")
+	public void insert(InsertOrderRequest vo, HttpServletResponse response) {
+		responseJson(orderService.insertOrder(vo), response);
+	}
 
 }

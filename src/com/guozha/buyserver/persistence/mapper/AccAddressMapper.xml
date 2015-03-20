@@ -66,5 +66,23 @@ WHERE
   	VALUES(#{noServiceRecordId},#{mobileNo},#{provinceId},#{cityId},#{countyId},#{detailAddr},#{recordTime})
 </insert>
 
+    <resultMap id="rm" type="com.guozha.buyserver.persistence.beans.AccAddress">
+        <result property="addressId" jdbcType="INTEGER" column="ADDRESS_ID"/>
+        <result property="userId" jdbcType="INTEGER" column="USER_ID"/>
+        <result property="receiveName" jdbcType="VARCHAR" column="RECEIVE_NAME"/>
+        <result property="mobileNo" jdbcType="VARCHAR" column="MOBILE_NO"/>
+        <result property="provinceId" jdbcType="INTEGER" column="PROVINCE_ID"/>
+        <result property="cityId" jdbcType="INTEGER" column="CITY_ID"/>
+        <result property="countyId" jdbcType="INTEGER" column="COUNTY_ID"/>
+        <result property="buildingId" jdbcType="INTEGER" column="BUILDING_ID"/>
+        <result property="buildingName" jdbcType="VARCHAR" column="BUILDING_NAME"/>
+        <result property="detailAddr" jdbcType="VARCHAR" column="DETAIL_ADDR"/>
+        <result property="defaultFlag" jdbcType="VARCHAR" column="DEFAULT_FLAG"/>
+	</resultMap>
+
+    <select id="load" parameterType="java.lang.Integer" resultMap="rm">
+        SELECT * FROM ACC_ADDRESS T WHERE T.ADDRESS_ID = #{addressId}
+    </select>
+
 
 </mapper>

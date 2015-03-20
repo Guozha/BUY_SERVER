@@ -1,5 +1,6 @@
 package com.guozha.buyserver.service.account.impl;
 
+import java.io.UnsupportedEncodingException;
 import java.sql.Timestamp;
 import java.util.Date;
 import java.util.List;
@@ -9,6 +10,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.guozha.buyserver.common.util.DateUtil;
+import com.guozha.buyserver.common.util.StringUtils;
 import com.guozha.buyserver.framework.enums.ReturnCodeEnum;
 import com.guozha.buyserver.framework.enums.YesNo;
 import com.guozha.buyserver.framework.sys.business.AbstractBusinessObjectServiceMgr;
@@ -90,27 +92,25 @@ public class AccAddressServiceImpl extends AbstractBusinessObjectServiceMgr impl
 	public ReturnCode insert(AddressRequest request) {
 		ReturnCode result = new ReturnCode();
 		if (request != null) {
-			String defaultFlag = request.getDefaultFlag();
-			// 小区是否已存在
-//			Integer buildingId = request.getBuildingId();
-//			AccAddress address = new AccAddress();
-//			address.setAddTime(Timestamp.valueOf(DateUtil.date2String(new Date(), DateUtil.PATTERN_STANDARD)));
-//			address.setBuildingId(buildingId);
-//			address.setBuildingName(request.getBuildingName());
-//			address.setCityId(request.getCityId());
-//			address.setCountyId(request.getCountyId());
-//			address.setDefaultFlag(request.getDefaultFlag());
-//			address.setDetailAddr(request.getDetailAddr());
-//			address.setMobileNo(request.getMobileNo());
-//			address.setProvinceId(request.getProvinceId());
-//			address.setReceiveName(request.getReceiveName());
-//			address.setUserId(request.getUserId());
-			request.setAddTime(Timestamp.valueOf(DateUtil.date2String(new Date(), DateUtil.PATTERN_STANDARD)));
-			accAddressMapper.insert(request);
-			if (YesNo.Yes.getCode().toString().equals(defaultFlag))// 如果设为默认地址
-				result = defaultAddress(request);
-			else if (request.getAddressId() > 0) {
-				result.setReturnCode(ReturnCodeEnum.SUCCESS.status);
+			try {
+				String defaultFlag = request.getDefaultFlag();
+				// 小区是否已存在
+				// Integer buildingId = request.getBuildingId();
+				String receiveName = request.getReceiveName();
+				String buildingName = request.getBuildingName();
+				String detailAddr = request.getDetailAddr();
+				request.setReceiveName(StringUtils.formatCharset(receiveName));
+				request.setBuildingName(StringUtils.formatCharset(buildingName));
+				request.setDetailAddr(StringUtils.formatCharset(detailAddr));
+				request.setAddTime(Timestamp.valueOf(DateUtil.date2String(new Date(), DateUtil.PATTERN_STANDARD)));
+				accAddressMapper.insert(request);
+				if (YesNo.Yes.getCode().toString().equals(defaultFlag))// 如果设为默认地址
+					result = defaultAddress(request);
+				else if (request.getAddressId() > 0) {
+					result.setReturnCode(ReturnCodeEnum.SUCCESS.status);
+				}
+			} catch (UnsupportedEncodingException e) {
+				e.printStackTrace();
 			}
 		}
 		return result;

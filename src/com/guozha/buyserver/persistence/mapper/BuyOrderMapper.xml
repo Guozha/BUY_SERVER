@@ -39,7 +39,9 @@ PUBLIC "-//ibatis.apache.org//DTD Mapper 3.0//EN"
         <result property="receiveMen" jdbcType="VARCHAR" column="RECEIVE_MEN"/>
         <result property="receiveMobile" jdbcType="VARCHAR" column="RECEIVE_MOBILE"/>
         <result property="receiveAddr" jdbcType="VARCHAR" column="RECEIVE_ADDR"/>
-        <result property="arrivalTime" jdbcType="TIMESTAMP" column="ARRIVAL_TIME"/>
+        <result property="aboutArrivalTime" jdbcType="TIMESTAMP" column="ABOUT_ARRIVAL_TIME"/>
+        <result property="wantUpTime" jdbcType="INTEGER" column="WANT_UP_TIME"/>
+        <result property="wantDownTime" jdbcType="INTEGER" column="WANT_DOWN_TIME"/>
         <result property="memo" jdbcType="VARCHAR" column="MEMO"/>
         <result property="createTime" jdbcType="TIMESTAMP" column="CREATE_TIME"/>
         <result property="totalPrice" jdbcType="INTEGER" column="TOTAL_PRICE"/>
