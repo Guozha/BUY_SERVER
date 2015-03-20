@@ -1,6 +1,5 @@
 package com.guozha.buyserver.web.controller.goods;
 
-import com.guozha.buyserver.persistence.beans.GooGoodsAmount;
 
 /**
  * 商品價格BO

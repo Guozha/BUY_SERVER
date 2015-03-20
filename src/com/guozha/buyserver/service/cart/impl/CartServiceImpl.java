@@ -11,9 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.guozha.buyserver.common.util.ArrayUtils;
 import com.guozha.buyserver.common.util.PriceUtils;
-import com.guozha.buyserver.common.util.SystemResource;
 import com.guozha.buyserver.framework.sys.business.AbstractBusinessObjectServiceMgr;
 import com.guozha.buyserver.persistence.beans.BuyCart;
 import com.guozha.buyserver.persistence.beans.GooGoods;
@@ -163,7 +161,7 @@ public class CartServiceImpl extends AbstractBusinessObjectServiceMgr implements
 		for(MnuMenuGoods menuGoods:menuGoodsList){
 			List<GooGoodsAmount> goodsAmountList = this.gooGoodsAmountMapper.findByGoodsId(menuGoods.getGoodsId());
 			int unitPrice = this.marMarketGoodsMapper.findByGoodsId(marketId, menuGoods.getGoodsId()).getPrice();
-			int amounts []  = {goodsAmountList.size()};
+			int amounts []  = new int[goodsAmountList.size()];
 			for(int j =0;j<goodsAmountList.size();j++){
 				amounts[j] = goodsAmountList.get(j).getAmount();
 			}

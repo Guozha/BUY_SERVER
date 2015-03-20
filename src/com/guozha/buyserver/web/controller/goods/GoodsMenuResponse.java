@@ -22,7 +22,7 @@ public class GoodsMenuResponse {
 		this.menuDesc = po.getMenuDesc();
 		this.cookieTime = po.getCookieTime();
 		this.cookieWay = po.getCookieWay();
-		this.cookieStep = po.getCookieStep();
+		//this.cookieStep = po.getCookieStep();
 		this.seasonings = po.getSeasonings();
 	}
 	

@@ -22,7 +22,7 @@ PUBLIC "-//ibatis.apache.org//DTD Mapper 3.0//EN"
 		    <include refid="BASE_COLUMN_LIST"/>
 		FROM GOO_GOODS_AMOUNT
 		WHERE 
-		    AND B.GOODS_ID = #{goodsId} 
+		     GOODS_ID = #{goodsId} 
 		ORDER BY AMOUNT ASC
 	</select>
 </mapper>
