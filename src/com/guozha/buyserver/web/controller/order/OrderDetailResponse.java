@@ -9,7 +9,9 @@ public class OrderDetailResponse {
 	private Integer orderId;
 	private String orderNo;
 	private Date createTime;
-	private Date arrivalTime;
+	private Date aboutArrivalTime;
+	private Integer wantUpTime;
+	private Integer wantDownTime;
 	private String receiveMen;
 	private String receiveMobile;
 	private String receiveAddr;
@@ -37,11 +39,23 @@ public class OrderDetailResponse {
 	public void setCreateTime(Date createTime) {
 		this.createTime = createTime;
 	}
-	public Date getArrivalTime() {
-		return arrivalTime;
+	public Date getAboutArrivalTime() {
+		return aboutArrivalTime;
 	}
-	public void setArrivalTime(Date arrivalTime) {
-		this.arrivalTime = arrivalTime;
+	public void setAboutArrivalTime(Date aboutArrivalTime) {
+		this.aboutArrivalTime = aboutArrivalTime;
+	}
+	public Integer getWantUpTime() {
+		return wantUpTime;
+	}
+	public void setWantUpTime(Integer wantUpTime) {
+		this.wantUpTime = wantUpTime;
+	}
+	public Integer getWantDownTime() {
+		return wantDownTime;
+	}
+	public void setWantDownTime(Integer wantDownTime) {
+		this.wantDownTime = wantDownTime;
 	}
 	public String getReceiveMen() {
 		return receiveMen;

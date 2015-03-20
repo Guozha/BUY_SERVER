@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.guozha.buyserver.common.util.SystemResource;
 import com.guozha.buyserver.framework.sys.business.AbstractBusinessObjectServiceMgr;
 import com.guozha.buyserver.persistence.beans.AccAddress;
 import com.guozha.buyserver.persistence.beans.BuyCart;
@@ -33,6 +34,7 @@ import com.guozha.buyserver.persistence.mapper.MarMarketTimeMapper;
 import com.guozha.buyserver.persistence.mapper.MnuMenuGoodsMapper;
 import com.guozha.buyserver.persistence.mapper.MnuMenuMapper;
 import com.guozha.buyserver.service.cart.CartService;
+import com.guozha.buyserver.service.common.CommonService;
 import com.guozha.buyserver.service.order.OrderService;
 import com.guozha.buyserver.web.controller.MsgResponse;
 import com.guozha.buyserver.web.controller.order.CancelOrderRequest;
@@ -75,6 +77,8 @@ public class OrderServiceImpl extends AbstractBusinessObjectServiceMgr
 	private MnuMenuGoodsMapper mnuMenuGoodsMapper;
 	@Autowired
 	private CartService cartService;
+	@Autowired
+	private CommonService commonService;
 
 	@Override
 	public List<MarketTimeResponse> findMarketTime(int marketId) {
@@ -113,7 +117,9 @@ public class OrderServiceImpl extends AbstractBusinessObjectServiceMgr
 		response.setOrderId(buyOrder.getOrderId());
 		response.setOrderNo(buyOrder.getOrderNo());
 		response.setCreateTime(buyOrder.getCreateTime());
-		//response.setArrivalTime(buyOrder.getArrivalTime()); TODO
+		response.setAboutArrivalTime(buyOrder.getAboutArrivalTime());
+		response.setWantUpTime(buyOrder.getWantUpTime());
+		response.setWantDownTime(buyOrder.getWantDownTime());
 		response.setReceiveMen(buyOrder.getReceiveMen());
 		response.setReceiveMobile(buyOrder.getReceiveMobile());
 		response.setReceiveAddr(buyOrder.getReceiveAddr());
@@ -166,9 +172,8 @@ public class OrderServiceImpl extends AbstractBusinessObjectServiceMgr
 		return response;
 	}
 	
-	private OrderCount getOrderCount(List<BuyCart> buyCartList){
-		// TODO
-		return new OrderCount();
+	public int getServiceFee(int totalPrice){
+		return totalPrice < Integer.parseInt(SystemResource.getConfig("service.free_price"))? Integer.parseInt(SystemResource.getConfig("service.fee")) : 0;
 	}
 	
 	@Override
@@ -177,13 +182,12 @@ public class OrderServiceImpl extends AbstractBusinessObjectServiceMgr
 		List<BuyCart> buyCartList = buyCartMapper.findByUserId(vo.getUserId());
 		AccAddress accAddress = accAddressMapper.load(vo.getAddressId());
 		MarMarket marMarket = marMarketMapper.findByAddressId(accAddress.getAddressId());
-		OrderCount orderCount = this.getOrderCount(buyCartList);
 		
 		BuyOrder buyOrder = new BuyOrder();
-		buyOrder.setOrderNo("");// 生成订单号 TODO
+		buyOrder.setOrderNo(commonService.getPaperNo(SystemResource.getConfig("area_code.hangzhou"), "01"));// PAPER_TYPE 01-用户订单
 		buyOrder.setOrderType("1");// ORDER_TYPE 1-普通订单
 		buyOrder.setUserId(vo.getUserId());
-		buyOrder.setQuantity(orderCount.getQuantity()); //汇总件数
+		buyOrder.setQuantity(buyCartList.size()); //汇总件数
 		buyOrder.setReceiveMen(accAddress.getReceiveName());
 		buyOrder.setReceiveMobile(accAddress.getMobileNo());
 		buyOrder.setReceiveAddr(accAddress.getDetailAddr());
@@ -191,11 +195,11 @@ public class OrderServiceImpl extends AbstractBusinessObjectServiceMgr
 		buyOrder.setWantDownTime(vo.getWantDownTime());
 		buyOrder.setMemo(vo.getMemo());
 		buyOrder.setCreateTime(new Date());
-		buyOrder.setTotalPrice(orderCount.getTotalPrice()); //汇总金额
-		buyOrder.setServiceFee(orderCount.getServiceFee()); //计算服务费
 		buyOrder.setStatus("01");// ORDER_STATUS 01-新创建
 		
 		buyOrderMapper.insert(buyOrder);
+		
+		int totalPrice = 0;// 总金额
 		
 		for(BuyCart buyCart : buyCartList) {
 			
@@ -218,6 +222,7 @@ public class OrderServiceImpl extends AbstractBusinessObjectServiceMgr
 			buyOrderGoods.setPrice(marMarketGoods.getPrice() * buyCart.getAmount());
 			
 			buyOrderGoodsMapper.insert(buyOrderGoods);
+			totalPrice += buyOrderGoods.getPrice();
 		}
 		
 		for(BuyCart buyCart : buyCartList) {
@@ -238,6 +243,7 @@ public class OrderServiceImpl extends AbstractBusinessObjectServiceMgr
 			buyOrderMenu.setPrice(menuUnitPrice*buyCart.getAmount());
 			
 			buyOrderMenuMapper.insert(buyOrderMenu);
+			totalPrice += buyOrderMenu.getPrice();
 			
 			List<MnuMenuGoods> mnuMenuGoodsList = mnuMenuGoodsMapper.findByMenu(mnuMenu.getMenuId());
 			
@@ -268,6 +274,8 @@ public class OrderServiceImpl extends AbstractBusinessObjectServiceMgr
 				buyOrderMenuGoodsMapper.insert(orderMenuGoods);
 			}
 		}
+		
+		buyOrderMapper.updateCount(buyOrder.getOrderId(), totalPrice, getServiceFee(totalPrice));
 		
 		return new MsgResponse(MsgResponse.SUCC, "订单提交成功");
 	}
