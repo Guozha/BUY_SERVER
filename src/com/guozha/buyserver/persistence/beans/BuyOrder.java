@@ -14,7 +14,9 @@ public class BuyOrder extends AbstractDO {
 	private String receiveMen;
 	private String receiveMobile;
 	private String receiveAddr;
-	private Date arrivalTime;
+	private Date aboutArrivalTime;
+	private Integer wantUpTime;
+	private Integer wantDownTime;
 	private String memo;
 	private Date createTime;
 	private Integer totalPrice;
@@ -84,11 +86,23 @@ public class BuyOrder extends AbstractDO {
 	public void setReceiveAddr(String receiveAddr) {
 		this.receiveAddr = receiveAddr;
 	}
-	public Date getArrivalTime() {
-		return arrivalTime;
+	public Date getAboutArrivalTime() {
+		return aboutArrivalTime;
 	}
-	public void setArrivalTime(Date arrivalTime) {
-		this.arrivalTime = arrivalTime;
+	public void setAboutArrivalTime(Date aboutArrivalTime) {
+		this.aboutArrivalTime = aboutArrivalTime;
+	}
+	public Integer getWantUpTime() {
+		return wantUpTime;
+	}
+	public void setWantUpTime(Integer wantUpTime) {
+		this.wantUpTime = wantUpTime;
+	}
+	public Integer getWantDownTime() {
+		return wantDownTime;
+	}
+	public void setWantDownTime(Integer wantDownTime) {
+		this.wantDownTime = wantDownTime;
 	}
 	public String getMemo() {
 		return memo;

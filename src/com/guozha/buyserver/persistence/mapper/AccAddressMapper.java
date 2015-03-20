@@ -3,7 +3,7 @@ package com.guozha.buyserver.persistence.mapper;
 import java.util.List;
 
 import com.guozha.buyserver.dal.BaseMapper;
-import com.guozha.buyserver.persistence.beans.AccMyFavo;
+import com.guozha.buyserver.persistence.beans.AccAddress;
 import com.guozha.buyserver.persistence.beans.AccNoServiceRecord;
 import com.guozha.buyserver.web.controller.account.AddressRequest;
 import com.guozha.buyserver.web.controller.account.AddressResponse;
@@ -14,7 +14,7 @@ import com.guozha.buyserver.web.controller.account.AddressResponse;
  * @author sunhanbin
  * @date 2015-3-17 下午03:41:03
  */
-public interface AccAddressMapper extends BaseMapper<AccMyFavo, Integer> {
+public interface AccAddressMapper extends BaseMapper<AccAddress, Integer> {
 
 	// 我的地址查询
 	List<AddressResponse> getMyAddress(int userId);

@@ -1,6 +1,7 @@
 package com.guozha.buyserver.service.order.impl;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -8,19 +9,34 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.guozha.buyserver.framework.sys.business.AbstractBusinessObjectServiceMgr;
+import com.guozha.buyserver.persistence.beans.AccAddress;
+import com.guozha.buyserver.persistence.beans.BuyCart;
 import com.guozha.buyserver.persistence.beans.BuyOrder;
 import com.guozha.buyserver.persistence.beans.BuyOrderGoods;
 import com.guozha.buyserver.persistence.beans.BuyOrderMenu;
 import com.guozha.buyserver.persistence.beans.BuyOrderMenuGoods;
+import com.guozha.buyserver.persistence.beans.GooGoods;
+import com.guozha.buyserver.persistence.beans.MarMarket;
+import com.guozha.buyserver.persistence.beans.MarMarketGoods;
+import com.guozha.buyserver.persistence.beans.MnuMenu;
+import com.guozha.buyserver.persistence.beans.MnuMenuGoods;
+import com.guozha.buyserver.persistence.mapper.AccAddressMapper;
+import com.guozha.buyserver.persistence.mapper.BuyCartMapper;
 import com.guozha.buyserver.persistence.mapper.BuyOrderGoodsMapper;
 import com.guozha.buyserver.persistence.mapper.BuyOrderMapper;
 import com.guozha.buyserver.persistence.mapper.BuyOrderMenuGoodsMapper;
 import com.guozha.buyserver.persistence.mapper.BuyOrderMenuMapper;
+import com.guozha.buyserver.persistence.mapper.GooGoodsMapper;
+import com.guozha.buyserver.persistence.mapper.MarMarketGoodsMapper;
+import com.guozha.buyserver.persistence.mapper.MarMarketMapper;
 import com.guozha.buyserver.persistence.mapper.MarMarketTimeMapper;
+import com.guozha.buyserver.persistence.mapper.MnuMenuGoodsMapper;
+import com.guozha.buyserver.persistence.mapper.MnuMenuMapper;
 import com.guozha.buyserver.service.order.OrderService;
 import com.guozha.buyserver.web.controller.MsgResponse;
 import com.guozha.buyserver.web.controller.order.CancelOrderRequest;
 import com.guozha.buyserver.web.controller.order.GoodsInfo;
+import com.guozha.buyserver.web.controller.order.InsertOrderRequest;
 import com.guozha.buyserver.web.controller.order.MarketTimeResponse;
 import com.guozha.buyserver.web.controller.order.MenuInfo;
 import com.guozha.buyserver.web.controller.order.OrderDetailResponse;
@@ -42,6 +58,20 @@ public class OrderServiceImpl extends AbstractBusinessObjectServiceMgr
 	private BuyOrderMenuMapper buyOrderMenuMapper;
 	@Autowired
 	private BuyOrderMenuGoodsMapper buyOrderMenuGoodsMapper;
+	@Autowired
+	private BuyCartMapper buyCartMapper;
+	@Autowired
+	private AccAddressMapper accAddressMapper;
+	@Autowired
+	private GooGoodsMapper gooGoodsMapper;
+	@Autowired
+	private MarMarketMapper marMarketMapper;
+	@Autowired
+	private MarMarketGoodsMapper marMarketGoodsMapper;
+	@Autowired
+	private MnuMenuMapper mnuMenuMapper;
+	@Autowired
+	private MnuMenuGoodsMapper mnuMenuGoodsMapper;
 
 	@Override
 	public List<MarketTimeResponse> findMarketTime(int marketId) {
@@ -131,6 +161,117 @@ public class OrderServiceImpl extends AbstractBusinessObjectServiceMgr
 		}
 		
 		return response;
+	}
+	
+	private OrderCount getOrderCount(List<BuyCart> buyCartList){
+		// TODO
+		return new OrderCount();
+	}
+	
+	private int countMenuUnitPrice(int marketId, int menuId){
+		// TODO
+		return 0;
+	}
+
+	@Override
+	public MsgResponse insertOrder(InsertOrderRequest vo) {
+		
+		List<BuyCart> buyCartList = buyCartMapper.findByUserId(vo.getUserId());
+		AccAddress accAddress = accAddressMapper.load(vo.getAddressId());
+		MarMarket marMarket = marMarketMapper.findByAddressId(accAddress.getAddressId());
+		OrderCount orderCount = this.getOrderCount(buyCartList);
+		
+		BuyOrder buyOrder = new BuyOrder();
+		buyOrder.setOrderNo("");// 生成订单号 TODO
+		buyOrder.setOrderType("1");// ORDER_TYPE 1-普通订单
+		buyOrder.setUserId(vo.getUserId());
+		buyOrder.setQuantity(orderCount.getQuantity()); //汇总件数
+		buyOrder.setReceiveMen(accAddress.getReceiveName());
+		buyOrder.setReceiveMobile(accAddress.getMobileNo());
+		buyOrder.setReceiveAddr(accAddress.getDetailAddr());
+		buyOrder.setWantUpTime(vo.getWantUpTime());
+		buyOrder.setWantDownTime(vo.getWantDownTime());
+		buyOrder.setMemo(vo.getMemo());
+		buyOrder.setCreateTime(new Date());
+		buyOrder.setTotalPrice(orderCount.getTotalPrice()); //汇总金额
+		buyOrder.setServiceFee(orderCount.getServiceFee()); //计算服务费
+		buyOrder.setStatus("01");// ORDER_STATUS 01-新创建
+		
+		buyOrderMapper.insert(buyOrder);
+		
+		for(BuyCart buyCart : buyCartList) {
+			
+			//只接受食材
+			if("01".equals(buyCart.getSplitType())) continue; //SPLIT_TYPE 01-菜谱  
+			
+			GooGoods gooGoods = gooGoodsMapper.load(buyCart.getGoodsOrMenuId());
+			MarMarketGoods marMarketGoods = marMarketGoodsMapper.findByGoodsId(marMarket.getMarketId(), gooGoods.getGoodsId());
+			
+			BuyOrderGoods buyOrderGoods = new BuyOrderGoods();
+			buyOrderGoods.setOrderId(buyOrder.getOrderId());
+			buyOrderGoods.setMarketId(marMarket.getMarketId());
+			buyOrderGoods.setGoodsId(gooGoods.getGoodsId());
+			buyOrderGoods.setGoodsName(gooGoods.getGoodsName());
+			buyOrderGoods.setGoodsImg(gooGoods.getGoodsImg());
+			buyOrderGoods.setBackTypeId(gooGoods.getBackTypeId());
+			buyOrderGoods.setUnit(gooGoods.getUnit());
+			buyOrderGoods.setUnitPrice(marMarketGoods.getPrice());
+			buyOrderGoods.setAmount(buyCart.getAmount());
+			buyOrderGoods.setPrice(marMarketGoods.getPrice() * buyCart.getAmount());
+			
+			buyOrderGoodsMapper.insert(buyOrderGoods);
+		}
+		
+		for(BuyCart buyCart : buyCartList) {
+			
+			if("02".equals(buyCart.getSplitType())) continue; //SPLIT_TYPE 02-食材
+			
+			MnuMenu mnuMenu = mnuMenuMapper.load(buyCart.getGoodsOrMenuId());
+			
+			BuyOrderMenu buyOrderMenu = new BuyOrderMenu();
+			buyOrderMenu.setOrderId(buyOrder.getOrderId());
+			buyOrderMenu.setMarketId(marMarket.getMarketId());
+			buyOrderMenu.setMenuId(mnuMenu.getMenuId());
+			buyOrderMenu.setMenuName(mnuMenu.getMenuName());
+			buyOrderMenu.setMenuImg(mnuMenu.getMenuImg());
+			int menuUnitPrice = this.countMenuUnitPrice(marMarket.getMarketId(), mnuMenu.getMenuId());
+			buyOrderMenu.setUnitPrice(menuUnitPrice);
+			buyOrderMenu.setAmount(buyCart.getAmount());
+			buyOrderMenu.setPrice(menuUnitPrice*buyCart.getAmount());
+			
+			buyOrderMenuMapper.insert(buyOrderMenu);
+			
+			List<MnuMenuGoods> mnuMenuGoodsList = mnuMenuGoodsMapper.findByMenu(mnuMenu.getMenuId());
+			
+			List<GooGoods> gooGoodsList = gooGoodsMapper.findByMenu(buyOrderMenu.getMenuId());
+			for(GooGoods gooGoods : gooGoodsList){
+				
+				MarMarketGoods marMarketGoods = marMarketGoodsMapper.findByGoodsId(marMarket.getMarketId(), gooGoods.getGoodsId());
+				
+				BuyOrderMenuGoods orderMenuGoods = new BuyOrderMenuGoods();
+				orderMenuGoods.setOrderId(buyOrder.getOrderId());
+				orderMenuGoods.setOrderMenuId(buyOrderMenu.getOrderMenuId());
+				orderMenuGoods.setMarketId(marMarket.getMarketId());
+				orderMenuGoods.setGoodsId(gooGoods.getGoodsId());
+				orderMenuGoods.setGoodsName(gooGoods.getGoodsName());
+				orderMenuGoods.setGoodsImg(gooGoods.getGoodsImg());
+				orderMenuGoods.setBackTypeId(gooGoods.getBackTypeId());
+				orderMenuGoods.setUnit(gooGoods.getUnit());
+				
+				int goodsUnitPrice = marMarketGoods.getPrice();
+				orderMenuGoods.setUnitPrice(goodsUnitPrice);
+				
+				for(MnuMenuGoods mnuMenuGoods : mnuMenuGoodsList){
+					if(!mnuMenuGoods.getGoodsId().equals(gooGoods.getGoodsId())) continue;
+					orderMenuGoods.setAmount(mnuMenuGoods.getAmount());
+					orderMenuGoods.setPrice(goodsUnitPrice * mnuMenuGoods.getAmount());
+				}
+				
+				buyOrderMenuGoodsMapper.insert(orderMenuGoods);
+			}
+		}
+		
+		return new MsgResponse(MsgResponse.SUCC, "订单提交成功");
 	}
 
 }

@@ -71,4 +71,11 @@ public interface GooGoodsMapper extends BaseMapper<GooGoods, Integer> {
 	 * @return
 	 */
 	List<GoodsResponse> findSecondSpecial(@Param("marketId") int marketId,@Param("secondFrontTypeId") int secondFrontTypeId);
+	
+	/**
+	 * 按菜单查询出商品
+	 * @param menuId
+	 * @return
+	 */
+	List<GooGoods> findByMenu(int menuId);
 }

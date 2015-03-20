@@ -6,6 +6,7 @@ public class BuyOrderMenu extends AbstractDO {
 	
 	private Integer orderMenuId;
 	private Integer orderId;
+	private Integer marketId;
 	private Integer menuId;
 	private String menuName;
 	private byte[] menuImg;
@@ -24,6 +25,12 @@ public class BuyOrderMenu extends AbstractDO {
 	}
 	public void setOrderId(Integer orderId) {
 		this.orderId = orderId;
+	}
+	public Integer getMarketId() {
+		return marketId;
+	}
+	public void setMarketId(Integer marketId) {
+		this.marketId = marketId;
 	}
 	public Integer getMenuId() {
 		return menuId;
