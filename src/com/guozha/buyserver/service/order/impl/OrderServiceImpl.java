@@ -32,6 +32,7 @@ import com.guozha.buyserver.persistence.mapper.MarMarketMapper;
 import com.guozha.buyserver.persistence.mapper.MarMarketTimeMapper;
 import com.guozha.buyserver.persistence.mapper.MnuMenuGoodsMapper;
 import com.guozha.buyserver.persistence.mapper.MnuMenuMapper;
+import com.guozha.buyserver.service.cart.CartService;
 import com.guozha.buyserver.service.order.OrderService;
 import com.guozha.buyserver.web.controller.MsgResponse;
 import com.guozha.buyserver.web.controller.order.CancelOrderRequest;
@@ -72,6 +73,8 @@ public class OrderServiceImpl extends AbstractBusinessObjectServiceMgr
 	private MnuMenuMapper mnuMenuMapper;
 	@Autowired
 	private MnuMenuGoodsMapper mnuMenuGoodsMapper;
+	@Autowired
+	private CartService cartService;
 
 	@Override
 	public List<MarketTimeResponse> findMarketTime(int marketId) {
@@ -110,7 +113,7 @@ public class OrderServiceImpl extends AbstractBusinessObjectServiceMgr
 		response.setOrderId(buyOrder.getOrderId());
 		response.setOrderNo(buyOrder.getOrderNo());
 		response.setCreateTime(buyOrder.getCreateTime());
-		response.setArrivalTime(buyOrder.getArrivalTime());
+		//response.setArrivalTime(buyOrder.getArrivalTime()); TODO
 		response.setReceiveMen(buyOrder.getReceiveMen());
 		response.setReceiveMobile(buyOrder.getReceiveMobile());
 		response.setReceiveAddr(buyOrder.getReceiveAddr());
@@ -168,11 +171,6 @@ public class OrderServiceImpl extends AbstractBusinessObjectServiceMgr
 		return new OrderCount();
 	}
 	
-	private int countMenuUnitPrice(int marketId, int menuId){
-		// TODO
-		return 0;
-	}
-
 	@Override
 	public MsgResponse insertOrder(InsertOrderRequest vo) {
 		
@@ -234,7 +232,7 @@ public class OrderServiceImpl extends AbstractBusinessObjectServiceMgr
 			buyOrderMenu.setMenuId(mnuMenu.getMenuId());
 			buyOrderMenu.setMenuName(mnuMenu.getMenuName());
 			buyOrderMenu.setMenuImg(mnuMenu.getMenuImg());
-			int menuUnitPrice = this.countMenuUnitPrice(marMarket.getMarketId(), mnuMenu.getMenuId());
+			int menuUnitPrice = cartService.getMenuUnitPrice(marMarket.getMarketId(), mnuMenu.getMenuId());
 			buyOrderMenu.setUnitPrice(menuUnitPrice);
 			buyOrderMenu.setAmount(buyCart.getAmount());
 			buyOrderMenu.setPrice(menuUnitPrice*buyCart.getAmount());
