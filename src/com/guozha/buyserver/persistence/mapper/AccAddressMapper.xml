@@ -35,8 +35,8 @@ WHERE
 
 <!--新增地址  -->
 <insert id="insert" useGeneratedKeys="true" keyProperty="addressId" parameterType="com.guozha.buyserver.web.controller.account.AddressRequest">  
-   INSERT INTO ACC_ADDRESS(user_id,receive_name,mobile_no,province_id,city_id,county_id,building_id,building_name,detail_addr,default_flag)
-	VALUES(#{userId},#{receiveName},#{mobileNo},#{provinceId},#{cityId},#{countyId},#{buildingId},#{buildingName},#{detailAddr},#{defaultFlag})
+   INSERT INTO ACC_ADDRESS(user_id,receive_name,mobile_no,province_id,city_id,county_id,building_id,building_name,detail_addr,default_flag,add_time)
+	VALUES(#{userId},#{receiveName},#{mobileNo},#{provinceId},#{cityId},#{countyId},#{buildingId},#{buildingName},#{detailAddr},#{defaultFlag},#{addTime})
 </insert>  
 
 
