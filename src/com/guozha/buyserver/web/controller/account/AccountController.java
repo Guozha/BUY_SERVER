@@ -54,7 +54,7 @@ public class AccountController extends BaseController {
 	 */
 	@RequestMapping(value = "/checkCodeForResetPasswd")
 	public void checkCodeForResetPasswd(PasswdRequest request, HttpServletResponse response) {
-		responseJson(accountService.checkCodeForResetPasswd(request.getCheckCode()), response);
+		responseJson(accountService.checkCodeForResetPasswd(request.getMobileNo()), response);
 	}
 
 	/**
