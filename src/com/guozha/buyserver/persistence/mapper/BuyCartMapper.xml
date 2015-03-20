@@ -48,7 +48,7 @@ PUBLIC "-//ibatis.apache.org//DTD Mapper 3.0//EN"
 	<select id="findGoodsByUserId" parameterType="int" resultType="com.guozha.buyserver.service.cart.CartBo">
 		SELECT 
 			 T.CART_ID cartId,T.USER_ID userId,T.SPLIT_TYPE splitType,T.GOODS_OR_MENU_ID goodsOrMenuId,T.DISPLAY_NAME displayName,
-     		 T.AMOUNT amount,T.UNIT unit,T.MARKET_ID marketId,T.MARKET_GOODS_ID marketGoodsId,B.PRICE price
+     		 T.AMOUNT amount,T.UNIT unit,T.MARKET_ID marketId,T.MARKET_GOODS_ID marketGoodsId,B.UNIT_PRICE unitPrice
 		FROM BUY_CART T, MAR_MARKET_GOODS B
 		WHERE 
 		    cast(T.MARKET_GOODS_ID as unsigned int) = B.MARKET_GOODS_ID

@@ -120,7 +120,6 @@ public class CartServiceImpl extends AbstractBusinessObjectServiceMgr implements
 	
 	@Override
 	public List<ProductTypeResponse> find(CartRequest vo) {
-		long begintime = System.currentTimeMillis();
 		List<ProductTypeResponse> response = new ArrayList<ProductTypeResponse>();
 		
 		//菜谱
@@ -149,7 +148,6 @@ public class CartServiceImpl extends AbstractBusinessObjectServiceMgr implements
 		
 		response.add(goodsResponse);
 		response.add(menuResponse);
-		System.out.println(System.currentTimeMillis()-begintime);
 		return response;
 	}
 
