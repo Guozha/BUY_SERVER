@@ -1,6 +1,6 @@
 package com.guozha.buyserver.web.controller.goods;
 
-import com.guozha.buyserver.persistence.beans.MarMarketGoodsPrice;
+import com.guozha.buyserver.persistence.beans.GooGoodsAmount;
 
 /**
  * 商品價格BO
@@ -10,20 +10,12 @@ import com.guozha.buyserver.persistence.beans.MarMarketGoodsPrice;
  * @date 2015-3-11 上午10:07:55
  */
 public class GoodsPriceResponse {
-	private Integer goodsPriceId;
+	//private Integer goodsPriceId;
 	private Integer goodsId;
 	private Integer amount;
 	private Integer price;
     private String unit;
 	
-
-	public Integer getGoodsPriceId() {
-		return goodsPriceId;
-	}
-
-	public void setGoodsPriceId(Integer goodsPriceId) {
-		this.goodsPriceId = goodsPriceId;
-	}
 
 	public Integer getGoodsId() {
 		return goodsId;

@@ -22,7 +22,7 @@ PUBLIC "-//ibatis.apache.org//DTD Mapper 3.0//EN"
 	</sql>
 	
     <!-- 所有用户购物车信息 -->
-	<select id="findByUserId" parameterType="int" resultMap="rm">
+	<select id="findByUserId" parameterType="int" resultType="com.guozha.buyserver.service.cart.CartBo">
 		SELECT 
 			<include refid="BASE_COLUMN_LIST" />
 		FROM BUY_CART
@@ -31,26 +31,31 @@ PUBLIC "-//ibatis.apache.org//DTD Mapper 3.0//EN"
 		ORDER BY SPLIT_TYPE ASC,CART_ID DESC
 	</select>
 	
-	  <!-- 所有用户菜谱信息 -->
-	<select id="findMenuByUserId" parameterType="int" resultMap="rm">
+		
+	<!-- 所有用户菜谱信息 -->
+	<select id="findMenuByUserId"  parameterType="int" resultType="com.guozha.buyserver.service.cart.CartBo">
 		SELECT 
-			<include refid="BASE_COLUMN_LIST" />
-		FROM BUY_CART
+			 T.CART_ID cartId,T.USER_ID userId,T.SPLIT_TYPE splitType,T.GOODS_OR_MENU_ID goodsOrMenuId,T.DISPLAY_NAME displayName,
+     		 T.AMOUNT amount,T.UNIT unit,T.MARKET_ID marketId,T.MARKET_GOODS_ID marketGoodsId
+		FROM BUY_CART T
 		WHERE
-		    USER_ID =#{userId}
-		    AND SPLIT_TYPE ='01'
-		ORDER BY CART_ID DESC
+		    T.USER_ID =#{userId}
+		    AND T.SPLIT_TYPE ='01'
+		ORDER BY T.CART_ID DESC
 	</select>
 	
-	  <!-- 所有用户商品食材信息 -->
-	<select id="findGoodsByUserId" parameterType="int" resultMap="rm">
+	<!-- 所有用户商品食材信息 -->
+	<select id="findGoodsByUserId" parameterType="int" resultType="com.guozha.buyserver.service.cart.CartBo">
 		SELECT 
-			<include refid="BASE_COLUMN_LIST" />
-		FROM BUY_CART
-		WHERE
-		    USER_ID =#{userId}
-		    AND SPLIT_TYPE ='02'
-		ORDER BY CART_ID DESC
+			 T.CART_ID cartId,T.USER_ID userId,T.SPLIT_TYPE splitType,T.GOODS_OR_MENU_ID goodsOrMenuId,T.DISPLAY_NAME displayName,
+     		 T.AMOUNT amount,T.UNIT unit,T.MARKET_ID marketId,T.MARKET_GOODS_ID marketGoodsId,B.PRICE price
+		FROM BUY_CART T, MAR_MARKET_GOODS B
+		WHERE 
+		    cast(T.MARKET_GOODS_ID as unsigned int) = B.MARKET_GOODS_ID
+		    AND T.GOODS_OR_MENU_ID = B.GOODS_ID
+		    AND T.SPLIT_TYPE ='02'
+		    AND T.USER_ID =#{userId}
+		ORDER BY T.CART_ID DESC
 	</select>
 	
 	<!-- 删除单个购物车信息 -->

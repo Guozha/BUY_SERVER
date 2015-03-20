@@ -1,6 +1,7 @@
 package com.guozha.buyserver.common.util;
 
 import java.io.File;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.Map;
@@ -39,6 +40,20 @@ public class ArrayUtils {
 			m.put(keys[i], array[i]);
 		}
 		return m;
+	}
+	
+	/**
+	 * 字符数组转int数组，并排序
+	 * @param arrays
+	 * @return
+	 */
+	public static int [] toIntArray(String [] arrays){
+		int [] array ={arrays.length};
+		for(int i=0;i<arrays.length;i++){
+			array[i] = Integer.valueOf(arrays[i]);
+		}
+		Arrays.sort(array);
+		return array;
 	}
 	
 	/** 

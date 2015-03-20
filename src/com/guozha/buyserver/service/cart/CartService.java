@@ -50,5 +50,13 @@ public interface CartService  extends BusinessObjectServiceMgr{
 	 * @return
 	 */
 	MsgResponse add(CartRequest vo);
+	
+	/**
+	 * 获得菜谱单价
+	 * @param marketId
+	 * @param menuId
+	 * @return
+	 */
+	int getMenuUnitPrice(int marketId,int menuId);
 
 }

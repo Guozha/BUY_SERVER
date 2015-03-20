@@ -40,8 +40,45 @@ public class PriceUtils {
 		return price;
 	}
 	
+	/**
+	 *  计算菜谱中食材的单价（食材单价取上值）
+	 * @param unitPrice
+	 * @param amount
+	 * @param amounts
+	 * @return
+	 */
+	public static int getMenuGoodsPrice(int unitPrice,int amount,int amounts[]){
+		return getMenuGoodsPrice(unitPrice, amount, amounts, "01");
+	}
 	
-	public static int getMenuPrice(int unitPrice,int amount,String unit){
-		return 0;
+	/**
+	 * 计算菜谱中食材的单价（食材单价取上值）
+	 * @param unitPrice
+	 * @param amount
+	 * @param amounts
+	 * @param unit
+	 * @return
+	 */
+	public static int getMenuGoodsPrice(int unitPrice,int amount,int amounts[],String unit){
+		int price =0;
+		if("01".equals(unit)){
+			for(int i =0;i<amounts.length;i++){
+				int configAmount = amounts[i];
+				if(configAmount>=amount){
+					amount=configAmount;
+					break;
+				}
+			}
+			double d = ((double)amount/500)*unitPrice;
+			price= (int)d;
+		}else if("02".equals(unit)){
+			price = unitPrice*amount;
+		}
+		
+		return price;
+	}
+	
+	public static void main(String[] args) {
+		System.out.println(getMenuGoodsPrice(400, 200, new int[]{200,500}));
 	}
 }

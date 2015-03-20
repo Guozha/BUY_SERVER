@@ -2,6 +2,7 @@ package com.guozha.buyserver.service.cart.impl;
 
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
@@ -10,16 +11,22 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.guozha.buyserver.common.util.ArrayUtils;
+import com.guozha.buyserver.common.util.PriceUtils;
 import com.guozha.buyserver.common.util.SystemResource;
 import com.guozha.buyserver.framework.sys.business.AbstractBusinessObjectServiceMgr;
 import com.guozha.buyserver.persistence.beans.BuyCart;
 import com.guozha.buyserver.persistence.beans.GooGoods;
+import com.guozha.buyserver.persistence.beans.GooGoodsAmount;
 import com.guozha.buyserver.persistence.beans.MarMarketGoods;
 import com.guozha.buyserver.persistence.beans.MnuMenu;
+import com.guozha.buyserver.persistence.beans.MnuMenuGoods;
 import com.guozha.buyserver.persistence.mapper.BuyCartMapper;
+import com.guozha.buyserver.persistence.mapper.GooGoodsAmountMapper;
 import com.guozha.buyserver.persistence.mapper.GooGoodsMapper;
 import com.guozha.buyserver.persistence.mapper.MarMarketGoodsMapper;
 import com.guozha.buyserver.persistence.mapper.MnuMenuMapper;
+import com.guozha.buyserver.service.cart.CartBo;
 import com.guozha.buyserver.service.cart.CartService;
 import com.guozha.buyserver.service.market.MarketService;
 import com.guozha.buyserver.web.controller.MsgResponse;
@@ -40,6 +47,9 @@ public class CartServiceImpl extends AbstractBusinessObjectServiceMgr implements
     
 	@Autowired
 	private MarMarketGoodsMapper marMarketGoodsMapper;
+	
+	@Autowired
+	private GooGoodsAmountMapper gooGoodsAmountMapper;
 	
 	@Autowired
 	private MarketService marketService;
@@ -114,73 +124,54 @@ public class CartServiceImpl extends AbstractBusinessObjectServiceMgr implements
 	
 	@Override
 	public List<ProductTypeResponse> find(CartRequest vo) {
+		List<ProductTypeResponse> response = new ArrayList<ProductTypeResponse>();
 		
-		List<BuyCart> menuCartList = new ArrayList<BuyCart>();
-		List<BuyCart> goodsCartList = new ArrayList<BuyCart>();
+		//菜谱
+		ProductTypeResponse menuResponse = new ProductTypeResponse();
+		menuResponse.setProductType("01");
+		List<CartBo> menuCartList = this.buyCartMapper.findMenuByUserId(vo.getUserId());
 		
-		
-		
-		List<BuyCart> pos = this.buyCartMapper.findByUserId(vo.getUserId());
-		int marketId =Integer.valueOf(SystemResource.getConfig("default_market_id"));
-		//获得菜场ID
-		if(!pos.isEmpty()){
-			marketId = pos.get(0).getMarketId();
-		}
-		for(BuyCart cart:pos){
-			if("01".equals(cart.getSplitType())){
-				menuCartList.add(cart);
-			}else if ("02".equals(cart.getSplitType())) {
-				goodsCartList.add(cart);
-			}
-		}
-		
-		
+		List<CartResponse> menuCartResonseList = new ArrayList<CartResponse>();
+	
 		for(int i=0;i<menuCartList.size();i++){
-			
+			CartBo bo = menuCartList.get(i);
+			bo.setPrice(getMenuUnitPrice(bo.getMarketId(), bo.getGoodsOrMenuId()));
+			menuCartResonseList.add(new CartResponse(bo));
 		}
+		menuResponse.setCartList(menuCartResonseList);
 		
+		//食材
+		ProductTypeResponse goodsResponse = new ProductTypeResponse();
+		goodsResponse.setProductType("02");
+		List<CartBo> goodsCartList = this.buyCartMapper.findGoodsByUserId(vo.getUserId());
+		List<CartResponse> goodsCartResonseList = new ArrayList<CartResponse>();
+		for(CartBo bo:goodsCartList){
+			goodsCartResonseList.add(new CartResponse(bo));
+		}
+		goodsResponse.setCartList(goodsCartResonseList);
+		
+		response.add(goodsResponse);
+		response.add(menuResponse);
+		return response;
+	}
 
-		Map<String, List<CartResponse>> map = new LinkedHashMap<String, List<CartResponse>>();
-		List<CartResponse> list = null;
-		//分组去重
-		for(BuyCart po:pos){
-			if(map.containsKey(po.getSplitType())){
-				map.get(po.getSplitType()).add(new CartResponse(po));
-			}else{
-				list = new ArrayList<CartResponse>();
-				list.add(new CartResponse(po));
-				map.put(po.getSplitType(), list);
-			}
-		}
+	@Override
+	public int getMenuUnitPrice(int marketId, int menuId) {
+		int menuUnitPrice =0; //菜谱单价
+		List<MnuMenuGoods> menuGoodsList = this.mnuMenuMapper.findGoodsById(menuId);
 		
-		
-		//设置结果集
-		List<ProductTypeResponse> bos = new ArrayList<ProductTypeResponse>();
-		for (String productType : map.keySet()) {
-			ProductTypeResponse bo = new ProductTypeResponse();
-			bo.setProductType(productType);
-			//计算单价
-			if("01".equals(productType)){
-				/*
-				//菜谱单价设置
-				for(int i =0;i<map.get(productType).size();i++){
-					List<MarMarketGoods> marketGoodsList = this.marMarketGoodsMapper.findByMenuId(marketId, map.get(productType).get(i).getId());
-					
-					map.get(productType).get(i).setPrice(marketGoods.getPrice());
-				}
-				*/
-				//map.get(productType).get(0).setPrice(price);
-			}else if("02".equals(productType)){
-				for(int i =0;i<map.get(productType).size();i++){
-					//商品单价设置
-					MarMarketGoods marketGoods = this.marMarketGoodsMapper.findByGoodsId(marketId, map.get(productType).get(i).getId());
-					map.get(productType).get(i).setPrice(marketGoods.getPrice());
-				}
+		for(MnuMenuGoods menuGoods:menuGoodsList){
+			List<GooGoodsAmount> goodsAmountList = this.gooGoodsAmountMapper.findByGoodsId(menuGoods.getGoodsId());
+			int unitPrice = this.marMarketGoodsMapper.findByGoodsId(marketId, menuGoods.getGoodsId()).getPrice();
+			int amounts []  = {goodsAmountList.size()};
+			for(int j =0;j<goodsAmountList.size();j++){
+				amounts[j] = goodsAmountList.get(j).getAmount();
 			}
-			bo.setCartList(map.get(productType));
-			bos.add(bo);
+			Arrays.sort(amounts);
+			int goodsUnitPrice = PriceUtils.getMenuGoodsPrice(unitPrice, menuGoods.getAmount(), amounts);
+			menuUnitPrice+=goodsUnitPrice;
 		}
-		return bos;
+		return menuUnitPrice;
 	}
 	
 	/*
