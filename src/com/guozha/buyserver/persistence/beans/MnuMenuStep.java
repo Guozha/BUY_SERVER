@@ -3,200 +3,48 @@ package com.guozha.buyserver.persistence.beans;
 import com.guozha.buyserver.dal.object.AbstractDO;
 
 /**
- * @Package com.guozha.buyserver.persistence.beans
- * @Description: 菜票制作步骤
+ * @Package com.guozha.buyserver.persistence.mapper
+ * @Description: 菜谱步骤表
  * @author sunhanbin
- * @date 2015-3-19 下午03:58:33
+ * @date 2015-3-20 下午02:09:14
  */
-public class MnuMenuStep extends AbstractDO {
-
-	private Integer menuStepId;
-	private byte[] oneImg;
-	private String oneDesc;
-	private byte[] twoImg;
-	private String twoDesc;
-	private byte[] threeImg;
-	private String threeDesc;
-	private byte[] fourImg;
-	private String fourDesc;
-	private byte[] fiveImg;
-	private String fiveDesc;
-	private byte[] sixImg;
-	private String sixDesc;
-	private byte[] sevenImg;
-	private String sevenDesc;
-	private byte[] eightImg;
-	private String eightDesc;
-	private byte[] nineImg;
-	private String nineDesc;
-	private byte[] tenImg;
-	private String tenDesc;
-
+public class MnuMenuStep extends AbstractDO{
+	
+	
+	private Integer menuStepId;//步骤ID
+	private Integer menuId;//菜谱ID
+	private Integer stepDesc;//步骤描述
+	private byte[] stepImg;//步骤图片
+	private Integer sortFlag;//排序
 	public Integer getMenuStepId() {
 		return menuStepId;
 	}
-
 	public void setMenuStepId(Integer menuStepId) {
 		this.menuStepId = menuStepId;
 	}
-
-	public byte[] getOneImg() {
-		return oneImg;
+	public Integer getMenuId() {
+		return menuId;
 	}
-
-	public void setOneImg(byte[] oneImg) {
-		this.oneImg = oneImg;
+	public void setMenuId(Integer menuId) {
+		this.menuId = menuId;
 	}
-
-	public String getOneDesc() {
-		return oneDesc;
+	public Integer getStepDesc() {
+		return stepDesc;
 	}
-
-	public void setOneDesc(String oneDesc) {
-		this.oneDesc = oneDesc;
+	public void setStepDesc(Integer stepDesc) {
+		this.stepDesc = stepDesc;
 	}
-
-	public byte[] getTwoImg() {
-		return twoImg;
+	public byte[] getStepImg() {
+		return stepImg;
 	}
-
-	public void setTwoImg(byte[] twoImg) {
-		this.twoImg = twoImg;
+	public void setStepImg(byte[] stepImg) {
+		this.stepImg = stepImg;
 	}
-
-	public String getTwoDesc() {
-		return twoDesc;
+	public Integer getSortFlag() {
+		return sortFlag;
 	}
-
-	public void setTwoDesc(String twoDesc) {
-		this.twoDesc = twoDesc;
+	public void setSortFlag(Integer sortFlag) {
+		this.sortFlag = sortFlag;
 	}
-
-	public byte[] getThreeImg() {
-		return threeImg;
-	}
-
-	public void setThreeImg(byte[] threeImg) {
-		this.threeImg = threeImg;
-	}
-
-	public String getThreeDesc() {
-		return threeDesc;
-	}
-
-	public void setThreeDesc(String threeDesc) {
-		this.threeDesc = threeDesc;
-	}
-
-	public byte[] getFourImg() {
-		return fourImg;
-	}
-
-	public void setFourImg(byte[] fourImg) {
-		this.fourImg = fourImg;
-	}
-
-	public String getFourDesc() {
-		return fourDesc;
-	}
-
-	public void setFourDesc(String fourDesc) {
-		this.fourDesc = fourDesc;
-	}
-
-	public byte[] getFiveImg() {
-		return fiveImg;
-	}
-
-	public void setFiveImg(byte[] fiveImg) {
-		this.fiveImg = fiveImg;
-	}
-
-	public String getFiveDesc() {
-		return fiveDesc;
-	}
-
-	public void setFiveDesc(String fiveDesc) {
-		this.fiveDesc = fiveDesc;
-	}
-
-	public byte[] getSixImg() {
-		return sixImg;
-	}
-
-	public void setSixImg(byte[] sixImg) {
-		this.sixImg = sixImg;
-	}
-
-	public String getSixDesc() {
-		return sixDesc;
-	}
-
-	public void setSixDesc(String sixDesc) {
-		this.sixDesc = sixDesc;
-	}
-
-	public byte[] getSevenImg() {
-		return sevenImg;
-	}
-
-	public void setSevenImg(byte[] sevenImg) {
-		this.sevenImg = sevenImg;
-	}
-
-	public String getSevenDesc() {
-		return sevenDesc;
-	}
-
-	public void setSevenDesc(String sevenDesc) {
-		this.sevenDesc = sevenDesc;
-	}
-
-	public byte[] getEightImg() {
-		return eightImg;
-	}
-
-	public void setEightImg(byte[] eightImg) {
-		this.eightImg = eightImg;
-	}
-
-	public String getEightDesc() {
-		return eightDesc;
-	}
-
-	public void setEightDesc(String eightDesc) {
-		this.eightDesc = eightDesc;
-	}
-
-	public byte[] getNineImg() {
-		return nineImg;
-	}
-
-	public void setNineImg(byte[] nineImg) {
-		this.nineImg = nineImg;
-	}
-
-	public String getNineDesc() {
-		return nineDesc;
-	}
-
-	public void setNineDesc(String nineDesc) {
-		this.nineDesc = nineDesc;
-	}
-
-	public byte[] getTenImg() {
-		return tenImg;
-	}
-
-	public void setTenImg(byte[] tenImg) {
-		this.tenImg = tenImg;
-	}
-
-	public String getTenDesc() {
-		return tenDesc;
-	}
-
-	public void setTenDesc(String tenDesc) {
-		this.tenDesc = tenDesc;
-	}
+	
 }

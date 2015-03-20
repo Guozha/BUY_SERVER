@@ -213,4 +213,10 @@
 	    <constantName value="1">进行中</constantName>
     	<constantName value="2">已完成</constantName>
 	</constant>
+	<!--菜谱制作难易程度  -->
+	<constant constantDef="MENU_COOK_HARD_TYPE">
+	    <constantName value="1">简单</constantName>
+	    <constantName value="2">中等</constantName>
+	    <constantName value="3">复杂</constantName>
+	</constant>
 </constants>
