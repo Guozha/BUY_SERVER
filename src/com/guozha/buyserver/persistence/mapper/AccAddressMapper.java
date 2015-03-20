@@ -3,6 +3,7 @@ package com.guozha.buyserver.persistence.mapper;
 import java.util.List;
 
 import com.guozha.buyserver.dal.BaseMapper;
+import com.guozha.buyserver.persistence.beans.AccAddress;
 import com.guozha.buyserver.persistence.beans.AccMyFavo;
 import com.guozha.buyserver.persistence.beans.AccNoServiceRecord;
 import com.guozha.buyserver.web.controller.account.AddressRequest;
