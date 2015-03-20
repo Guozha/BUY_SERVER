@@ -12,6 +12,7 @@ import com.guozha.buyserver.common.util.DateUtil;
 import com.guozha.buyserver.framework.enums.ReturnCodeEnum;
 import com.guozha.buyserver.framework.enums.YesNo;
 import com.guozha.buyserver.framework.sys.business.AbstractBusinessObjectServiceMgr;
+import com.guozha.buyserver.persistence.beans.AccAddress;
 import com.guozha.buyserver.persistence.beans.AccNoServiceRecord;
 import com.guozha.buyserver.persistence.mapper.AccAddressMapper;
 import com.guozha.buyserver.service.account.AccAddressService;
@@ -92,6 +93,19 @@ public class AccAddressServiceImpl extends AbstractBusinessObjectServiceMgr impl
 			String defaultFlag = request.getDefaultFlag();
 			// 小区是否已存在
 //			Integer buildingId = request.getBuildingId();
+//			AccAddress address = new AccAddress();
+//			address.setAddTime(Timestamp.valueOf(DateUtil.date2String(new Date(), DateUtil.PATTERN_STANDARD)));
+//			address.setBuildingId(buildingId);
+//			address.setBuildingName(request.getBuildingName());
+//			address.setCityId(request.getCityId());
+//			address.setCountyId(request.getCountyId());
+//			address.setDefaultFlag(request.getDefaultFlag());
+//			address.setDetailAddr(request.getDetailAddr());
+//			address.setMobileNo(request.getMobileNo());
+//			address.setProvinceId(request.getProvinceId());
+//			address.setReceiveName(request.getReceiveName());
+//			address.setUserId(request.getUserId());
+			request.setAddTime(Timestamp.valueOf(DateUtil.date2String(new Date(), DateUtil.PATTERN_STANDARD)));
 			accAddressMapper.insert(request);
 			if (YesNo.Yes.getCode().toString().equals(defaultFlag))// 如果设为默认地址
 				result = defaultAddress(request);

@@ -1,6 +1,7 @@
 package com.guozha.buyserver.web.controller.cart;
 
 import com.guozha.buyserver.persistence.beans.BuyCart;
+import com.guozha.buyserver.service.cart.CartBo;
 
 public class CartResponse {
    
@@ -23,6 +24,17 @@ public class CartResponse {
 		this.id = po.getGoodsOrMenuId();
 		this.displayName = po.getDisplayName();
 		//this.price = po.getPrice();
+		this.amount = po.getAmount();
+		this.unit  = po.getUnit();
+	}
+	
+	public CartResponse(CartBo po) {
+		super();
+		this.cartId = po.getCartId();
+		this.productType = po.getSplitType();
+		this.id = po.getGoodsOrMenuId();
+		this.displayName = po.getDisplayName();
+		this.price = po.getPrice();
 		this.amount = po.getAmount();
 		this.unit  = po.getUnit();
 	}

@@ -11,12 +11,12 @@ import com.guozha.buyserver.common.util.PriceUtils;
 import com.guozha.buyserver.framework.sys.business.AbstractBusinessObjectServiceMgr;
 import com.guozha.buyserver.persistence.beans.BasFrontType;
 import com.guozha.buyserver.persistence.beans.GooGoods;
-import com.guozha.buyserver.persistence.beans.MarMarketGoodsPrice;
+import com.guozha.buyserver.persistence.beans.GooGoodsAmount;
 import com.guozha.buyserver.persistence.beans.MnuMenu;
 import com.guozha.buyserver.persistence.mapper.BasFrontTypeMapper;
 import com.guozha.buyserver.persistence.mapper.GooGoodsMapper;
 import com.guozha.buyserver.persistence.mapper.MarMarketGoodsMapper;
-import com.guozha.buyserver.persistence.mapper.MarMarketGoodsPriceMapper;
+import com.guozha.buyserver.persistence.mapper.GooGoodsAmountMapper;
 import com.guozha.buyserver.persistence.mapper.MnuMenuMapper;
 import com.guozha.buyserver.service.goods.GeneralService;
 import com.guozha.buyserver.service.market.MarketService;
@@ -38,7 +38,7 @@ public class GeneralServiceImpl extends AbstractBusinessObjectServiceMgr impleme
 	@Autowired
 	private GooGoodsMapper gooGoodsMapper;
 	@Autowired
-	private MarMarketGoodsPriceMapper marMarketGoodsPriceMapper;
+	private GooGoodsAmountMapper gooGoodsAmountMapper;
 	@Autowired
 	private MnuMenuMapper mnuMenuMapper;
 	
@@ -115,14 +115,13 @@ public class GeneralServiceImpl extends AbstractBusinessObjectServiceMgr impleme
 		//商品单价
 		int unitPrice = this.marMarketGoodsMapper.findByGoodsId(marketId, vo.getGoodsId()).getPrice();
 		//商品重量配置
-		List<MarMarketGoodsPrice> pos = this.marMarketGoodsPriceMapper.findByGoodsId(marketId, vo.getGoodsId());
+		List<GooGoodsAmount> pos = this.gooGoodsAmountMapper.findByGoodsId(vo.getGoodsId());
 		List<GoodsPriceResponse> bos = new ArrayList<GoodsPriceResponse>();
-	    for(MarMarketGoodsPrice po:pos){
+	    for(GooGoodsAmount po:pos){
 	    	GoodsPriceResponse res = new GoodsPriceResponse();
 	    	res.setUnit(goodPo.getUnit());
 	    	res.setGoodsId(vo.getGoodsId());
 	    	res.setAmount(po.getAmount());
-	    	res.setGoodsPriceId(po.getGoodsPriceId());
 	    	res.setPrice(PriceUtils.getGoodsPrice(unitPrice, po.getAmount(), goodPo.getUnit()));
 	    	bos.add(res);
 	    }

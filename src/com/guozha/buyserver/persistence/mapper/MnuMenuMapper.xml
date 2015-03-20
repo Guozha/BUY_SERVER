@@ -11,14 +11,14 @@ PUBLIC "-//ibatis.apache.org//DTD Mapper 3.0//EN"
         <result property="menuDesc" jdbcType="VARCHAR" column="MENU_DESC"/>
         <result property="cookieTime" jdbcType="INTEGER" column="COOKIE_TIME"/>
         <result property="cookieWay" jdbcType="VARCHAR" column="COOKIE_WAY"/>
-        <result property="cookieStep" jdbcType="VARCHAR" column="COOKIE_STEP"/>
+       <!--  <result property="cookieStep" jdbcType="VARCHAR" column="COOKIE_STEP"/>--> 
         <result property="seasonings" jdbcType="VARCHAR" column="SEASONINGS"/>
         <result property="status" jdbcType="VARCHAR" column="STATUS"/>
         
 	</resultMap>
 	
 	<sql id="BASE_COLUMN_LIST">
-		MENU_ID,MENU_NAME,MENU_IMG,MENU_DESC,COOKIE_TIME,COOKIE_WAY,COOKIE_STEP,SEASONINGS,STATUS
+		MENU_ID,MENU_NAME,MENU_IMG,MENU_DESC,COOKIE_TIME,COOKIE_WAY,SEASONINGS,STATUS
 	</sql>
 	
 	<!-- 菜谱详情 -->
@@ -33,12 +33,19 @@ PUBLIC "-//ibatis.apache.org//DTD Mapper 3.0//EN"
     <!-- 商品菜谱-->
 	<select id="findByGoodsId" resultMap="rm">
 		SELECT 
-			A.MENU_ID,A.MENU_NAME,A.MENU_IMG,A.MENU_DESC,A.COOKIE_TIME,A.COOKIE_WAY,A.COOKIE_STEP,A.SEASONINGS,A.STATUS
+			A.MENU_ID,A.MENU_NAME,A.MENU_IMG,A.MENU_DESC,A.COOKIE_TIME,A.COOKIE_WAY,A.SEASONINGS,A.STATUS
 		FROM MNU_MENU A,MNU_MENU_GOODS B
 		WHERE 
 		    A.MENU_ID = B.MENU_ID 
 		    AND B.GOODS_ID = #{goodsId}
 	</select>
 	
+	<select id="findGoodsById" resultType="com.guozha.buyserver.persistence.beans.MnuMenuGoods" parameterType="int">
+	      SELECT GOODS_ID goodsId,AMOUNT amount 
+	      FROM MNU_MENU_GOODS
+	      WHERE 
+	        MENU_ID =#{menuId}
+	 
+	</select>
 	
 </mapper>

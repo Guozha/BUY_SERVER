@@ -47,4 +47,5 @@ public class MnuMenuGoods extends AbstractDO {
 	public void setAmount(Integer amount) {
 		this.amount = amount;
 	}
+	
 }

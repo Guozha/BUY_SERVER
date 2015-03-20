@@ -5,6 +5,8 @@
  */
 package com.guozha.buyserver.web.controller.account;
 
+import java.sql.Timestamp;
+
 public class AddressRequest {
 
 	private Integer userId;// 用户ID
@@ -18,6 +20,7 @@ public class AddressRequest {
 	private String buildingName; // 小区名
 	private String detailAddr; // 详细地址
 	private String defaultFlag;// 是否默认地址
+	private Timestamp addTime;// 插入时间
 
 	private Integer addressId;// 地址ID
 	private String status;// 地址状态
@@ -99,6 +102,12 @@ public class AddressRequest {
 	}
 	public void setStatus(String status) {
 		this.status = status;
+	}
+	public Timestamp getAddTime() {
+		return addTime;
+	}
+	public void setAddTime(Timestamp addTime) {
+		this.addTime = addTime;
 	}
 
 
