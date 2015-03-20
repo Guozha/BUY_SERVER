@@ -19,7 +19,7 @@ public class MnuMenu extends AbstractDO {
 	private Integer cookieTime;
 
 	private String cookieWay;
-	private String cookieStep;
+	private String stepId;
 	private String seasonings;
 	public String getSeasonings() {
 		return seasonings;
@@ -65,17 +65,17 @@ public class MnuMenu extends AbstractDO {
 	public void setCookieWay(String cookieWay) {
 		this.cookieWay = cookieWay;
 	}
-	public String getCookieStep() {
-		return cookieStep;
-	}
-	public void setCookieStep(String cookieStep) {
-		this.cookieStep = cookieStep;
-	}
 	public String getStatus() {
 		return status;
 	}
 	public void setStatus(String status) {
 		this.status = status;
+	}
+	public String getStepId() {
+		return stepId;
+	}
+	public void setStepId(String stepId) {
+		this.stepId = stepId;
 	}
 
 }

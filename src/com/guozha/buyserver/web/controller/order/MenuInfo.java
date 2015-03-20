@@ -1,5 +1,6 @@
 package com.guozha.buyserver.web.controller.order;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class MenuInfo {
@@ -10,7 +11,7 @@ public class MenuInfo {
 	private Integer unitPrice;
 	private Integer amount;
 	private Integer price;
-	private List<GoodsInfo> goodsInfoList;
+	private List<GoodsInfo> goodsInfoList = new ArrayList<GoodsInfo>();
 
 	public Integer getMenuId() {
 		return menuId;

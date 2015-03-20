@@ -8,7 +8,7 @@ public class BuyOrderGoods extends AbstractDO {
 	private Integer orderId;
 	private Integer goodsId;
 	private String goodsName;
-	private String goodsUrl;
+	private byte[] goodsImg;
 	private Integer backTypeId;
 	private Integer unitPrice;
 	private Integer amount;
@@ -39,11 +39,11 @@ public class BuyOrderGoods extends AbstractDO {
 	public void setGoodsName(String goodsName) {
 		this.goodsName = goodsName;
 	}
-	public String getGoodsUrl() {
-		return goodsUrl;
+	public byte[] getGoodsImg() {
+		return goodsImg;
 	}
-	public void setGoodsUrl(String goodsUrl) {
-		this.goodsUrl = goodsUrl;
+	public void setGoodsImg(byte[] goodsImg) {
+		this.goodsImg = goodsImg;
 	}
 	public Integer getBackTypeId() {
 		return backTypeId;

@@ -3,11 +3,12 @@
 PUBLIC "-//ibatis.apache.org//DTD Mapper 3.0//EN"
 "http://ibatis.apache.org/dtd/ibatis-3-mapper.dtd">
 
-<mapper namespace="com.guozha.buyserver.persistence.mapper.BuyOrderGoodsMapper">
+<mapper namespace="com.guozha.buyserver.persistence.mapper.BuyOrderMenuGoodsMapper">
 
-    <resultMap id="rm" type="com.guozha.buyserver.persistence.beans.BuyOrderGoods">
-        <result property="orderGoodsId" jdbcType="INTEGER" column="ORDER_GOODS_ID"/>
+    <resultMap id="rm" type="com.guozha.buyserver.persistence.beans.BuyOrderMenuGoods">
+        <result property="orderMenuGoodsId" jdbcType="INTEGER" column="ORDER_MENU_GOODS_ID"/>
         <result property="orderId" jdbcType="INTEGER" column="ORDER_ID"/>
+        <result property="orderMenuId" jdbcType="INTEGER" column="ORDER_MENU_ID"/>
         <result property="goodsId" jdbcType="INTEGER" column="GOODS_ID"/>
         <result property="goodsName" jdbcType="VARCHAR" column="GOODS_NAME"/>
         <result property="goodsImg" jdbcType="BLOB" column="GOODS_IMG"/>
@@ -18,8 +19,8 @@ PUBLIC "-//ibatis.apache.org//DTD Mapper 3.0//EN"
         <result property="goodsStar" jdbcType="INTEGER" column="GOODS_STAR"/>
 	</resultMap>
 	
-    <select id="findByOrder" parameterType="java.lang.Integer" resultMap="rm">
-        SELECT * FROM BUY_ORDER_GOODS T WHERE T.ORDER_ID = #{orderId} ORDER BY T.ORDER_GOODS_ID
+    <select id="findByOrderMenu" parameterType="java.lang.Integer" resultMap="rm">
+        SELECT * FROM BUY_ORDER_MENU_GOODS T WHERE T.ORDER_MENU_ID = #{orderMenuId} ORDER BY T.ORDER_MENU_GOODS_ID
     </select>
 
 </mapper>

@@ -1,7 +1,12 @@
 package com.guozha.buyserver.service.menuplan;
 
+import java.util.List;
+
+import com.guozha.buyserver.persistence.beans.MnuMenu;
 import com.guozha.buyserver.service.account.ReturnCode;
-import com.guozha.buyserver.web.controller.menuplan.MenuPlanRequest;
+import com.guozha.buyserver.web.controller.menuplan.MenuDetailRequest;
+import com.guozha.buyserver.web.controller.menuplan.MenuResponse;
+import com.guozha.buyserver.web.controller.menuplan.MenuUserPlanRequest;
 
 /**
  * 菜谱计划
@@ -13,6 +18,12 @@ import com.guozha.buyserver.web.controller.menuplan.MenuPlanRequest;
 public interface MenuPlanService {
 
 	// 新增菜谱
-	ReturnCode insert(MenuPlanRequest request);
+	ReturnCode insert(MenuUserPlanRequest request);
+
+	// 推荐菜谱
+	List<MnuMenu> listMenu();
+
+	// 菜谱菜品详情
+	MenuResponse detail(MenuDetailRequest request);
 
 }

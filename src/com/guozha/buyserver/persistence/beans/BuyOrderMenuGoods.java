@@ -9,11 +9,12 @@ public class BuyOrderMenuGoods extends AbstractDO {
 	private Integer orderMenuId;
 	private Integer goodsId;
 	private String goodsName;
-	private String goodsUrl;
+	private byte[] goodsImg;
 	private Integer backTypeId;
 	private Integer unitPrice;
 	private Integer amount;
 	private Integer price;
+	private String goodsStar;
 	
 	public Integer getOrderMenuGoodsId() {
 		return orderMenuGoodsId;
@@ -45,11 +46,17 @@ public class BuyOrderMenuGoods extends AbstractDO {
 	public void setGoodsName(String goodsName) {
 		this.goodsName = goodsName;
 	}
-	public String getGoodsUrl() {
-		return goodsUrl;
+	public byte[] getGoodsImg() {
+		return goodsImg;
 	}
-	public void setGoodsUrl(String goodsUrl) {
-		this.goodsUrl = goodsUrl;
+	public void setGoodsImg(byte[] goodsImg) {
+		this.goodsImg = goodsImg;
+	}
+	public String getGoodsStar() {
+		return goodsStar;
+	}
+	public void setGoodsStar(String goodsStar) {
+		this.goodsStar = goodsStar;
 	}
 	public Integer getBackTypeId() {
 		return backTypeId;
