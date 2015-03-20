@@ -105,6 +105,17 @@ public class OrderServiceImpl extends AbstractBusinessObjectServiceMgr
 		}
 		return buyOrderMapper.findOrder(vo.getUserId(), statusList, vo.getStartIndex(), vo.getPageSize());
 	}
+	
+	/**
+	 * 
+	 * @param wantUpTime  [yymmddhhmm]
+	 * @param wantDownTime [yymmddhhmm]
+	 * @return 3月20 16点至17点
+	 */
+	private String getWantArrivalTimeScope(int wantUpTime, int wantDownTime) {
+		// TODO
+		return "";
+	}
 
 	@Override
 	public OrderDetailResponse getOrderDetail(int orderId) {
@@ -118,8 +129,7 @@ public class OrderServiceImpl extends AbstractBusinessObjectServiceMgr
 		response.setOrderNo(buyOrder.getOrderNo());
 		response.setCreateTime(buyOrder.getCreateTime());
 		response.setAboutArrivalTime(buyOrder.getAboutArrivalTime());
-		response.setWantUpTime(buyOrder.getWantUpTime());
-		response.setWantDownTime(buyOrder.getWantDownTime());
+		response.setWantArrivalTimeScope(getWantArrivalTimeScope(buyOrder.getWantUpTime(), buyOrder.getWantDownTime()));
 		response.setReceiveMen(buyOrder.getReceiveMen());
 		response.setReceiveMobile(buyOrder.getReceiveMobile());
 		response.setReceiveAddr(buyOrder.getReceiveAddr());
@@ -172,7 +182,7 @@ public class OrderServiceImpl extends AbstractBusinessObjectServiceMgr
 		return response;
 	}
 	
-	public int getServiceFee(int totalPrice){
+	public int getServiceFeeForNormalOrder(int totalPrice){
 		return totalPrice < Integer.parseInt(SystemResource.getConfig("service.free_price"))? Integer.parseInt(SystemResource.getConfig("service.fee")) : 0;
 	}
 	
@@ -275,7 +285,7 @@ public class OrderServiceImpl extends AbstractBusinessObjectServiceMgr
 			}
 		}
 		
-		buyOrderMapper.updateCount(buyOrder.getOrderId(), totalPrice, getServiceFee(totalPrice));
+		buyOrderMapper.updateCount(buyOrder.getOrderId(), totalPrice, getServiceFeeForNormalOrder(totalPrice));
 		
 		return new MsgResponse(MsgResponse.SUCC, "订单提交成功");
 	}
