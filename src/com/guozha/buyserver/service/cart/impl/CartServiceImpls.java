@@ -167,7 +167,7 @@ public class CartServiceImpls extends AbstractBusinessObjectServiceMgr implement
 			goods.setGoodsName(cart.getDisplayName());
 			goods.setUnit(cart.getUnit());
 			goods.setAmount(cart.getAmount());
-			int unitPrice = this.marMarketGoodsMapper.findByGoodsId(cart.getMarketId(),cart.getGoodsOrMenuId()).getPrice();
+			int unitPrice = this.marMarketGoodsMapper.findByGoodsId(cart.getMarketId(),cart.getGoodsOrMenuId()).getUnitPrice();
 			goods.setUnitPrice(unitPrice);
 			int price = PriceUtils.getGoodsPrice(unitPrice, cart.getAmount(), cart.getUnit());
 			goods.setPrice(price);
@@ -188,13 +188,14 @@ public class CartServiceImpls extends AbstractBusinessObjectServiceMgr implement
 		
 		for(MnuMenuGoods menuGoods:menuGoodsList){
 			List<GooGoodsAmount> goodsAmountList = this.gooGoodsAmountMapper.findByGoodsId(menuGoods.getGoodsId());
-			int unitPrice = this.marMarketGoodsMapper.findByGoodsId(marketId, menuGoods.getGoodsId()).getPrice();
+			int unitPrice = this.marMarketGoodsMapper.findByGoodsId(marketId, menuGoods.getGoodsId()).getUnitPrice();
 			int amounts []  = new int[goodsAmountList.size()];
 			for(int j =0;j<goodsAmountList.size();j++){
 				amounts[j] = goodsAmountList.get(j).getAmount();
 			}
 			Arrays.sort(amounts);
-			int goodsUnitPrice = PriceUtils.getMenuGoodsPrice(unitPrice, menuGoods.getAmount(), amounts);
+			GooGoods goods = gooGoodsMapper.load(menuGoods.getGoodsId());
+			int goodsUnitPrice = PriceUtils.getMenuGoodsPrice(unitPrice, menuGoods.getAmount(), amounts,goods.getUnit());
 			menuUnitPrice+=goodsUnitPrice;
 		}
 		return menuUnitPrice;

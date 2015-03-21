@@ -11,7 +11,8 @@ public class CartResponse {
 	private String  productType;
 	private Integer id;
 	private String  displayName;
-	private Integer price;
+	private Integer unitPrice;
+
 	private Integer amount;
 	private String unit; //计量单位
 	
@@ -34,11 +35,17 @@ public class CartResponse {
 		this.productType = po.getSplitType();
 		this.id = po.getGoodsOrMenuId();
 		this.displayName = po.getDisplayName();
-		this.price = po.getPrice();
+		this.unitPrice = po.getUnitPrice();
 		this.amount = po.getAmount();
 		this.unit  = po.getUnit();
 	}
-	
+	public Integer getUnitPrice() {
+		return unitPrice;
+	}
+
+	public void setUnitPrice(Integer unitPrice) {
+		this.unitPrice = unitPrice;
+	}
 	public String getUnit() {
 		return unit;
 	}
@@ -63,12 +70,6 @@ public class CartResponse {
 	}
 	public void setDisplayName(String displayName) {
 		this.displayName = displayName;
-	}
-	public Integer getPrice() {
-		return price;
-	}
-	public void setPrice(Integer price) {
-		this.price = price;
 	}
 	public Integer getAmount() {
 		return amount;

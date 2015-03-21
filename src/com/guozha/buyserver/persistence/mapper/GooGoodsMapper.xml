@@ -40,7 +40,7 @@ PUBLIC "-//ibatis.apache.org//DTD Mapper 3.0//EN"
     <!-- 所有商品 -->
 	<select id="findByMarketId" parameterType="int" resultType="com.guozha.buyserver.web.controller.goods.GoodsResponse" >
 		SELECT 
-			T.GOODS_ID goodsId,T.GOODS_NAME goodsName,T.GOODS_PROP goodsProp,T.GOODS_IMG goodsImg,T.UNIT,B.PRICE price
+			T.GOODS_ID goodsId,T.GOODS_NAME goodsName,T.GOODS_PROP goodsProp,T.GOODS_IMG goodsImg,T.UNIT,B.UNIT_PRICE unitPrice
 		FROM GOO_GOODS T,MAR_MARKET_GOODS B
 		WHERE
 		    T.GOODS_ID = B.GOODS_ID 
@@ -51,7 +51,7 @@ PUBLIC "-//ibatis.apache.org//DTD Mapper 3.0//EN"
 	<!-- 查询一级类目商品列表 (不区分特供等类型) -->
 	<select id="findFirst"  parameterType="map" resultType="com.guozha.buyserver.web.controller.goods.GoodsResponse">
 		SELECT 
-			T.GOODS_ID goodsId,T.GOODS_NAME goodsName,T.GOODS_PROP goodsProp,T.GOODS_IMG goodsImg,T.UNIT,B.PRICE price
+			T.GOODS_ID goodsId,T.GOODS_NAME goodsName,T.GOODS_PROP goodsProp,T.GOODS_IMG goodsImg,T.UNIT,B.UNIT_PRICE unitPrice
 		FROM GOO_GOODS T,MAR_MARKET_GOODS B
 		WHERE
 		    T.GOODS_ID = B.GOODS_ID 
@@ -63,7 +63,7 @@ PUBLIC "-//ibatis.apache.org//DTD Mapper 3.0//EN"
 	<!-- 查询二级类目商品列表(不区分特供等类型) -->
 	<select id="findSecond"  parameterType="map" resultType="com.guozha.buyserver.web.controller.goods.GoodsResponse">
 		SELECT 
-			T.GOODS_ID goodsId,T.GOODS_NAME goodsName,T.GOODS_PROP goodsProp,T.GOODS_IMG goodsImg,T.UNIT,B.PRICE price
+			T.GOODS_ID goodsId,T.GOODS_NAME goodsName,T.GOODS_PROP goodsProp,T.GOODS_IMG goodsImg,T.UNIT,B.UNIT_PRICE unitPrice
 		FROM GOO_GOODS T,MAR_MARKET_GOODS B
 		WHERE
 		    T.GOODS_ID = B.GOODS_ID 
@@ -76,7 +76,7 @@ PUBLIC "-//ibatis.apache.org//DTD Mapper 3.0//EN"
 	   <!-- 所有商品  (仅特供)-->
 	<select id="findAllSpecial"  parameterType="int" resultType="com.guozha.buyserver.web.controller.goods.GoodsResponse" >
 		SELECT 
-			T.GOODS_ID goodsId,T.GOODS_NAME goodsName,T.GOODS_PROP goodsProp,T.GOODS_IMG goodsImg,T.UNIT,B.PRICE price
+			T.GOODS_ID goodsId,T.GOODS_NAME goodsName,T.GOODS_PROP goodsProp,T.GOODS_IMG goodsImg,T.UNIT,B.UNIT_PRICE unitPrice
 		FROM GOO_GOODS T,MAR_MARKET_GOODS B
 		WHERE
 		    T.GOODS_ID = B.GOODS_ID 
@@ -88,7 +88,7 @@ PUBLIC "-//ibatis.apache.org//DTD Mapper 3.0//EN"
 	<!-- 查询一级类目商品列表 (仅特供) -->
 	<select id="findFirstSpecial" parameterType="map" resultType="com.guozha.buyserver.web.controller.goods.GoodsResponse">
 		SELECT 
-			T.GOODS_ID goodsId,T.GOODS_NAME goodsName,T.GOODS_PROP goodsProp,T.GOODS_IMG goodsImg,T.UNIT,B.PRICE price
+			T.GOODS_ID goodsId,T.GOODS_NAME goodsName,T.GOODS_PROP goodsProp,T.GOODS_IMG goodsImg,T.UNIT,B.UNIT_PRICE unitPrice
 		FROM GOO_GOODS T,MAR_MARKET_GOODS B
 		WHERE
 		    T.GOODS_ID = B.GOODS_ID 
@@ -101,7 +101,7 @@ PUBLIC "-//ibatis.apache.org//DTD Mapper 3.0//EN"
 	<!-- 查询二级类目商品列表(仅特供) -->
 	<select id="findSecondSpecial"  parameterType="map" resultType="com.guozha.buyserver.web.controller.goods.GoodsResponse">
 		SELECT 
-			T.GOODS_ID goodsId,T.GOODS_NAME goodsName,T.GOODS_PROP goodsProp,T.GOODS_IMG goodsImg,T.UNIT,B.PRICE price
+			T.GOODS_ID goodsId,T.GOODS_NAME goodsName,T.GOODS_PROP goodsProp,T.GOODS_IMG goodsImg,T.UNIT,B.UNIT_PRICE unitPrice
 		FROM GOO_GOODS T,MAR_MARKET_GOODS B
 		WHERE
 		    T.GOODS_ID = B.GOODS_ID 

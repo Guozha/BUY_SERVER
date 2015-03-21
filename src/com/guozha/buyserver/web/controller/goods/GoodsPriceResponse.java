@@ -12,9 +12,17 @@ public class GoodsPriceResponse {
 	//private Integer goodsPriceId;
 	private Integer goodsId;
 	private Integer amount;
+	private Integer unitPrice;
 	private Integer price;
     private String unit;
-	
+
+	public Integer getUnitPrice() {
+		return unitPrice;
+	}
+
+	public void setUnitPrice(Integer unitPrice) {
+		this.unitPrice = unitPrice;
+	}
 
 	public Integer getGoodsId() {
 		return goodsId;

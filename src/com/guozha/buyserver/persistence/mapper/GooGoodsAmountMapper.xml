@@ -16,7 +16,7 @@ PUBLIC "-//ibatis.apache.org//DTD Mapper 3.0//EN"
 	</sql>
 	
 	
-    <!-- 商品价格配置 -->
+    <!-- 商品重量配置 -->
 	<select id="findByGoodsId" parameterType="int" resultMap="rm">
 		SELECT 
 		    <include refid="BASE_COLUMN_LIST"/>

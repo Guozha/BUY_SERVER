@@ -104,7 +104,7 @@ public class GeneralServiceImpl extends AbstractBusinessObjectServiceMgr impleme
 		int marketId= this.marketService.findMaketId(vo.getAddressId());
 		GooGoods po = this.gooGoodsMapper.load(vo.getGoodsId());
 		GoodsInfoResponse response = new GoodsInfoResponse(po);
-		response.setPrice(marMarketGoodsMapper.findByGoodsId(marketId, vo.getGoodsId()).getPrice());
+		response.setPrice(marMarketGoodsMapper.findByGoodsId(marketId, vo.getGoodsId()).getUnitPrice());
 		return response;
 	}
 
@@ -113,7 +113,7 @@ public class GeneralServiceImpl extends AbstractBusinessObjectServiceMgr impleme
 		int marketId= this.marketService.findMaketId(vo.getAddressId());
 		GooGoods goodPo =this.gooGoodsMapper.load(vo.getGoodsId());
 		//商品单价
-		int unitPrice = this.marMarketGoodsMapper.findByGoodsId(marketId, vo.getGoodsId()).getPrice();
+		int unitPrice = this.marMarketGoodsMapper.findByGoodsId(marketId, vo.getGoodsId()).getUnitPrice();
 		//商品重量配置
 		List<GooGoodsAmount> pos = this.gooGoodsAmountMapper.findByGoodsId(vo.getGoodsId());
 		List<GoodsPriceResponse> bos = new ArrayList<GoodsPriceResponse>();
@@ -123,6 +123,7 @@ public class GeneralServiceImpl extends AbstractBusinessObjectServiceMgr impleme
 	    	res.setGoodsId(vo.getGoodsId());
 	    	res.setAmount(po.getAmount());
 	    	res.setPrice(PriceUtils.getGoodsPrice(unitPrice, po.getAmount(), goodPo.getUnit()));
+	    	res.setUnitPrice(unitPrice);
 	    	bos.add(res);
 	    }
 		return bos;

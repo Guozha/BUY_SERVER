@@ -8,13 +8,13 @@ public class MarMarketGoods extends AbstractDO {
 	private Integer marketId;
 	private Integer goodsId;
 	private String openBuyFlag;
-	private Integer price; //单价
+	private Integer unitPrice; //单价
 	
-	public Integer getPrice() {
-		return price;
+	public Integer getUnitPrice() {
+		return unitPrice;
 	}
-	public void setPrice(Integer price) {
-		this.price = price;
+	public void setUnitPrice(Integer unitPrice) {
+		this.unitPrice = unitPrice;
 	}
 	public Integer getMarketGoodsId() {
 		return marketGoodsId;
