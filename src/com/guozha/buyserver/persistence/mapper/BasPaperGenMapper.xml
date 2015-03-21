@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//ibatis.apache.org//DTD Mapper 3.0//EN"
+"http://ibatis.apache.org/dtd/ibatis-3-mapper.dtd">
+
+<mapper namespace="com.guozha.buyserver.persistence.mapper.BasPaperGenMapper">
+	<resultMap id="rm" type="com.guozha.buyserver.persistence.beans.BasPaperGen">
+        <result property="areaCode" jdbcType="VARCHAR" column="AREA_CODE"/>
+        <result property="paperType" jdbcType="VARCHAR" column="PAPER_TYPE"/>
+        <result property="year" jdbcType="VARCHAR" column="YEAR"/>
+        <result property="month" jdbcType="VARCHAR" column="MONTH"/>
+        <result property="day" jdbcType="VARCHAR" column="DAY"/>
+        <result property="no" jdbcType="INTEGER" column="NO"/>
+	</resultMap>
+	
+    <select id="getOne" parameterType="com.guozha.buyserver.persistence.beans.BasPaperGen" resultMap="rm">
+    	SELECT *  
+            FROM BAS_PAPER_GEN  
+            WHERE AREA_CODE = #{areaCode} 
+            AND PAPER_TYPE = #{paperType} 
+            AND YEAR = #{year} 
+            AND MONTH = #{month} 
+            AND DAY = #{day}
+    </select>
+    
+    <insert id="insert" parameterType="com.guozha.buyserver.persistence.beans.BasPaperGen">
+        INSERT INTO BAS_PAPER_GEN (
+            AREA_CODE,PAPER_TYPE,YEAR,MONTH,DAY,NO
+        ) VALUES (
+            #{areaCode},#{paperType},#{year},#{month},#{day},#{no}
+        )
+    </insert>
+    
+	<update id="update" parameterType="com.guozha.buyserver.persistence.beans.BasPaperGen">
+        UPDATE BAS_PAPER_GEN  
+            SET NO = NO + 1 
+            WHERE AREA_CODE = #{areaCode} 
+            AND PAPER_TYPE = #{paperType} 
+            AND YEAR = #{year} 
+            AND MONTH = #{month} 
+            AND DAY = #{day}
+	</update>
+	
+</mapper>
+
