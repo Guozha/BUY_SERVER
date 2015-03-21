@@ -16,13 +16,12 @@ PUBLIC "-//ibatis.apache.org//DTD Mapper 3.0//EN"
         <result property="marketId" jdbcType="INTEGER" column="MARKET_ID"/>
         <result property="marketGoodsId" jdbcType="VARCHAR" column="MARKET_GOODS_ID"/>
 	</resultMap>
-	
-	<sql id="BASE_COLUMN_LIST">
+		<sql id="BASE_COLUMN_LIST">
 		CART_ID,USER_ID,SPLIT_TYPE,GOODS_OR_MENU_ID,DISPLAY_NAME,AMOUNT,UNIT,MARKET_ID,MARKET_GOODS_ID
 	</sql>
 	
     <!-- 所有用户购物车信息 -->
-	<select id="findByUserId" parameterType="int" resultType="com.guozha.buyserver.service.cart.CartBo">
+	<select id="findByUserId" parameterType="int" resultMap="rm">
 		SELECT 
 			<include refid="BASE_COLUMN_LIST" />
 		FROM BUY_CART
@@ -33,10 +32,9 @@ PUBLIC "-//ibatis.apache.org//DTD Mapper 3.0//EN"
 	
 		
 	<!-- 所有用户菜谱信息 -->
-	<select id="findMenuByUserId"  parameterType="int" resultType="com.guozha.buyserver.service.cart.CartBo">
+	<select id="findMenuByUserId"  parameterType="int" resultMap="rm">
 		SELECT 
-			 T.CART_ID cartId,T.USER_ID userId,T.SPLIT_TYPE splitType,T.GOODS_OR_MENU_ID goodsOrMenuId,T.DISPLAY_NAME displayName,
-     		 T.AMOUNT amount,T.UNIT unit,T.MARKET_ID marketId,T.MARKET_GOODS_ID marketGoodsId
+			<include refid="BASE_COLUMN_LIST" />
 		FROM BUY_CART T
 		WHERE
 		    T.USER_ID =#{userId}
@@ -45,11 +43,9 @@ PUBLIC "-//ibatis.apache.org//DTD Mapper 3.0//EN"
 	</select>
 	
 	<!-- 所有用户商品食材信息 -->
-	<select id="findGoodsByUserId" parameterType="int" resultType="com.guozha.buyserver.service.cart.CartBo">
+	<select id="findGoodsByUserId" parameterType="int" resultMap="rm">
 		SELECT 
-			 T.CART_ID cartId,T.USER_ID userId,T.SPLIT_TYPE splitType,T.GOODS_OR_MENU_ID goodsOrMenuId,T.DISPLAY_NAME displayName,
-     		 T.AMOUNT amount,T.UNIT unit,T.MARKET_ID marketId,T.MARKET_GOODS_ID marketGoodsId,B.UNIT_PRICE unitPrice
-		FROM BUY_CART T, MAR_MARKET_GOODS B
+			<include refid="BASE_COLUMN_LIST" />
 		WHERE 
 		    cast(T.MARKET_GOODS_ID as unsigned int) = B.MARKET_GOODS_ID
 		    AND T.GOODS_OR_MENU_ID = B.GOODS_ID
