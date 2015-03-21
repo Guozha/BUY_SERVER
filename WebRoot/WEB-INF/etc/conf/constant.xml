@@ -219,4 +219,8 @@
 	    <constantName value="2">中等</constantName>
 	    <constantName value="3">复杂</constantName>
 	</constant>
+	<!-- 业务单据类型 -->
+	<constant constantDef="PAPER_TYPE">
+	    <constantName value="01">用户订单</constantName>
+	</constant>
 </constants>

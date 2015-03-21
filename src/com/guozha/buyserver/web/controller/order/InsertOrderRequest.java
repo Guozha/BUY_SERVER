@@ -4,7 +4,6 @@ package com.guozha.buyserver.web.controller.order;
 public class InsertOrderRequest {
 	
 	private String token;
-	private String orderType;
 	private Integer userId;
 	private Integer addressId;
 	private Integer wantUpTime;
@@ -16,12 +15,6 @@ public class InsertOrderRequest {
 	}
 	public void setToken(String token) {
 		this.token = token;
-	}
-	public String getOrderType() {
-		return orderType;
-	}
-	public void setOrderType(String orderType) {
-		this.orderType = orderType;
 	}
 	public Integer getAddressId() {
 		return addressId;

@@ -67,5 +67,42 @@ PUBLIC "-//ibatis.apache.org//DTD Mapper 3.0//EN"
     <select id="load" parameterType="java.lang.Integer" resultMap="rm">
         SELECT * FROM BUY_ORDER T WHERE T.ORDER_ID = #{orderId}
     </select>
+    
+    <insert id="insert" useGeneratedKeys="true" keyProperty="orderId">
+        INSERT INTO BUY_ORDER(
+            ORDER_ID,
+            ORDER_NO,
+            ORDER_TYPE,
+            USER_ID,
+            QUANTITY,
+            RECEIVE_MEN,
+            RECEIVE_MOBILE,
+            RECEIVE_ADDR,
+            WANT_UP_TIME,
+            WANT_DOWN_TIME,
+            MEMO,
+            CREATE_TIME,
+            STATUS
+        ) VALUES (
+            #{orderId},
+            #{orderNo},
+            #{orderType},
+            #{userId},
+            #{quantity},
+            #{receiveMen},
+            #{receiveMobile},
+            #{receiveAddr},
+            #{wantUpTime},
+            #{wantDownTime},
+            #{memo},
+            #{createTime},
+            #{status}
+        )
+    </insert>
+    
+    <update id="updateCount" parameterType="java.util.Map">
+        UPDATE BUY_ORDER T SET T.TOTAL_PRICE = #{totalPrice}, T.SERVICE_FEE = #{serviceFee} WHERE T.ORDER_ID = #{orderId}
+    </update>
+    
 
 </mapper>

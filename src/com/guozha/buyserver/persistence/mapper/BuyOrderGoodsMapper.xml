@@ -8,6 +8,7 @@ PUBLIC "-//ibatis.apache.org//DTD Mapper 3.0//EN"
     <resultMap id="rm" type="com.guozha.buyserver.persistence.beans.BuyOrderGoods">
         <result property="orderGoodsId" jdbcType="INTEGER" column="ORDER_GOODS_ID"/>
         <result property="orderId" jdbcType="INTEGER" column="ORDER_ID"/>
+        <result property="marketId" jdbcType="INTEGER" column="MARKET_ID"/>
         <result property="goodsId" jdbcType="INTEGER" column="GOODS_ID"/>
         <result property="goodsName" jdbcType="VARCHAR" column="GOODS_NAME"/>
         <result property="goodsImg" jdbcType="BLOB" column="GOODS_IMG"/>
@@ -22,5 +23,33 @@ PUBLIC "-//ibatis.apache.org//DTD Mapper 3.0//EN"
     <select id="findByOrder" parameterType="java.lang.Integer" resultMap="rm">
         SELECT * FROM BUY_ORDER_GOODS T WHERE T.ORDER_ID = #{orderId} ORDER BY T.ORDER_GOODS_ID
     </select>
+    
+    <insert id="insert" useGeneratedKeys="true" keyProperty="orderGoodsId">
+        INSERT INTO BUY_ORDER_GOODS (
+            ORDER_GOODS_ID,
+            ORDER_ID,
+            MARKET_ID,
+            GOODS_ID,
+            GOODS_NAME,
+            GOODS_IMG,
+            BACK_TYPE_ID,
+            UNIT,
+            UNIT_PRICE,
+            AMOUNT,
+            PRICE
+        ) VALUES (
+            #{orderGoodsId},
+            #{orderId},
+            #{marketId},
+            #{goodsId},
+            #{goodsName},
+            #{goodsImg},
+            #{backTypeId},
+            #{unit},
+            #{unitPrice},
+            #{amount},
+            #{price}
+        )
+    </insert>
 
 </mapper>
