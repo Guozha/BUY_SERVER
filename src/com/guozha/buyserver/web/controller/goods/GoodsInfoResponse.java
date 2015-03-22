@@ -11,7 +11,8 @@ public class GoodsInfoResponse {
 	private String goodsProp;   //商品性质
 	private byte[] goodsImg;//商品图片
 	
-	private Integer price;//单价
+	private Integer unitPrice;//单价
+	
 	private String unit;//计量单位
 	private String memo;//商品备注
 	private String prepareEndDate;//预售截止日期
@@ -32,6 +33,13 @@ public class GoodsInfoResponse {
 		this.otherNames = po.getOtherNames();
 	}
 	
+	public Integer getUnitPrice() {
+		return unitPrice;
+	}
+
+	public void setUnitPrice(Integer unitPrice) {
+		this.unitPrice = unitPrice;
+	}
 	public Integer getGoodsId() {
 		return goodsId;
 	}
@@ -55,12 +63,6 @@ public class GoodsInfoResponse {
 	}
 	public void setGoodsImg(byte[] goodsImg) {
 		this.goodsImg = goodsImg;
-	}
-	public Integer getPrice() {
-		return price;
-	}
-	public void setPrice(Integer price) {
-		this.price = price;
 	}
 	public String getUnit() {
 		return unit;

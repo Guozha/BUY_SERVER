@@ -179,7 +179,7 @@ public class GeneralServiceImpl extends AbstractBusinessObjectServiceMgr impleme
 		int marketId= this.marketService.findMaketId(vo.getAddressId());
 		GooGoods po = this.gooGoodsMapper.load(vo.getGoodsId());
 		GoodsInfoResponse response = new GoodsInfoResponse(po);
-		response.setPrice(marMarketGoodsMapper.findByGoodsId(marketId, vo.getGoodsId()).getUnitPrice());
+		response.setUnitPrice(marMarketGoodsMapper.findByGoodsId(marketId, vo.getGoodsId()).getUnitPrice());
 		return response;
 	}
 

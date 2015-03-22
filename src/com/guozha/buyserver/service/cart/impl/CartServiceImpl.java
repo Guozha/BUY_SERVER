@@ -184,13 +184,13 @@ public class CartServiceImpl extends AbstractBusinessObjectServiceMgr implements
 		
 		for(MnuMenuGoods menuGoods:menuGoodsList){
 			List<GooGoodsAmount> goodsAmountList = this.gooGoodsAmountMapper.findByGoodsId(menuGoods.getGoodsId());
-			int unitPrice = this.marMarketGoodsMapper.findByGoodsId(marketId, menuGoods.getGoodsId()).getUnitPrice();
 			int amounts []  = new int[goodsAmountList.size()];
 			for(int j =0;j<goodsAmountList.size();j++){
 				amounts[j] = goodsAmountList.get(j).getAmount();
 			}
 			Arrays.sort(amounts);
 			GooGoods goods = gooGoodsMapper.load(menuGoods.getGoodsId());
+			int unitPrice = this.marMarketGoodsMapper.findByGoodsId(marketId, menuGoods.getGoodsId()).getUnitPrice();
 			int goodsUnitPrice = PriceUtils.getMenuGoodsPrice(unitPrice, menuGoods.getAmount(), amounts,goods.getUnit());
 			menuUnitPrice+=goodsUnitPrice;
 		}
