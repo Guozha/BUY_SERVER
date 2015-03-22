@@ -1,92 +1,63 @@
 package com.guozha.buyserver.web.controller.cart;
 
-import com.guozha.buyserver.persistence.beans.BuyCart;
-import com.guozha.buyserver.service.cart.CartBo;
+import java.util.ArrayList;
+import java.util.List;
+
 
 public class CartResponse {
-   
-
-	private Integer cartId;
-	private Integer userId;
-	private String  productType;
-	private Integer id;
-	private String  displayName;
-	private Integer unitPrice;
-
-	private Integer amount;
-	private String unit; //计量单位
 	
-
+	private Integer quantity;    //总个数
+	private Integer totalPrice;  //总金额
+	private Integer serviceFee; //服务费
+	private Integer currServiceFee; //本次服务费
 	
-	public CartResponse(BuyCart po) {
-		super();
-		this.cartId = po.getCartId();
-		this.productType = po.getSplitType();
-		this.id = po.getGoodsOrMenuId();
-		this.displayName = po.getDisplayName();
-		//this.price = po.getPrice();
-		this.amount = po.getAmount();
-		this.unit  = po.getUnit();
-	}
+	private Integer serviceFeePrice; //免服务费最少金额
 	
-	public CartResponse(CartBo po) {
-		super();
-		this.cartId = po.getCartId();
-		this.productType = po.getSplitType();
-		this.id = po.getGoodsOrMenuId();
-		this.displayName = po.getDisplayName();
-		this.unitPrice = po.getUnitPrice();
-		this.amount = po.getAmount();
-		this.unit  = po.getUnit();
+	private List<Menu> menuList = new ArrayList<Menu>();
+	private List<Goods> goodsList = new ArrayList<Goods>();
+	public List<Goods> getGoodsList() {
+		return goodsList;
 	}
-	public Integer getUnitPrice() {
-		return unitPrice;
+	public void setGoodsList(List<Goods> goodsList) {
+		this.goodsList = goodsList;
 	}
-
-	public void setUnitPrice(Integer unitPrice) {
-		this.unitPrice = unitPrice;
+	public List<Menu> getMenuList() {
+		return menuList;
 	}
-	public String getUnit() {
-		return unit;
+	public void setMenuList(List<Menu> menuList) {
+		this.menuList = menuList;
 	}
-	public void setUnit(String unit) {
-		this.unit = unit;
+	public Integer getQuantity() {
+		return quantity;
+	}
+	public void setQuantity(Integer quantity) {
+		this.quantity = quantity;
+	}
+	public Integer getTotalPrice() {
+		return totalPrice;
+	}
+	public void setTotalPrice(Integer totalPrice) {
+		this.totalPrice = totalPrice;
 	}
 	
-	public Integer getCartId() {
-		return cartId;
+	public Integer getServiceFee() {
+		return serviceFee;
 	}
-	public void setCartId(Integer cartId) {
-		this.cartId = cartId;
+	public void setServiceFee(Integer serviceFee) {
+		this.serviceFee = serviceFee;
 	}
-	public Integer getUserId() {
-		return userId;
+	public Integer getServiceFeePrice() {
+		return serviceFeePrice;
 	}
-	public void setUserId(Integer userId) {
-		this.userId = userId;
+	public void setServiceFeePrice(Integer serviceFeePrice) {
+		this.serviceFeePrice = serviceFeePrice;
 	}
-	public String getDisplayName() {
-		return displayName;
+	
+	public Integer getCurrServiceFee() {
+		return currServiceFee;
 	}
-	public void setDisplayName(String displayName) {
-		this.displayName = displayName;
+	public void setCurrServiceFee(Integer currServiceFee) {
+		this.currServiceFee = currServiceFee;
 	}
-	public Integer getAmount() {
-		return amount;
-	}
-	public void setAmount(Integer amount) {
-		this.amount = amount;
-	}
-	public String getProductType() {
-		return productType;
-	}
-	public void setProductType(String productType) {
-		this.productType = productType;
-	}
-	public Integer getId() {
-		return id;
-	}
-	public void setId(Integer id) {
-		this.id = id;
-	}
+
 }

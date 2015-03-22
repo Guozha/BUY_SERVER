@@ -6,6 +6,8 @@ import com.guozha.buyserver.framework.sys.business.BusinessObjectServiceMgr;
 import com.guozha.buyserver.web.controller.MsgResponse;
 import com.guozha.buyserver.web.controller.order.CancelOrderRequest;
 import com.guozha.buyserver.web.controller.order.InsertOrderRequest;
+import com.guozha.buyserver.web.controller.order.InsertPrepareOrderRequest;
+import com.guozha.buyserver.web.controller.order.InsertSupplyOrderRequest;
 import com.guozha.buyserver.web.controller.order.MarketTimeResponse;
 import com.guozha.buyserver.web.controller.order.OrderDetailResponse;
 import com.guozha.buyserver.web.controller.order.SearchOrderRequest;
@@ -22,5 +24,9 @@ public interface OrderService extends BusinessObjectServiceMgr {
 	OrderDetailResponse getOrderDetail(int orderId);
 	
 	MsgResponse insertOrder(InsertOrderRequest vo);
+	
+	MsgResponse insertSupplyOrder(InsertSupplyOrderRequest vo);
+	
+	MsgResponse insertPrepareOrder(InsertPrepareOrderRequest vo);
 
 }

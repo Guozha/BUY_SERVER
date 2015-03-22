@@ -7,7 +7,6 @@ import org.springframework.stereotype.Repository;
 
 import com.guozha.buyserver.dal.BaseMapper;
 import com.guozha.buyserver.persistence.beans.BuyCart;
-import com.guozha.buyserver.service.cart.CartBo;
 
 /**
  * 购物车映射
@@ -31,14 +30,14 @@ public interface BuyCartMapper extends BaseMapper<BuyCart, Integer> {
 	 * @param userId
 	 * @return
 	 */
-	List<CartBo> findMenuByUserId(int userId);
+	List<BuyCart> findMenuByUserId(int userId);
 	
 	/**
 	 * 查询购物车食材信息
 	 * @param userId
 	 * @return
 	 */
-	List<CartBo> findGoodsByUserId(int userId);
+	List<BuyCart> findGoodsByUserId(int userId);
 	
 	/**
 	 * 删除用户所有购物车信息
