@@ -41,7 +41,7 @@ PUBLIC "-//ibatis.apache.org//DTD Mapper 3.0//EN"
 	</select>
 	
 	<select id="findGoodsById" resultType="com.guozha.buyserver.persistence.beans.MnuMenuGoods" parameterType="int">
-	      SELECT GOODS_ID goodsId,AMOUNT amount 
+	      SELECT GOODS_ID goodsId,GOODS_NAME goodsName,AMOUNT amount 
 	      FROM MNU_MENU_GOODS
 	      WHERE 
 	        MENU_ID =#{menuId}

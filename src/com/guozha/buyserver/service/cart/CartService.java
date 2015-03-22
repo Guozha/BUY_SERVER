@@ -57,5 +57,13 @@ public interface CartService  extends BusinessObjectServiceMgr{
 	 * @return
 	 */
 	int getMenuUnitPrice(int marketId,int menuId);
+	
+	/**
+	 * 计算菜谱中商品的上值份量
+	 * @param goodsId 商品id
+	 * @param amount  份量
+	 * @return
+	 */
+	int getMenuGoodsAmount(int goodsId,int amount);
 
 }

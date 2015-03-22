@@ -122,12 +122,11 @@ public class CartServiceImpl extends AbstractBusinessObjectServiceMgr implements
 	public CartResponse find(CartRequest vo) {
        
 		CartResponse response = new CartResponse();
+		response.setServiceFee(PriceUtils.getServiceFee());
+		response.setServiceFeePrice(PriceUtils.getServiceFeePrice());
 		
 		int totalPrice=0;
 	    int quantity=0;
-	    int freeServicePrice =0; //免服务费金额
-	    int serviceFee =0;       //服务费
-	
 		
 		//菜谱
 		List<BuyCart> menuCartList = this.buyCartMapper.findMenuByUserId(vo.getUserId());
@@ -174,6 +173,7 @@ public class CartServiceImpl extends AbstractBusinessObjectServiceMgr implements
 		}
 		response.setQuantity(quantity);
 		response.setTotalPrice(totalPrice);
+		response.setCurrServiceFee(PriceUtils.getServiceFee(totalPrice));
 		return response;
 	}
 
@@ -203,7 +203,8 @@ public class CartServiceImpl extends AbstractBusinessObjectServiceMgr implements
 	 * @param goodsId
 	 * @return
 	 */
-	private int getMenuGoodsAmount(int goodsId,int amount){
+	@Override
+	public int getMenuGoodsAmount(int goodsId,int amount){
 		GooGoods goods = this.gooGoodsMapper.load(goodsId);
 		List<GooGoodsAmount> goodsAmountList = this.gooGoodsAmountMapper.findByGoodsId(goodsId);
 		int amounts []  = new int[goodsAmountList.size()];

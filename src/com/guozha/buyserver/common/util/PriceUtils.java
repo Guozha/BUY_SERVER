@@ -78,6 +78,31 @@ public class PriceUtils {
 		return price;
 	}
 	
+	/**
+	 * 获得系统服务费
+	 * @return
+	 */
+	public static int getServiceFee(){
+		return Integer.parseInt(SystemResource.getConfig("service.fee"));
+	}
+	
+	/**
+	 * 获得系统免服务费的金额
+	 * @return
+	 */
+	public static int getServiceFeePrice(){
+		return Integer.parseInt(SystemResource.getConfig("service.free_price"));
+	}
+	
+	/**
+	 * 获得本次服务费（若本次总额少于免付费金额则返回服务费，否则为0）
+	 * @param consPrice 本次消费总额
+	 * @return
+	 */
+	public static int getServiceFee(int consPrice){
+		return consPrice < getServiceFeePrice()? getServiceFee() : 0;
+	}
+	
 	public static void main(String[] args) {
 		System.out.println(getMenuGoodsPrice(400, 200, new int[]{200,500},"01"));
 	}

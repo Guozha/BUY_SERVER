@@ -35,23 +35,22 @@ PUBLIC "-//ibatis.apache.org//DTD Mapper 3.0//EN"
 	<select id="findMenuByUserId"  parameterType="int" resultMap="rm">
 		SELECT 
 			<include refid="BASE_COLUMN_LIST" />
-		FROM BUY_CART T
+		FROM BUY_CART
 		WHERE
-		    T.USER_ID =#{userId}
-		    AND T.SPLIT_TYPE ='01'
-		ORDER BY T.CART_ID DESC
+		    SPLIT_TYPE ='01'
+		    AND USER_ID =#{userId}
+		ORDER BY CART_ID DESC
 	</select>
 	
 	<!-- 所有用户商品食材信息 -->
 	<select id="findGoodsByUserId" parameterType="int" resultMap="rm">
 		SELECT 
 			<include refid="BASE_COLUMN_LIST" />
+		FROM BUY_CART
 		WHERE 
-		    cast(T.MARKET_GOODS_ID as unsigned int) = B.MARKET_GOODS_ID
-		    AND T.GOODS_OR_MENU_ID = B.GOODS_ID
-		    AND T.SPLIT_TYPE ='02'
-		    AND T.USER_ID =#{userId}
-		ORDER BY T.CART_ID DESC
+		    SPLIT_TYPE ='02'
+		    AND USER_ID =#{userId}
+		ORDER BY CART_ID DESC
 	</select>
 	
 	<!-- 删除单个购物车信息 -->

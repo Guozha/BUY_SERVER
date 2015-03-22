@@ -8,9 +8,13 @@ public class CartResponse {
 	
 	private Integer quantity;    //总个数
 	private Integer totalPrice;  //总金额
-	private List<Goods> goodsList = new ArrayList<Goods>();
-	private List<Menu> menuList = new ArrayList<Menu>();
+	private Integer serviceFee; //服务费
+	private Integer currServiceFee; //本次服务费
 	
+	private Integer serviceFeePrice; //免服务费最少金额
+	
+	private List<Menu> menuList = new ArrayList<Menu>();
+	private List<Goods> goodsList = new ArrayList<Goods>();
 	public List<Goods> getGoodsList() {
 		return goodsList;
 	}
@@ -34,6 +38,26 @@ public class CartResponse {
 	}
 	public void setTotalPrice(Integer totalPrice) {
 		this.totalPrice = totalPrice;
+	}
+	
+	public Integer getServiceFee() {
+		return serviceFee;
+	}
+	public void setServiceFee(Integer serviceFee) {
+		this.serviceFee = serviceFee;
+	}
+	public Integer getServiceFeePrice() {
+		return serviceFeePrice;
+	}
+	public void setServiceFeePrice(Integer serviceFeePrice) {
+		this.serviceFeePrice = serviceFeePrice;
+	}
+	
+	public Integer getCurrServiceFee() {
+		return currServiceFee;
+	}
+	public void setCurrServiceFee(Integer currServiceFee) {
+		this.currServiceFee = currServiceFee;
 	}
 
 }
