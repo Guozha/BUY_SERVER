@@ -7,7 +7,7 @@ import java.util.GregorianCalendar;
 import org.apache.commons.lang.StringUtils;
 
 public class BaseConditionVO {
-	public final static int PAGE_SHOW_COUNT = 20;
+	public final static int PAGE_SHOW_COUNT = 24;
 	private int pageNum = 1;
 	private int pageSize = 0;
 	private String orderField;

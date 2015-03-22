@@ -34,12 +34,19 @@ public interface GeneralService extends BusinessObjectServiceMgr{
 	
 	
 	/**
-	 * 商品查询
+	 * 商品查询 (逛菜场首页)
 	 * 所有的商品均来自某个农贸市场。
 	 * @param vo
 	 * @return
 	 */
 	List<GoodsResponse> findGoods(GoodsRequest vo);
+	
+	/**
+	 * 商品查询(逛菜场某个类目)
+	 * @param vo
+	 * @return
+	 */
+	List<GoodsResponse> findGoodsByFrontTypeId(GoodsRequest vo);
 	
 	/**
 	 * 商品详情

@@ -40,6 +40,18 @@ PUBLIC "-//ibatis.apache.org//DTD Mapper 3.0//EN"
     <!-- 所有商品 每个类目个取6条-->
 	<select id="findByMarketId" parameterType="int" resultType="com.guozha.buyserver.service.goods.GoodsBo" >
 		SELECT D.*,C.UNIT_PRICE unitPrice FROM (
+	  			SELECT 
+			    	 T.GOODS_ID goodsId,T.GOODS_NAME goodsName,T.GOODS_PROP goodsProp,T.UNIT,T.FIRST_FRONT_TYPE_ID frontTypeId
+				FROM GOO_GOODS T
+				WHERE
+					(SELECT COUNT(B.GOODS_ID) FROM GOO_GOODS B WHERE B.FIRST_FRONT_TYPE_ID=T.FIRST_FRONT_TYPE_ID AND B.GOODS_ID>T.GOODS_ID)&lt;6
+	    		ORDER BY T.FIRST_FRONT_TYPE_ID
+		) D,MAR_MARKET_GOODS C
+		WHERE D.goodsId = C.GOODS_ID 
+			AND C.OPEN_BUY_FLAG='1'
+			AND C.MARKET_ID=#{marketId}
+	  <!-- 
+		SELECT D.*,C.UNIT_PRICE unitPrice FROM (
   			SELECT 
 		    	 T.GOODS_ID goodsId,T.GOODS_NAME goodsName,T.GOODS_PROP goodsProp,T.UNIT,T.FIRST_FRONT_TYPE_ID frontTypeId
 			FROM GOO_GOODS T
@@ -50,6 +62,7 @@ PUBLIC "-//ibatis.apache.org//DTD Mapper 3.0//EN"
 		WHERE D.goodsId = C.GOODS_ID 
 			AND C.OPEN_BUY_FLAG='1'
 			AND C.MARKET_ID=#{marketId}
+	 -->
 	</select>
 	
 	<!-- 查询一级类目商品列表 (不区分特供等类型) -->

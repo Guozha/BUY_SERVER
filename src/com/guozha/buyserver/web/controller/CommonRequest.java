@@ -1,5 +1,7 @@
 package com.guozha.buyserver.web.controller;
 
+import com.guozha.buyserver.persistence.BaseConditionVO;
+
 /**
  * 公用的接参
  * @Package com.guozha.buyserver.web.controller
@@ -7,7 +9,7 @@ package com.guozha.buyserver.web.controller;
  * @author txf
  * @date 2015-3-13 上午11:44:12
  */
-public class CommonRequest {
+public class CommonRequest extends BaseConditionVO{
 	
 	private Integer userId;
 	

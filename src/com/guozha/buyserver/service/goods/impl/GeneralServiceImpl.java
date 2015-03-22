@@ -79,7 +79,39 @@ public class GeneralServiceImpl extends AbstractBusinessObjectServiceMgr impleme
 		return list1;
 	}
 	
+	@Override
+	public List<GoodsResponse> findGoods(GoodsRequest vo) {
+		int marketId= this.marketService.findMaketId(vo.getAddressId());
+	    List<GoodsResponse> response = new ArrayList<GoodsResponse>();
+		List<BasFrontType> frontTypeList = this.basFrontTypeMapper.findFirstPager(vo.getStartIndex(), vo.getPageSize()/6);
+		for(BasFrontType frontType:frontTypeList){
+			GoodsResponse goodsResponse = new GoodsResponse();
+			goodsResponse.getFrontType().setFrontTypeId(vo.getFrontTypeId());
+			goodsResponse.getFrontType().setShortName(frontType.getShortName());
+			goodsResponse.getFrontType().setTypeName(frontType.getTypeName());
+			goodsResponse.setGoodsList(this.gooGoodsMapper.findLimit6ByFirstFrontTypeId(marketId, vo.getFrontTypeId()));
+			response.add(goodsResponse);
+		}
+		return response;
+	}
 	
+	
+	public List<GoodsResponse> findGoodsByFrontTypeId(GoodsRequest vo){
+		int marketId= this.marketService.findMaketId(vo.getAddressId());
+		BasFrontType bft = this.basFrontTypeMapper.load(vo.getFrontTypeId());
+		List<GoodsResponse> response = null;
+		switch (bft.getLevel()) {
+		case 1: //一级类目商品
+			response = this.gooGoodsMapper.findPagerByFirstFrontTypeId(marketId, vo.getFrontTypeId(), vo.getStartIndex(), vo.getPageSize());
+			break;
+		case 2: //二级类目商品
+			response = this.gooGoodsMapper.findPagerBySecondFrontTypeId(marketId, vo.getFrontTypeId(), vo.getStartIndex(), vo.getPageSize());
+			break;
+		}
+		return response;
+	}
+	
+	/*
 	@Override
 	public List<GoodsResponse> findGoods(GoodsRequest vo) {
 		int marketId= this.marketService.findMaketId(vo.getAddressId());
@@ -140,6 +172,7 @@ public class GeneralServiceImpl extends AbstractBusinessObjectServiceMgr impleme
 		}
 		return response;
 	}
+	*/
 	
 	@Override
 	public GoodsInfoResponse findGoodsById(GoodsRequest vo) {
