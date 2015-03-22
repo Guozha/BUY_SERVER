@@ -1,7 +1,9 @@
 package com.guozha.buyserver.service.goods.impl;
 
 import java.util.ArrayList;
+import java.util.LinkedHashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -19,6 +21,7 @@ import com.guozha.buyserver.persistence.mapper.MarMarketGoodsMapper;
 import com.guozha.buyserver.persistence.mapper.GooGoodsAmountMapper;
 import com.guozha.buyserver.persistence.mapper.MnuMenuMapper;
 import com.guozha.buyserver.service.goods.GeneralService;
+import com.guozha.buyserver.service.goods.GoodsBo;
 import com.guozha.buyserver.service.market.MarketService;
 import com.guozha.buyserver.web.controller.goods.FrontTypeRequest;
 import com.guozha.buyserver.web.controller.goods.FrontTypeResponse;
@@ -81,22 +84,61 @@ public class GeneralServiceImpl extends AbstractBusinessObjectServiceMgr impleme
 	public List<GoodsResponse> findGoods(GoodsRequest vo) {
 		int marketId= this.marketService.findMaketId(vo.getAddressId());
 		
-		List<GoodsResponse> list = null;
+		
+		List<GoodsResponse> response = null;
 		Integer frontTypeId = vo.getFrontTypeId();
+		List<GoodsBo> list = null;
 		if(frontTypeId==null){
-			list = this.gooGoodsMapper.findByMarketId(marketId);
+			List<GoodsBo> goodsBoList = this.gooGoodsMapper.findByMarketId(marketId);
+			Map<Integer,List<GoodsBo>> map = new LinkedHashMap<Integer, List<GoodsBo>>();
+			for(GoodsBo bo: goodsBoList){
+				if(map.containsKey(bo.getFrontTypeId())){
+					map.get(bo.getFrontTypeId()).add(bo);
+				}else{
+					list = new ArrayList<GoodsBo>();
+					list.add(bo);
+					map.put(bo.getFrontTypeId(), list);
+				}
+			}
+			goodsBoList = null;
+			
+			response = new ArrayList<GoodsResponse>();
+			
+			for(int key:map.keySet()){
+				GoodsResponse goods = new GoodsResponse();
+				BasFrontType frontType = this.basFrontTypeMapper.load(key);
+				goods.getFrontType().setFrontTypeId(key);
+				goods.getFrontType().setTypeName(frontType.getTypeName());
+				goods.getFrontType().setShortName(frontType.getShortName());
+				
+				
+				for(GoodsBo bo:map.get(key)){
+					GoodsResponse kid = new GoodsResponse();
+					kid.setGoodsId(bo.getGoodsId());
+					kid.setGoodsName(bo.getGoodsName());
+					kid.setGoodsImg(bo.getGoodsImg());
+					kid.setGoodsProp(bo.getGoodsProp());
+					kid.setUnit(bo.getUnit());
+					kid.setUnitPrice(bo.getUnitPrice());
+					kid.setFrontType(null);
+					kid.setGoodsList(null);
+					goods.getGoodsList().add(kid);
+				}
+				response.add(goods);
+			}
+			
 		}else{
 			BasFrontType bft = this.basFrontTypeMapper.load(vo.getFrontTypeId());
 			switch (bft.getLevel()) {
 			case 1: //一级类目商品
-				list = this.gooGoodsMapper.findFirst(marketId,frontTypeId);
+				response = this.gooGoodsMapper.findFirst(marketId,frontTypeId);
 				break;
 			case 2: //二级类目商品
-				list = this.gooGoodsMapper.findSecond(marketId,frontTypeId);
+				response = this.gooGoodsMapper.findSecond(marketId,frontTypeId);
 				break;
 			}
 		}
-		return list;
+		return response;
 	}
 	
 	@Override
