@@ -40,5 +40,15 @@ public class OrderController extends BaseController {
 	public void insert(InsertOrderRequest vo, HttpServletResponse response) {
 		responseJson(orderService.insertOrder(vo), response);
 	}
+	
+	@RequestMapping(value = "/insertSupply")
+	public void insertSupply(InsertSupplyOrderRequest vo, HttpServletResponse response) {
+		responseJson(orderService.insertSupplyOrder(vo), response);
+	}
+	
+	@RequestMapping(value = "/insertPrepare")
+	public void insertPrepare(InsertPrepareOrderRequest vo, HttpServletResponse response) {
+		responseJson(orderService.insertPrepareOrder(vo), response);
+	}
 
 }

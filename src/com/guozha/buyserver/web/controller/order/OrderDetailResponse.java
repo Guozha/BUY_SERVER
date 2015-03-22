@@ -10,8 +10,7 @@ public class OrderDetailResponse {
 	private String orderNo;
 	private Date createTime;
 	private Date aboutArrivalTime;
-	private Integer wantUpTime;
-	private Integer wantDownTime;
+	private String wantArrivalTimeScope;
 	private String receiveMen;
 	private String receiveMobile;
 	private String receiveAddr;
@@ -45,17 +44,11 @@ public class OrderDetailResponse {
 	public void setAboutArrivalTime(Date aboutArrivalTime) {
 		this.aboutArrivalTime = aboutArrivalTime;
 	}
-	public Integer getWantUpTime() {
-		return wantUpTime;
+	public String getWantArrivalTimeScope() {
+		return wantArrivalTimeScope;
 	}
-	public void setWantUpTime(Integer wantUpTime) {
-		this.wantUpTime = wantUpTime;
-	}
-	public Integer getWantDownTime() {
-		return wantDownTime;
-	}
-	public void setWantDownTime(Integer wantDownTime) {
-		this.wantDownTime = wantDownTime;
+	public void setWantArrivalTimeScope(String wantArrivalTimeScope) {
+		this.wantArrivalTimeScope = wantArrivalTimeScope;
 	}
 	public String getReceiveMen() {
 		return receiveMen;

@@ -1,11 +1,10 @@
 package com.guozha.buyserver.service.cart;
 
-import java.util.List;
 
 import com.guozha.buyserver.framework.sys.business.BusinessObjectServiceMgr;
 import com.guozha.buyserver.web.controller.MsgResponse;
 import com.guozha.buyserver.web.controller.cart.CartRequest;
-import com.guozha.buyserver.web.controller.cart.ProductTypeResponse;
+import com.guozha.buyserver.web.controller.cart.CartResponse;
 
 /**
  * 购物车service
@@ -42,7 +41,7 @@ public interface CartService  extends BusinessObjectServiceMgr{
 	 * @param vo
 	 * @return
 	 */
-	List<ProductTypeResponse> find(CartRequest vo);
+    CartResponse find(CartRequest vo);
 	
 	/**
 	 * 添加购物车
@@ -58,5 +57,13 @@ public interface CartService  extends BusinessObjectServiceMgr{
 	 * @return
 	 */
 	int getMenuUnitPrice(int marketId,int menuId);
+	
+	/**
+	 * 计算菜谱中商品的上值份量
+	 * @param goodsId 商品id
+	 * @param amount  份量
+	 * @return
+	 */
+	int getMenuGoodsAmount(int goodsId,int amount);
 
 }

@@ -1,6 +1,9 @@
 package com.guozha.buyserver.service.order.impl;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
@@ -8,6 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.guozha.buyserver.common.util.PriceUtils;
 import com.guozha.buyserver.common.util.SystemResource;
 import com.guozha.buyserver.framework.sys.business.AbstractBusinessObjectServiceMgr;
 import com.guozha.buyserver.persistence.beans.AccAddress;
@@ -40,6 +44,8 @@ import com.guozha.buyserver.web.controller.MsgResponse;
 import com.guozha.buyserver.web.controller.order.CancelOrderRequest;
 import com.guozha.buyserver.web.controller.order.GoodsInfo;
 import com.guozha.buyserver.web.controller.order.InsertOrderRequest;
+import com.guozha.buyserver.web.controller.order.InsertPrepareOrderRequest;
+import com.guozha.buyserver.web.controller.order.InsertSupplyOrderRequest;
 import com.guozha.buyserver.web.controller.order.MarketTimeResponse;
 import com.guozha.buyserver.web.controller.order.MenuInfo;
 import com.guozha.buyserver.web.controller.order.OrderDetailResponse;
@@ -105,6 +111,17 @@ public class OrderServiceImpl extends AbstractBusinessObjectServiceMgr
 		}
 		return buyOrderMapper.findOrder(vo.getUserId(), statusList, vo.getStartIndex(), vo.getPageSize());
 	}
+	
+	/**
+	 * 
+	 * @param wantUpTime  [yymmddhhmm]
+	 * @param wantDownTime [yymmddhhmm]
+	 * @return 3月20 16点至17点
+	 */
+	private String getWantArrivalTimeScope(int wantUpTime, int wantDownTime) {
+		// TODO
+		return "";
+	}
 
 	@Override
 	public OrderDetailResponse getOrderDetail(int orderId) {
@@ -118,8 +135,7 @@ public class OrderServiceImpl extends AbstractBusinessObjectServiceMgr
 		response.setOrderNo(buyOrder.getOrderNo());
 		response.setCreateTime(buyOrder.getCreateTime());
 		response.setAboutArrivalTime(buyOrder.getAboutArrivalTime());
-		response.setWantUpTime(buyOrder.getWantUpTime());
-		response.setWantDownTime(buyOrder.getWantDownTime());
+		response.setWantArrivalTimeScope(getWantArrivalTimeScope(buyOrder.getWantUpTime(), buyOrder.getWantDownTime()));
 		response.setReceiveMen(buyOrder.getReceiveMen());
 		response.setReceiveMobile(buyOrder.getReceiveMobile());
 		response.setReceiveAddr(buyOrder.getReceiveAddr());
@@ -172,7 +188,7 @@ public class OrderServiceImpl extends AbstractBusinessObjectServiceMgr
 		return response;
 	}
 	
-	public int getServiceFee(int totalPrice){
+	public int getServiceFeeForNormalOrder(int totalPrice){
 		return totalPrice < Integer.parseInt(SystemResource.getConfig("service.free_price"))? Integer.parseInt(SystemResource.getConfig("service.fee")) : 0;
 	}
 	
@@ -217,9 +233,9 @@ public class OrderServiceImpl extends AbstractBusinessObjectServiceMgr
 			buyOrderGoods.setGoodsImg(gooGoods.getGoodsImg());
 			buyOrderGoods.setBackTypeId(gooGoods.getBackTypeId());
 			buyOrderGoods.setUnit(gooGoods.getUnit());
-			buyOrderGoods.setUnitPrice(marMarketGoods.getPrice());
+			buyOrderGoods.setUnitPrice(marMarketGoods.getUnitPrice());
 			buyOrderGoods.setAmount(buyCart.getAmount());
-			buyOrderGoods.setPrice(marMarketGoods.getPrice() * buyCart.getAmount());
+			buyOrderGoods.setPrice(marMarketGoods.getUnitPrice() * buyCart.getAmount());
 			
 			buyOrderGoodsMapper.insert(buyOrderGoods);
 			totalPrice += buyOrderGoods.getPrice();
@@ -262,7 +278,7 @@ public class OrderServiceImpl extends AbstractBusinessObjectServiceMgr
 				orderMenuGoods.setBackTypeId(gooGoods.getBackTypeId());
 				orderMenuGoods.setUnit(gooGoods.getUnit());
 				
-				int goodsUnitPrice = marMarketGoods.getPrice();
+				int goodsUnitPrice = marMarketGoods.getUnitPrice();
 				orderMenuGoods.setUnitPrice(goodsUnitPrice);
 				
 				for(MnuMenuGoods mnuMenuGoods : mnuMenuGoodsList){
@@ -275,7 +291,106 @@ public class OrderServiceImpl extends AbstractBusinessObjectServiceMgr
 			}
 		}
 		
-		buyOrderMapper.updateCount(buyOrder.getOrderId(), totalPrice, getServiceFee(totalPrice));
+		buyOrderMapper.updateCount(buyOrder.getOrderId(), totalPrice, PriceUtils.getServiceFee(totalPrice));
+		
+		return new MsgResponse(MsgResponse.SUCC, "订单提交成功");
+	}
+	
+	@Override
+	public MsgResponse insertSupplyOrder(InsertSupplyOrderRequest vo) {
+		
+		MarMarketGoods marMarketGoods = marMarketGoodsMapper.load(vo.getMarketGoodsId());
+		GooGoods gooGoods = gooGoodsMapper.load(marMarketGoods.getGoodsId());
+		AccAddress accAddress = accAddressMapper.load(vo.getAddressId());
+		
+		BuyOrder buyOrder = new BuyOrder();
+		buyOrder.setOrderNo(commonService.getPaperNo(SystemResource.getConfig("area_code.hangzhou"), "01"));// PAPER_TYPE 01-用户订单
+		buyOrder.setOrderType("2"); // ORDER_TYPE 2-特供
+		buyOrder.setUserId(vo.getUserId());
+		buyOrder.setQuantity(1); //汇总件数
+		buyOrder.setReceiveMen(accAddress.getReceiveName());
+		buyOrder.setReceiveMobile(accAddress.getMobileNo());
+		buyOrder.setReceiveAddr(accAddress.getDetailAddr());
+		buyOrder.setWantUpTime(vo.getWantUpTime());
+		buyOrder.setWantDownTime(vo.getWantDownTime());
+		buyOrder.setMemo(vo.getMemo());
+		buyOrder.setCreateTime(new Date());
+		buyOrder.setTotalPrice(marMarketGoods.getUnitPrice() * vo.getAmount());
+		buyOrder.setServiceFee(0);
+		buyOrder.setStatus("01");// ORDER_STATUS 01-新创建
+		
+		buyOrderMapper.insert(buyOrder);
+		
+		BuyOrderGoods buyOrderGoods = new BuyOrderGoods();
+		buyOrderGoods.setOrderId(buyOrder.getOrderId());
+		buyOrderGoods.setMarketId(marMarketGoods.getMarketId());
+		buyOrderGoods.setGoodsId(gooGoods.getGoodsId());
+		buyOrderGoods.setGoodsName(gooGoods.getGoodsName());
+		buyOrderGoods.setGoodsImg(gooGoods.getGoodsImg());
+		buyOrderGoods.setBackTypeId(gooGoods.getBackTypeId());
+		buyOrderGoods.setUnit(gooGoods.getUnit());
+		buyOrderGoods.setUnitPrice(marMarketGoods.getUnitPrice());
+		buyOrderGoods.setAmount(vo.getAmount());
+		buyOrderGoods.setPrice(marMarketGoods.getUnitPrice() * vo.getAmount());
+		
+		buyOrderGoodsMapper.insert(buyOrderGoods);
+		
+		return new MsgResponse(MsgResponse.SUCC, "订单提交成功");
+	}
+	
+	private Date getAboutArrivalTime(Date prepareEndDate, int arrivalDays){
+		Date abouteArrivalTime = null;
+		try {
+			SimpleDateFormat sf = new SimpleDateFormat("yyyy-MM-dd");  
+			String nowDate = sf.format(prepareEndDate);
+			Calendar cal = Calendar.getInstance();  
+			cal.setTime(sf.parse(nowDate));  
+			cal.add(Calendar.DAY_OF_YEAR, + arrivalDays);  
+			String time = sf.format(cal.getTime());
+			abouteArrivalTime = sf.parse(time);
+		} catch (ParseException e) {
+			e.printStackTrace();
+		}
+		return abouteArrivalTime;
+	}
+	
+	@Override
+	public MsgResponse insertPrepareOrder(InsertPrepareOrderRequest vo) {
+		
+		MarMarketGoods marMarketGoods = marMarketGoodsMapper.load(vo.getMarketGoodsId());
+		GooGoods gooGoods = gooGoodsMapper.load(marMarketGoods.getGoodsId());
+		AccAddress accAddress = accAddressMapper.load(vo.getAddressId());
+		
+		BuyOrder buyOrder = new BuyOrder();
+		buyOrder.setOrderNo(commonService.getPaperNo(SystemResource.getConfig("area_code.hangzhou"), "01"));// PAPER_TYPE 01-用户订单
+		buyOrder.setOrderType("3"); // ORDER_TYPE 3-预售
+		buyOrder.setUserId(vo.getUserId());
+		buyOrder.setQuantity(1); //汇总件数
+		buyOrder.setReceiveMen(accAddress.getReceiveName());
+		buyOrder.setReceiveMobile(accAddress.getMobileNo());
+		buyOrder.setReceiveAddr(accAddress.getDetailAddr());
+		buyOrder.setAboutArrivalTime(this.getAboutArrivalTime(gooGoods.getPrepareEndDate(), gooGoods.getArrivalDays()));
+		buyOrder.setMemo(vo.getMemo());
+		buyOrder.setCreateTime(new Date());
+		buyOrder.setTotalPrice(marMarketGoods.getUnitPrice() * vo.getAmount());
+		buyOrder.setServiceFee(0);
+		buyOrder.setStatus("01");// ORDER_STATUS 01-新创建
+		
+		buyOrderMapper.insert(buyOrder);
+		
+		BuyOrderGoods buyOrderGoods = new BuyOrderGoods();
+		buyOrderGoods.setOrderId(buyOrder.getOrderId());
+		buyOrderGoods.setMarketId(marMarketGoods.getMarketId());
+		buyOrderGoods.setGoodsId(gooGoods.getGoodsId());
+		buyOrderGoods.setGoodsName(gooGoods.getGoodsName());
+		buyOrderGoods.setGoodsImg(gooGoods.getGoodsImg());
+		buyOrderGoods.setBackTypeId(gooGoods.getBackTypeId());
+		buyOrderGoods.setUnit(gooGoods.getUnit());
+		buyOrderGoods.setUnitPrice(marMarketGoods.getUnitPrice());
+		buyOrderGoods.setAmount(vo.getAmount());
+		buyOrderGoods.setPrice(marMarketGoods.getUnitPrice() * vo.getAmount());
+		
+		buyOrderGoodsMapper.insert(buyOrderGoods);
 		
 		return new MsgResponse(MsgResponse.SUCC, "订单提交成功");
 	}

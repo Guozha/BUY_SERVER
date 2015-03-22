@@ -1,10 +1,8 @@
-package com.guozha.buyserver.web.controller.goods;
-
-import java.util.ArrayList;
-import java.util.List;
+package com.guozha.buyserver.service.goods;
 
 
-public class GoodsResponse {
+
+public class GoodsBo {
 	
 	private Integer goodsId;   //商品ID
 	private String goodsName;  //商品名
@@ -12,21 +10,13 @@ public class GoodsResponse {
 	private Integer unitPrice;//单价
 	private String unit;//计量单位
 	private String goodsProp;   //商品性质
-	private FrontTypeResponse frontType = new FrontTypeResponse();
-	private List<GoodsResponse> goodsList = new ArrayList<GoodsResponse>();
-	public FrontTypeResponse getFrontType() {
-		return frontType;
+	private Integer frontTypeId;
+    public Integer getFrontTypeId() {
+		return frontTypeId;
 	}
-	public void setFrontType(FrontTypeResponse frontType) {
-		this.frontType = frontType;
+	public void setFrontTypeId(Integer frontTypeId) {
+		this.frontTypeId = frontTypeId;
 	}
-	public List<GoodsResponse> getGoodsList() {
-		return goodsList;
-	}
-	public void setGoodsList(List<GoodsResponse> goodsList) {
-		this.goodsList = goodsList;
-	}
-	
 	public Integer getGoodsId() {
 		return goodsId;
 	}
@@ -64,4 +54,5 @@ public class GoodsResponse {
 	public void setGoodsProp(String goodsProp) {
 		this.goodsProp = goodsProp;
 	}
+
 }

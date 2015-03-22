@@ -10,10 +10,10 @@ PUBLIC "-//ibatis.apache.org//DTD Mapper 3.0//EN"
         <result property="marketId" jdbcType="INTEGER" column="MARKET_ID"/>
         <result property="goodsId" jdbcType="INTEGER" column="GOODS_ID"/>
         <result property="openBuyFlag" jdbcType="VARCHAR" column="OPEN_BUY_FLAG"/>
-        <result property="price" jdbcType="INTEGER" column="PRICE"/>
+        <result property="unitPrice" jdbcType="INTEGER" column="UNIT_PRICE"/>
 	</resultMap>
      <sql id="BASE_COLUMN_LIST">
-		T.MARKET_GOODS_ID,T.MARKET_ID,T.GOODS_ID,T.OPEN_BUY_FLAG,T.PRICE
+		T.MARKET_GOODS_ID,T.MARKET_ID,T.GOODS_ID,T.OPEN_BUY_FLAG,T.UNIT_PRICE
 	</sql>
     <select id="getGoodIdsInMarket" parameterType="java.util.Map" resultMap="rm">
         SELECT T.GOODS_ID FROM MAR_MARKET_GOODS T WHERE T.MARKET_ID = #{marketId} AND T.OPEN_BUY_FLAG = #{openBuyFlag}

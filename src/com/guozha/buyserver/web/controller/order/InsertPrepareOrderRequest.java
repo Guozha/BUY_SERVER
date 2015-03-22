@@ -1,13 +1,13 @@
 package com.guozha.buyserver.web.controller.order;
 
 
-public class InsertOrderRequest {
+public class InsertPrepareOrderRequest {
 	
 	private String token;
 	private Integer userId;
 	private Integer addressId;
-	private Integer wantUpTime;
-	private Integer wantDownTime;
+	private Integer marketGoodsId;
+	private Integer amount;
 	private String memo;
 	
 	public String getToken() {
@@ -28,17 +28,17 @@ public class InsertOrderRequest {
 	public void setUserId(Integer userId) {
 		this.userId = userId;
 	}
-	public Integer getWantUpTime() {
-		return wantUpTime;
+	public Integer getMarketGoodsId() {
+		return marketGoodsId;
 	}
-	public void setWantUpTime(Integer wantUpTime) {
-		this.wantUpTime = wantUpTime;
+	public void setMarketGoodsId(Integer marketGoodsId) {
+		this.marketGoodsId = marketGoodsId;
 	}
-	public Integer getWantDownTime() {
-		return wantDownTime;
+	public Integer getAmount() {
+		return amount;
 	}
-	public void setWantDownTime(Integer wantDownTime) {
-		this.wantDownTime = wantDownTime;
+	public void setAmount(Integer amount) {
+		this.amount = amount;
 	}
 	public String getMemo() {
 		return memo;
