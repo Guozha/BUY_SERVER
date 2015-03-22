@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.guozha.buyserver.common.util.PriceUtils;
 import com.guozha.buyserver.common.util.SystemResource;
 import com.guozha.buyserver.framework.sys.business.AbstractBusinessObjectServiceMgr;
 import com.guozha.buyserver.persistence.beans.AccAddress;
@@ -227,9 +228,9 @@ public class OrderServiceImpl extends AbstractBusinessObjectServiceMgr
 			buyOrderGoods.setGoodsImg(gooGoods.getGoodsImg());
 			buyOrderGoods.setBackTypeId(gooGoods.getBackTypeId());
 			buyOrderGoods.setUnit(gooGoods.getUnit());
-			buyOrderGoods.setUnitPrice(marMarketGoods.getPrice());
+			buyOrderGoods.setUnitPrice(marMarketGoods.getUnitPrice());
 			buyOrderGoods.setAmount(buyCart.getAmount());
-			buyOrderGoods.setPrice(marMarketGoods.getPrice() * buyCart.getAmount());
+			buyOrderGoods.setPrice(marMarketGoods.getUnitPrice() * buyCart.getAmount());
 			
 			buyOrderGoodsMapper.insert(buyOrderGoods);
 			totalPrice += buyOrderGoods.getPrice();
@@ -272,7 +273,7 @@ public class OrderServiceImpl extends AbstractBusinessObjectServiceMgr
 				orderMenuGoods.setBackTypeId(gooGoods.getBackTypeId());
 				orderMenuGoods.setUnit(gooGoods.getUnit());
 				
-				int goodsUnitPrice = marMarketGoods.getPrice();
+				int goodsUnitPrice = marMarketGoods.getUnitPrice();
 				orderMenuGoods.setUnitPrice(goodsUnitPrice);
 				
 				for(MnuMenuGoods mnuMenuGoods : mnuMenuGoodsList){
@@ -285,7 +286,7 @@ public class OrderServiceImpl extends AbstractBusinessObjectServiceMgr
 			}
 		}
 		
-		buyOrderMapper.updateCount(buyOrder.getOrderId(), totalPrice, getServiceFeeForNormalOrder(totalPrice));
+		buyOrderMapper.updateCount(buyOrder.getOrderId(), totalPrice, PriceUtils.getServiceFee(totalPrice));
 		
 		return new MsgResponse(MsgResponse.SUCC, "订单提交成功");
 	}
