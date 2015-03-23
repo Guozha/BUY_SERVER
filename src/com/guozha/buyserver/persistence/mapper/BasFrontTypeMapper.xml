@@ -31,7 +31,9 @@ PUBLIC "-//ibatis.apache.org//DTD Mapper 3.0//EN"
 	<select id="findAll" resultMap="rm">
 		SELECT 
 			<include refid="BASE_COLUMN_LIST" />
-		FROM BAS_FRONT_TYPE
+		FROM BAS_FRONT_TYPE 
+		WHERE STATUS='1'
+		ORDER BY SORT ASC
 	</select>
 	
 	<!-- 查询一级类目 -->
@@ -40,7 +42,8 @@ PUBLIC "-//ibatis.apache.org//DTD Mapper 3.0//EN"
 			<include refid="BASE_COLUMN_LIST" />
 		FROM BAS_FRONT_TYPE
 		WHERE
-		    PARENT_ID = 0
+		    STATUS='1'
+		    AND PARENT_ID = 0
 		    ORDER BY SORT ASC
 	</select>
 	
@@ -50,7 +53,20 @@ PUBLIC "-//ibatis.apache.org//DTD Mapper 3.0//EN"
 			<include refid="BASE_COLUMN_LIST" />
 		FROM BAS_FRONT_TYPE
 		WHERE
-		    PARENT_ID = #{parentId} 
+		    STATUS='1'
+		    AND PARENT_ID = #{parentId} 
 		    ORDER BY SORT ASC
+	</select>
+	
+	<!-- 查询所有一级类目分页 -->
+	<select id="findFirstPager" resultMap="rm" parameterType="map">
+		SELECT 
+			<include refid="BASE_COLUMN_LIST" />
+		FROM BAS_FRONT_TYPE
+		WHERE
+		    STATUS='1'
+		    AND PARENT_ID = 0
+		ORDER BY SORT ASC
+		LIMIT #{startIndex},#{pageSize}
 	</select>
 </mapper>

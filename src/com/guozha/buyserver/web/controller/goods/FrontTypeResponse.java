@@ -1,6 +1,5 @@
 package com.guozha.buyserver.web.controller.goods;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import com.guozha.buyserver.persistence.beans.BasFrontType;
@@ -10,17 +9,17 @@ public class FrontTypeResponse {
 	    private Integer frontTypeId; //类目ID
 	    private String typeName;     //类目名称
 	    private String shortName;    //类目简称
-	    private Integer level;       //层级
 	    
 	    private List<FrontTypeResponse> frontTypeList;
 	
-		
+	    public FrontTypeResponse() {
+			
+		}
 		public FrontTypeResponse(BasFrontType po) {
 			super();
 			this.frontTypeId = po.getFrontTypeId();
 			this.typeName = po.getTypeName();
 			this.shortName = po.getShortName();
-			this.level = po.getLevel();
 			
 		}
 		
@@ -42,12 +41,6 @@ public class FrontTypeResponse {
 		}
 		public void setShortName(String shortName) {
 			this.shortName = shortName;
-		}
-		public Integer getLevel() {
-			return level;
-		}
-		public void setLevel(Integer level) {
-			this.level = level;
 		}
 		public String getTypeName() {
 			return typeName;

@@ -2,6 +2,7 @@ package com.guozha.buyserver.persistence.mapper;
 
 import java.util.List;
 
+import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Repository;
 
 import com.guozha.buyserver.dal.BaseMapper;
@@ -28,5 +29,13 @@ public interface BasFrontTypeMapper  extends BaseMapper<BasFrontType, Integer>{
 	 * @return
 	 */
 	List<BasFrontType> findSecond(int parentId);
+	
+	/**
+	 * 查询所有一级类目分页
+	 * @param startIndex
+	 * @param pageSize
+	 * @return
+	 */
+	List<BasFrontType> findFirstPager(@Param("startIndex")int startIndex, @Param("pageSize")int pageSize);
 
 }

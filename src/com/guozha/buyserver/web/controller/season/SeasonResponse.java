@@ -4,7 +4,6 @@ package com.guozha.buyserver.web.controller.season;
 import java.util.List;
 
 import com.guozha.buyserver.persistence.beans.GooSeasonGoods;
-import com.guozha.buyserver.web.controller.goods.GoodsResponse;
 
 public class SeasonResponse {
 	
