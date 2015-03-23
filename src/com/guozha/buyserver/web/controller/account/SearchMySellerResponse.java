@@ -9,6 +9,7 @@ public class SearchMySellerResponse {
 	private byte[] logo;
 	private String mainBusi;
 	private String sellerTag;
+	private Integer transCount;
 	
 	public Integer getMySellerId() {
 		return mySellerId;
@@ -49,6 +50,14 @@ public class SearchMySellerResponse {
 	}
 	public void setMainBusi(String mainBusi) {
 		this.mainBusi = mainBusi;
+	}
+
+	public Integer getTransCount() {
+		return transCount;
+	}
+
+	public void setTransCount(Integer transCount) {
+		this.transCount = transCount;
 	}
 
 }

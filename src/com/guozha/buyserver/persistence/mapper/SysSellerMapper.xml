@@ -6,11 +6,12 @@ PUBLIC "-//ibatis.apache.org//DTD Mapper 3.0//EN"
 <mapper namespace="com.guozha.buyserver.persistence.mapper.SysSellerMapper">
 
     <resultMap id="findByUserIdRM" type="com.guozha.buyserver.web.controller.account.SearchMySellerResponse">
-        <result property="mySellerId" jdbcType="INTEGER" column="MY_SELLER_ID"/>
         <result property="sellerId" jdbcType="INTEGER" column="SELLER_ID"/>
         <result property="sellerName" jdbcType="VARCHAR" column="SELLER_NAME"/>
         <result property="logo" jdbcType="BLOB" column="LOGO"/>
         <result property="mainBusi" jdbcType="VARCHAR" column="MAIN_BUSI"/>
+        <result property="transCount" jdbcType="INTEGER" column="TRANS_COUNT"/>
+        <result property="mySellerId" jdbcType="INTEGER" column="MY_SELLER_ID"/>
         <result property="sellerTag" jdbcType="VARCHAR" column="SELLER_TAG"/>
 	</resultMap>
 
@@ -20,6 +21,7 @@ PUBLIC "-//ibatis.apache.org//DTD Mapper 3.0//EN"
             T1.SELLER_NAME,
             T1.LOGO,
             T1.MAIN_BUSI,
+            T1.TRANS_COUNT,
             T2.MY_SELLER_ID,
             T2.SELLER_TAG 
         FROM 

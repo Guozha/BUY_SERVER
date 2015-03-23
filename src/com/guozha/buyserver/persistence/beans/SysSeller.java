@@ -12,6 +12,7 @@ public class SysSeller extends AbstractDO {
 	private String sellerName;
 	private byte[] logo;
 	private String mainBusi;
+	private Integer transCount;
 	private Date lastPayDate;
 	private Integer marketId;
 	private String status;
@@ -45,6 +46,12 @@ public class SysSeller extends AbstractDO {
 	}
 	public void setLogo(byte[] logo) {
 		this.logo = logo;
+	}
+	public Integer getTransCount() {
+		return transCount;
+	}
+	public void setTransCount(Integer transCount) {
+		this.transCount = transCount;
 	}
 	public String getMainBusi() {
 		return mainBusi;
