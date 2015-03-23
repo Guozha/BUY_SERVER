@@ -67,7 +67,7 @@ public class MenuPlanController extends BaseController {
 	 * @param response
 	 */
 	@RequestMapping(value="/goodsMenuList")
-	public void menu(int goodsId,HttpServletResponse response){
+	public void goodsMenuList(int goodsId,HttpServletResponse response){
 		responseJson(menuPlanService.findByGoodsId(goodsId), response);
 	}
 
