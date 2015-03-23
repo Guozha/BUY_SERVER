@@ -1,5 +1,9 @@
 package com.guozha.buyserver.web.controller.menuplan;
 
+import java.util.List;
+
+import com.guozha.buyserver.persistence.beans.MnuMenuGoods;
+import com.guozha.buyserver.persistence.beans.MnuMenuStep;
 
 /**
  * @Package com.guozha.buyserver.web.controller.menuplan
@@ -15,8 +19,10 @@ public class MenuResponse {
 	private String menuDesc;// 菜谱描述
 	private Integer cookieTime;// 烹饪时间
 	private String cookieWay;// 制作方式
-	private String seasonings;// 调料
-	private String hardType;//难易程度：1-简单;2-中等;3-困难
+	private String seasonings="";// 调料
+	private String hardType;// 难易程度：1-简单;2-中等;3-困难
+	private List<MnuMenuStep> muenSteps;// 做菜步骤
+	private List<MnuMenuGoods> menuGoods;//食材
 
 	public Integer getMenuId() {
 		return menuId;
@@ -82,5 +88,20 @@ public class MenuResponse {
 		this.hardType = hardType;
 	}
 
+	public List<MnuMenuStep> getMuenSteps() {
+		return muenSteps;
+	}
+
+	public void setMuenSteps(List<MnuMenuStep> muenSteps) {
+		this.muenSteps = muenSteps;
+	}
+
+	public List<MnuMenuGoods> getMenuGoods() {
+		return menuGoods;
+	}
+
+	public void setMenuGoods(List<MnuMenuGoods> menuGoods) {
+		this.menuGoods = menuGoods;
+	}
 
 }

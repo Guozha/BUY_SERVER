@@ -8,7 +8,10 @@ import org.springframework.stereotype.Service;
 import com.guozha.buyserver.common.util.DateUtil;
 import com.guozha.buyserver.framework.enums.ReturnCodeEnum;
 import com.guozha.buyserver.persistence.beans.MnuMenu;
+import com.guozha.buyserver.persistence.beans.MnuMenuGoods;
+import com.guozha.buyserver.persistence.beans.MnuMenuStep;
 import com.guozha.buyserver.persistence.beans.MnuUserMenuPlan;
+import com.guozha.buyserver.persistence.mapper.MnuMenuMapper;
 import com.guozha.buyserver.persistence.mapper.MnuMenuPlanMapper;
 import com.guozha.buyserver.service.account.ReturnCode;
 import com.guozha.buyserver.service.menuplan.MenuPlanService;
@@ -28,6 +31,8 @@ public class MenuPlanServiceImpl implements MenuPlanService {
 
 	@Autowired
 	private MnuMenuPlanMapper menuPlanMapper;
+	@Autowired
+	private MnuMenuMapper menuMapper;
 
 	/**
 	 * 新增菜谱
@@ -74,7 +79,14 @@ public class MenuPlanServiceImpl implements MenuPlanService {
 	public MenuResponse detail(MenuDetailRequest request) {
 		MenuResponse response = null;
 		if (request != null) {
-			response = menuPlanMapper.menuDetail(request.getMenuId());
+			int menuId = request.getMenuId();
+			response = menuPlanMapper.menuDetail(menuId);
+			List<MnuMenuStep> menuSteps = menuPlanMapper.listMenuCookStep(menuId);
+			if (menuSteps != null)
+				response.setMuenSteps(menuSteps);
+			List<MnuMenuGoods> menuGoods = menuMapper.findGoodsById(menuId);
+			if (menuGoods != null)
+				response.setMenuGoods(menuGoods);
 		}
 		return response;
 	}

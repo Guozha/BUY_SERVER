@@ -54,7 +54,7 @@ PUBLIC "-//ibatis.apache.org//DTD Mapper 3.0//EN"
 	</select>
 	
 	
-	<!--获取菜票详情  -->
+	<!--获取菜谱详情  -->
     <select id="menuDetail" parameterType="int" resultType="com.guozha.buyserver.web.controller.menuplan.MenuResponse">
       SELECT
 	   m.menu_id AS menuId,
@@ -64,31 +64,24 @@ PUBLIC "-//ibatis.apache.org//DTD Mapper 3.0//EN"
 	   m.cookie_time AS cookieTime,
 	   m.cookie_way AS cookieWay,
 	   m.seasonings AS seasonings,
-	   s.one_img AS oneImg,
-	   s.one_desc AS oneDesc,
-	   s.two_img AS twoImg,
-	   s.two_desc AS twoDesc,
-	   s.three_img AS threeImg,
-	   s.three_desc AS threeDesc,
-	   s.four_img AS fourImg,
-	   s.four_desc AS fourDesc,
-	   s.five_img AS fiveImg,
-	   s.five_desc AS fiveDesc,
-	   s.six_img AS sixImg,
-	   s.six_desc AS sixDesc,
-	   s.seven_img AS sevenImg,
-	   s.seven_desc AS sevenDesc,
-	   s.eight_img AS eightImg,
-	   s.eight_desc AS eightDesc,
-	   s.nine_img AS nineImg,
-	   s.nine_desc AS nineDesc,
-	   s.ten_img AS tenImg,
-	   s.ten_desc AS tenDesc
+	   m.hard_type AS hardType
      FROM
-	   MNU_MENU m,
-	   MNU_MENU_STEP s
+	   MNU_MENU m
      WHERE
-	     m.step_id=s.menu_step_id AND m.menu_id = #{menuId}
+	     m.menu_id = #{menuId}
+    </select>
+    
+    
+    <!-- 获取菜谱制作详情 -->
+    <select id="listMenuCookStep" parameterType="int" resultType="com.guozha.buyserver.persistence.beans.MnuMenuStep">
+    SELECT 
+      menu_id AS menuId,
+      step_desc AS stepDesc,
+      step_Img AS stepImg 
+   FROM
+      MNU_MENU_STEP 
+   WHERE menu_id = #{menuId}
+   ORDER BY sort_flag
     </select>
 	
 </mapper>

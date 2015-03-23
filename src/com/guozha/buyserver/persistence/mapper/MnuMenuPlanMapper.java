@@ -31,4 +31,7 @@ public interface MnuMenuPlanMapper extends BaseMapper<MnuMenuPlan, Integer> {
 	// 查询菜谱详情
 	MenuResponse menuDetail(int menuId);
 
+	// 获取菜谱制作详情
+	List<MnuMenuStep> listMenuCookStep(int menuId);
+
 }

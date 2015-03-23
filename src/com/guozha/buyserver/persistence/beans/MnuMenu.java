@@ -21,6 +21,8 @@ public class MnuMenu extends AbstractDO {
 	private String cookieWay;
 	private String stepId;
 	private String seasonings;
+	private String hardType;
+	
 	public String getSeasonings() {
 		return seasonings;
 	}
@@ -76,6 +78,12 @@ public class MnuMenu extends AbstractDO {
 	}
 	public void setStepId(String stepId) {
 		this.stepId = stepId;
+	}
+	public String getHardType() {
+		return hardType;
+	}
+	public void setHardType(String hardType) {
+		this.hardType = hardType;
 	}
 
 }
