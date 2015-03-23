@@ -32,7 +32,7 @@ PUBLIC "-//ibatis.apache.org//DTD Mapper 3.0//EN"
 	</sql>
 	
 
-	<resultMap id="goodsResponseRm" type="com.guozha.buyserver.web.controller.goods.GoodsResponse">
+	<resultMap id="goodsResponseRm" type="com.guozha.buyserver.web.controller.goods.Goods">
        <result property="goodsId" jdbcType="INTEGER" column="GOODS_ID"/>
        <result property="goodsName" jdbcType="VARCHAR" column="GOODS_NAME"/>
        <result property="goodsProp" jdbcType="VARCHAR" column="GOODS_PROP"/>
@@ -51,11 +51,11 @@ PUBLIC "-//ibatis.apache.org//DTD Mapper 3.0//EN"
 	</select>
 	
     <!-- 所有一级类目商品 个取6条-->
-	<select id="findLimit6ByFirstFrontTypeId" parameterType="map" resultType="goodsResponseRm" >
+	<select id="findLimit6ByFirstFrontTypeId" parameterType="map" resultMap="goodsResponseRm" >
 		SELECT 
 			 T.GOODS_ID,T.GOODS_NAME,T.GOODS_IMG,T.GOODS_PROP,T.UNIT,B.UNIT_PRICE 
 		FROM GOO_GOODS T,MAR_MARKET_GOODS B
-		WHERE D.goodsId = B.GOODS_ID 
+		WHERE T.GOODS_ID = B.GOODS_ID 
 			AND B.OPEN_BUY_FLAG='1'
 			AND B.MARKET_ID=#{marketId}
 			AND T.FIRST_FRONT_TYPE_ID = #{firstFrontTypeId}
@@ -64,7 +64,7 @@ PUBLIC "-//ibatis.apache.org//DTD Mapper 3.0//EN"
 	</select>
 	
 	<!-- 查询一级类目商品列表 (不区分特供等类型) -->
-	<select id="findPagerByFirstFrontTypeId"  parameterType="map" resultType="goodsResponseRm" >
+	<select id="findPagerByFirstFrontTypeId"  parameterType="map" resultMap="goodsResponseRm" >
 		SELECT 
 			T.GOODS_ID,T.GOODS_NAME,T.GOODS_PROP,T.GOODS_IMG,T.UNIT,B.UNIT_PRICE
 		FROM GOO_GOODS T,MAR_MARKET_GOODS B
@@ -78,7 +78,7 @@ PUBLIC "-//ibatis.apache.org//DTD Mapper 3.0//EN"
 	</select>
 	
 	<!-- 查询二级类目商品列表(不区分特供等类型) -->
-	<select id="findPagerBySecondFrontTypeId"  parameterType="map" resultType="goodsResponseRm" >
+	<select id="findPagerBySecondFrontTypeId"  parameterType="map" resultMap="goodsResponseRm" >
 		SELECT 
 			T.GOODS_ID,T.GOODS_NAME,T.GOODS_PROP,T.GOODS_IMG,T.UNIT,B.UNIT_PRICE
 		FROM GOO_GOODS T,MAR_MARKET_GOODS B

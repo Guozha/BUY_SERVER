@@ -8,6 +8,7 @@ import org.springframework.stereotype.Repository;
 import com.guozha.buyserver.dal.BaseMapper;
 import com.guozha.buyserver.persistence.beans.GooGoods;
 import com.guozha.buyserver.service.goods.GoodsBo;
+import com.guozha.buyserver.web.controller.goods.Goods;
 import com.guozha.buyserver.web.controller.goods.GoodsResponse;
 
 /**
@@ -56,7 +57,7 @@ public interface GooGoodsMapper extends BaseMapper<GooGoods, Integer> {
      * @param pageSize
      * @return
      */
-	List<GoodsResponse> findLimit6ByFirstFrontTypeId(@Param("marketId") int marketId,@Param("firstFrontTypeId") int firstFrontTypeId);
+	List<Goods> findLimit6ByFirstFrontTypeId(@Param("marketId") int marketId,@Param("firstFrontTypeId") int firstFrontTypeId);
 	
 	/**
 	 * 根据一级类目id查询商品分页
@@ -66,7 +67,7 @@ public interface GooGoodsMapper extends BaseMapper<GooGoods, Integer> {
 	 * @param pageSize
 	 * @return
 	 */
-	List<GoodsResponse> findPagerByFirstFrontTypeId(@Param("marketId") int marketId,@Param("firstFrontTypeId") int firstFrontTypeId,@Param("startIndex")int startIndex, @Param("pageSize")int pageSize);
+	List<Goods> findPagerByFirstFrontTypeId(@Param("marketId") int marketId,@Param("firstFrontTypeId") int firstFrontTypeId,@Param("startIndex")int startIndex, @Param("pageSize")int pageSize);
 	
 	/**
 	 * 根据二级类目id查询商品分页
@@ -76,7 +77,7 @@ public interface GooGoodsMapper extends BaseMapper<GooGoods, Integer> {
 	 * @param pageSize
 	 * @return
 	 */
-	List<GoodsResponse> findPagerBySecondFrontTypeId(@Param("marketId") int marketId,@Param("secondFrontTypeId") int secondFrontTypeId,@Param("startIndex")int startIndex, @Param("pageSize")int pageSize);
+	List<Goods> findPagerBySecondFrontTypeId(@Param("marketId") int marketId,@Param("secondFrontTypeId") int secondFrontTypeId,@Param("startIndex")int startIndex, @Param("pageSize")int pageSize);
 	
 	/*--------------------------------------------------------------------------------
 	 *********************************特供*****************************************

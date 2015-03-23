@@ -1,5 +1,6 @@
 package com.guozha.buyserver.web.controller.goods;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import com.guozha.buyserver.persistence.beans.BasFrontType;
@@ -11,8 +12,11 @@ public class FrontTypeResponse {
 	    private String shortName;    //类目简称
 	    
 	    private List<FrontTypeResponse> frontTypeList;
+	    
+	    private List<Goods> goodsList = new ArrayList<Goods>();
 	
-	    public FrontTypeResponse() {
+	  
+		public FrontTypeResponse() {
 			
 		}
 		public FrontTypeResponse(BasFrontType po) {
@@ -48,5 +52,11 @@ public class FrontTypeResponse {
 		public void setTypeName(String typeName) {
 			this.typeName = typeName;
 		}
+		  public List<Goods> getGoodsList() {
+				return goodsList;
+			}
+			public void setGoodsList(List<Goods> goodsList) {
+				this.goodsList = goodsList;
+			}
 
 }

@@ -46,13 +46,23 @@ public class GeneralController extends BaseController {
 	}
 	
 	/**
-	 * 普通商品列表
+	 * 普通商品列表 首页
 	 * @param vo
 	 * @param response
 	 */
-	@RequestMapping(value="/general")
-	public void general(GoodsRequest vo,HttpServletResponse response){
+	@RequestMapping(value="/generalList")
+	public void generalList(GoodsRequest vo,HttpServletResponse response){
 		responseJson(generalService.findGoods(vo), response);
+	}
+	
+	/**
+	 * 普通类目商品列表
+	 * @param vo
+	 * @param response
+	 */
+	@RequestMapping(value="/generalTypeList")
+	public void generalTypeList(GoodsRequest vo,HttpServletResponse response){
+		responseJson(generalService.findGoodsByFrontTypeId(vo), response);
 	}
 	
 	/**

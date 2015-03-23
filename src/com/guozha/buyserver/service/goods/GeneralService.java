@@ -5,6 +5,8 @@ import java.util.List;
 import com.guozha.buyserver.framework.sys.business.BusinessObjectServiceMgr;
 import com.guozha.buyserver.web.controller.goods.FrontTypeRequest;
 import com.guozha.buyserver.web.controller.goods.FrontTypeResponse;
+import com.guozha.buyserver.web.controller.goods.GeneralResponse;
+import com.guozha.buyserver.web.controller.goods.Goods;
 import com.guozha.buyserver.web.controller.goods.GoodsInfoResponse;
 import com.guozha.buyserver.web.controller.goods.GoodsMenuResponse;
 import com.guozha.buyserver.web.controller.goods.GoodsPriceResponse;
@@ -39,14 +41,14 @@ public interface GeneralService extends BusinessObjectServiceMgr{
 	 * @param vo
 	 * @return
 	 */
-	List<GoodsResponse> findGoods(GoodsRequest vo);
+	GeneralResponse findGoods(GoodsRequest vo);
 	
 	/**
 	 * 商品查询(逛菜场某个类目)
 	 * @param vo
 	 * @return
 	 */
-	List<GoodsResponse> findGoodsByFrontTypeId(GoodsRequest vo);
+	GeneralResponse findGoodsByFrontTypeId(GoodsRequest vo);
 	
 	/**
 	 * 商品详情

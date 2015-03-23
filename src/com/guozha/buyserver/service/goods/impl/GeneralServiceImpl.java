@@ -25,6 +25,8 @@ import com.guozha.buyserver.service.goods.GoodsBo;
 import com.guozha.buyserver.service.market.MarketService;
 import com.guozha.buyserver.web.controller.goods.FrontTypeRequest;
 import com.guozha.buyserver.web.controller.goods.FrontTypeResponse;
+import com.guozha.buyserver.web.controller.goods.GeneralResponse;
+import com.guozha.buyserver.web.controller.goods.Goods;
 import com.guozha.buyserver.web.controller.goods.GoodsInfoResponse;
 import com.guozha.buyserver.web.controller.goods.GoodsMenuResponse;
 import com.guozha.buyserver.web.controller.goods.GoodsPriceResponse;
@@ -80,34 +82,37 @@ public class GeneralServiceImpl extends AbstractBusinessObjectServiceMgr impleme
 	}
 	
 	@Override
-	public List<GoodsResponse> findGoods(GoodsRequest vo) {
+	public GeneralResponse findGoods(GoodsRequest vo) {
 		int marketId= this.marketService.findMaketId(vo.getAddressId());
-	    List<GoodsResponse> response = new ArrayList<GoodsResponse>();
+		GeneralResponse response = new GeneralResponse();
 		List<BasFrontType> frontTypeList = this.basFrontTypeMapper.findFirstPager(vo.getStartIndex(), vo.getPageSize()/6);
-		for(BasFrontType frontType:frontTypeList){
-			GoodsResponse goodsResponse = new GoodsResponse();
-			goodsResponse.getFrontType().setFrontTypeId(vo.getFrontTypeId());
-			goodsResponse.getFrontType().setShortName(frontType.getShortName());
-			goodsResponse.getFrontType().setTypeName(frontType.getTypeName());
-			goodsResponse.setGoodsList(this.gooGoodsMapper.findLimit6ByFirstFrontTypeId(marketId, vo.getFrontTypeId()));
-			response.add(goodsResponse);
+		for(int i=0;i< frontTypeList.size();i++){
+			BasFrontType frontType = frontTypeList.get(i);
+			FrontTypeResponse ft = new FrontTypeResponse(frontType);
+			response.getFrontTypeList().add(ft);
+			response.getFrontTypeList().get(i).setGoodsList(this.gooGoodsMapper.findLimit6ByFirstFrontTypeId(marketId, frontType.getFrontTypeId()));
 		}
+		response.setPageCount(10);
 		return response;
 	}
 	
 	
-	public List<GoodsResponse> findGoodsByFrontTypeId(GoodsRequest vo){
+	public GeneralResponse findGoodsByFrontTypeId(GoodsRequest vo){
 		int marketId= this.marketService.findMaketId(vo.getAddressId());
 		BasFrontType bft = this.basFrontTypeMapper.load(vo.getFrontTypeId());
-		List<GoodsResponse> response = null;
+		GeneralResponse response = new GeneralResponse();
+		response.setFrontTypeList(null);
+		response.setPageCount(0);
+		List<Goods> goodsList = null;
 		switch (bft.getLevel()) {
 		case 1: //一级类目商品
-			response = this.gooGoodsMapper.findPagerByFirstFrontTypeId(marketId, vo.getFrontTypeId(), vo.getStartIndex(), vo.getPageSize());
+			goodsList = this.gooGoodsMapper.findPagerByFirstFrontTypeId(marketId, vo.getFrontTypeId(), vo.getStartIndex(), vo.getPageSize());
 			break;
 		case 2: //二级类目商品
-			response = this.gooGoodsMapper.findPagerBySecondFrontTypeId(marketId, vo.getFrontTypeId(), vo.getStartIndex(), vo.getPageSize());
+			goodsList = this.gooGoodsMapper.findPagerBySecondFrontTypeId(marketId, vo.getFrontTypeId(), vo.getStartIndex(), vo.getPageSize());
 			break;
 		}
+		response.setGoodsList(goodsList);
 		return response;
 	}
 	
