@@ -16,7 +16,6 @@ import com.guozha.buyserver.persistence.mapper.BasFrontTypeMapper;
 import com.guozha.buyserver.persistence.mapper.GooGoodsMapper;
 import com.guozha.buyserver.persistence.mapper.MarMarketGoodsMapper;
 import com.guozha.buyserver.persistence.mapper.GooGoodsAmountMapper;
-import com.guozha.buyserver.persistence.mapper.MnuMenuMapper;
 import com.guozha.buyserver.service.goods.GeneralService;
 import com.guozha.buyserver.service.market.MarketService;
 import com.guozha.buyserver.web.controller.goods.FrontTypeRequest;
