@@ -58,4 +58,17 @@ public class MenuPlanController extends BaseController {
 	public void insert(MenuUserPlanRequest requset, HttpServletResponse response) {
 		responseJson(menuPlanService.insert(requset), response);
 	}
+	
+	/**
+	 * 商品相关菜谱列表
+	 * @author txf
+	 * @date 2015-03-23
+	 * @param vo
+	 * @param response
+	 */
+	@RequestMapping(value="/goodsMenuList")
+	public void menu(int goodsId,HttpServletResponse response){
+		responseJson(menuPlanService.findByGoodsId(goodsId), response);
+	}
+
 }

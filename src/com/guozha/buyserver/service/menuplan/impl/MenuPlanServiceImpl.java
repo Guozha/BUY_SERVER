@@ -1,5 +1,6 @@
 package com.guozha.buyserver.service.menuplan.impl;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -32,7 +33,8 @@ public class MenuPlanServiceImpl implements MenuPlanService {
 	@Autowired
 	private MnuMenuPlanMapper menuPlanMapper;
 	@Autowired
-	private MnuMenuMapper menuMapper;
+	private MnuMenuMapper mnuMenuMapper;
+	
 
 	/**
 	 * 新增菜谱
@@ -84,9 +86,26 @@ public class MenuPlanServiceImpl implements MenuPlanService {
 			List<MnuMenuStep> menuSteps = menuPlanMapper.listMenuCookStep(menuId);
 			if (menuSteps != null)
 				response.setMuenSteps(menuSteps);
-			List<MnuMenuGoods> menuGoods = menuMapper.findGoodsById(menuId);
+			List<MnuMenuGoods> menuGoods = mnuMenuMapper.findGoodsById(menuId);
 			if (menuGoods != null)
 				response.setMenuGoods(menuGoods);
+		}
+		return response;
+	}
+	
+	@Override
+	public List<MenuResponse> findByGoodsId(int goodsId) {
+		List<MnuMenu> pos = this.mnuMenuMapper.findByGoodsId(goodsId);
+		List<MenuResponse> response = new ArrayList<MenuResponse>();
+		for(MnuMenu po : pos){
+			MenuResponse menuResponse = new MenuResponse();
+			menuResponse.setMenuId(po.getMenuId());
+			menuResponse.setMenuName(po.getMenuName());
+			menuResponse.setCookieWay(po.getCookieWay());
+			menuResponse.setHardType(po.getHardType());
+			menuResponse.setCookieTime(po.getCookieTime());
+			menuResponse.setMenuImg(po.getMenuImg());
+			response.add(menuResponse);
 		}
 		return response;
 	}

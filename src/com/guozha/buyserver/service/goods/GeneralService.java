@@ -6,12 +6,9 @@ import com.guozha.buyserver.framework.sys.business.BusinessObjectServiceMgr;
 import com.guozha.buyserver.web.controller.goods.FrontTypeRequest;
 import com.guozha.buyserver.web.controller.goods.FrontTypeResponse;
 import com.guozha.buyserver.web.controller.goods.GeneralResponse;
-import com.guozha.buyserver.web.controller.goods.Goods;
 import com.guozha.buyserver.web.controller.goods.GoodsInfoResponse;
-import com.guozha.buyserver.web.controller.goods.GoodsMenuResponse;
 import com.guozha.buyserver.web.controller.goods.GoodsPriceResponse;
 import com.guozha.buyserver.web.controller.goods.GoodsRequest;
-import com.guozha.buyserver.web.controller.goods.GoodsResponse;
 
 /**
  * 单品
@@ -64,12 +61,6 @@ public interface GeneralService extends BusinessObjectServiceMgr{
 	 */
 	List<GoodsPriceResponse> findGoodsPriceByGoodsId(GoodsRequest vo);
     
-	/**
-	 * 商品菜谱查询
-	 * @param goodsId
-	 * @return
-	 */
-	List<GoodsMenuResponse> findMenuByGoodsId(GoodsRequest vo);
 	
 	/**
 	 * 二级类目

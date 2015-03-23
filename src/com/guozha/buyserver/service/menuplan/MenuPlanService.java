@@ -25,5 +25,15 @@ public interface MenuPlanService {
 
 	// 菜谱菜品详情
 	MenuResponse detail(MenuDetailRequest request);
+	
+	
+	/**
+	 * 商品菜谱查询
+	 * @author txf
+	 * @date 2015-03-23
+	 * @param goodsId
+	 * @return
+	 */
+	List<MenuResponse> findByGoodsId(int goodsId);
 
 }

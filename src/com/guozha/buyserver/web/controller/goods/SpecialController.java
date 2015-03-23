@@ -28,7 +28,7 @@ public class SpecialController extends BaseController {
 	 * @param vo
 	 * @param response
 	 */
-	@RequestMapping(value="/special")
+	@RequestMapping(value="/specialList")
 	public void special(GoodsRequest vo,HttpServletResponse response){
 		responseJson(specialService.findGoods(vo), response);
 	}

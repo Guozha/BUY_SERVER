@@ -25,7 +25,7 @@ public class Goods {
 		return goodsImg;
 	}
 	public void setGoodsImg(byte[] goodsImg) {
-		//this.goodsImg = goodsImg;
+		this.goodsImg = goodsImg;
 	}
 	public Integer getUnitPrice() {
 		return unitPrice;

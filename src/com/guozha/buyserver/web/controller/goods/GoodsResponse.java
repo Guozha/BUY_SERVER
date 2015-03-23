@@ -1,7 +1,5 @@
 package com.guozha.buyserver.web.controller.goods;
 
-import java.util.ArrayList;
-import java.util.List;
 
 
 public class GoodsResponse {
@@ -12,7 +10,7 @@ public class GoodsResponse {
 	private Integer unitPrice;//单价
 	private String unit;//计量单位
 	private String goodsProp;   //商品性质
-	private FrontTypeResponse frontType = new FrontTypeResponse();
+	/*private FrontTypeResponse frontType = new FrontTypeResponse();
 	private List<GoodsResponse> goodsList = new ArrayList<GoodsResponse>();
 	public FrontTypeResponse getFrontType() {
 		return frontType;
@@ -25,7 +23,7 @@ public class GoodsResponse {
 	}
 	public void setGoodsList(List<GoodsResponse> goodsList) {
 		this.goodsList = goodsList;
-	}
+	}*/
 	
 	public Integer getGoodsId() {
 		return goodsId;

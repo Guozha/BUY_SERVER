@@ -85,14 +85,5 @@ public class GeneralController extends BaseController {
 		responseJson(generalService.findGoodsPriceByGoodsId(vo), response);
 	}
     
-	/**
-	 * 商品菜谱
-	 * @param vo
-	 * @param response
-	 */
-	@RequestMapping(value="/menu")
-	public void menu(GoodsRequest vo,HttpServletResponse response){
-		responseJson(generalService.findMenuByGoodsId(vo), response);
-	}
-
+	
 }
