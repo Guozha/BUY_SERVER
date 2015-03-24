@@ -69,4 +69,14 @@ PUBLIC "-//ibatis.apache.org//DTD Mapper 3.0//EN"
 		ORDER BY SORT ASC
 		LIMIT #{startIndex},#{pageSize}
 	</select>
+	
+	<select id="findFirstTotalCount" resultType="int">
+		SELECT 
+			COUNT(*)
+		FROM BAS_FRONT_TYPE
+		WHERE
+		    STATUS='1'
+		    AND PARENT_ID = 0
+	</select>
+	
 </mapper>

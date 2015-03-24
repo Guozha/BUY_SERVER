@@ -60,25 +60,23 @@ public interface GooGoodsMapper extends BaseMapper<GooGoods, Integer> {
 	List<Goods> findLimit6ByFirstFrontTypeId(@Param("marketId") int marketId,@Param("firstFrontTypeId") int firstFrontTypeId);
 	
 	/**
-	 * 根据一级类目id查询商品分页
+	 * 根据类目id查询商品分页
 	 * @param marketId
 	 * @param firstFrontTypeId
 	 * @param startIndex
 	 * @param pageSize
 	 * @return
 	 */
-	List<Goods> findPagerByFirstFrontTypeId(@Param("marketId") int marketId,@Param("firstFrontTypeId") int firstFrontTypeId,@Param("startIndex")int startIndex, @Param("pageSize")int pageSize);
+	List<Goods> findPagerByFrontTypeId(@Param("marketId") int marketId,@Param("firstFrontTypeId") Integer firstFrontTypeId,@Param("secondFrontTypeId") Integer secondFrontTypeId,@Param("startIndex")int startIndex, @Param("pageSize")int pageSize);
 	
 	/**
-	 * 根据二级类目id查询商品分页
+	 * 查询类目商品的总条数
 	 * @param marketId
 	 * @param firstFrontTypeId
-	 * @param startIndex
-	 * @param pageSize
+	 * @param secondFrontTypeId
 	 * @return
 	 */
-	List<Goods> findPagerBySecondFrontTypeId(@Param("marketId") int marketId,@Param("secondFrontTypeId") int secondFrontTypeId,@Param("startIndex")int startIndex, @Param("pageSize")int pageSize);
-	
+	int findTotalCountByFrontTypeId(@Param("marketId") int marketId,@Param("firstFrontTypeId") Integer firstFrontTypeId,@Param("secondFrontTypeId") Integer secondFrontTypeId);
 	/*--------------------------------------------------------------------------------
 	 *********************************特供*****************************************
 	 *--------------------------------------------------------------------------------*/

@@ -37,5 +37,11 @@ public interface BasFrontTypeMapper  extends BaseMapper<BasFrontType, Integer>{
 	 * @return
 	 */
 	List<BasFrontType> findFirstPager(@Param("startIndex")int startIndex, @Param("pageSize")int pageSize);
+	
+	/**
+	 * 查询一级类目总条数
+	 * @return
+	 */
+	int findFirstTotalCount();
 
 }

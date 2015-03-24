@@ -88,4 +88,8 @@ public class BaseConditionVO {
 		int pageNum = this.getPageNum() > 0 ? this.getPageNum() - 1 : 0;
 		return pageNum * this.getPageSize();
 	}
+	
+	public int getPageCount(int totalCount){
+		return  (totalCount  +  pageSize  - 1) / pageSize;
+	}
 }

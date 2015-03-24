@@ -74,16 +74,17 @@ public class GeneralServiceImpl extends AbstractBusinessObjectServiceMgr impleme
 	
 	@Override
 	public GeneralResponse findGoods(GoodsRequest vo) {
+		vo.setPageSize(4);
 		int marketId= this.marketService.findMaketId(vo.getAddressId());
 		GeneralResponse response = new GeneralResponse();
-		List<BasFrontType> frontTypeList = this.basFrontTypeMapper.findFirstPager(vo.getStartIndex(), vo.getPageSize()/6);
+		List<BasFrontType> frontTypeList = this.basFrontTypeMapper.findFirstPager(vo.getStartIndex(), vo.getPageSize());
 		for(int i=0;i< frontTypeList.size();i++){
 			BasFrontType frontType = frontTypeList.get(i);
 			FrontTypeResponse ft = new FrontTypeResponse(frontType);
 			response.getFrontTypeList().add(ft);
 			response.getFrontTypeList().get(i).setGoodsList(this.gooGoodsMapper.findLimit6ByFirstFrontTypeId(marketId, frontType.getFrontTypeId()));
 		}
-		response.setPageCount(10);
+		response.setPageCount(vo.getPageCount(basFrontTypeMapper.findFirstTotalCount()));
 		return response;
 	}
 	
@@ -93,17 +94,21 @@ public class GeneralServiceImpl extends AbstractBusinessObjectServiceMgr impleme
 		BasFrontType bft = this.basFrontTypeMapper.load(vo.getFrontTypeId());
 		GeneralResponse response = new GeneralResponse();
 		response.setFrontTypeList(null);
-		response.setPageCount(0);
+		
+		int totalCount =0;
 		List<Goods> goodsList = null;
 		switch (bft.getLevel()) {
 		case 1: //一级类目商品
-			goodsList = this.gooGoodsMapper.findPagerByFirstFrontTypeId(marketId, vo.getFrontTypeId(), vo.getStartIndex(), vo.getPageSize());
+			goodsList = this.gooGoodsMapper.findPagerByFrontTypeId(marketId, vo.getFrontTypeId(),null, vo.getStartIndex(), vo.getPageSize());
+			totalCount = gooGoodsMapper.findTotalCountByFrontTypeId(marketId, vo.getFrontTypeId(), null);
 			break;
 		case 2: //二级类目商品
-			goodsList = this.gooGoodsMapper.findPagerBySecondFrontTypeId(marketId, vo.getFrontTypeId(), vo.getStartIndex(), vo.getPageSize());
+			goodsList = this.gooGoodsMapper.findPagerByFrontTypeId(marketId, null,vo.getFrontTypeId(), vo.getStartIndex(), vo.getPageSize());
+			totalCount = gooGoodsMapper.findTotalCountByFrontTypeId(marketId, null, vo.getFrontTypeId());
 			break;
 		}
 		response.setGoodsList(goodsList);
+		response.setPageCount(vo.getPageCount(totalCount));
 		return response;
 	}
 	

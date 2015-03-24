@@ -63,40 +63,41 @@ PUBLIC "-//ibatis.apache.org//DTD Mapper 3.0//EN"
 		LIMIT 6
 	</select>
 	
-	<!-- 查询一级类目商品列表 (不区分特供等类型) -->
-	<select id="findPagerByFirstFrontTypeId"  parameterType="map" resultMap="goodsResponseRm" >
+	<!-- 查询类目商品列表 (不区分特供等类型) -->
+	<select id="findPagerByFrontTypeId"  parameterType="map" resultMap="goodsResponseRm" >
 		SELECT 
 			T.GOODS_ID,T.GOODS_NAME,T.GOODS_PROP,T.GOODS_IMG,T.UNIT,B.UNIT_PRICE
 		FROM GOO_GOODS T,MAR_MARKET_GOODS B
 		WHERE
 		    T.GOODS_ID = B.GOODS_ID 
-		    AND T.FIRST_FRONT_TYPE_ID = #{firstFrontTypeId}
+		    <if test="firstFrontTypeId!=null">
+		      AND T.FIRST_FRONT_TYPE_ID = #{firstFrontTypeId}
+		    </if>
+		    <if test="secondFrontTypeId!=null">
+		     AND T.SECOND_FRONT_TYPE_ID = #{secondFrontTypeId}
+		    </if>
 		    AND B.OPEN_BUY_FLAG='1'
 		    AND B.MARKET_ID = #{marketId}
 		ORDER BY T.SORT 
 		LIMIT #{startIndex},#{pageSize}
 	</select>
 	
-	<!-- 查询二级类目商品列表(不区分特供等类型) -->
-	<select id="findPagerBySecondFrontTypeId"  parameterType="map" resultMap="goodsResponseRm" >
+	<!-- 查询类目商品总条数(不区分特供等类型) -->
+	<select id="findTotalCountByFrontTypeId"  parameterType="map" resultType="int" >
 		SELECT 
-			T.GOODS_ID,T.GOODS_NAME,T.GOODS_PROP,T.GOODS_IMG,T.UNIT,B.UNIT_PRICE
+			COUNT(*)
 		FROM GOO_GOODS T,MAR_MARKET_GOODS B
 		WHERE
 		    T.GOODS_ID = B.GOODS_ID 
-		    AND T.SECOND_FRONT_TYPE_ID = #{secondFrontTypeId}
+		    <if test="secondFrontTypeId!=null">
+		     AND T.SECOND_FRONT_TYPE_ID = #{secondFrontTypeId}
+		    </if>
+		    <if test="firstFrontTypeId!=null">
+		      AND T.FIRST_FRONT_TYPE_ID = #{firstFrontTypeId}
+		    </if>
 		    AND B.OPEN_BUY_FLAG='1'
 		    AND B.MARKET_ID = #{marketId}
-		ORDER BY T.SORT 
-	    LIMIT #{startIndex},#{pageSize}
 	</select>
-	
-	
-	
-	
-	
-	
-	
 	
 	   <!-- 所有商品  (仅特供)-->
 	<select id="findAllSpecial"  parameterType="int" resultType="com.guozha.buyserver.web.controller.goods.GoodsResponse" >
