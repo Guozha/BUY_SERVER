@@ -90,6 +90,6 @@ public class BaseConditionVO {
 	}
 	
 	public int getPageCount(int totalCount){
-		return  (totalCount  +  pageSize  - 1) / pageSize;
+		return  (totalCount  +   getPageSize()  - 1) /  getPageSize();
 	}
 }
