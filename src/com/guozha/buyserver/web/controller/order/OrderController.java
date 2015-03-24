@@ -27,7 +27,7 @@ public class OrderController extends BaseController {
 	}
 	
 	@RequestMapping(value = "/list")
-	public void cancel(SearchOrderRequest vo, HttpServletResponse response) {
+	public void list(SearchOrderRequest vo, HttpServletResponse response) {
 		responseJson(orderService.listOrder(vo), response);
 	}
 	

@@ -96,9 +96,16 @@ public class OrderServiceImpl extends AbstractBusinessObjectServiceMgr
 		buyOrderMapper.updateStatus(vo.getOrderId(), vo.getOldStatus(), "00"); //ORDER_STATUS 00-取消
 		return new MsgResponse(MsgResponse.SUCC, "订单取消成功");
 	}
+	
+	public int getPageCount(int totalCount, int pageSize){
+		return (totalCount%pageSize==0)?(totalCount/pageSize):(totalCount/pageSize+1);
+	}
 
 	@Override
-	public List<SearchOrderResponse> listOrder(SearchOrderRequest vo) {
+	public SearchOrderResponse listOrder(SearchOrderRequest vo) {
+		
+		SearchOrderResponse response = new SearchOrderResponse();
+		
 		List<String> statusList = new ArrayList<String>();
 		if("1".equals(vo.getSearchType())){// ORDER_SEARCH_TYPE 1-进行中
 			statusList.add("01");// ORDER_STATUS 01-新创建
@@ -109,7 +116,14 @@ public class OrderServiceImpl extends AbstractBusinessObjectServiceMgr
 		}else if("2".equals(vo.getSearchType())){ // ORDER_SEARCH_TYPE 2-已完成
 			statusList.add("06");// ORDER_STATUS 06-已签收
 		}
-		return buyOrderMapper.findOrder(vo.getUserId(), statusList, vo.getStartIndex(), vo.getPageSize());
+		
+		int totalCount = buyOrderMapper.findOrderCount(vo.getUserId(), statusList);
+		
+		List<BuyOrder> buyOrderList = buyOrderMapper.findOrder(vo.getUserId(), statusList, vo.getStartIndex(), vo.getPageSize());
+		response.setBuyOrderList(buyOrderList);
+		response.setTotalCount(totalCount);
+		response.setPageCount(getPageCount(totalCount, vo.getPageSize()));
+		return response;
 	}
 	
 	/**

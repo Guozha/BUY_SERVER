@@ -1,51 +1,33 @@
 package com.guozha.buyserver.web.controller.order;
 
-import java.util.Date;
+import java.util.List;
+
+import com.guozha.buyserver.persistence.beans.BuyOrder;
 
 public class SearchOrderResponse {
 	
-	private Integer orderId;
-	private String orderNo;
-	private Date createTime;
-	private int quantity;
-	private int totalPrice;
-	private String status;
+	private Integer totalCount;
+	private Integer pageCount;
+	private List<BuyOrder> buyOrderList;
 	
-	public Integer getOrderId() {
-		return orderId;
+	public Integer getTotalCount() {
+		return totalCount;
 	}
-	public void setOrderId(Integer orderId) {
-		this.orderId = orderId;
+	public void setTotalCount(Integer totalCount) {
+		this.totalCount = totalCount;
 	}
-	public String getOrderNo() {
-		return orderNo;
+	public Integer getPageCount() {
+		return pageCount;
 	}
-	public void setOrderNo(String orderNo) {
-		this.orderNo = orderNo;
+	public void setPageCount(Integer pageCount) {
+		this.pageCount = pageCount;
 	}
-	public Date getCreateTime() {
-		return createTime;
+	public List<BuyOrder> getBuyOrderList() {
+		return buyOrderList;
 	}
-	public void setCreateTime(Date createTime) {
-		this.createTime = createTime;
+	public void setBuyOrderList(List<BuyOrder> buyOrderList) {
+		this.buyOrderList = buyOrderList;
 	}
-	public int getQuantity() {
-		return quantity;
-	}
-	public void setQuantity(int quantity) {
-		this.quantity = quantity;
-	}
-	public int getTotalPrice() {
-		return totalPrice;
-	}
-	public void setTotalPrice(int totalPrice) {
-		this.totalPrice = totalPrice;
-	}
-	public String getStatus() {
-		return status;
-	}
-	public void setStatus(String status) {
-		this.status = status;
-	}
+	
 
 }

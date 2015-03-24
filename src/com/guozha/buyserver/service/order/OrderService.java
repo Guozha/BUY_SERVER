@@ -19,7 +19,7 @@ public interface OrderService extends BusinessObjectServiceMgr {
 	
 	MsgResponse cancelOrder(CancelOrderRequest vo);
 	
-	List<SearchOrderResponse> listOrder(SearchOrderRequest vo);
+	SearchOrderResponse listOrder(SearchOrderRequest vo);
 	
 	OrderDetailResponse getOrderDetail(int orderId);
 	

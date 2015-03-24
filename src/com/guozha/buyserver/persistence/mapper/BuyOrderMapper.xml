@@ -9,7 +9,17 @@ PUBLIC "-//ibatis.apache.org//DTD Mapper 3.0//EN"
         UPDATE BUY_ORDER T SET T.STATUS = #{newStatus} WHERE T.ORDER_ID = #{orderId} AND T.STATUS = #{oldStatus} 
     </update>
     
-    <resultMap id="findOrderRM" type="com.guozha.buyserver.web.controller.order.SearchOrderResponse">
+    <select id="findOrderCount" parameterType="java.util.Map" resultType="java.lang.Integer">
+        SELECT 
+            COUNT(*)
+        FROM 
+            BUY_ORDER T 
+        WHERE 
+            T.USER_ID = #{userId}
+            AND T.STATUS IN <foreach item="item" index="index" collection="statusList" open="(" separator="," close=")">#{item}</foreach>
+    </select>
+    
+    <resultMap id="findOrderRM" type="com.guozha.buyserver.persistence.beans.BuyOrder">
         <result property="orderId" jdbcType="INTEGER" column="ORDER_ID"/>
         <result property="orderNo" jdbcType="VARCHAR" column="ORDER_NO"/>
         <result property="createTime" jdbcType="TIMESTAMP" column="CREATE_TIME"/>
