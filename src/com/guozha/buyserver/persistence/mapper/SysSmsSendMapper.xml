@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//ibatis.apache.org//DTD Mapper 3.0//EN"
+"http://ibatis.apache.org/dtd/ibatis-3-mapper.dtd">
+
+<mapper namespace="com.guozha.buyserver.persistence.mapper.SysSmsSendMapper">
+
+  <insert id="insertSms" parameterType="com.guozha.buyserver.persistence.beans.SysSmsSend">
+    INSERT INTO SYS_SMS_SEND(mobile_no,send_time,send_type,send_text,send_status)
+    VALUES(#{mobileNo},now(),#{sendType},#{sendText},#{sendStatus})
+  </insert>
+
+</mapper>

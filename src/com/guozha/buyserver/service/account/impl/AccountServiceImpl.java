@@ -67,7 +67,7 @@ public class AccountServiceImpl extends AbstractBusinessObjectServiceMgr impleme
 		sms.setSendTime(DateUtil.currentTimestamp());
 		sms.setSendType("注册获取验证码");
 		sms.setSendText(String.format(SystemResource.getConfig("sms.content.register"), arr));
-//		commonService.insertSms(sms);
+		commonService.insertSms(sms);
 		return new MsgResponse();
 	}
 
@@ -334,7 +334,7 @@ public class AccountServiceImpl extends AbstractBusinessObjectServiceMgr impleme
 		sms.setSendTime(DateUtil.currentTimestamp());
 		sms.setSendType("找回密码获取验证码");
 		sms.setSendText(String.format(SystemResource.getConfig("sms.content.resetPasswd"), arr));
-//		commonService.insertSms(sms);
+		commonService.insertSms(sms);
 		return new MsgResponse();
 	}
 
