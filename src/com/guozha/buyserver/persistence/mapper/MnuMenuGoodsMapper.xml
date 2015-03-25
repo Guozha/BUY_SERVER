@@ -5,17 +5,23 @@ PUBLIC "-//ibatis.apache.org//DTD Mapper 3.0//EN"
 
 <mapper namespace="com.guozha.buyserver.persistence.mapper.MnuMenuGoodsMapper">
 
-	<resultMap id="rm" type="com.guozha.buyserver.persistence.beans.MnuMenuGoods">
-        <result property="menuGoodsId" jdbcType="INTEGER" column="MENU_GOODS_ID"/>
-        <result property="menuId" jdbcType="INTEGER" column="MENU_ID"/>
+	<resultMap id="menuGoodsInfoRM" type="com.guozha.buyserver.service.order.impl.MenuGoodsInfo">
+	    <result property="amount" jdbcType="INTEGER" column="AMOUNT"/>
         <result property="goodsId" jdbcType="INTEGER" column="GOODS_ID"/>
         <result property="goodsName" jdbcType="VARCHAR" column="GOODS_NAME"/>
-        <result property="otherNames" jdbcType="VARCHAR" column="OTHER_NAMES"/>
-        <result property="amount" jdbcType="INTEGER" column="AMOUNT"/>
+        <result property="goodsImg" jdbcType="BLOB" column="GOODS_IMG"/>
+        <result property="backTypeId" jdbcType="INTEGER" column="BACK_TYPE_ID"/>
+        <result property="unit" jdbcType="VARCHAR" column="UNIT"/>
 	</resultMap>
 	
-	<select id="findByMenu" parameterType="java.lang.Integer" resultMap="rm">
-	    SELECT * FROM MNU_MENU_GOODS T WHERE T.MENU_ID = #{menuId}
+	<select id="findMenuGoodsInfo" parameterType="java.lang.Integer" resultMap="menuGoodsInfoRM">
+	    SELECT 
+	        T1.AMOUNT,T2.GOODS_ID,T2.GOODS_NAME,T2.GOODS_IMG,T2.BACK_TYPE_ID,T2.UNIT 
+	    FROM 
+	        MNU_MENU_GOODS T1,GOO_GOODS T2 
+	    WHERE 
+	        T1.GOODS_ID = T2.GOODS_ID 
+	        AND T1.MENU_ID = #{menuId}
 	</select>
 	
 </mapper>
