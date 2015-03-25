@@ -144,7 +144,7 @@ public class CommonServiceImpl extends AbstractBusinessObjectServiceMgr implemen
 	 * @date 2015-03-25
 	 */
 	public void insertSms(SysSmsSend sms) {
-		this.smsSendMapper.insertSms(sms);
+		this.smsSendMapper.insert(sms);
 	}
 
 }

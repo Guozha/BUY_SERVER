@@ -14,6 +14,5 @@ import com.guozha.buyserver.persistence.beans.SysSmsSend;
 @Repository
 public interface SysSmsSendMapper extends BaseMapper<SysSmsSend, Integer>{
 	
-	void insertSms(SysSmsSend sms);
 
 }

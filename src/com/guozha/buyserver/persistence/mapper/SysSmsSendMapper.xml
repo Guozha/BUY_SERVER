@@ -5,9 +5,16 @@ PUBLIC "-//ibatis.apache.org//DTD Mapper 3.0//EN"
 
 <mapper namespace="com.guozha.buyserver.persistence.mapper.SysSmsSendMapper">
 
-  <insert id="insertSms" parameterType="com.guozha.buyserver.persistence.beans.SysSmsSend">
-    INSERT INTO SYS_SMS_SEND(mobile_no,send_time,send_type,send_text,send_status)
-    VALUES(#{mobileNo},now(),#{sendType},#{sendText},#{sendStatus})
+  <insert id="insert" parameterType="com.guozha.buyserver.persistence.beans.SysSmsSend">
+   INSERT INTO SYS_SMS_SEND (
+    mobile_no,
+    send_time,
+    send_type,
+    send_text,
+    send_status
+   ) 
+   VALUES
+    (#{mobileNo},now(),#{sendType},#{sendText},#{sendStatus}) 
   </insert>
 
 </mapper>
