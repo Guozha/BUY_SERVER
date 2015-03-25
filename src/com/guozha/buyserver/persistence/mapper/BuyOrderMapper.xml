@@ -62,8 +62,8 @@ PUBLIC "-//ibatis.apache.org//DTD Mapper 3.0//EN"
         <result property="payPrice" jdbcType="INTEGER" column="PAY_PRICE"/>
         <result property="payWay" jdbcType="VARCHAR" column="PAY_WAY"/>
         <result property="arrivalPayFlag" jdbcType="VARCHAR" column="ARRIVAL_PAY_FLAG"/>
-        <result property="inteFeeRate" jdbcType="INTEGER" column="INTE_FEE_RATE"/>
-        <result property="inteFee" jdbcType="INTEGER" column="INTE_FEE"/>
+        <result property="inteFeeRate" jdbcType="DOUBLE" column="INTE_FEE_RATE"/>
+        <result property="inteFee" jdbcType="DOUBLE" column="INTE_FEE"/>
         <result property="payTime" jdbcType="TIMESTAMP" column="PAY_TIME"/>
         <result property="senderId" jdbcType="INTEGER" column="SENDER_ID"/>
         <result property="finishTime" jdbcType="TIMESTAMP" column="FINISH_TIME"/>

@@ -38,7 +38,6 @@ import com.guozha.buyserver.persistence.mapper.MnuMenuGoodsMapper;
 import com.guozha.buyserver.persistence.mapper.MnuMenuMapper;
 import com.guozha.buyserver.service.cart.CartService;
 import com.guozha.buyserver.service.common.CommonService;
-import com.guozha.buyserver.service.market.MarketService;
 import com.guozha.buyserver.service.order.OrderService;
 import com.guozha.buyserver.web.controller.MsgResponse;
 import com.guozha.buyserver.web.controller.order.CancelOrderRequest;
@@ -83,8 +82,6 @@ public class OrderServiceImpl extends AbstractBusinessObjectServiceMgr
 	private CartService cartService;
 	@Autowired
 	private CommonService commonService;
-	@Autowired
-	private MarketService marketService;
 
 	@Override
 	public List<MarketTimeResponse> findMarketTime(int marketId) {
@@ -220,7 +217,7 @@ public class OrderServiceImpl extends AbstractBusinessObjectServiceMgr
 		
 		List<BuyCart> buyCartList = buyCartMapper.findByUserId(vo.getUserId());
 		AccAddress accAddress = accAddressMapper.load(vo.getAddressId());
-		int marketId = marketService.findMaketId(accAddress.getAddressId());
+		int marketId = commonService.getMaketId(accAddress.getAddressId());
 		
 		/**
 		 * start：添加订单主信息
@@ -291,7 +288,7 @@ public class OrderServiceImpl extends AbstractBusinessObjectServiceMgr
 			buyOrderMenu.setMenuId(mnuMenu.getMenuId());
 			buyOrderMenu.setMenuName(mnuMenu.getMenuName());
 			buyOrderMenu.setMenuImg(mnuMenu.getMenuImg());
-			int menuUnitPrice = cartService.getMenuUnitPrice(marketId, mnuMenu.getMenuId());
+			int menuUnitPrice = commonService.getMenuUnitPrice(marketId, mnuMenu.getMenuId());
 			buyOrderMenu.setUnitPrice(menuUnitPrice);
 			buyOrderMenu.setAmount(buyCart.getAmount());
 			buyOrderMenu.setPrice(menuUnitPrice*buyCart.getAmount());
@@ -307,7 +304,7 @@ public class OrderServiceImpl extends AbstractBusinessObjectServiceMgr
 			for(MenuGoodsInfo menuGoodsInfo : menuGoodsInfoList){
 				
 				int goodsUnitPrice = marketGoodsPriceMap.get(menuGoodsInfo.getGoodsId());
-				int amount = cartService.getMenuGoodsAmount(menuGoodsInfo.getGoodsId(), menuGoodsInfo.getAmount());
+				int amount = commonService.getMenuGoodsAmount(menuGoodsInfo.getGoodsId(), menuGoodsInfo.getAmount());
 				
 				BuyOrderMenuGoods orderMenuGoods = new BuyOrderMenuGoods();
 				orderMenuGoods.setOrderId(buyOrder.getOrderId());

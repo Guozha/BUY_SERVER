@@ -28,7 +28,7 @@ public class BuyOrder extends AbstractDO {
 	private String payWay;
 	private String arrivalPayFlag;
 	private Double inteFeeRate;
-	private Integer inteFee;
+	private Double inteFee;
 	private Date payTime;
 	private Integer senderId;
 	private Date finishTime;
@@ -170,10 +170,10 @@ public class BuyOrder extends AbstractDO {
 	public void setInteFeeRate(Double inteFeeRate) {
 		this.inteFeeRate = inteFeeRate;
 	}
-	public Integer getInteFee() {
+	public Double getInteFee() {
 		return inteFee;
 	}
-	public void setInteFee(Integer inteFee) {
+	public void setInteFee(Double inteFee) {
 		this.inteFee = inteFee;
 	}
 	public Date getPayTime() {
