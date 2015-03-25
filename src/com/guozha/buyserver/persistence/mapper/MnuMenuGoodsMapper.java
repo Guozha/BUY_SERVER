@@ -6,10 +6,11 @@ import org.springframework.stereotype.Repository;
 
 import com.guozha.buyserver.dal.BaseMapper;
 import com.guozha.buyserver.persistence.beans.MnuMenuGoods;
+import com.guozha.buyserver.service.order.impl.MenuGoodsInfo;
 
 @Repository
 public interface MnuMenuGoodsMapper extends BaseMapper<MnuMenuGoods, Integer> {
 	
-	List<MnuMenuGoods> findByMenu(int menuId);
+	List<MenuGoodsInfo> findMenuGoodsInfo(int menuId);
 
 }

@@ -149,6 +149,18 @@ PUBLIC "-//ibatis.apache.org//DTD Mapper 3.0//EN"
 		   </foreach>
 	</select>
 	
+	<!-- 关键字查询商品 -->
+	<select id="findByOtherName" parameterType="map" resultMap="goodsResponseRm">
+	  SELECT 
+			T.GOODS_ID,T.GOODS_NAME,T.GOODS_IMG,T.GOODS_PROP,T.UNIT,B.UNIT_PRICE 
+	  FROM GOO_GOODS T,MAR_MARKET_GOODS B
+	  WHERE T.GOODS_ID = B.GOODS_ID 
+	        AND T.OTHER_NAMES LIKE "%"#{otherNames}"%"
+			AND B.OPEN_BUY_FLAG='1'
+			AND B.MARKET_ID=#{marketId}
+	  ORDER BY T.SORT 
+	</select>
+	
 	<select id="findByMenu" parameterType="int" resultMap="rm">
 	    SELECT 
 			<include refid="BASE_COLUMN_LIST" />

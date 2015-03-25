@@ -11,8 +11,8 @@ import com.guozha.buyserver.framework.sys.business.AbstractBusinessObjectService
 import com.guozha.buyserver.persistence.beans.BasFrontType;
 import com.guozha.buyserver.persistence.mapper.BasFrontTypeMapper;
 import com.guozha.buyserver.persistence.mapper.GooGoodsMapper;
+import com.guozha.buyserver.service.common.CommonService;
 import com.guozha.buyserver.service.goods.SpecialService;
-import com.guozha.buyserver.service.market.MarketService;
 import com.guozha.buyserver.web.controller.goods.GoodsRequest;
 import com.guozha.buyserver.web.controller.goods.GoodsResponse;
 
@@ -26,11 +26,11 @@ public class SpecialServiceImpl extends AbstractBusinessObjectServiceMgr impleme
 	@Autowired
 	private GooGoodsMapper gooGoodsMapper;
 	@Autowired
-	private MarketService marketService;
+	private CommonService commonService;
 	
 	@Override
 	public List<GoodsResponse> findGoods(GoodsRequest vo) {
-		int marketId= this.marketService.findMaketId(vo.getAddressId());
+		int marketId= this.commonService.getMaketId(vo.getAddressId());
 		List<GoodsResponse> pos = null;
 		Integer frontTypeId = vo.getFrontTypeId();
 		if(frontTypeId==null){

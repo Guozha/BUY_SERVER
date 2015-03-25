@@ -70,8 +70,8 @@ public class GeneralController extends BaseController {
 	 * @param vo
 	 * @param response
 	 */
-	@RequestMapping(value="/info")
-	public void info(GoodsRequest vo,HttpServletResponse response){
+	@RequestMapping(value="/detail")
+	public void detail(GoodsRequest vo,HttpServletResponse response){
 		responseJson(generalService.findGoodsById(vo), response);
 	}
 	
