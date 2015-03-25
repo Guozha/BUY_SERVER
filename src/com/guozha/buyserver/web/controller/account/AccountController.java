@@ -134,7 +134,7 @@ public class AccountController extends BaseController {
 	 * @param accept
 	 * @param response
 	 */
-	@RequestMapping(value = "/invite/accept")
+	@RequestMapping(value = "/invite/open")
 	public void accept(AcceptRequest accept, HttpServletResponse response) {
 		responseJson(accountService.accept(accept), response);
 	}
