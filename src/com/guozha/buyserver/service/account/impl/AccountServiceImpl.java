@@ -2,7 +2,9 @@ package com.guozha.buyserver.service.account.impl;
 
 import java.sql.Timestamp;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.apache.commons.lang.RandomStringUtils;
 import org.apache.commons.lang.StringUtils;
@@ -21,12 +23,14 @@ import com.guozha.buyserver.framework.enums.YesNo;
 import com.guozha.buyserver.framework.sys.business.AbstractBusinessObjectServiceMgr;
 import com.guozha.buyserver.persistence.beans.AccMyInvite;
 import com.guozha.buyserver.persistence.beans.AccMyTicket;
+import com.guozha.buyserver.persistence.beans.AccMyTicketCount;
 import com.guozha.buyserver.persistence.beans.SysSeq;
 import com.guozha.buyserver.persistence.beans.SysUser;
 import com.guozha.buyserver.persistence.mapper.AccountMapper;
 import com.guozha.buyserver.persistence.mapper.SysUserMapper;
 import com.guozha.buyserver.service.account.AccountService;
 import com.guozha.buyserver.web.controller.MsgResponse;
+import com.guozha.buyserver.web.controller.account.AcceptRequest;
 import com.guozha.buyserver.web.controller.account.AccountInfoResponse;
 import com.guozha.buyserver.web.controller.account.BalanceResponse;
 import com.guozha.buyserver.web.controller.account.GenerateInviteResponse;
@@ -315,6 +319,120 @@ public class AccountServiceImpl extends AbstractBusinessObjectServiceMgr impleme
 		arr[0] = RandomStringUtils.randomNumeric(6);
 		SmsUtil.sendSms("02", mobileNo, arr);// SMS_TYPE 02-找回密码获取验证码
 		return new MsgResponse();
+	}
+
+	/**
+	 * 菜票领用
+	 * 
+	 * @author sunhanbin
+	 * @date 2015-03-10
+	 */
+	public MsgResponse accept(AcceptRequest accept) {
+		MsgResponse response = new MsgResponse();
+		if (accept != null) {
+			AccMyInvite myInvite = accountMapper.listMyInvite(accept.getMyInviteId());// 邀请信息对象
+			SysUser acceptor = sysUserMapper.getUserByMobileNo(accept.getMobileNo());// 领用人user对象
+			if (myInvite == null) {
+				response.setReturnCode(YesNo.No.getCode().toString());
+				response.setMsg("邀请信息不存在");
+				return response;
+			}
+			if (acceptor == null) {
+				response.setReturnCode(YesNo.No.getCode().toString());
+				response.setMsg("用户未注册");
+				return response;
+			}
+			int send_userId = myInvite.getUserId();// 发放人
+			int get_userId = acceptor.getUserId();// 接收人
+			if (send_userId == get_userId) {
+				response.setReturnCode(YesNo.No.getCode().toString());
+				response.setMsg("对不起，不能领取自己发放的菜票");
+				return response;
+			}
+			// 1、检查是否已领用过该用户的菜票
+			accept.setTicketNo(myInvite.getTicketNo());
+			accept.setUserId(send_userId);
+			accept.setGetUserId(get_userId);
+			Integer count = accountMapper.checkAccept(accept);
+			if (count != null && count.intValue() == 1) {// 已领用
+				response.setReturnCode(YesNo.No.getCode().toString());
+				response.setMsg("对不起，来自同一发放人的邀请菜票只能领取一次");
+				return response;
+			}
+			// 2、一周只能领取一张菜票
+			count = accountMapper.checkWeekAccept(accept);
+			if (count != null && count.intValue() == 1) {
+				response.setReturnCode(YesNo.No.getCode().toString());
+				response.setMsg("对不起，您本周已领用过菜票，无法再次领用");
+				return response;
+			}
+			// 3、邀请受益：
+			// ①领取人受益：生成一张面值5元的菜票
+			AccMyTicket ticket = new AccMyTicket();
+			ticket.setUserId(get_userId);
+			ticket.setTicketType(TicketTypeEnum.register.getCode());// 分享受益
+			ticket.setParValue(Integer.parseInt(SystemResource.getConfig(TicketTypeEnum.share.getType())));// 面值
+			ticket.setForPrice(Integer.parseInt(SystemResource.getConfig("ticket.for_price")));// 满多少金额可用
+			ticket.setStatus(YesNo.Yes.getCode().toString());
+			ticket.setTicketNo(myInvite.getTicketNo());
+			int myTicketId = insertTicket(ticket);
+			if (myTicketId > 0) {
+				// 更新菜票邀请表
+				AccMyInvite invite = new AccMyInvite();
+				invite.setDrawFlag(YesNo.Yes.getCode().toString());
+				invite.setTicketNo(accept.getTicketNo());
+				invite.setToMobileNo(accept.getMobileNo());
+				count = accountMapper.updateInvite(invite);
+				if (count.intValue() != 1) {
+					response.setReturnCode(YesNo.No.getCode().toString());
+					response.setMsg("更新邀请表失败");
+					return response;
+				}
+				// 受益人发放菜票放入统计表
+				AccMyTicketCount ticketCount = new AccMyTicketCount();
+				ticketCount.setUserId(send_userId);
+				ticketCount.setTicketDrawCount(1);// 一张
+				insertTicketCount(ticketCount);
+				// ②发放人受益：领取人达到5人后才可返赠一张菜票
+				count = accountMapper.getTicketDrawCount(send_userId);
+				if (count != null && count.intValue() == Integer.parseInt(SystemResource.getConfig("ticket.draw.user.count"))) {
+					Map map = new HashMap<String, Object>();
+					map.put("userId", send_userId);
+					map.put("ticketNo", generateTicketNo(TicketTypeEnum.share.getCode()));
+					accountMapper.resetTicketCount(map);
+				}
+			}
+
+		}
+		return response;
+	}
+
+	/**
+	 * 生成菜票：插入菜票表
+	 * 
+	 * @author sunhanbin
+	 * @date 2015-03-25
+	 * @param ticket
+	 * @return
+	 */
+	public int insertTicket(AccMyTicket ticket) {
+		if (ticket != null)
+			accountMapper.insertTicket(ticket);
+		return ticket.getMyTicketId();
+	}
+
+	/**
+	 * 插入发放人菜票统计表
+	 * 
+	 * @author sunhanbin
+	 * @date 2015-03-25
+	 * @param ticketCount
+	 * @return
+	 */
+	public int insertTicketCount(AccMyTicketCount ticketCount) {
+		if (ticketCount != null)
+			accountMapper.insertTicketCount(ticketCount);
+		return ticketCount.getUserId();
 	}
 
 }

@@ -6,6 +6,7 @@ import com.guozha.buyserver.framework.sys.business.BusinessObjectServiceMgr;
 import com.guozha.buyserver.persistence.beans.AccMyTicket;
 import com.guozha.buyserver.persistence.beans.SysUser;
 import com.guozha.buyserver.web.controller.MsgResponse;
+import com.guozha.buyserver.web.controller.account.AcceptRequest;
 import com.guozha.buyserver.web.controller.account.AccountInfoResponse;
 import com.guozha.buyserver.web.controller.account.AddressRequest;
 import com.guozha.buyserver.web.controller.account.AddressResponse;
@@ -26,7 +27,7 @@ public interface AccountService extends BusinessObjectServiceMgr {
 
 	// 我的账户信息
 	AccountInfoResponse info(SysUser user);
-	
+
 	// 修改密码找回验证码
 	MsgResponse checkCodeForResetPasswd(String mobileNo);
 
@@ -49,9 +50,11 @@ public interface AccountService extends BusinessObjectServiceMgr {
 
 	// 菜票编号生成生成公共规则
 	String generateTicketNo(String ticketType);
-	
-	
+
 	// 我的菜票查询
 	List<AccMyTicket> list(TicketRequest ticket);
+
+	// 菜票领用
+	MsgResponse accept(AcceptRequest accept);
 
 }
