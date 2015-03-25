@@ -40,4 +40,9 @@ PUBLIC "-//ibatis.apache.org//DTD Mapper 3.0//EN"
              AND A.MENU_ID = #{menuId}  
              AND T.MARKET_ID = #{marketId} 
     </select>
+    
+    <!-- 查询农贸市场商品 -->
+    <select id="findByMarketId" parameterType="java.lang.Integer" resultMap="rm">
+        SELECT * FROM MAR_MARKET_GOODS T WHERE T.MARKET_ID = #{marketId}
+    </select>
 </mapper>
