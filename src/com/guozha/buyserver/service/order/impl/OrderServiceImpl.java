@@ -19,6 +19,7 @@ import com.guozha.buyserver.framework.sys.business.AbstractBusinessObjectService
 import com.guozha.buyserver.persistence.beans.AccAddress;
 import com.guozha.buyserver.persistence.beans.BuyCart;
 import com.guozha.buyserver.persistence.beans.BuyOrder;
+import com.guozha.buyserver.persistence.beans.BuyOrderChild;
 import com.guozha.buyserver.persistence.beans.BuyOrderGoods;
 import com.guozha.buyserver.persistence.beans.BuyOrderMenu;
 import com.guozha.buyserver.persistence.beans.BuyOrderMenuGoods;
@@ -27,6 +28,7 @@ import com.guozha.buyserver.persistence.beans.MarMarketGoods;
 import com.guozha.buyserver.persistence.beans.MnuMenu;
 import com.guozha.buyserver.persistence.mapper.AccAddressMapper;
 import com.guozha.buyserver.persistence.mapper.BuyCartMapper;
+import com.guozha.buyserver.persistence.mapper.BuyOrderChildMapper;
 import com.guozha.buyserver.persistence.mapper.BuyOrderGoodsMapper;
 import com.guozha.buyserver.persistence.mapper.BuyOrderMapper;
 import com.guozha.buyserver.persistence.mapper.BuyOrderMenuGoodsMapper;
@@ -36,7 +38,6 @@ import com.guozha.buyserver.persistence.mapper.MarMarketGoodsMapper;
 import com.guozha.buyserver.persistence.mapper.MarMarketTimeMapper;
 import com.guozha.buyserver.persistence.mapper.MnuMenuGoodsMapper;
 import com.guozha.buyserver.persistence.mapper.MnuMenuMapper;
-import com.guozha.buyserver.service.cart.CartService;
 import com.guozha.buyserver.service.common.CommonService;
 import com.guozha.buyserver.service.order.OrderService;
 import com.guozha.buyserver.web.controller.MsgResponse;
@@ -79,7 +80,7 @@ public class OrderServiceImpl extends AbstractBusinessObjectServiceMgr
 	@Autowired
 	private MnuMenuGoodsMapper mnuMenuGoodsMapper;
 	@Autowired
-	private CartService cartService;
+	private BuyOrderChildMapper buyOrderChildMapper;
 	@Autowired
 	private CommonService commonService;
 
@@ -434,6 +435,11 @@ public class OrderServiceImpl extends AbstractBusinessObjectServiceMgr
 		buyOrderGoodsMapper.insert(buyOrderGoods);
 		
 		return new MsgResponse(MsgResponse.SUCC, "订单提交成功");
+	}
+
+	@Override
+	public void sendOrder(int orderId) {
+		List<BuyOrderChild> buyOrderChildList = buyOrderChildMapper.findByOrder(orderId);
 	}
 
 }
