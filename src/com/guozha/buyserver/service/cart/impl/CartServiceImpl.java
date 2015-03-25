@@ -1,29 +1,25 @@
 package com.guozha.buyserver.service.cart.impl;
 
 
-import java.util.Arrays;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.guozha.buyserver.common.util.AmountUtils;
 import com.guozha.buyserver.common.util.PriceUtils;
 import com.guozha.buyserver.framework.sys.business.AbstractBusinessObjectServiceMgr;
 import com.guozha.buyserver.persistence.beans.BuyCart;
 import com.guozha.buyserver.persistence.beans.GooGoods;
-import com.guozha.buyserver.persistence.beans.GooGoodsAmount;
 import com.guozha.buyserver.persistence.beans.MarMarketGoods;
 import com.guozha.buyserver.persistence.beans.MnuMenu;
 import com.guozha.buyserver.persistence.beans.MnuMenuGoods;
 import com.guozha.buyserver.persistence.mapper.BuyCartMapper;
-import com.guozha.buyserver.persistence.mapper.GooGoodsAmountMapper;
 import com.guozha.buyserver.persistence.mapper.GooGoodsMapper;
 import com.guozha.buyserver.persistence.mapper.MarMarketGoodsMapper;
 import com.guozha.buyserver.persistence.mapper.MnuMenuMapper;
 import com.guozha.buyserver.service.cart.CartService;
-import com.guozha.buyserver.service.market.MarketService;
+import com.guozha.buyserver.service.common.CommonService;
 import com.guozha.buyserver.web.controller.MsgResponse;
 import com.guozha.buyserver.web.controller.cart.CartRequest;
 import com.guozha.buyserver.web.controller.cart.CartResponse;
@@ -45,14 +41,12 @@ public class CartServiceImpl extends AbstractBusinessObjectServiceMgr implements
 	private MarMarketGoodsMapper marMarketGoodsMapper;
 	
 	@Autowired
-	private GooGoodsAmountMapper gooGoodsAmountMapper;
+	private CommonService commonService;
 	
-	@Autowired
-	private MarketService marketService;
     
 	@Override
 	public MsgResponse add(CartRequest vo) {
-		int marketId= this.marketService.findMaketId( vo.getAddressId());
+		int marketId= this.commonService.getMaketId( vo.getAddressId());
 		BuyCart po = this.buyCartMapper.selectByGoodsOrMenuId(vo.getUserId(), vo.getId(),vo.getProductType());
 		if(po==null){  //新的购物车信息
 			po = new BuyCart();
@@ -135,7 +129,7 @@ public class CartServiceImpl extends AbstractBusinessObjectServiceMgr implements
 			menu.setCartId(cart.getCartId());
 			menu.setMenuName(cart.getDisplayName());
 			menu.setAmount(cart.getAmount());
-			int unitPrice = getMenuUnitPrice(cart.getMarketId(), cart.getGoodsOrMenuId());
+			int unitPrice = commonService.getMenuUnitPrice(cart.getMarketId(), cart.getGoodsOrMenuId());
 			menu.setUnitPrice(unitPrice);
 			int price=unitPrice*cart.getAmount();
 			menu.setPrice(price);
@@ -143,7 +137,7 @@ public class CartServiceImpl extends AbstractBusinessObjectServiceMgr implements
 			for(MnuMenuGoods menuGoods:menuGoodsList){
 				Goods goods = new Goods();
 				goods.setGoodsName(menuGoods.getGoodsName());
-				goods.setAmount(getMenuGoodsAmount(menuGoods.getGoodsId(), menuGoods.getAmount())); //	去上值的重量而不是菜谱的配置食材重量
+				goods.setAmount(commonService.getMenuGoodsAmount(menuGoods.getGoodsId(), menuGoods.getAmount())); //	去上值的重量而不是菜谱的配置食材重量
 				menu.getGoodsList().add(goods);
 				
 				quantity+=1;
@@ -175,44 +169,6 @@ public class CartServiceImpl extends AbstractBusinessObjectServiceMgr implements
 		response.setTotalPrice(totalPrice);
 		response.setCurrServiceFee(PriceUtils.getServiceFee(totalPrice));
 		return response;
-	}
-
-	@Override
-	public int getMenuUnitPrice(int marketId, int menuId) {
-		int menuUnitPrice =0; //菜谱单价
-		List<MnuMenuGoods> menuGoodsList = this.mnuMenuMapper.findGoodsById(menuId);
-		
-		for(MnuMenuGoods menuGoods:menuGoodsList){
-			List<GooGoodsAmount> goodsAmountList = this.gooGoodsAmountMapper.findByGoodsId(menuGoods.getGoodsId());
-			int amounts []  = new int[goodsAmountList.size()];
-			for(int j =0;j<goodsAmountList.size();j++){
-				amounts[j] = goodsAmountList.get(j).getAmount();
-			}
-			Arrays.sort(amounts);
-			GooGoods goods = gooGoodsMapper.load(menuGoods.getGoodsId());
-			int unitPrice = this.marMarketGoodsMapper.findByGoodsId(marketId, menuGoods.getGoodsId()).getUnitPrice();
-			int goodsUnitPrice = PriceUtils.getMenuGoodsPrice(unitPrice, menuGoods.getAmount(), amounts,goods.getUnit());
-			menuUnitPrice+=goodsUnitPrice;
-		}
-		return menuUnitPrice;
-	}
-	
-	/**
-	 * 计算菜谱中食材的上值份量
-	 * @param marketId
-	 * @param goodsId
-	 * @return
-	 */
-	@Override
-	public int getMenuGoodsAmount(int goodsId,int amount){
-		GooGoods goods = this.gooGoodsMapper.load(goodsId);
-		List<GooGoodsAmount> goodsAmountList = this.gooGoodsAmountMapper.findByGoodsId(goodsId);
-		int amounts []  = new int[goodsAmountList.size()];
-		for(int j =0;j<goodsAmountList.size();j++){
-			amounts[j] = goodsAmountList.get(j).getAmount();
-		}
-		Arrays.sort(amounts);
-		return AmountUtils.getMenuGoodsAmount(amount, amounts, goods.getUnit());
 	}
 
 }

@@ -2,6 +2,7 @@ package com.guozha.buyserver.persistence.mapper;
 
 import java.util.List;
 
+import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Repository;
 
 import com.guozha.buyserver.dal.BaseMapper;
@@ -18,6 +19,11 @@ import com.guozha.buyserver.persistence.beans.MnuMenuGoods;
 @Repository
 public interface MnuMenuMapper extends BaseMapper<MnuMenu, Integer> {
 	
+	 /**
+	  * 商品id查询菜谱
+	  * @param goodsId
+	  * @return
+	  */
      List<MnuMenu> findByGoodsId(int goodsId);
      
      /**
@@ -26,4 +32,11 @@ public interface MnuMenuMapper extends BaseMapper<MnuMenu, Integer> {
       * @return
       */
      List<MnuMenuGoods> findGoodsById(int menuId);
+     
+     /**
+      * 商品id查询菜谱
+      * @param goodsIds 数组 一个或多个
+      * @return
+      */
+     List<MnuMenu> findByGoodsIds(@Param("goodsIds") int [] goodsIds);
 }
