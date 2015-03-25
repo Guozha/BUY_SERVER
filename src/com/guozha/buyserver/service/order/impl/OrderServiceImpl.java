@@ -8,6 +8,7 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Random;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -26,6 +27,7 @@ import com.guozha.buyserver.persistence.beans.BuyOrderMenuGoods;
 import com.guozha.buyserver.persistence.beans.GooGoods;
 import com.guozha.buyserver.persistence.beans.MarMarketGoods;
 import com.guozha.buyserver.persistence.beans.MnuMenu;
+import com.guozha.buyserver.persistence.beans.SysSeller;
 import com.guozha.buyserver.persistence.mapper.AccAddressMapper;
 import com.guozha.buyserver.persistence.mapper.BuyCartMapper;
 import com.guozha.buyserver.persistence.mapper.BuyOrderChildMapper;
@@ -38,6 +40,7 @@ import com.guozha.buyserver.persistence.mapper.MarMarketGoodsMapper;
 import com.guozha.buyserver.persistence.mapper.MarMarketTimeMapper;
 import com.guozha.buyserver.persistence.mapper.MnuMenuGoodsMapper;
 import com.guozha.buyserver.persistence.mapper.MnuMenuMapper;
+import com.guozha.buyserver.persistence.mapper.SysSellerMapper;
 import com.guozha.buyserver.service.common.CommonService;
 import com.guozha.buyserver.service.order.OrderService;
 import com.guozha.buyserver.web.controller.MsgResponse;
@@ -81,6 +84,8 @@ public class OrderServiceImpl extends AbstractBusinessObjectServiceMgr
 	private MnuMenuGoodsMapper mnuMenuGoodsMapper;
 	@Autowired
 	private BuyOrderChildMapper buyOrderChildMapper;
+	@Autowired
+	private SysSellerMapper sysSellerMapper;
 	@Autowired
 	private CommonService commonService;
 
@@ -440,6 +445,23 @@ public class OrderServiceImpl extends AbstractBusinessObjectServiceMgr
 	@Override
 	public void sendOrder(int orderId) {
 		List<BuyOrderChild> buyOrderChildList = buyOrderChildMapper.findByOrder(orderId);
+		
+		for(BuyOrderChild buyOrderChild: buyOrderChildList){
+			int marketId = buyOrderChild.getMarketId();
+			int backTypeId = buyOrderChild.getBackTypeId();
+			
+			//查找本农贸市场中负责此种后台类目的卖家信息
+			List<SysSeller> sysSellerList = sysSellerMapper.findForOrderSend(marketId, backTypeId);
+			
+			//唯独只有一家的情况下，系统自动帮后台人员做出卖方选择
+			if(sysSellerList.size()==1){
+				SysSeller sysSeller = sysSellerList.get(0);
+				buyOrderChildMapper.updateBySend(buyOrderChild.getOrderChildId(), sysSeller.getSellerId(), sysSeller.getSellerId(), "03"); // ORDER_CHILD 03-已抢单
+			}else{
+				// 否则 no code，留给后台操作人员主动分配卖家
+			}
+			
+		}
 	}
-
+	
 }
