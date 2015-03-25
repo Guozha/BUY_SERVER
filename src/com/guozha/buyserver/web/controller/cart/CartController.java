@@ -29,8 +29,8 @@ public class CartController extends BaseController {
 	 * @param vo
 	 * @param response
 	 */
-	@RequestMapping(value="/add")
-	public void add(CartRequest vo,HttpServletRequest request,HttpServletResponse response){
+	@RequestMapping(value="/insert")
+	public void insert(CartRequest vo,HttpServletRequest request,HttpServletResponse response){
 		responseJson(cartService.add(vo), response);
 	}
 	
@@ -59,8 +59,8 @@ public class CartController extends BaseController {
 	 * @param vo
 	 * @param response
 	 */
-	@RequestMapping(value="/del")
-	public void del(CartRequest vo,HttpServletResponse response){
+	@RequestMapping(value="/delete")
+	public void delete(CartRequest vo,HttpServletResponse response){
 		responseJson(cartService.del(vo), response);
 	}
 	

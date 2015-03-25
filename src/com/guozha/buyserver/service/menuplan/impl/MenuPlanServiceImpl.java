@@ -5,6 +5,7 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.guozha.buyserver.common.util.DateUtil;
 import com.guozha.buyserver.framework.enums.ReturnCodeEnum;
@@ -27,6 +28,7 @@ import com.guozha.buyserver.web.controller.menuplan.MenuUserPlanRequest;
  * @date 2015-03-15
  * 
  */
+@Transactional(rollbackFor = Exception.class)
 @Service
 public class MenuPlanServiceImpl implements MenuPlanService {
 

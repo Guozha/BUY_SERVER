@@ -25,10 +25,12 @@ import com.guozha.buyserver.persistence.beans.AccMyInvite;
 import com.guozha.buyserver.persistence.beans.AccMyTicket;
 import com.guozha.buyserver.persistence.beans.AccMyTicketCount;
 import com.guozha.buyserver.persistence.beans.SysSeq;
+import com.guozha.buyserver.persistence.beans.SysSmsSend;
 import com.guozha.buyserver.persistence.beans.SysUser;
 import com.guozha.buyserver.persistence.mapper.AccountMapper;
 import com.guozha.buyserver.persistence.mapper.SysUserMapper;
 import com.guozha.buyserver.service.account.AccountService;
+import com.guozha.buyserver.service.common.CommonService;
 import com.guozha.buyserver.web.controller.MsgResponse;
 import com.guozha.buyserver.web.controller.account.AcceptRequest;
 import com.guozha.buyserver.web.controller.account.AccountInfoResponse;
@@ -50,6 +52,8 @@ public class AccountServiceImpl extends AbstractBusinessObjectServiceMgr impleme
 	private SysUserMapper sysUserMapper;
 	@Autowired
 	private AccountMapper accountMapper;
+	@Autowired
+	private CommonService commonService;
 
 	@Override
 	public MsgResponse getCheckCodeForReg(String mobileNo) {
@@ -58,7 +62,13 @@ public class AccountServiceImpl extends AbstractBusinessObjectServiceMgr impleme
 		arr[0] = RandomStringUtils.randomNumeric(6);
 		System.out.println("%%%%%%%%%%%%%%%注册校验码%%%%%%%%%%%%-----"+arr[0]);
 		SmsUtil.sendSms("01", mobileNo, arr);// SMS_TYPE 01-注册获取验证码
-
+		SysSmsSend sms = new SysSmsSend();
+		sms.setMobileNo(mobileNo);
+		sms.setSendStatus(YesNo.Yes.getCode().toString());
+		sms.setSendTime(DateUtil.currentTimestamp());
+		sms.setSendType("注册获取验证码");
+		sms.setSendText(String.format(SystemResource.getConfig("sms.content.register"), arr));
+		commonService.insertSms(sms);
 		return new MsgResponse();
 	}
 
@@ -319,6 +329,13 @@ public class AccountServiceImpl extends AbstractBusinessObjectServiceMgr impleme
 		Object[] arr = new Object[1];
 		arr[0] = RandomStringUtils.randomNumeric(6);
 		SmsUtil.sendSms("02", mobileNo, arr);// SMS_TYPE 02-找回密码获取验证码
+		SysSmsSend sms = new SysSmsSend();
+		sms.setMobileNo(mobileNo);
+		sms.setSendStatus(YesNo.Yes.getCode().toString());
+		sms.setSendTime(DateUtil.currentTimestamp());
+		sms.setSendType("找回密码获取验证码");
+		sms.setSendText(String.format(SystemResource.getConfig("sms.content.resetPasswd"), arr));
+		commonService.insertSms(sms);
 		return new MsgResponse();
 	}
 
