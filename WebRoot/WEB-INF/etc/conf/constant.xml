@@ -143,11 +143,6 @@
     	<constantName value="04">已称重</constantName>
     	<constantName value="05">已揽件</constantName>
 	</constant>
-	<!-- 子订单食材数据来源 -->
-	<constant constantDef="SPLIT_FROM_TYPE">
-    	<constantName value="1">订单商品</constantName>
-    	<constantName value="2">订单菜谱商品</constantName>
-	</constant>
 	<!-- 农贸市场状态 -->
 	<constant constantDef="MARKET_STATUS">
     	<constantName value="1">在用</constantName>
@@ -224,8 +219,8 @@
 	<constant constantDef="PAPER_TYPE">
 	    <constantName value="01">用户订单</constantName>
 	</constant>
-	<!-- 评价商品来源 -->
-	<constant constantDef="COMMENT_GOODS_FROM">
+	<!-- 商品来源类型 -->
+	<constant constantDef="GOODS_FROM_TYPE">
     	<constantName value="1">订单商品</constantName>
     	<constantName value="2">订单菜谱商品</constantName>
 	</constant>

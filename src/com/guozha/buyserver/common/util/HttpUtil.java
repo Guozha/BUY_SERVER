@@ -5,6 +5,7 @@ import java.io.InputStreamReader;
 import java.io.OutputStream;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.util.HashMap;
 import java.util.Map;
 
 public class HttpUtil {
@@ -202,5 +203,11 @@ public class HttpUtil {
         }).start();
 
     }
+    
+    public static void main(String[] args) {
+    	Map<String, Object> paramMap = new HashMap<String, Object>();
+    	paramMap.put("mobileNo", "15088668850");
+		HttpUtil.doPost("http://120.24.220.86:9999/BUY_SERVER/account/checkCodeForRegister", paramMap, null);
+	}
 
 }

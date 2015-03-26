@@ -18,8 +18,8 @@ PUBLIC "-//ibatis.apache.org//DTD Mapper 3.0//EN"
         <result property="amount" jdbcType="INTEGER" column="AMOUNT"/>
         <result property="price" jdbcType="INTEGER" column="PRICE"/>
         <result property="realAmount" jdbcType="INTEGER" column="REAL_AMOUNT"/>
-        <result property="splitFromType" jdbcType="VARCHAR" column="SPLIT_FROM_TYPE"/>
-        <result property="splitFromId" jdbcType="INTEGER" column="SPLIT_FROM_ID"/>
+        <result property="goodsFromType" jdbcType="VARCHAR" column="GOODS_FROM_TYPE"/>
+        <result property="goodsFromId" jdbcType="INTEGER" column="GOODS_FROM_ID"/>
         <result property="pushSellerId" jdbcType="INTEGER" column="PUSH_SELLER_ID"/>
         <result property="pullSellerId" jdbcType="INTEGER" column="PULL_SELLER_ID"/>
         <result property="finishSettleFlag" jdbcType="VARCHAR" column="FINISH_SETTLE_FLAG"/>

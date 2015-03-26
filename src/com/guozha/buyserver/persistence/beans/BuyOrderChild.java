@@ -16,8 +16,8 @@ public class BuyOrderChild extends AbstractDO {
 	private Integer amount;
 	private Integer price;
 	private Integer realAmount;
-	private String splitFromType;
-	private Integer splitFromId;
+	private String goodsFromType;
+	private Integer goodsFromId;
 	private Integer pushSellerId;
 	private Integer pullSellerId;
 	private String finishSettleFlag;
@@ -95,17 +95,17 @@ public class BuyOrderChild extends AbstractDO {
 	public void setRealAmount(Integer realAmount) {
 		this.realAmount = realAmount;
 	}
-	public String getSplitFromType() {
-		return splitFromType;
+	public String getGoodsFromType() {
+		return goodsFromType;
 	}
-	public void setSplitFromType(String splitFromType) {
-		this.splitFromType = splitFromType;
+	public void setGoodsFromType(String goodsFromType) {
+		this.goodsFromType = goodsFromType;
 	}
-	public Integer getSplitFromId() {
-		return splitFromId;
+	public Integer getGoodsFromId() {
+		return goodsFromId;
 	}
-	public void setSplitFromId(Integer splitFromId) {
-		this.splitFromId = splitFromId;
+	public void setGoodsFromId(Integer goodsFromId) {
+		this.goodsFromId = goodsFromId;
 	}
 	public Integer getPushSellerId() {
 		return pushSellerId;
