@@ -26,11 +26,21 @@ public class SpecialController extends BaseController {
 	/**
 	 *特供商品列表
 	 * @param vo
-	 * @param response
+	 * @param response /special/list
 	 */
-	@RequestMapping(value="/specialList")
+	@RequestMapping(value="/special/list")
 	public void special(GoodsRequest vo,HttpServletResponse response){
 		responseJson(specialService.findGoods(vo), response);
 	}
 	
+	
+	/**
+	 *特供详情
+	 * @param vo
+	 * @param response /special/detail
+	 */
+	@RequestMapping(value="/special/detail")
+	public void detail(GoodsRequest vo,HttpServletResponse response){
+		responseJson(specialService.findGoodsById(vo), response);
+	}
 }

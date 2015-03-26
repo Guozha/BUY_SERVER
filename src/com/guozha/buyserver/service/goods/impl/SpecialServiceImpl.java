@@ -9,10 +9,13 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.guozha.buyserver.framework.sys.business.AbstractBusinessObjectServiceMgr;
 import com.guozha.buyserver.persistence.beans.BasFrontType;
+import com.guozha.buyserver.persistence.beans.GooGoods;
 import com.guozha.buyserver.persistence.mapper.BasFrontTypeMapper;
 import com.guozha.buyserver.persistence.mapper.GooGoodsMapper;
+import com.guozha.buyserver.persistence.mapper.MarMarketGoodsMapper;
 import com.guozha.buyserver.service.common.CommonService;
 import com.guozha.buyserver.service.goods.SpecialService;
+import com.guozha.buyserver.web.controller.goods.GoodsInfoResponse;
 import com.guozha.buyserver.web.controller.goods.GoodsRequest;
 import com.guozha.buyserver.web.controller.goods.GoodsResponse;
 
@@ -27,6 +30,9 @@ public class SpecialServiceImpl extends AbstractBusinessObjectServiceMgr impleme
 	private GooGoodsMapper gooGoodsMapper;
 	@Autowired
 	private CommonService commonService;
+	
+	@Autowired
+	private MarMarketGoodsMapper marMarketGoodsMapper;
 	
 	@Override
 	public List<GoodsResponse> findGoods(GoodsRequest vo) {
@@ -47,6 +53,16 @@ public class SpecialServiceImpl extends AbstractBusinessObjectServiceMgr impleme
 			}
 		}
 		return pos;
+	}
+	
+	
+	@Override
+	public GoodsInfoResponse findGoodsById(GoodsRequest vo) {
+		int marketId= this.commonService.getMaketId(vo.getAddressId());
+		GooGoods po = this.gooGoodsMapper.load(vo.getGoodsId());
+		GoodsInfoResponse response = new GoodsInfoResponse(po);
+		response.setUnitPrice(marMarketGoodsMapper.findByGoodsId(marketId, vo.getGoodsId()).getUnitPrice());
+		return response;
 	}
 
 }

@@ -28,39 +28,39 @@ public class GeneralController extends BaseController {
 	/**
 	 * 类目列表 仅一级(一或者二)
 	 * @param vo
-	 * @param response
+	 * @param response /frontType/typeList
 	 */
-	@RequestMapping(value="/frontType")
-	public void frontType(FrontTypeRequest vo,HttpServletResponse response){
+	@RequestMapping(value="/frontType/typeList")
+	public void typeList(FrontTypeRequest vo,HttpServletResponse response){
 		responseJson(generalService.findFrontType(vo), response);
 	}
 	
 	/**
 	 * 类目列表 所有
 	 * @param vo
-	 * @param response
+	 * @param response /frontType/list
 	 */
-	@RequestMapping(value="/frontTypes")
-	public void frontTypes(HttpServletResponse response){
+	@RequestMapping(value="/frontType/list")
+	public void frontTypelist(HttpServletResponse response){
 		responseJson(generalService.findFrontType(), response);
 	}
 	
 	/**
 	 * 普通商品列表 首页
 	 * @param vo
-	 * @param response
+	 * @param response  /general/list
 	 */
-	@RequestMapping(value="/generalList")
-	public void generalList(GoodsRequest vo,HttpServletResponse response){
+	@RequestMapping(value="/general/list")
+	public void  generalList(GoodsRequest vo,HttpServletResponse response){
 		responseJson(generalService.findGoods(vo), response);
 	}
 	
 	/**
 	 * 普通类目商品列表
 	 * @param vo
-	 * @param response
+	 * @param response /general/typeList
 	 */
-	@RequestMapping(value="/generalTypeList")
+	@RequestMapping(value="/general/typeList")
 	public void generalTypeList(GoodsRequest vo,HttpServletResponse response){
 		responseJson(generalService.findGoodsByFrontTypeId(vo), response);
 	}
@@ -68,9 +68,9 @@ public class GeneralController extends BaseController {
 	/**
 	 * 商品详情
 	 * @param vo
-	 * @param response
+	 * @param response /general/detail
 	 */
-	@RequestMapping(value="/detail")
+	@RequestMapping(value="/general/detail")
 	public void detail(GoodsRequest vo,HttpServletResponse response){
 		responseJson(generalService.findGoodsById(vo), response);
 	}
@@ -78,7 +78,7 @@ public class GeneralController extends BaseController {
 	/**
 	 * 商品價格
 	 * @param vo
-	 * @param response
+	 * @param response /price
 	 */
 	@RequestMapping(value="/price")
 	public void price(GoodsRequest vo,HttpServletResponse response){

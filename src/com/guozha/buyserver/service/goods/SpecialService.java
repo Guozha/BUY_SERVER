@@ -3,6 +3,7 @@ package com.guozha.buyserver.service.goods;
 import java.util.List;
 
 import com.guozha.buyserver.framework.sys.business.BusinessObjectServiceMgr;
+import com.guozha.buyserver.web.controller.goods.GoodsInfoResponse;
 import com.guozha.buyserver.web.controller.goods.GoodsRequest;
 import com.guozha.buyserver.web.controller.goods.GoodsResponse;
 
@@ -21,5 +22,13 @@ public interface SpecialService extends BusinessObjectServiceMgr{
 	 * @return
 	 */
 	List<GoodsResponse> findGoods(GoodsRequest vo);
+	
+	
+	/**
+	 * 商品详情（特供)
+	 * @param goodsId 商品id
+	 * @return
+	 */
+	GoodsInfoResponse findGoodsById(GoodsRequest vo);
 
 }

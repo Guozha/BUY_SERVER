@@ -30,7 +30,7 @@ public class GoodsInfoResponse {
 		this.prepareEndDate = DateUtil.date2String(po.getPrepareEndDate(), DateUtil.PATTERN_DATE);
 		this.arrivalDays = po.getArrivalDays();
 		this.picDesc = po.getPicDesc();
-		this.otherNames = po.getOtherNames();
+		//this.otherNames = po.getOtherNames();
 	}
 	
 	public Integer getUnitPrice() {
