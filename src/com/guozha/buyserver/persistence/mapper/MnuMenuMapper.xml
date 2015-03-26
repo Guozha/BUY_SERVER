@@ -62,5 +62,20 @@ PUBLIC "-//ibatis.apache.org//DTD Mapper 3.0//EN"
 	</select>
 	
 	
+	<!--查询多个菜谱  -->
+	<select id="listMenuByIds" resultType="com.guozha.buyserver.persistence.beans.MnuMenu">
+	 SELECT 
+        menu_id menuId,
+        menu_name menuName,
+        menu_img menuImg 
+    FROM
+        MNU_MENU 
+    WHERE menu_id IN 
+	 <foreach item="item" index="index" collection="menuIds" open="(" separator="," close=")">  
+         #{item}  
+     </foreach>
+	</select>
+	
+	
 	
 </mapper>

@@ -6,9 +6,10 @@ package com.guozha.buyserver.web.controller.menuplan;
  * @author sunhanbin
  * @date 2015-3-16 下午04:42:29
  */
-public class MenuPlanResponse {
+public class MenuPlanResponse implements java.io.Serializable{
 	
 	
+	private static final long serialVersionUID = 1L;
 	private Integer firstMenuId;// 菜谱1
 	private String firstMenuName;
 	private byte[] firstMenuImg;

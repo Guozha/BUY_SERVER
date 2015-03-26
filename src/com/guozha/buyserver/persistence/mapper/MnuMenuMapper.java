@@ -1,6 +1,7 @@
 package com.guozha.buyserver.persistence.mapper;
 
 import java.util.List;
+import java.util.Set;
 
 import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Repository;
@@ -39,4 +40,11 @@ public interface MnuMenuMapper extends BaseMapper<MnuMenu, Integer> {
       * @return
       */
      List<MnuMenu> findByGoodsIds(@Param("goodsIds") int [] goodsIds);
+     
+     /**
+      * 根据菜谱id查找菜谱
+      * @param goodsIds 数组 一个或多个
+      * @return
+      */
+     List<MnuMenu> listMenuByIds(@Param("menuIds")Set<Integer> menuIds);
 }
