@@ -50,5 +50,10 @@ public class OrderController extends BaseController {
 	public void insertPrepare(InsertPrepareOrderRequest vo, HttpServletResponse response) {
 		responseJson(orderService.insertPrepareOrder(vo), response);
 	}
+	
+	@RequestMapping(value = "/send")
+	public void send(int orderId) {
+		orderService.sendOrder(orderId);
+	}
 
 }

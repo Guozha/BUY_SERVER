@@ -16,8 +16,8 @@ import com.guozha.buyserver.persistence.mapper.BasFrontTypeMapper;
 import com.guozha.buyserver.persistence.mapper.GooGoodsMapper;
 import com.guozha.buyserver.persistence.mapper.MarMarketGoodsMapper;
 import com.guozha.buyserver.persistence.mapper.GooGoodsAmountMapper;
+import com.guozha.buyserver.service.common.CommonService;
 import com.guozha.buyserver.service.goods.GeneralService;
-import com.guozha.buyserver.service.market.MarketService;
 import com.guozha.buyserver.web.controller.goods.FrontTypeRequest;
 import com.guozha.buyserver.web.controller.goods.FrontTypeResponse;
 import com.guozha.buyserver.web.controller.goods.GeneralResponse;
@@ -42,7 +42,7 @@ public class GeneralServiceImpl extends AbstractBusinessObjectServiceMgr impleme
 	private MarMarketGoodsMapper marMarketGoodsMapper;
 	
 	@Autowired
-	private MarketService marketService;
+	private CommonService commonService;
     
 	
 	@Override
@@ -75,7 +75,7 @@ public class GeneralServiceImpl extends AbstractBusinessObjectServiceMgr impleme
 	@Override
 	public GeneralResponse findGoods(GoodsRequest vo) {
 		vo.setPageSize(4);
-		int marketId= this.marketService.findMaketId(vo.getAddressId());
+		int marketId= this.commonService.getMaketId(vo.getAddressId());
 		GeneralResponse response = new GeneralResponse();
 		List<BasFrontType> frontTypeList = this.basFrontTypeMapper.findFirstPager(vo.getStartIndex(), vo.getPageSize());
 		for(int i=0;i< frontTypeList.size();i++){
@@ -90,7 +90,7 @@ public class GeneralServiceImpl extends AbstractBusinessObjectServiceMgr impleme
 	
 	
 	public GeneralResponse findGoodsByFrontTypeId(GoodsRequest vo){
-		int marketId= this.marketService.findMaketId(vo.getAddressId());
+		int marketId= this.commonService.getMaketId(vo.getAddressId());
 		BasFrontType bft = this.basFrontTypeMapper.load(vo.getFrontTypeId());
 		GeneralResponse response = new GeneralResponse();
 		response.setFrontTypeList(null);
@@ -114,7 +114,7 @@ public class GeneralServiceImpl extends AbstractBusinessObjectServiceMgr impleme
 	
 	@Override
 	public GoodsInfoResponse findGoodsById(GoodsRequest vo) {
-		int marketId= this.marketService.findMaketId(vo.getAddressId());
+		int marketId= this.commonService.getMaketId(vo.getAddressId());
 		GooGoods po = this.gooGoodsMapper.load(vo.getGoodsId());
 		GoodsInfoResponse response = new GoodsInfoResponse(po);
 		response.setUnitPrice(marMarketGoodsMapper.findByGoodsId(marketId, vo.getGoodsId()).getUnitPrice());
@@ -123,7 +123,7 @@ public class GeneralServiceImpl extends AbstractBusinessObjectServiceMgr impleme
 
 	@Override
 	public List<GoodsPriceResponse> findGoodsPriceByGoodsId(GoodsRequest vo) {
-		int marketId= this.marketService.findMaketId(vo.getAddressId());
+		int marketId= this.commonService.getMaketId(vo.getAddressId());
 		GooGoods goodPo =this.gooGoodsMapper.load(vo.getGoodsId());
 		//商品单价
 		int unitPrice = this.marMarketGoodsMapper.findByGoodsId(marketId, vo.getGoodsId()).getUnitPrice();

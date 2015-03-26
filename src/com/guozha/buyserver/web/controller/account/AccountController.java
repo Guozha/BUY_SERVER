@@ -90,8 +90,6 @@ public class AccountController extends BaseController {
 		this.responseJson(accountService.logout(token), response);
 	}
 
-	
-
 	/**
 	 * 我的菜票查询
 	 * 
@@ -128,6 +126,17 @@ public class AccountController extends BaseController {
 	@RequestMapping(value = "/invite/insert")
 	public void invite(SysUser user, HttpServletResponse response) {
 		responseJson(accountService.invite(user), response);
+	}
+
+	
+	/**
+	 * 菜票领用
+	 * @param accept
+	 * @param response
+	 */
+	@RequestMapping(value = "/invite/open")
+	public void accept(AcceptRequest accept, HttpServletResponse response) {
+		responseJson(accountService.accept(accept), response);
 	}
 
 }

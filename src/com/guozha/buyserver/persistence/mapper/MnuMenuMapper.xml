@@ -40,12 +40,27 @@ PUBLIC "-//ibatis.apache.org//DTD Mapper 3.0//EN"
 		    AND B.GOODS_ID = #{goodsId}
 	</select>
 	
+	<!-- 多个商品查询菜谱 -->
+	<select id="findByGoodsIds" resultMap="rm" parameterType="map">
+		SELECT 
+			A.MENU_ID,A.MENU_NAME,A.MENU_IMG,A.MENU_DESC,A.COOKIE_TIME,A.COOKIE_WAY,A.SEASONINGS,A.STATUS
+		FROM MNU_MENU A,MNU_MENU_GOODS B
+		WHERE 
+		    A.MENU_ID = B.MENU_ID 
+		    AND B.GOODS_ID IN
+		    <foreach item="item" index="index" collection="goodsIds" open="(" separator="," close=")">  
+			   #{item}  
+		    </foreach>
+	</select>
+	
+	<!-- 菜谱ID查询商品 -->
 	<select id="findGoodsById" resultType="com.guozha.buyserver.persistence.beans.MnuMenuGoods" parameterType="int">
 	      SELECT GOODS_ID goodsId,GOODS_NAME goodsName,AMOUNT amount 
 	      FROM MNU_MENU_GOODS
 	      WHERE 
 	        MENU_ID =#{menuId}
-	 
 	</select>
+	
+	
 	
 </mapper>

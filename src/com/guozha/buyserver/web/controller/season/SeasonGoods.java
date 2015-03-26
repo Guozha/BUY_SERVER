@@ -2,14 +2,14 @@ package com.guozha.buyserver.web.controller.season;
 
 import com.guozha.buyserver.persistence.beans.GooGoods;
 
-public class SeasonGoodsResponse {
+public class SeasonGoods {
 
 	private Integer goodsId;   //商品ID
 	private String goodsName;  //商品名
 	private byte[] goodsImg;//商品图片URL
 	private String memo;
 	
-	public SeasonGoodsResponse(GooGoods po) {
+	public SeasonGoods(GooGoods po) {
 		super();
 		this.goodsId = po.getGoodsId();
 		this.goodsName = po.getGoodsName();
@@ -40,7 +40,7 @@ public class SeasonGoodsResponse {
 	public void setMemo(String memo) {
 		this.memo = memo;
 	}
-	public SeasonGoodsResponse() {
+	public SeasonGoods() {
 		
 	}
 

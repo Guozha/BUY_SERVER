@@ -136,14 +136,15 @@
     	<constantName value="03">满意</constantName>
 	</constant>
 	<!-- 子订单状态 -->
-	<constant constantDef="CHILD_ORDER_STATUS">
-    	<constantName value="01">未抢单</constantName>
-    	<constantName value="02">已抢单</constantName>
-    	<constantName value="03">已称重</constantName>
-    	<constantName value="04">已揽件</constantName>
+	<constant constantDef="ORDER_CHILD_STATUS">
+	    <constantName value="01">新创建</constantName>
+    	<constantName value="02">待抢单</constantName>
+    	<constantName value="03">已抢单</constantName>
+    	<constantName value="04">已称重</constantName>
+    	<constantName value="05">已揽件</constantName>
 	</constant>
 	<!-- 子订单食材数据来源 -->
-	<constant constantDef="CHILD_ORDER_GOODS_FROM_TYPE">
+	<constant constantDef="SPLIT_FROM_TYPE">
     	<constantName value="1">订单商品</constantName>
     	<constantName value="2">订单菜谱商品</constantName>
 	</constant>

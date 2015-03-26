@@ -69,4 +69,99 @@ PUBLIC "-//ibatis.apache.org//DTD Mapper 3.0//EN"
   INSERT INTO ACC_MY_INVITE(MY_INVITE_ID,USER_ID,INVITE_TIME,TICKET_NO,PAR_VALUE,DRAW_FLAG,USE_FLAG)
   VALUES(#{myInviteId},#{userId},#{inviteTime},#{ticketNo},#{parValue},#{drawFlag},#{useFlag})
 </insert>
+
+
+<!-- 同一发放人只能领用一次 -->
+<select id="checkAccept" parameterType="com.guozha.buyserver.web.controller.account.AcceptRequest" resultType="int">
+  SELECT 1  FROM ACC_MY_INVITE i, ACC_MY_TICKET t 
+  WHERE i.ticket_no = t.ticket_no
+  AND i.user_id = #{userId}
+  AND t.user_id = #{getUserId} 
+  AND i.draw_flag = '1' 
+</select>
+
+<!-- 一周内是否已领取菜票 -->
+<select id="checkWeekAccept" parameterType="com.guozha.buyserver.web.controller.account.AcceptRequest" resultType="int">
+SELECT 
+   1 
+  FROM
+    ACC_MY_TICKET
+  WHERE  USER_ID=#{getUserId} AND DATE_SUB(CURDATE(), INTERVAL 7 DAY)  <![CDATA[ <= DATE(got_time)  ]]>  
+</select>
+
+<!--插入菜票表  -->
+<insert id="insertTicket" useGeneratedKeys="true" keyProperty="myTicketId" parameterType="com.guozha.buyserver.persistence.beans.AccMyTicket">
+  INSERT INTO ACC_MY_TICKET (
+    user_id,
+    ticket_type,
+    par_value,
+    for_price,
+    ticket_no,
+    got_time,
+    valid_date,
+    status
+  ) 
+  VALUES
+    (
+      #{userId},
+      #{ticketType},
+      #{parValue},
+      #{forPrice},
+      #{ticketNo},
+      NOW(),
+      DATE_ADD(CURDATE(), INTERVAL 1 MONTH),
+      #{status}
+    )
+</insert>
+
+<!--更新邀请表  -->
+<update id="updateInvite" parameterType="com.guozha.buyserver.persistence.beans.AccMyInvite">
+    UPDATE 
+      ACC_MY_INVITE
+    SET
+      to_mobile_no = #{toMobileNo},
+      draw_flag = #{drawFlag}
+    WHERE ticket_no = #{ticketNo}
+</update>
+
+<!--查询我的邀请信息  -->
+<select id="listMyInvite" parameterType="int" resultType="com.guozha.buyserver.persistence.beans.AccMyInvite">
+ SELECT 
+  my_invite_id AS myInviteId,
+  user_id AS userId,
+  to_mobile_no toMobileNo,
+  invite_time inviteTime,
+  ticket_no ticketNo,
+  par_value parValue,
+  draw_flag drawFlag,
+  use_flag useFlag 
+FROM
+  ACC_MY_INVITE 
+WHERE my_invite_id = #{myInviteId} 
+</select>
+
+<!-- 插入发放人菜票统计表 -->
+<insert id="insertTicketCount" parameterType="com.guozha.buyserver.persistence.beans.AccMyTicketCount" >
+  INSERT INTO ACC_MY_TICKET_COUNT (user_id, ticket_draw_count) 
+  VALUES (#{userId}, #{ticketDrawCount}) 
+  ON DUPLICATE KEY 
+  UPDATE 
+    ticket_draw_count = ticket_draw_count + 1 ;
+</insert>
+
+
+<!-- 获取用户发放的菜票数 -->
+<select id="getTicketDrawCount" parameterType="int" resultType="int">
+  SELECT ticket_draw_count FROM  ACC_MY_TICKET_COUNT 
+  WHERE user_id=#{userId}
+</select>
+
+<!-- 用户返赠菜票处理 -->
+<parameterMap type="map" id="paraMap">  
+   <parameter property="userId" jdbcType="INTEGER" mode="IN"/>  
+   <parameter property="ticketNo" jdbcType="VARCHAR" mode="IN"/>  
+ </parameterMap>  
+<update id="resetTicketCount" parameterMap="paraMap">
+  CALL PROC_TICKET_COUNT (#{userId},#{ticketNo})
+</update>
 </mapper>
