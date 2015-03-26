@@ -15,6 +15,7 @@ public class SysSeller extends AbstractDO {
 	private Integer transCount;
 	private Date lastPayDate;
 	private Integer marketId;
+	private Double goodRate;
 	private String status;
 	
 	public Integer getSellerId() {
@@ -76,6 +77,12 @@ public class SysSeller extends AbstractDO {
 	}
 	public void setStatus(String status) {
 		this.status = status;
+	}
+	public Double getGoodRate() {
+		return goodRate;
+	}
+	public void setGoodRate(Double goodRate) {
+		this.goodRate = goodRate;
 	}
 
 }

@@ -33,4 +33,22 @@ PUBLIC "-//ibatis.apache.org//DTD Mapper 3.0//EN"
         ORDER BY T2.SELLER_TAG,T1.SELLER_ID
     </select>
     
+    <resultMap id="rm" type="com.guozha.buyserver.persistence.beans.SysSeller">
+        <result property="sellerId" jdbcType="INTEGER" column="SELLER_ID"/>
+        <result property="mobileNo" jdbcType="VARCHAR" column="MOBILE_NO"/>
+        <result property="passwd" jdbcType="VARCHAR" column="PASSWD"/>
+        <result property="sellerName" jdbcType="VARCHAR" column="SELLER_NAME"/>
+        <result property="logo" jdbcType="BLOB" column="LOGO"/>
+        <result property="mainBusi" jdbcType="VARCHAR" column="MAIN_BUSI"/>
+        <result property="lastPayDate" jdbcType="DATE" column="LAST_PAY_DATE"/>
+        <result property="marketId" jdbcType="INTEGER" column="MARKET_ID"/>
+        <result property="transCount" jdbcType="INTEGER" column="TRANS_COUNT"/>
+        <result property="goodRate" jdbcType="DOUBLE" column="GOOD_RATE"/>
+        <result property="status" jdbcType="VARCHAR" column="STATUS"/>
+	</resultMap>
+    
+    <select id="findForOrderSend" parameterType="java.util.Map" resultMap="rm">
+        SELECT T1.SELLER_ID,T1.TRANS_COUNT FROM SYS_SELLER T1 WHERE  T1.MARKET_ID = #{marketId} AND T1.SELLER_ID IN (SELECT T2.SELLER_ID FROM BAS_SELLER_BACK_TYPE T2 WHERE T2.BACK_TYPE_ID = #{backTypeId})
+    </select>
+    
 </mapper>

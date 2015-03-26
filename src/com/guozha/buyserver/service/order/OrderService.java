@@ -28,5 +28,7 @@ public interface OrderService extends BusinessObjectServiceMgr {
 	MsgResponse insertSupplyOrder(InsertSupplyOrderRequest vo);
 	
 	MsgResponse insertPrepareOrder(InsertPrepareOrderRequest vo);
+	
+	void sendOrder(int orderId);
 
 }

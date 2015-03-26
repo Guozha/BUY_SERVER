@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//ibatis.apache.org//DTD Mapper 3.0//EN"
+"http://ibatis.apache.org/dtd/ibatis-3-mapper.dtd">
+
+<mapper namespace="com.guozha.buyserver.persistence.mapper.BuyOrderChildMapper">
+
+    <resultMap type="com.guozha.buyserver.persistence.beans.BuyOrderChild" id="rm">
+        <result property="orderChildId" jdbcType="INTEGER" column="ORDER_CHILD_ID"/>
+        <result property="orderId" jdbcType="INTEGER" column="ORDER_ID"/>
+        <result property="marketId" jdbcType="INTEGER" column="MARKET_ID"/>
+        <result property="goodsId" jdbcType="INTEGER" column="GOODS_ID"/>
+        <result property="backTypeId" jdbcType="INTEGER" column="BACK_TYPE_ID"/>
+        <result property="goodsName" jdbcType="VARCHAR" column="GOODS_NAME"/>
+        <result property="goodsImg" jdbcType="BLOB" column="GOODS_IMG"/>
+        <result property="unit" jdbcType="VARCHAR" column="UNIT"/>
+        <result property="unitPrice" jdbcType="INTEGER" column="UNIT_PRICE"/>
+        <result property="amount" jdbcType="INTEGER" column="AMOUNT"/>
+        <result property="price" jdbcType="INTEGER" column="PRICE"/>
+        <result property="realAmount" jdbcType="INTEGER" column="REAL_AMOUNT"/>
+        <result property="splitFromType" jdbcType="VARCHAR" column="SPLIT_FROM_TYPE"/>
+        <result property="splitFromId" jdbcType="INTEGER" column="SPLIT_FROM_ID"/>
+        <result property="pushSellerId" jdbcType="INTEGER" column="PUSH_SELLER_ID"/>
+        <result property="pullSellerId" jdbcType="INTEGER" column="PULL_SELLER_ID"/>
+        <result property="finishSettleFlag" jdbcType="VARCHAR" column="FINISH_SETTLE_FLAG"/>
+        <result property="status" jdbcType="VARCHAR" column="STATUS"/>
+    </resultMap>
+    
+    <select id="findByOrder" parameterType="java.lang.Integer" resultMap="rm">
+        SELECT * FROM BUY_ORDER_CHILD T WHERE T.ORDER_ID = #{orderId}
+    </select>
+    
+    <update id="updateSeller" parameterType="java.util.Map">
+        UPDATE BUY_ORDER_CHILD T SET T.REAL_AMOUNT = T.AMOUNT ,T.PUSH_SELLER_ID = #{pushSellerId}, T.PULL_SELLER_ID = #{pullSellerId}, T.STATUS = #{status} WHERE T.ORDER_CHILD_ID = #{orderChildId};
+    </update>
+    
+</mapper>
