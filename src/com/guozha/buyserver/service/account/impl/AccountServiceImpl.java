@@ -326,6 +326,9 @@ public class AccountServiceImpl extends AbstractBusinessObjectServiceMgr impleme
 	 * @return
 	 */
 	public MsgResponse checkCodeForResetPasswd(String mobileNo) {
+		if(StringUtils.isBlank(mobileNo)){
+			return new MsgResponse("0", "手机号码未传递");
+		}
 		Object[] arr = new Object[1];
 		arr[0] = RandomStringUtils.randomNumeric(6);
 		SmsUtil.sendSms("02", mobileNo, arr);// SMS_TYPE 02-找回密码获取验证码
