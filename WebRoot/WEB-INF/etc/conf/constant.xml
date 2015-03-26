@@ -131,9 +131,9 @@
 	</constant>
 	<!-- 食材满意度 -->
 	<constant constantDef="GOODS_STAR">
-    	<constantName value="01">不满意</constantName>
-    	<constantName value="02">一般</constantName>
-    	<constantName value="03">满意</constantName>
+    	<constantName value="-1">不满意</constantName>
+    	<constantName value="0">还行</constantName>
+    	<constantName value="1">满意</constantName>
 	</constant>
 	<!-- 子订单状态 -->
 	<constant constantDef="ORDER_CHILD_STATUS">
@@ -223,5 +223,10 @@
 	<!-- 业务单据类型 -->
 	<constant constantDef="PAPER_TYPE">
 	    <constantName value="01">用户订单</constantName>
+	</constant>
+	<!-- 评价商品来源 -->
+	<constant constantDef="COMMENT_GOODS_FROM">
+    	<constantName value="1">订单商品</constantName>
+    	<constantName value="2">订单菜谱商品</constantName>
 	</constant>
 </constants>
