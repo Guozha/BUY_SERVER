@@ -90,21 +90,27 @@ public class GeneralServiceImpl extends AbstractBusinessObjectServiceMgr impleme
 	
 	
 	public GeneralResponse findGoodsByFrontTypeId(GoodsRequest vo){
-		int marketId= this.commonService.getMaketId(vo.getAddressId());
-		BasFrontType bft = this.basFrontTypeMapper.load(vo.getFrontTypeId());
 		GeneralResponse response = new GeneralResponse();
 		response.setFrontTypeList(null);
+		
+		Integer frontTypeId= vo.getFrontTypeId();
+		if(frontTypeId==null){
+			return response;
+		}
+		
+		int marketId= this.commonService.getMaketId(vo.getAddressId());
+		BasFrontType bft = this.basFrontTypeMapper.load(frontTypeId);
 		
 		int totalCount =0;
 		List<Goods> goodsList = null;
 		switch (bft.getLevel()) {
 		case 1: //一级类目商品
-			goodsList = this.gooGoodsMapper.findPagerByFrontTypeId(marketId, vo.getFrontTypeId(),null, vo.getStartIndex(), vo.getPageSize());
-			totalCount = gooGoodsMapper.findTotalCountByFrontTypeId(marketId, vo.getFrontTypeId(), null);
+			goodsList = this.gooGoodsMapper.findPagerByFrontTypeId(marketId, frontTypeId,null, vo.getStartIndex(), vo.getPageSize());
+			totalCount = gooGoodsMapper.findTotalCountByFrontTypeId(marketId, frontTypeId, null);
 			break;
 		case 2: //二级类目商品
-			goodsList = this.gooGoodsMapper.findPagerByFrontTypeId(marketId, null,vo.getFrontTypeId(), vo.getStartIndex(), vo.getPageSize());
-			totalCount = gooGoodsMapper.findTotalCountByFrontTypeId(marketId, null, vo.getFrontTypeId());
+			goodsList = this.gooGoodsMapper.findPagerByFrontTypeId(marketId, null,frontTypeId, vo.getStartIndex(), vo.getPageSize());
+			totalCount = gooGoodsMapper.findTotalCountByFrontTypeId(marketId, null, frontTypeId);
 			break;
 		}
 		response.setGoodsList(goodsList);
@@ -120,6 +126,7 @@ public class GeneralServiceImpl extends AbstractBusinessObjectServiceMgr impleme
 		response.setUnitPrice(marMarketGoodsMapper.findByGoodsId(marketId, vo.getGoodsId()).getUnitPrice());
 		return response;
 	}
+	
 
 	@Override
 	public List<GoodsPriceResponse> findGoodsPriceByGoodsId(GoodsRequest vo) {

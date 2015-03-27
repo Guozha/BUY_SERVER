@@ -79,7 +79,7 @@ public class CartServiceImpl extends AbstractBusinessObjectServiceMgr implements
 			po.setMarketId(marketId);
 			this.buyCartMapper.insert(po);
 		}else{  //修改购物车信息
-			po.setAmount(vo.getAmount()[0]);
+			po.setAmount(po.getAmount()+vo.getAmount()[0]);
 			this.buyCartMapper.update(po);
 		}
 		return new MsgResponse(MsgResponse.SUCC, "添加购物车成功");
@@ -95,7 +95,7 @@ public class CartServiceImpl extends AbstractBusinessObjectServiceMgr implements
 			this.buyCartMapper.update(po);
 		}
 		//删除已被用户移除的购物车信息
-		this.buyCartMapper.deletesNotIn(vo.getUserId(), vo.getCartId());
+		this.buyCartMapper.deleteNotIn(vo.getUserId(), vo.getCartId());
 		return new MsgResponse(MsgResponse.SUCC, "修改购物车成功");
 	}
 
