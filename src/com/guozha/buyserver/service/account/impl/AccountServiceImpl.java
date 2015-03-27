@@ -455,4 +455,22 @@ public class AccountServiceImpl extends AbstractBusinessObjectServiceMgr impleme
 		return ticketCount.getUserId();
 	}
 
+
+	@Override
+	public SysUser getUserByMobileNo(String mobileNo) {
+		return sysUserMapper.getUserByMobileNo(mobileNo);
+	}
+
+	public void setSysUserMapper(SysUserMapper sysUserMapper) {
+		this.sysUserMapper = sysUserMapper;
+	}
+
+	public void setAccountMapper(AccountMapper accountMapper) {
+		this.accountMapper = accountMapper;
+	}
+
+	public void setCommonService(CommonService commonService) {
+		this.commonService = commonService;
+	}
+
 }

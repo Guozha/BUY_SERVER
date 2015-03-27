@@ -5,11 +5,12 @@ import java.util.List;
 import com.guozha.buyserver.framework.sys.business.BusinessObjectServiceMgr;
 import com.guozha.buyserver.persistence.beans.AccMyTicket;
 import com.guozha.buyserver.persistence.beans.SysUser;
+import com.guozha.buyserver.persistence.mapper.AccountMapper;
+import com.guozha.buyserver.persistence.mapper.SysUserMapper;
+import com.guozha.buyserver.service.common.CommonService;
 import com.guozha.buyserver.web.controller.MsgResponse;
 import com.guozha.buyserver.web.controller.account.AcceptRequest;
 import com.guozha.buyserver.web.controller.account.AccountInfoResponse;
-import com.guozha.buyserver.web.controller.account.AddressRequest;
-import com.guozha.buyserver.web.controller.account.AddressResponse;
 import com.guozha.buyserver.web.controller.account.BalanceResponse;
 import com.guozha.buyserver.web.controller.account.GenerateInviteResponse;
 import com.guozha.buyserver.web.controller.account.InviteResponse;
@@ -56,5 +57,13 @@ public interface AccountService extends BusinessObjectServiceMgr {
 
 	// 菜票领用
 	MsgResponse accept(AcceptRequest accept);
+	
+	SysUser getUserByMobileNo(String mobileNo);
+	
+	public void setSysUserMapper(SysUserMapper sysUserMapper);
+
+	public void setAccountMapper(AccountMapper accountMapper);
+
+	public void setCommonService(CommonService commonService);
 
 }
