@@ -13,7 +13,7 @@ public class SysUser extends AbstractDO{
 	
 	private Integer userId;
 	private String mobileNo;
-	private String headUrl;
+	private byte[] headUrl;
 	private String passwd;
 	private int balance;
 	private int ticketAmount;
@@ -36,12 +36,6 @@ public class SysUser extends AbstractDO{
 	}
 	public void setMobileNo(String mobileNo) {
 		this.mobileNo = mobileNo;
-	}
-	public String getHeadUrl() {
-		return headUrl;
-	}
-	public void setHeadUrl(String headUrl) {
-		this.headUrl = headUrl;
 	}
 	public String getPasswd() {
 		return passwd;
@@ -134,6 +128,12 @@ public class SysUser extends AbstractDO{
 		return new EqualsBuilder()
 			.append(getUserId(),other.getUserId())
 			.isEquals();
+	}
+	public byte[] getHeadUrl() {
+		return headUrl;
+	}
+	public void setHeadUrl(byte[] headUrl) {
+		this.headUrl = headUrl;
 	}
 
 }

@@ -473,4 +473,23 @@ public class AccountServiceImpl extends AbstractBusinessObjectServiceMgr impleme
 		this.commonService = commonService;
 	}
 
+	/**
+	 * 头像设置
+	 * @author sunhanbin
+	 * @date 2015-03-25
+	 * @param user
+	 * @return
+	 */
+	public MsgResponse setHeadImg(SysUser user) {
+		MsgResponse response = new MsgResponse();
+		if(user!=null){
+//			int count=accountMapper.setHeadImg(user);
+//			if(count!=1){
+//				response.setReturnCode(YesNo.No.getCode().toString());
+//				response.setMsg("操作失败");
+//			}
+		}
+		return response;
+	}
+
 }

@@ -332,7 +332,7 @@ public class DateUtil {
 		// } else {
 		// System.out.println("ok");
 		// }
-		System.out.println(getStartTimeOfDate(new Date()));
+		System.out.println(getLunarCalendarMMDD());
 
 	}
 }

@@ -77,5 +77,6 @@
 	<classpathentry kind="con" path="org.eclipse.jst.j2ee.internal.web.container"/>
 	<classpathentry kind="con" path="org.eclipse.jst.j2ee.internal.module.container"/>
 	<classpathentry kind="lib" path="WebRoot/WEB-INF/lib/easymock-3.3.1.jar"/>
+	<classpathentry kind="lib" path="D:/Repository/Git/BUY_SERVER/WebRoot/WEB-INF/lib/LunarCalendar.jar"/>
 	<classpathentry kind="output" path="WebRoot/WEB-INF/classes"/>
 </classpath>

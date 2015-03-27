@@ -138,5 +138,15 @@ public class AccountController extends BaseController {
 	public void accept(AcceptRequest accept, HttpServletResponse response) {
 		responseJson(accountService.accept(accept), response);
 	}
+	
+	/**
+	 * 头像设置
+	 * @param user
+	 * @param response
+	 */
+	@RequestMapping(value = "/setHeadImg")
+	public void setHeadImg(SysUser user,HttpServletResponse response){
+		responseJson(accountService.setHeadImg(user), response);
+	}
 
 }

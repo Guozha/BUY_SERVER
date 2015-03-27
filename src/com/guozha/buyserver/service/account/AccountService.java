@@ -57,13 +57,16 @@ public interface AccountService extends BusinessObjectServiceMgr {
 
 	// 菜票领用
 	MsgResponse accept(AcceptRequest accept);
-	
+
 	SysUser getUserByMobileNo(String mobileNo);
-	
+
 	public void setSysUserMapper(SysUserMapper sysUserMapper);
 
 	public void setAccountMapper(AccountMapper accountMapper);
 
 	public void setCommonService(CommonService commonService);
+
+	// 头像设置
+	MsgResponse setHeadImg(SysUser user);
 
 }
