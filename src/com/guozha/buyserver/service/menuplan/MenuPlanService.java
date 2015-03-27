@@ -22,7 +22,7 @@ public interface MenuPlanService {
 	ReturnCode insert(MenuUserPlanRequest request);
 
 	// 推荐菜谱计划
-	List<MenuPlanResponse> listMenuPlan();
+	MenuPlanResponse listMenuPlan(String planDate);
 
 	// 菜谱菜品详情
 	MenuResponse detail(MenuDetailRequest request);

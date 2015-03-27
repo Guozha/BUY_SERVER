@@ -5,7 +5,6 @@ import java.util.List;
 import org.springframework.stereotype.Repository;
 
 import com.guozha.buyserver.dal.BaseMapper;
-import com.guozha.buyserver.persistence.beans.MnuMenu;
 import com.guozha.buyserver.persistence.beans.MnuMenuPlan;
 import com.guozha.buyserver.persistence.beans.MnuMenuStep;
 import com.guozha.buyserver.persistence.beans.MnuUserMenuPlan;
@@ -27,7 +26,7 @@ public interface MnuMenuPlanMapper extends BaseMapper<MnuMenuPlan, Integer> {
 	int insertUserMenuPlan(MnuUserMenuPlan menuUserPlan);
 
 	// 菜谱推荐
-	List<MenuPlanResponse> listMenuPlan();
+	MenuPlanResponse listMenuPlan(String planDate);
 
 	// 查询菜谱详情
 	MenuResponse menuDetail(int menuId);
