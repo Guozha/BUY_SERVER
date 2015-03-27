@@ -23,6 +23,18 @@ public class MenuPlanController extends BaseController {
 	private MenuPlanService menuPlanService;
 
 	/**
+	 * 首页：今日信息
+	 * 
+	 * @author sunhanbin
+	 * @date 2015-03-19
+	 * @param response
+	 */
+	@RequestMapping(value = "/todayInfo")
+	public void todayInfo(HttpServletResponse response) {
+		responseJson(menuPlanService.getTodayInfo(), response);
+	}
+
+	/**
 	 * 菜谱推荐
 	 * 
 	 * @author sunhanbin
@@ -30,7 +42,7 @@ public class MenuPlanController extends BaseController {
 	 * @param response
 	 */
 	@RequestMapping(value = "/list")
-	public void list(String planDate,HttpServletResponse response) {
+	public void list(String planDate, HttpServletResponse response) {
 		responseJson(menuPlanService.listMenuPlan(planDate), response);
 	}
 
@@ -58,16 +70,17 @@ public class MenuPlanController extends BaseController {
 	public void insert(MenuUserPlanRequest requset, HttpServletResponse response) {
 		responseJson(menuPlanService.insert(requset), response);
 	}
-	
+
 	/**
 	 * 商品相关菜谱列表
+	 * 
 	 * @author txf
 	 * @date 2015-03-23
 	 * @param vo
 	 * @param response
 	 */
-	@RequestMapping(value="/goodsMenuList")
-	public void goodsMenuList(int goodsId,HttpServletResponse response){
+	@RequestMapping(value = "/goodsMenuList")
+	public void goodsMenuList(int goodsId, HttpServletResponse response) {
 		responseJson(menuPlanService.findByGoodsId(goodsId), response);
 	}
 

@@ -34,4 +34,7 @@ public interface MnuMenuPlanMapper extends BaseMapper<MnuMenuPlan, Integer> {
 	// 获取菜谱制作详情
 	List<MnuMenuStep> listMenuCookStep(int menuId);
 
+	// 今日菜谱信息
+	String getTodayInfo(String planDate);
+
 }

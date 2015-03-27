@@ -13,12 +13,20 @@ import javax.xml.datatype.XMLGregorianCalendar;
 
 import org.springframework.util.Assert;
 
+import com.lunarcalendar.LunarCalendar;
+
 public class DateUtil {
 
 	public static final String PATTERN_STANDARD = "yyyy-MM-dd HH:mm:ss";
-
 	public static final String PATTERN_DATE = "yyyy-MM-dd";
 
+	/**
+	 * 时间戳转为String
+	 * 
+	 * @param timestamp
+	 * @param pattern
+	 * @return
+	 */
 	public static String timestamp2String(Timestamp timestamp, String pattern) {
 		if (timestamp == null) {
 			throw new java.lang.IllegalArgumentException("timestamp null illegal");
@@ -30,27 +38,49 @@ public class DateUtil {
 		return sdf.format(new Date(timestamp.getTime()));
 	}
 
+	/**
+	 * Date转为String
+	 * 
+	 * @param date
+	 * @param pattern
+	 * @return
+	 */
 	public static String date2String(java.util.Date date, String pattern) {
 		if (date == null) {
 			return "";
-			//throw new java.lang.IllegalArgumentException("timestamp null illegal");
 		}
 		if (pattern == null || pattern.equals("")) {
 			pattern = PATTERN_STANDARD;
-			;
 		}
 		SimpleDateFormat sdf = new SimpleDateFormat(pattern);
 		return sdf.format(date);
 	}
 
+	/**
+	 * 获取当前时间戳
+	 * 
+	 * @return
+	 */
 	public static Timestamp currentTimestamp() {
 		return new Timestamp(new Date().getTime());
 	}
 
+	/**
+	 * 当前TimeStamp转为string
+	 * 
+	 * @param pattern
+	 * @return
+	 */
 	public static String currentTimestamp2String(String pattern) {
 		return timestamp2String(currentTimestamp(), pattern);
 	}
 
+	/**
+	 * TimeStamp转为string
+	 * 
+	 * @param pattern
+	 * @return
+	 */
 	public static Timestamp string2Timestamp(String strDateTime, String pattern) {
 		if (strDateTime == null || strDateTime.equals("")) {
 			throw new java.lang.IllegalArgumentException("Date Time Null Illegal");
@@ -69,6 +99,12 @@ public class DateUtil {
 		return new Timestamp(date.getTime());
 	}
 
+	/**
+	 * string转Date
+	 * 
+	 * @param pattern
+	 * @return
+	 */
 	public static Date string2Date(String strDate, String pattern) {
 		if (strDate == null || strDate.equals("")) {
 			throw new RuntimeException("str date null");
@@ -87,6 +123,12 @@ public class DateUtil {
 		return date;
 	}
 
+	/**
+	 * 获取strdate中的年
+	 * 
+	 * @param strDest
+	 * @return
+	 */
 	public static String stringToYear(String strDest) {
 		if (strDest == null || strDest.equals("")) {
 			throw new java.lang.IllegalArgumentException("str dest null");
@@ -98,6 +140,12 @@ public class DateUtil {
 		return String.valueOf(c.get(Calendar.YEAR));
 	}
 
+	/**
+	 * 获取strdate中的月
+	 * 
+	 * @param strDest
+	 * @return
+	 */
 	public static String stringToMonth(String strDest) {
 		if (strDest == null || strDest.equals("")) {
 			throw new java.lang.IllegalArgumentException("str dest null");
@@ -106,7 +154,6 @@ public class DateUtil {
 		Date date = string2Date(strDest, DateUtil.PATTERN_DATE);
 		Calendar c = Calendar.getInstance();
 		c.setTime(date);
-		// return String.valueOf(c.get(Calendar.MONTH));
 		int month = c.get(Calendar.MONTH);
 		month = month + 1;
 		if (month < 10) {
@@ -115,6 +162,12 @@ public class DateUtil {
 		return String.valueOf(month);
 	}
 
+	/**
+	 * 获取strdate中的日期
+	 * 
+	 * @param strDest
+	 * @return
+	 */
 	public static String stringToDay(String strDest) {
 		if (strDest == null || strDest.equals("")) {
 			throw new java.lang.IllegalArgumentException("str dest null");
@@ -131,6 +184,12 @@ public class DateUtil {
 		return "" + day;
 	}
 
+	/**
+	 * 获取一个月中的第一天
+	 * 
+	 * @param strDest
+	 * @return
+	 */
 	public static Date getFirstDayOfMonth(Calendar c) {
 		int year = c.get(Calendar.YEAR);
 		int month = c.get(Calendar.MONTH);
@@ -139,6 +198,12 @@ public class DateUtil {
 		return c.getTime();
 	}
 
+	/**
+	 * 获取一个月中的最后一天
+	 * 
+	 * @param strDest
+	 * @return
+	 */
 	public static Date getLastDayOfMonth(Calendar c) {
 		int year = c.get(Calendar.YEAR);
 		int month = c.get(Calendar.MONTH) + 1;
@@ -151,6 +216,12 @@ public class DateUtil {
 		return c.getTime();
 	}
 
+	/**
+	 * 混合日历
+	 * 
+	 * @param strDest
+	 * @return
+	 */
 	public static String date2GregorianCalendarString(Date date) {
 		if (date == null) {
 			throw new java.lang.IllegalArgumentException("Date is null");
@@ -169,11 +240,17 @@ public class DateUtil {
 
 	}
 
+	/**
+	 * 日期比较
+	 * 
+	 * @param firstDate
+	 * @param secondDate
+	 * @return
+	 */
 	public static boolean compareDate(Date firstDate, Date secondDate) {
 		if (firstDate == null || secondDate == null) {
 			throw new java.lang.RuntimeException();
 		}
-
 		String strFirstDate = date2String(firstDate, "yyyy-MM-dd");
 		String strSecondDate = date2String(secondDate, "yyyy-MM-dd");
 		if (strFirstDate.equals(strSecondDate)) {
@@ -181,34 +258,81 @@ public class DateUtil {
 		}
 		return false;
 	}
-	
+
+	/**
+	 * 获取一天中的起始时间
+	 * 
+	 * @param firstDate
+	 * @param secondDate
+	 * @return
+	 */
 	public static Date getStartTimeOfDate(Date currentDate) {
 		Assert.notNull(currentDate);
-		String strDateTime = date2String(currentDate,"yyyy-MM-dd") + " 00:00:00";
-		return string2Date(strDateTime,"yyyy-MM-dd hh:mm:ss");
+		String strDateTime = date2String(currentDate, "yyyy-MM-dd") + " 00:00:00";
+		return string2Date(strDateTime, "yyyy-MM-dd hh:mm:ss");
 	}
-	
+
+	/**
+	 * 获取一天中的结束时间
+	 * 
+	 * @param firstDate
+	 * @param secondDate
+	 * @return
+	 */
 	public static Date getEndTimeOfDate(Date currentDate) {
 		Assert.notNull(currentDate);
-		String strDateTime = date2String(currentDate,"yyyy-MM-dd") + " 59:59:59";
-		return string2Date(strDateTime,"yyyy-MM-dd hh:mm:ss");
+		String strDateTime = date2String(currentDate, "yyyy-MM-dd") + " 59:59:59";
+		return string2Date(strDateTime, "yyyy-MM-dd hh:mm:ss");
 	}
-	
-	public static void main(String[] args){
-		String str1 = "2011-01-01";
-		String str2 = "1988-09-09";
-		Date date1 = DateUtil.string2Date(str1, "yyyy-MM-dd");
-		Date date2 = DateUtil.string2Date(str2, "yyyy-MM-dd");
-		Calendar c1 = Calendar.getInstance();
-		Calendar c2 = Calendar.getInstance();
-		c1.setTime(date1);
-		c2.setTime(date2);
-		c2.add(Calendar.YEAR, 4);
-		if (c2.before(c1)) {
-			System.out.println("illegal");
-		}else {
-			System.out.println("ok");
-		}
-		
+
+	/**
+	 * 获取农历月日
+	 * 
+	 * @return
+	 */
+	public static String getLunarCalendarMMDD() {
+		LunarCalendar cal = new LunarCalendar();
+		return cal.getChineaseMMDD();
+	}
+
+	/**
+	 * 获取今天(中文日期)
+	 * 
+	 * @return yyyy年MM月dd日
+	 */
+	public final static String getTodayInCN() {
+		Date date = new Date();
+		SimpleDateFormat df = new SimpleDateFormat("yyyy年M月d日");
+		return df.format(date);
+	}
+
+	/**
+	 * 获取今天(日期)
+	 * 
+	 * @return yyyy-MM-dd
+	 */
+	public final static String getToday() {
+		Date date = new Date();
+		SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd");
+		return df.format(date);
+	}
+
+	public static void main(String[] args) {
+		// String str1 = "2011-01-01";
+		// String str2 = "1988-09-09";
+		// Date date1 = DateUtil.string2Date(str1, "yyyy-MM-dd");
+		// Date date2 = DateUtil.string2Date(str2, "yyyy-MM-dd");
+		// Calendar c1 = Calendar.getInstance();
+		// Calendar c2 = Calendar.getInstance();
+		// c1.setTime(date1);
+		// c2.setTime(date2);
+		// c2.add(Calendar.YEAR, 4);
+		// if (c2.before(c1)) {
+		// System.out.println("illegal");
+		// } else {
+		// System.out.println("ok");
+		// }
+		System.out.println(getStartTimeOfDate(new Date()));
+
 	}
 }
