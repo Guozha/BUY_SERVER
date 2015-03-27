@@ -1,10 +1,6 @@
 package com.guozha.buyserver.service.menuplan.impl;
 
-import java.sql.Timestamp;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
@@ -20,18 +16,17 @@ import com.guozha.buyserver.framework.enums.ReturnCodeEnum;
 import com.guozha.buyserver.framework.sys.business.AbstractBusinessObjectServiceMgr;
 import com.guozha.buyserver.persistence.beans.MnuMenu;
 import com.guozha.buyserver.persistence.beans.MnuMenuGoods;
-import com.guozha.buyserver.persistence.beans.MnuMenuPlan;
 import com.guozha.buyserver.persistence.beans.MnuMenuStep;
 import com.guozha.buyserver.persistence.beans.MnuUserMenuPlan;
 import com.guozha.buyserver.persistence.mapper.MnuMenuMapper;
 import com.guozha.buyserver.persistence.mapper.MnuMenuPlanMapper;
 import com.guozha.buyserver.service.account.ReturnCode;
 import com.guozha.buyserver.service.menuplan.MenuPlanService;
-import com.guozha.buyserver.web.controller.cart.Menu;
 import com.guozha.buyserver.web.controller.menuplan.MenuDetailRequest;
 import com.guozha.buyserver.web.controller.menuplan.MenuPlanResponse;
 import com.guozha.buyserver.web.controller.menuplan.MenuResponse;
 import com.guozha.buyserver.web.controller.menuplan.MenuUserPlanRequest;
+import com.guozha.buyserver.web.controller.menuplan.TodayInfoResponse;
 
 /**
  * 菜谱计划
@@ -48,6 +43,20 @@ public class MenuPlanServiceImpl extends AbstractBusinessObjectServiceMgr implem
 	private MnuMenuPlanMapper menuPlanMapper;
 	@Autowired
 	private MnuMenuMapper mnuMenuMapper;
+
+	/**
+	 * 首页：今日信息
+	 * 
+	 * @author sunhanbin
+	 * @date 2015-03-15
+	 */
+	public TodayInfoResponse getTodayInfo() {
+		TodayInfoResponse response = new TodayInfoResponse();
+		response.setToday(DateUtil.getTodayInCN());// XXXX年XX月XX日
+		response.setLunarToday(DateUtil.getLunarCalendarMMDD());// 农历
+		response.setDayDesc(menuPlanMapper.getTodayInfo(DateUtil.getToday()));
+		return response;
+	}
 
 	/**
 	 * 新增菜谱

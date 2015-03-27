@@ -39,6 +39,13 @@ PUBLIC "-//ibatis.apache.org//DTD Mapper 3.0//EN"
 		    AND B.GOODS_ID = #{goodsId}
 	</select>
 	
+	<!-- 首页：今天菜谱信息 -->
+	<select id="getTodayInfo" parameterType="String" resultType="String">
+	  SELECT day_desc dayDesc 
+	  FROM MNU_MENU_PLAN
+      WHERE plan_date=#{planDate}
+	</select>
+	
 	
 	<!--新增我的菜票计划  -->
 	<insert id="insertUserMenuPlan" useGeneratedKeys="true" keyProperty="userMenuPlanId" parameterType="com.guozha.buyserver.persistence.beans.MnuUserMenuPlan">
