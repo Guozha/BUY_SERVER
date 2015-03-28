@@ -109,7 +109,7 @@ SELECT
       #{forPrice},
       #{ticketNo},
       NOW(),
-      DATE_ADD(CURDATE(), INTERVAL 1 MONTH),
+      date_sub(DATE_ADD(CURDATE(), INTERVAL 1 MONTH),interval 1 day),
       #{status}
     )
 </insert>
@@ -162,6 +162,15 @@ WHERE my_invite_id = #{myInviteId}
    <parameter property="ticketNo" jdbcType="VARCHAR" mode="IN"/>  
  </parameterMap>  
 <update id="resetTicketCount" parameterMap="paraMap">
-  CALL PROC_TICKET_COUNT (#{userId},#{ticketNo})
+  CALL PROC_TICKET_PRESENT (#{userId},#{ticketNo})
+</update>
+
+<!-- 头像设置 -->
+<update id="setHeadImg" parameterType="com.guozha.buyserver.persistence.beans.SysUser">
+   UPDATE 
+     SYS_USER 
+   SET
+    head_url = #{headUrl}
+   WHERE user_id = #{userId}
 </update>
 </mapper>

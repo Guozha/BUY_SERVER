@@ -16,6 +16,7 @@ import com.guozha.buyserver.persistence.beans.AccMyInvite;
 import com.guozha.buyserver.persistence.beans.AccMyTicket;
 import com.guozha.buyserver.persistence.beans.AccMyTicketCount;
 import com.guozha.buyserver.persistence.beans.SysSeq;
+import com.guozha.buyserver.persistence.beans.SysUser;
 import com.guozha.buyserver.web.controller.account.AcceptRequest;
 import com.guozha.buyserver.web.controller.account.AccountInfoResponse;
 import com.guozha.buyserver.web.controller.account.BalanceResponse;
@@ -80,5 +81,8 @@ public interface AccountMapper extends BaseMapper<AccAddress, Integer> {
 
 	// 菜票返赠处理
 	void resetTicketCount(Map paraMap);
+
+	// 设置头像
+	int setHeadImg(SysUser user);
 
 }

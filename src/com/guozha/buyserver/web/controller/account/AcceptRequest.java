@@ -8,7 +8,7 @@ package com.guozha.buyserver.web.controller.account;
  */
 public class AcceptRequest {
 
-	private Integer myInviteId;
+	private Integer inviteId;
 	private String mobileNo;// 手机号
 	private String ticketNo;
 	private Integer userId;//发放人userID
@@ -20,14 +20,6 @@ public class AcceptRequest {
 
 	public void setMobileNo(String mobileNo) {
 		this.mobileNo = mobileNo;
-	}
-
-	public Integer getMyInviteId() {
-		return myInviteId;
-	}
-
-	public void setMyInviteId(Integer myInviteId) {
-		this.myInviteId = myInviteId;
 	}
 
 	public String getTicketNo() {
@@ -53,6 +45,14 @@ public class AcceptRequest {
 
 	public void setGetUserId(Integer getUserId) {
 		this.getUserId = getUserId;
+	}
+
+	public Integer getInviteId() {
+		return inviteId;
+	}
+
+	public void setInviteId(Integer inviteId) {
+		this.inviteId = inviteId;
 	}
 
 }
