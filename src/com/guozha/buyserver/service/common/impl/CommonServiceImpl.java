@@ -17,6 +17,7 @@ import com.guozha.buyserver.persistence.beans.BasPaperGen;
 import com.guozha.buyserver.persistence.beans.GooGoods;
 import com.guozha.buyserver.persistence.beans.GooGoodsAmount;
 import com.guozha.buyserver.persistence.beans.MarMarket;
+import com.guozha.buyserver.persistence.beans.MarMarketGoods;
 import com.guozha.buyserver.persistence.beans.MnuMenuGoods;
 import com.guozha.buyserver.persistence.beans.SysSmsSend;
 import com.guozha.buyserver.persistence.mapper.BasPaperGenMapper;
@@ -27,6 +28,7 @@ import com.guozha.buyserver.persistence.mapper.MarMarketMapper;
 import com.guozha.buyserver.persistence.mapper.MnuMenuMapper;
 import com.guozha.buyserver.persistence.mapper.SysSmsSendMapper;
 import com.guozha.buyserver.service.common.CommonService;
+import com.guozha.buyserver.service.common.MenuUnitPriceBo;
 
 @Transactional(rollbackFor = Exception.class)
 @Service("commonService")
@@ -96,35 +98,46 @@ public class CommonServiceImpl extends AbstractBusinessObjectServiceMgr implemen
 	}
 
 	@Override
-	public int getMenuUnitPrice(int marketId, int menuId) {
+	public MenuUnitPriceBo getMenuUnitPrice(int marketId, int menuId) {
+		MenuUnitPriceBo bo = new MenuUnitPriceBo();
+		bo.setStatus("1");
 		int menuUnitPrice = 0; // 菜谱单价
 		List<MnuMenuGoods> menuGoodsList = this.mnuMenuMapper.findGoodsById(menuId);
 
 		for (MnuMenuGoods menuGoods : menuGoodsList) {
-			List<GooGoodsAmount> goodsAmountList = this.gooGoodsAmountMapper.findByGoodsId(menuGoods.getGoodsId());
-			int amounts[] = new int[goodsAmountList.size()];
-			for (int j = 0; j < goodsAmountList.size(); j++) {
-				amounts[j] = goodsAmountList.get(j).getAmount();
+			int unitPrice  =0; //食材单价
+			int goodsPrice =0; //食材份量取上上值后的价格
+			MarMarketGoods marketGoods = marMarketGoodsMapper.loadByGoodsId(marketId, menuGoods.getGoodsId());
+			if(marketGoods!=null){
+				unitPrice = marketGoods.getUnitPrice();
+				List<GooGoodsAmount> goodsAmountList = this.gooGoodsAmountMapper.findByGoodsId(menuGoods.getGoodsId());
+				int amounts[] = new int[goodsAmountList.size()];
+				for (int j = 0; j < goodsAmountList.size(); j++) {
+					amounts[j] = goodsAmountList.get(j).getAmount();
+				}
+				Arrays.sort(amounts);
+				goodsPrice = PriceUtils.getMenuGoodsPrice(unitPrice, menuGoods.getAmount(), amounts, gooGoodsMapper.load(menuGoods.getGoodsId()).getUnit());
+				menuUnitPrice += goodsPrice;
+			}else{
+				bo.setStatus("0");
+				menuUnitPrice =0 ;
+				break;
 			}
-			Arrays.sort(amounts);
-			GooGoods goods = gooGoodsMapper.load(menuGoods.getGoodsId());
-			int unitPrice = this.marMarketGoodsMapper.findByGoodsId(marketId, menuGoods.getGoodsId()).getUnitPrice();
-			int goodsUnitPrice = PriceUtils.getMenuGoodsPrice(unitPrice, menuGoods.getAmount(), amounts, goods.getUnit());
-			menuUnitPrice += goodsUnitPrice;
 		}
-		return menuUnitPrice;
+	
+		bo.setUnitPrice(menuUnitPrice);
+		return bo;
 	}
 
 	@Override
-	public int getMenuGoodsAmount(int goodsId, int amount) {
-		GooGoods goods = this.gooGoodsMapper.load(goodsId);
+	public int getMenuGoodsAmount(int goodsId, int amount,String unit) {
 		List<GooGoodsAmount> goodsAmountList = this.gooGoodsAmountMapper.findByGoodsId(goodsId);
 		int amounts[] = new int[goodsAmountList.size()];
 		for (int j = 0; j < goodsAmountList.size(); j++) {
 			amounts[j] = goodsAmountList.get(j).getAmount();
 		}
 		Arrays.sort(amounts);
-		return AmountUtils.getMenuGoodsAmount(amount, amounts, goods.getUnit());
+		return AmountUtils.getMenuGoodsAmount(amount, amounts, unit);
 	}
 
 	@Override

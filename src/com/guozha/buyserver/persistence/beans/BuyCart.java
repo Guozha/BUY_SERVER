@@ -19,21 +19,6 @@ public class BuyCart extends AbstractDO {
 	private Integer amount; //份量
 	private String unit; //计量单位
 	
-	private Integer marketId; //农贸市场ID
-	private String marketGoodsId; //农贸市场商品id ，因菜谱存在多个id,因此统一存字符串，已逗号分隔
-	
-	public Integer getMarketId() {
-		return marketId;
-	}
-	public void setMarketId(Integer marketId) {
-		this.marketId = marketId;
-	}
-	public String getMarketGoodsId() {
-		return marketGoodsId;
-	}
-	public void setMarketGoodsId(String marketGoodsId) {
-		this.marketGoodsId = marketGoodsId;
-	}
 	public String getUnit() {
 		return unit;
 	}

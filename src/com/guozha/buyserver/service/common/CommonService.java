@@ -18,13 +18,13 @@ public interface CommonService extends BusinessObjectServiceMgr {
 	int getMaketId(Integer addressId);
 
 	/**
-	 * 计算菜谱单价（食材取上值）
+	 * 计算菜谱单价（食材取上值） 如果菜谱中存在部分食材不能购买，则菜谱失效
 	 * 
 	 * @param marketId
 	 * @param menuId
 	 * @return
 	 */
-	int getMenuUnitPrice(int marketId, int menuId);
+	MenuUnitPriceBo getMenuUnitPrice(int marketId, int menuId);
 
 	/**
 	 * 计算菜谱中食材的上值份量
@@ -33,7 +33,7 @@ public interface CommonService extends BusinessObjectServiceMgr {
 	 * @param goodsId
 	 * @return
 	 */
-	int getMenuGoodsAmount(int goodsId, int amount);
+	int getMenuGoodsAmount(int goodsId, int amount,String unit);
 
 	/**
 	 * 短信插入短信表

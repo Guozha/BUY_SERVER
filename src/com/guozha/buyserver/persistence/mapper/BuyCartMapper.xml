@@ -13,11 +13,9 @@ PUBLIC "-//ibatis.apache.org//DTD Mapper 3.0//EN"
         <result property="displayName" jdbcType="INTEGER" column="DISPLAY_NAME"/>
         <result property="amount" jdbcType="INTEGER" column="AMOUNT"/>
         <result property="unit" jdbcType="VARCHAR" column="UNIT"/>
-        <result property="marketId" jdbcType="INTEGER" column="MARKET_ID"/>
-        <result property="marketGoodsId" jdbcType="VARCHAR" column="MARKET_GOODS_ID"/>
 	</resultMap>
 		<sql id="BASE_COLUMN_LIST">
-		CART_ID,USER_ID,SPLIT_TYPE,GOODS_OR_MENU_ID,DISPLAY_NAME,AMOUNT,UNIT,MARKET_ID,MARKET_GOODS_ID
+		CART_ID,USER_ID,SPLIT_TYPE,GOODS_OR_MENU_ID,DISPLAY_NAME,AMOUNT,UNIT
 	</sql>
 	
     <!-- 所有用户购物车信息 -->
@@ -108,9 +106,7 @@ PUBLIC "-//ibatis.apache.org//DTD Mapper 3.0//EN"
 	        GOODS_OR_MENU_ID,
 	        DISPLAY_NAME,
 	        AMOUNT,
-	        UNIT,
-	        MARKET_ID,
-	        MARKET_GOODS_ID
+	        UNIT
 	   )VALUES(
 	       #{cartId},
 	       #{userId},
@@ -118,9 +114,7 @@ PUBLIC "-//ibatis.apache.org//DTD Mapper 3.0//EN"
 	       #{goodsOrMenuId},
 	       #{displayName},
 	       #{amount},
-	       #{unit},
-	       #{marketId},
-	       #{marketGoodsId}
+	       #{unit}
 	   )
 	</insert>
 	

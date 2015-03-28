@@ -20,6 +20,7 @@ import com.guozha.buyserver.persistence.mapper.MarMarketGoodsMapper;
 import com.guozha.buyserver.persistence.mapper.MnuMenuMapper;
 import com.guozha.buyserver.service.cart.CartService;
 import com.guozha.buyserver.service.common.CommonService;
+import com.guozha.buyserver.service.common.MenuUnitPriceBo;
 import com.guozha.buyserver.web.controller.MsgResponse;
 import com.guozha.buyserver.web.controller.cart.CartRequest;
 import com.guozha.buyserver.web.controller.cart.CartResponse;
@@ -46,7 +47,7 @@ public class CartServiceImpl extends AbstractBusinessObjectServiceMgr implements
     
 	@Override
 	public MsgResponse add(CartRequest vo) {
-		int marketId= this.commonService.getMaketId( vo.getAddressId());
+		//int marketId= this.commonService.getMaketId( vo.getAddressId());
 		BuyCart po = this.buyCartMapper.selectByGoodsOrMenuId(vo.getUserId(), vo.getId(),vo.getProductType());
 		if(po==null){  //新的购物车信息
 			po = new BuyCart();
@@ -55,28 +56,28 @@ public class CartServiceImpl extends AbstractBusinessObjectServiceMgr implements
 				po.setDisplayName(menu.getMenuName());
 				po.setUnit("08");//constants.xml 
 				
-				List<MarMarketGoods> marketGoodsList = this.marMarketGoodsMapper.findByMenuId(marketId, vo.getId());
-				String marketGoodsId ="";
-				for(MarMarketGoods marketGoods:marketGoodsList){
-					marketGoodsId += marketGoods.getMarketGoodsId()+",";
-				}
-				marketGoodsId = marketGoodsId.substring(0, marketGoodsId.lastIndexOf(","));
-				po.setMarketGoodsId(marketGoodsId);
+				//List<MarMarketGoods> marketGoodsList = this.marMarketGoodsMapper.findByMenuId(marketId, vo.getId());
+				//String marketGoodsId ="";
+				//for(MarMarketGoods marketGoods:marketGoodsList){
+				//	marketGoodsId += marketGoods.getMarketGoodsId()+",";
+				//}
+				//marketGoodsId = marketGoodsId.substring(0, marketGoodsId.lastIndexOf(","));
+				//po.setMarketGoodsId(marketGoodsId);
 			}else if("02".equals(vo.getProductType())){ //单品  constants.xml
 				GooGoods goods = this.gooGoodsMapper.load(vo.getId());
 				po.setDisplayName(goods.getGoodsName());
 				po.setUnit(goods.getUnit());//constants.xml 
 				
 				//存储农贸市场商品ID
-				MarMarketGoods marketGoods = this.marMarketGoodsMapper.findByGoodsId(marketId, vo.getId());
-				po.setMarketGoodsId(marketGoods.getMarketGoodsId().toString());
+				//MarMarketGoods marketGoods = this.marMarketGoodsMapper.findByGoodsId(marketId, vo.getId());
+				//po.setMarketGoodsId(marketGoods.getMarketGoodsId().toString());
 			}
 			po.setUserId(vo.getUserId());
 			po.setGoodsOrMenuId(vo.getId());
 			po.setSplitType(vo.getProductType());
 			po.setAmount(vo.getAmount()[0]);
 			
-			po.setMarketId(marketId);
+			//po.setMarketId(marketId);
 			this.buyCartMapper.insert(po);
 		}else{  //修改购物车信息
 			po.setAmount(po.getAmount()+vo.getAmount()[0]);
@@ -114,7 +115,7 @@ public class CartServiceImpl extends AbstractBusinessObjectServiceMgr implements
 	
 	@Override
 	public CartResponse find(CartRequest vo) {
-       
+		int marketId= this.commonService.getMaketId( vo.getAddressId());
 		CartResponse response = new CartResponse();
 		response.setServiceFee(PriceUtils.getServiceFee());
 		response.setServiceFeePrice(PriceUtils.getServiceFeePrice());
@@ -127,21 +128,35 @@ public class CartServiceImpl extends AbstractBusinessObjectServiceMgr implements
 		for(BuyCart cart:menuCartList){
 			Menu menu = new Menu();
 			menu.setCartId(cart.getCartId());
-			menu.setMenuName(cart.getDisplayName());
+			menu.setGoodsName(cart.getDisplayName());
 			menu.setAmount(cart.getAmount());
-			int unitPrice = commonService.getMenuUnitPrice(cart.getMarketId(), cart.getGoodsOrMenuId());
-			menu.setUnitPrice(unitPrice);
-			int price=unitPrice*cart.getAmount();
-			menu.setPrice(price);
+			
+			int price =0;
+			int unitPrice=0;
+			
 			List<MnuMenuGoods> menuGoodsList = this.mnuMenuMapper.findGoodsById(cart.getGoodsOrMenuId());
 			for(MnuMenuGoods menuGoods:menuGoodsList){
 				Goods goods = new Goods();
 				goods.setGoodsName(menuGoods.getGoodsName());
-				goods.setAmount(commonService.getMenuGoodsAmount(menuGoods.getGoodsId(), menuGoods.getAmount())); //	去上值的重量而不是菜谱的配置食材重量
+				GooGoods gooGoods = this.gooGoodsMapper.load(menuGoods.getGoodsId());
+				goods.setAmount(commonService.getMenuGoodsAmount(menuGoods.getGoodsId(), menuGoods.getAmount(),gooGoods.getUnit())); //	去上值的重量而不是菜谱的配置食材重量
+				goods.setUnit(gooGoods.getUnit());
 				menu.getGoodsList().add(goods);
-				
-				quantity+=1;
 			}
+		    
+			MenuUnitPriceBo menuUnitPriceBo  = commonService.getMenuUnitPrice(marketId, cart.getGoodsOrMenuId());
+			//如果菜谱有效  则设置菜谱有效  反之菜谱无效
+			if("1".equals(menuUnitPriceBo.getStatus())){	
+				menu.setCartStatus("1");
+				unitPrice = menuUnitPriceBo.getUnitPrice();
+				quantity+=1;
+			}else{ 
+			    menu.setCartStatus("0");
+			}
+			price = unitPrice*cart.getAmount();
+			menu.setUnitPrice(unitPrice);
+			menu.setPrice(price);	//菜谱价格= 菜谱单价*分享
+			
 			response.getMenuList().add(menu);
 			
 			totalPrice+=price;
@@ -150,15 +165,26 @@ public class CartServiceImpl extends AbstractBusinessObjectServiceMgr implements
 		//食材
 		List<BuyCart> goodsCartList = this.buyCartMapper.findGoodsByUserId(vo.getUserId());
 		for(BuyCart cart:goodsCartList){
+			int goodsId = cart.getGoodsOrMenuId();
 			Goods goods = new Goods();
 			goods.setCartId(cart.getCartId());
-			goods.setGoodsId(cart.getGoodsOrMenuId());
+			goods.setGoodsId(goodsId);
 			goods.setGoodsName(cart.getDisplayName());
 			goods.setUnit(cart.getUnit());
 			goods.setAmount(cart.getAmount());
-			int unitPrice = this.marMarketGoodsMapper.findByGoodsId(cart.getMarketId(),cart.getGoodsOrMenuId()).getUnitPrice();
+			
+			int price =0;
+			int unitPrice=0;
+			MarMarketGoods marketGoods = this.marMarketGoodsMapper.loadByGoodsId(marketId, goodsId);
+			//如果菜谱有效  则设置商品有效  反之商品无效
+			if(marketGoods!=null){
+				goods.setCartStatus("1");
+				unitPrice = marketGoods.getUnitPrice();
+				price = PriceUtils.getGoodsPrice(unitPrice, cart.getAmount(), cart.getUnit());
+			}else{
+				goods.setCartStatus("0");
+			}
 			goods.setUnitPrice(unitPrice);
-			int price = PriceUtils.getGoodsPrice(unitPrice, cart.getAmount(), cart.getUnit());
 			goods.setPrice(price);
 			response.getGoodsList().add(goods);
 			

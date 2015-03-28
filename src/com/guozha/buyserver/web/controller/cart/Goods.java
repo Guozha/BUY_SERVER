@@ -9,7 +9,14 @@ public class Goods {
 	private Integer amount;
 	private Integer price;
 	private String unit; //计量单位
+	private String cartStatus;  //contant.xml CART_STATUS
 	
+	public String getCartStatus() {
+		return cartStatus;
+	}
+	public void setCartStatus(String cartStatus) {
+		this.cartStatus = cartStatus;
+	}
 	public Integer getCartId() {
 		return cartId;
 	}

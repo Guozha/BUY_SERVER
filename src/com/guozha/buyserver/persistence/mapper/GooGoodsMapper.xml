@@ -53,7 +53,7 @@ PUBLIC "-//ibatis.apache.org//DTD Mapper 3.0//EN"
     <!-- 所有一级类目商品 个取6条-->
 	<select id="findLimit6ByFirstFrontTypeId" parameterType="map" resultMap="goodsResponseRm" >
 		SELECT 
-			 T.GOODS_ID,T.GOODS_NAME,T.GOODS_IMG,T.GOODS_PROP,T.UNIT,B.UNIT_PRICE 
+			 T.GOODS_ID,T.GOODS_NAME,T.GOODS_PROP,T.UNIT,B.UNIT_PRICE 
 		FROM GOO_GOODS T,MAR_MARKET_GOODS B
 		WHERE T.GOODS_ID = B.GOODS_ID 
 			AND B.OPEN_BUY_FLAG='1'
@@ -66,7 +66,7 @@ PUBLIC "-//ibatis.apache.org//DTD Mapper 3.0//EN"
 	<!-- 查询类目商品列表 (不区分特供等类型) -->
 	<select id="findPagerByFrontTypeId"  parameterType="map" resultMap="goodsResponseRm" >
 		SELECT 
-			T.GOODS_ID,T.GOODS_NAME,T.GOODS_PROP,T.GOODS_IMG,T.UNIT,B.UNIT_PRICE
+			T.GOODS_ID,T.GOODS_NAME,T.GOODS_PROP,T.UNIT,B.UNIT_PRICE
 		FROM GOO_GOODS T,MAR_MARKET_GOODS B
 		WHERE
 		    T.GOODS_ID = B.GOODS_ID 

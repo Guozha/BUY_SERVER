@@ -20,12 +20,13 @@ PUBLIC "-//ibatis.apache.org//DTD Mapper 3.0//EN"
     </select>
 	
 	<!-- 查询农贸市场商品-->
-	<select id="findByGoodsId" parameterType="java.util.Map" resultMap="rm">
+	<select id="loadByGoodsId" parameterType="java.util.Map" resultMap="rm">
         SELECT 
             <include refid="BASE_COLUMN_LIST"/> 
         FROM MAR_MARKET_GOODS T 
         WHERE 
             T.MARKET_ID = #{marketId} 
+            AND T.OPEN_BUY_FLAG = '1'
             AND T.GOODS_ID = #{goodsId}
     </select>
     
@@ -37,6 +38,7 @@ PUBLIC "-//ibatis.apache.org//DTD Mapper 3.0//EN"
  		  WHERE 
  		     A.GOODS_ID = B.GOODS_ID 
  		     AND B.GOODS_ID = T.GOODS_ID
+ 		     AND T.OPEN_BUY_FLAG = '1'
              AND A.MENU_ID = #{menuId}  
              AND T.MARKET_ID = #{marketId} 
     </select>

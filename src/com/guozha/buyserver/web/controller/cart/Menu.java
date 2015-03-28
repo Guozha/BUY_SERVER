@@ -7,11 +7,27 @@ public class Menu {
 	
 	private Integer cartId;
 	private Integer menuId;
-	private String menuName;
+	private String goodsName;
+
 	private Integer unitPrice;
 	private Integer amount;
 	private Integer price;
+	private String cartStatus;  //contant.xml CART_STATUS
 	private List<Goods> goodsList = new ArrayList<Goods>();
+	
+	
+	public String getGoodsName() {
+		return goodsName;
+	}
+	public void setGoodsName(String goodsName) {
+		this.goodsName = goodsName;
+	}
+	public String getCartStatus() {
+		return cartStatus;
+	}
+	public void setCartStatus(String cartStatus) {
+		this.cartStatus = cartStatus;
+	}
 	
 	public List<Goods> getGoodsList() {
 		return goodsList;
@@ -30,12 +46,6 @@ public class Menu {
 	}
 	public void setMenuId(Integer menuId) {
 		this.menuId = menuId;
-	}
-	public String getMenuName() {
-		return menuName;
-	}
-	public void setMenuName(String menuName) {
-		this.menuName = menuName;
 	}
 	public Integer getUnitPrice() {
 		return unitPrice;

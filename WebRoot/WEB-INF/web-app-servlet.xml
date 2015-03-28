@@ -106,7 +106,7 @@
                 </list> 
             </property> 
         </bean>-->
-		
+		<bean class="com.guozha.buyserver.web.adapter.interceptor.TimeInteceptor"/>
 	</mvc:interceptors>
 	
 	

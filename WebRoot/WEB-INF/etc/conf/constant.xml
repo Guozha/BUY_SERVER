@@ -99,9 +99,16 @@
 	</constant>
 	<!-- 食材状态 -->
 	<constant constantDef="GOODS_STATUS">
-    	<constantName value="1">可用</constantName>
-    	<constantName value="2">停用</constantName>
+    	<constantName value="1">有效</constantName>
+    	<constantName value="0">无效</constantName>
 	</constant>
+	
+	<!-- 菜谱状态 -->
+	<constant constantDef="MENU_STATUS">
+    	<constantName value="1">有效</constantName>
+    	<constantName value="0">无效</constantName>
+	</constant>
+	
 	<!-- 产品类型 -->
 	<constant constantDef="PRODUCT_TYPE">
 		<constantName value="01">菜谱</constantName>
@@ -223,5 +230,12 @@
 	<constant constantDef="GOODS_FROM_TYPE">
     	<constantName value="1">订单商品</constantName>
     	<constantName value="2">订单菜谱商品</constantName>
+	</constant>
+	
+	
+	<!-- 购物车状态 -->
+	<constant constantDef="CART_STATUS">
+    	<constantName value="1">有效</constantName>
+    	<constantName value="0">无效</constantName>
 	</constant>
 </constants>
