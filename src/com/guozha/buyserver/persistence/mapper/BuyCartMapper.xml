@@ -10,12 +10,10 @@ PUBLIC "-//ibatis.apache.org//DTD Mapper 3.0//EN"
         <result property="userId" jdbcType="INTEGER" column="USER_ID"/>
         <result property="splitType" jdbcType="VARCHAR" column="SPLIT_TYPE"/>
         <result property="goodsOrMenuId" jdbcType="INTEGER" column="GOODS_OR_MENU_ID"/>
-        <result property="displayName" jdbcType="INTEGER" column="DISPLAY_NAME"/>
         <result property="amount" jdbcType="INTEGER" column="AMOUNT"/>
-        <result property="unit" jdbcType="VARCHAR" column="UNIT"/>
 	</resultMap>
 		<sql id="BASE_COLUMN_LIST">
-		CART_ID,USER_ID,SPLIT_TYPE,GOODS_OR_MENU_ID,DISPLAY_NAME,AMOUNT,UNIT
+		CART_ID,USER_ID,SPLIT_TYPE,GOODS_OR_MENU_ID,AMOUNT
 	</sql>
 	
     <!-- 所有用户购物车信息 -->
@@ -104,17 +102,13 @@ PUBLIC "-//ibatis.apache.org//DTD Mapper 3.0//EN"
 	        USER_ID,
 	        SPLIT_TYPE,
 	        GOODS_OR_MENU_ID,
-	        DISPLAY_NAME,
-	        AMOUNT,
-	        UNIT
+	        AMOUNT
 	   )VALUES(
 	       #{cartId},
 	       #{userId},
 	       #{splitType},
 	       #{goodsOrMenuId},
-	       #{displayName},
-	       #{amount},
-	       #{unit}
+	       #{amount}
 	   )
 	</insert>
 	

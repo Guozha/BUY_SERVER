@@ -107,7 +107,7 @@ public class CommonServiceImpl extends AbstractBusinessObjectServiceMgr implemen
 		for (MnuMenuGoods menuGoods : menuGoodsList) {
 			int unitPrice  =0; //食材单价
 			int goodsPrice =0; //食材份量取上上值后的价格
-			MarMarketGoods marketGoods = marMarketGoodsMapper.loadByGoodsId(marketId, menuGoods.getGoodsId());
+			MarMarketGoods marketGoods = marMarketGoodsMapper.loadIsOpenBuyByGoodsId(marketId, menuGoods.getGoodsId());
 			if(marketGoods!=null){
 				unitPrice = marketGoods.getUnitPrice();
 				List<GooGoodsAmount> goodsAmountList = this.gooGoodsAmountMapper.findByGoodsId(menuGoods.getGoodsId());

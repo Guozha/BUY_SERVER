@@ -52,9 +52,9 @@ public class CartServiceImpl extends AbstractBusinessObjectServiceMgr implements
 		if(po==null){  //新的购物车信息
 			po = new BuyCart();
 			if("01".equals(vo.getProductType())){ //菜谱 constants.xml 
-				MnuMenu menu = this.mnuMenuMapper.load(vo.getId());
-				po.setDisplayName(menu.getMenuName());
-				po.setUnit("08");//constants.xml 
+				//MnuMenu menu = this.mnuMenuMapper.load(vo.getId());
+				//po.setDisplayName(menu.getMenuName());
+				//po.setUnit("08");//constants.xml 
 				
 				//List<MarMarketGoods> marketGoodsList = this.marMarketGoodsMapper.findByMenuId(marketId, vo.getId());
 				//String marketGoodsId ="";
@@ -64,9 +64,9 @@ public class CartServiceImpl extends AbstractBusinessObjectServiceMgr implements
 				//marketGoodsId = marketGoodsId.substring(0, marketGoodsId.lastIndexOf(","));
 				//po.setMarketGoodsId(marketGoodsId);
 			}else if("02".equals(vo.getProductType())){ //单品  constants.xml
-				GooGoods goods = this.gooGoodsMapper.load(vo.getId());
-				po.setDisplayName(goods.getGoodsName());
-				po.setUnit(goods.getUnit());//constants.xml 
+				//GooGoods goods = this.gooGoodsMapper.load(vo.getId());
+				//po.setDisplayName(goods.getGoodsName());
+				//po.setUnit(goods.getUnit());//constants.xml 
 				
 				//存储农贸市场商品ID
 				//MarMarketGoods marketGoods = this.marMarketGoodsMapper.findByGoodsId(marketId, vo.getId());
@@ -128,7 +128,7 @@ public class CartServiceImpl extends AbstractBusinessObjectServiceMgr implements
 		for(BuyCart cart:menuCartList){
 			Menu menu = new Menu();
 			menu.setCartId(cart.getCartId());
-			menu.setGoodsName(cart.getDisplayName());
+			menu.setGoodsName(mnuMenuMapper.load(cart.getGoodsOrMenuId()).getMenuName());
 			menu.setAmount(cart.getAmount());
 			
 			int price =0;
@@ -166,21 +166,24 @@ public class CartServiceImpl extends AbstractBusinessObjectServiceMgr implements
 		List<BuyCart> goodsCartList = this.buyCartMapper.findGoodsByUserId(vo.getUserId());
 		for(BuyCart cart:goodsCartList){
 			int goodsId = cart.getGoodsOrMenuId();
+			GooGoods gooGoods = this.gooGoodsMapper.load(goodsId);
 			Goods goods = new Goods();
 			goods.setCartId(cart.getCartId());
 			goods.setGoodsId(goodsId);
-			goods.setGoodsName(cart.getDisplayName());
-			goods.setUnit(cart.getUnit());
+			goods.setGoodsName(gooGoods.getGoodsName());
+			goods.setUnit(gooGoods.getUnit());
 			goods.setAmount(cart.getAmount());
 			
 			int price =0;
 			int unitPrice=0;
-			MarMarketGoods marketGoods = this.marMarketGoodsMapper.loadByGoodsId(marketId, goodsId);
+			MarMarketGoods marketGoods = this.marMarketGoodsMapper.loadIsOpenBuyByGoodsId(marketId, goodsId);
 			//如果菜谱有效  则设置商品有效  反之商品无效
 			if(marketGoods!=null){
 				goods.setCartStatus("1");
 				unitPrice = marketGoods.getUnitPrice();
-				price = PriceUtils.getGoodsPrice(unitPrice, cart.getAmount(), cart.getUnit());
+				price = PriceUtils.getGoodsPrice(unitPrice, cart.getAmount(), gooGoods.getUnit());
+				
+				quantity+=1;
 			}else{
 				goods.setCartStatus("0");
 			}
@@ -188,7 +191,6 @@ public class CartServiceImpl extends AbstractBusinessObjectServiceMgr implements
 			goods.setPrice(price);
 			response.getGoodsList().add(goods);
 			
-			quantity+=1;
 			totalPrice+=price;
 		}
 		response.setQuantity(quantity);

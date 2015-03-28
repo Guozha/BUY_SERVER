@@ -61,7 +61,7 @@ public class SpecialServiceImpl extends AbstractBusinessObjectServiceMgr impleme
 		int marketId= this.commonService.getMaketId(vo.getAddressId());
 		GooGoods po = this.gooGoodsMapper.load(vo.getGoodsId());
 		GoodsInfoResponse response = new GoodsInfoResponse(po);
-		response.setUnitPrice(marMarketGoodsMapper.loadByGoodsId(marketId, vo.getGoodsId()).getUnitPrice());
+		response.setUnitPrice(marMarketGoodsMapper.loadIsOpenBuyByGoodsId(marketId, vo.getGoodsId()).getUnitPrice());
 		return response;
 	}
 

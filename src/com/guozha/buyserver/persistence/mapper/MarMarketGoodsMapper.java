@@ -13,12 +13,21 @@ public interface MarMarketGoodsMapper extends
 	List<Integer> getGoodIdsInMarket(@Param("marketId")int marketId, @Param("openBuyFlag")String openBuyFlag);
 	
 	/**
-	 * 查询商品单价
+	 * 查询开放购买农贸市场商品
 	 * @param marketId 所在农贸市场ID
 	 * @param goodsId 商品ID
 	 * @return
 	 */
+	MarMarketGoods loadIsOpenBuyByGoodsId(@Param("marketId")int marketId, @Param("goodsId")int goodsId);
+	
+	/**
+	 * 查询农贸市场商品，不忽悠是否开发购买
+	 * @param marketId
+	 * @param goodsId
+	 * @return
+	 */
 	MarMarketGoods loadByGoodsId(@Param("marketId")int marketId, @Param("goodsId")int goodsId);
+	
 	
 	/**
 	 * 查询菜谱对应的农贸商品 

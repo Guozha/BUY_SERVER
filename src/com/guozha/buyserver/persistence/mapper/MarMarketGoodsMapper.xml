@@ -19,14 +19,24 @@ PUBLIC "-//ibatis.apache.org//DTD Mapper 3.0//EN"
         SELECT T.GOODS_ID FROM MAR_MARKET_GOODS T WHERE T.MARKET_ID = #{marketId} AND T.OPEN_BUY_FLAG = #{openBuyFlag}
     </select>
 	
-	<!-- 查询农贸市场商品-->
-	<select id="loadByGoodsId" parameterType="java.util.Map" resultMap="rm">
+	<!-- 查询开放购买农贸市场商品-->
+	<select id="loadIsOpenBuyByGoodsId" parameterType="java.util.Map" resultMap="rm">
         SELECT 
             <include refid="BASE_COLUMN_LIST"/> 
         FROM MAR_MARKET_GOODS T 
         WHERE 
             T.MARKET_ID = #{marketId} 
             AND T.OPEN_BUY_FLAG = '1'
+            AND T.GOODS_ID = #{goodsId}
+    </select>
+    
+    <!-- 查询农贸市场商品，不忽悠是否开发购买 -->
+    <select id="loadByGoodsId" parameterType="java.util.Map" resultMap="rm">
+        SELECT 
+            <include refid="BASE_COLUMN_LIST"/> 
+        FROM MAR_MARKET_GOODS T 
+        WHERE 
+            T.MARKET_ID = #{marketId} 
             AND T.GOODS_ID = #{goodsId}
     </select>
     

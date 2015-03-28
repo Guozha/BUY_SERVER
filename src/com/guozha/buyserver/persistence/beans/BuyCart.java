@@ -15,16 +15,8 @@ public class BuyCart extends AbstractDO {
 	private Integer userId;   
 	private String splitType;  //contrants.xml
 	private Integer goodsOrMenuId; //ID
-	private String displayName; //名称
 	private Integer amount; //份量
-	private String unit; //计量单位
-	
-	public String getUnit() {
-		return unit;
-	}
-	public void setUnit(String unit) {
-		this.unit = unit;
-	}
+
 	public Integer getCartId() {
 		return cartId;
 	}
@@ -48,12 +40,6 @@ public class BuyCart extends AbstractDO {
 	}
 	public void setGoodsOrMenuId(Integer goodsOrMenuId) {
 		this.goodsOrMenuId = goodsOrMenuId;
-	}
-	public String getDisplayName() {
-		return displayName;
-	}
-	public void setDisplayName(String displayName) {
-		this.displayName = displayName;
 	}
 	public Integer getAmount() {
 		return amount;
