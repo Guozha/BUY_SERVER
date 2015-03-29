@@ -13,9 +13,16 @@ public class Menu {
 	private Integer amount;
 	private Integer price;
 	private String cartStatus;  //contant.xml CART_STATUS
+	private String unit;
+
 	private List<Goods> goodsList = new ArrayList<Goods>();
 	
-	
+	public String getUnit() {
+		return unit;
+	}
+	public void setUnit(String unit) {
+		this.unit = unit;
+	}
 	public String getGoodsName() {
 		return goodsName;
 	}

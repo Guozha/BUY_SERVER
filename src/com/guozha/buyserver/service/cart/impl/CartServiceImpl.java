@@ -124,6 +124,7 @@ public class CartServiceImpl extends AbstractBusinessObjectServiceMgr implements
 			menu.setCartId(cart.getCartId());
 			menu.setGoodsName(mnuMenuMapper.load(cart.getGoodsOrMenuId()).getMenuName());
 			menu.setAmount(cart.getAmount());
+			menu.setUnit("08");
 			
 			int price =0;
 			int unitPrice=0;
