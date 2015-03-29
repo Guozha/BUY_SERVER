@@ -10,7 +10,7 @@ PUBLIC "-//ibatis.apache.org//DTD Mapper 3.0//EN"
         <result property="dirFlag" jdbcType="VARCHAR" column="DIR_FLAG"/>
         <result property="menuId" jdbcType="INTEGER" column="MENU_OR_GOODS_ID"/>
         <result property="favoName" jdbcType="VARCHAR" column="FAVO_NAME"/>
-        <result property="menuImg" jdbcType="VARCHAR" column="MENU_IMG"/>
+        <result property="menuImg" jdbcType="BLOB" column="MENU_IMG"/>
         <result property="cookieTime" jdbcType="INTEGER" column="COOKIE_TIME"/>
         <result property="cookieWay" jdbcType="VARCHAR" column="COOKIE_WAY"/>
 	</resultMap>
@@ -25,8 +25,7 @@ PUBLIC "-//ibatis.apache.org//DTD Mapper 3.0//EN"
         <result property="myFavoId" jdbcType="INTEGER" column="MY_FAVO_ID"/>
         <result property="goodsId" jdbcType="INTEGER" column="GOODS_ID"/>
         <result property="goodsName" jdbcType="VARCHAR" column="GOODS_NAME"/>
-        <result property="goodsImg" jdbcType="VARCHAR" column="GOODS_IMG"/>
-        <result property="price" jdbcType="INTEGER" column="PRICE"/>
+        <result property="goodsImg" jdbcType="BLOB" column="GOODS_IMG"/>
         <result property="unit" jdbcType="VARCHAR" column="UNIT"/>
 	</resultMap>
     
@@ -36,7 +35,6 @@ PUBLIC "-//ibatis.apache.org//DTD Mapper 3.0//EN"
             T2.GOODS_ID,
             T2.GOODS_NAME,
             T2.GOODS_IMG,
-            T2.PRICE,
             T2.UNIT 
         FROM 
             ACC_MY_FAVO T1,
@@ -89,16 +87,26 @@ PUBLIC "-//ibatis.apache.org//DTD Mapper 3.0//EN"
     </update>
     
     <delete id="delete" parameterType="java.lang.Integer">
-        DELETE FROM ACC_MY_FAVO T WHERE T.MY_FAVO_ID = #{myFavoId}
+        DELETE FROM ACC_MY_FAVO WHERE MY_FAVO_ID = #{myFavoId}
     </delete>
     
     <update id="adjustFavoByDirDel" parameterType="java.lang.Integer">
         UPDATE ACC_MY_FAVO T SET T.PARENT_ID = 0 WHERE T.PARENT_ID = #{parentId}
     </update>
     
+    <resultMap type="com.guozha.buyserver.web.controller.account.SearchMenuFavoResponse" id="findFavoRM">
+        <result property="myFavoId" jdbcType="INTEGER" column="MY_FAVO_ID"/>
+        <result property="userId" jdbcType="INTEGER" column="USER_ID"/>
+        <result property="favoType" jdbcType="VARCHAR" column="FAVO_TYPE"/>
+        <result property="dirFlag" jdbcType="VARCHAR" column="DIR_FLAG"/>
+        <result property="menuOrGoodsId" jdbcType="INTEGER" column="MENU_OR_GOODS_ID"/>
+        <result property="favoName" jdbcType="VARCHAR" column="FAVO_NAME"/>
+        <result property="parentId" jdbcType="INTEGER" column="PARENT_ID"/>
+    </resultMap>
+    
     <select id="findMenuByDir" parameterType="java.lang.Integer" resultMap="findFavoRM">
         SELECT 
-            <include refid="LIST_FAVO_COLUMN"/>
+            *
         FROM 
             ACC_MY_FAVO T1,
             MNU_MENU T2
