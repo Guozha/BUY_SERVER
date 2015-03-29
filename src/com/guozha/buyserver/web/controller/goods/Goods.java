@@ -4,7 +4,7 @@ public class Goods {
 	
 	private Integer goodsId;   //商品ID
 	private String goodsName;  //商品名
-	private byte[] goodsImg;//商品图片URL
+	private String goodsImg;//商品图片URL
 	private Integer unitPrice;//单价
 	private String unit;//计量单位
 	private String goodsProp;   //商品性质
@@ -21,10 +21,10 @@ public class Goods {
 	public void setGoodsName(String goodsName) {
 		this.goodsName = goodsName;
 	}
-	public byte[] getGoodsImg() {
+	public String getGoodsImg() {
 		return goodsImg;
 	}
-	public void setGoodsImg(byte[] goodsImg) {
+	public void setGoodsImg(String goodsImg) {
 		this.goodsImg = goodsImg;
 	}
 	public Integer getUnitPrice() {

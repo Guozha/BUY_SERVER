@@ -31,5 +31,9 @@ public class CalendarUtils {
 		return c1.get(field) == c2.get(field);
 	}
 	
+	public static void main(String[] args) {
+		Date date = CalendarUtils.add(1, new Date(), 1);
+		System.out.println(DateUtil.date2String(date, null));
+	}
 	
 }

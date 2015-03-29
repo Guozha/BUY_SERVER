@@ -52,9 +52,8 @@ public class PriceUtils {
 		int price =0;
 		if("01".equals(unit)){
 			for(int i =0;i<amounts.length;i++){
-				int configAmount = amounts[i];
-				if(configAmount>=amount){
-					amount=configAmount;
+				if( amounts[i]>=amount){
+					amount= amounts[i];
 					break;
 				}
 			}

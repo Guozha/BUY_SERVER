@@ -84,6 +84,16 @@ public class SeasonServiceImpl  extends AbstractBusinessObjectServiceMgr impleme
 		return response;
 	}
 	
+
+	@Override
+	public SeasonResponse findCurr() {
+		String [] seasons=this.gooSeasonConfigMapper.loadBySystemDate(new Date()).split(",");
+		GooSeasonGoods pos = this.gooSeasonGoodsMapper.findBySeason(new String[]{seasons[1]}).get(0);
+		SeasonResponse response  = new SeasonResponse(pos);
+		response.setGoodsList(null);
+		return response;
+	}
+	
 	/**
 	 * 获取食材id数组
 	 * @param po
@@ -92,5 +102,6 @@ public class SeasonServiceImpl  extends AbstractBusinessObjectServiceMgr impleme
 	private int [] getGoodsIds(GooSeasonGoods po){
 		return new int[]{po.getFirstGoodsId(),po.getSecondGoodsId(),po.getThirdGoodsId(),po.getFourGoodsId(),po.getFiveGoodsId()};
 	}
+
    
 }

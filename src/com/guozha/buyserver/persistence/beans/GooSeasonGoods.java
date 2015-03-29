@@ -12,14 +12,20 @@ import com.guozha.buyserver.dal.object.AbstractDO;
 public class GooSeasonGoods extends AbstractDO {
 	private Integer seasonGoodsId;
 	private String season;
-	private String seasonPicUrl;
+	private String seasonPicUrl; //主图
 	private Integer firstGoodsId;
 	private Integer secondGoodsId;
 	private Integer thirdGoodsId;
 	private Integer fourGoodsId;
 	private Integer fiveGoodsId;
+	private String seasonLogoUrl; //首页节气食材logo图
 	
-	
+	public String getSeasonLogoUrl() {
+		return seasonLogoUrl;
+	}
+	public void setSeasonLogoUrl(String seasonLogoUrl) {
+		this.seasonLogoUrl = seasonLogoUrl;
+	}
 	public Integer getSeasonGoodsId() {
 		return seasonGoodsId;
 	}

@@ -57,12 +57,12 @@ public class AccountServiceImpl extends AbstractBusinessObjectServiceMgr impleme
 
 	@Override
 	public MsgResponse getCheckCodeForReg(String mobileNo) {
-		if(StringUtils.isBlank(mobileNo)){
+		if (StringUtils.isBlank(mobileNo)) {
 			return new MsgResponse("0", "手机号码未传递");
 		}
 		Object[] arr = new Object[1];
 		arr[0] = RandomStringUtils.randomNumeric(6);
-		System.out.println("%%%%%%%%%%%%%%%注册校验码%%%%%%%%%%%%-----"+arr[0]);
+		System.out.println("%%%%%%%%%%%%%%%注册校验码%%%%%%%%%%%%-----" + arr[0]);
 		SmsUtil.sendSms("01", mobileNo, arr);// SMS_TYPE 01-注册获取验证码
 		SysSmsSend sms = new SysSmsSend();
 		sms.setMobileNo(mobileNo);
@@ -350,7 +350,7 @@ public class AccountServiceImpl extends AbstractBusinessObjectServiceMgr impleme
 	public MsgResponse accept(AcceptRequest accept) {
 		MsgResponse response = new MsgResponse();
 		if (accept != null) {
-			AccMyInvite myInvite = accountMapper.listMyInvite(accept.getMyInviteId());// 邀请信息对象
+			AccMyInvite myInvite = accountMapper.listMyInvite(accept.getInviteId());// 邀请信息对象
 			SysUser acceptor = sysUserMapper.getUserByMobileNo(accept.getMobileNo());// 领用人user对象
 			if (myInvite == null) {
 				response.setReturnCode(YesNo.No.getCode().toString());
@@ -422,7 +422,6 @@ public class AccountServiceImpl extends AbstractBusinessObjectServiceMgr impleme
 					accountMapper.resetTicketCount(map);
 				}
 			}
-
 		}
 		return response;
 	}
@@ -455,7 +454,6 @@ public class AccountServiceImpl extends AbstractBusinessObjectServiceMgr impleme
 		return ticketCount.getUserId();
 	}
 
-
 	@Override
 	public SysUser getUserByMobileNo(String mobileNo) {
 		return sysUserMapper.getUserByMobileNo(mobileNo);
@@ -475,6 +473,7 @@ public class AccountServiceImpl extends AbstractBusinessObjectServiceMgr impleme
 
 	/**
 	 * 头像设置
+	 * 
 	 * @author sunhanbin
 	 * @date 2015-03-25
 	 * @param user
@@ -482,14 +481,28 @@ public class AccountServiceImpl extends AbstractBusinessObjectServiceMgr impleme
 	 */
 	public MsgResponse setHeadImg(SysUser user) {
 		MsgResponse response = new MsgResponse();
-		if(user!=null){
-//			int count=accountMapper.setHeadImg(user);
-//			if(count!=1){
-//				response.setReturnCode(YesNo.No.getCode().toString());
-//				response.setMsg("操作失败");
-//			}
+		if (user != null) {
+			int count = accountMapper.setHeadImg(user);
+			if (count != 1) {
+				response.setReturnCode(YesNo.No.getCode().toString());
+				response.setMsg("操作失败");
+			}
 		}
 		return response;
+	}
+
+	public SysUserMapper getSysUserMapper() {
+		return sysUserMapper;
+	}
+
+	@Override
+	public AccountMapper getAccountMapper() {
+		return accountMapper;
+	}
+
+	@Override
+	public CommonService getCommonService() {
+		return commonService;
 	}
 
 }

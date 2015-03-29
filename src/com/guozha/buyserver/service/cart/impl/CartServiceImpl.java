@@ -47,37 +47,31 @@ public class CartServiceImpl extends AbstractBusinessObjectServiceMgr implements
     
 	@Override
 	public MsgResponse add(CartRequest vo) {
-		//int marketId= this.commonService.getMaketId( vo.getAddressId());
-		BuyCart po = this.buyCartMapper.selectByGoodsOrMenuId(vo.getUserId(), vo.getId(),vo.getProductType());
+		int marketId= this.commonService.getMaketId( vo.getAddressId());
+		BuyCart po = this.buyCartMapper.loadByGoodsOrMenuId(vo.getUserId(), vo.getId(),vo.getProductType());
 		if(po==null){  //新的购物车信息
 			po = new BuyCart();
 			if("01".equals(vo.getProductType())){ //菜谱 constants.xml 
-				//MnuMenu menu = this.mnuMenuMapper.load(vo.getId());
-				//po.setDisplayName(menu.getMenuName());
-				//po.setUnit("08");//constants.xml 
-				
-				//List<MarMarketGoods> marketGoodsList = this.marMarketGoodsMapper.findByMenuId(marketId, vo.getId());
-				//String marketGoodsId ="";
-				//for(MarMarketGoods marketGoods:marketGoodsList){
-				//	marketGoodsId += marketGoods.getMarketGoodsId()+",";
-				//}
-				//marketGoodsId = marketGoodsId.substring(0, marketGoodsId.lastIndexOf(","));
-				//po.setMarketGoodsId(marketGoodsId);
+				MnuMenu menu = this.mnuMenuMapper.load(vo.getId());
+				if(menu==null){
+					return new MsgResponse(MsgResponse.FAIL, "商品已下架");
+				}
 			}else if("02".equals(vo.getProductType())){ //单品  constants.xml
-				//GooGoods goods = this.gooGoodsMapper.load(vo.getId());
-				//po.setDisplayName(goods.getGoodsName());
-				//po.setUnit(goods.getUnit());//constants.xml 
-				
-				//存储农贸市场商品ID
-				//MarMarketGoods marketGoods = this.marMarketGoodsMapper.findByGoodsId(marketId, vo.getId());
-				//po.setMarketGoodsId(marketGoods.getMarketGoodsId().toString());
+				GooGoods goods = this.gooGoodsMapper.load(vo.getId());
+				if(goods==null){
+					return new MsgResponse(MsgResponse.FAIL, "商品已下架");
+				}
+				if(this.marMarketGoodsMapper.loadIsOpenBuyByGoodsId(marketId, vo.getId())==null){
+					return new MsgResponse(MsgResponse.FAIL, "商品已下架");
+				}
+			}else{
+				return new MsgResponse(MsgResponse.FAIL, "商品已下架");
 			}
 			po.setUserId(vo.getUserId());
 			po.setGoodsOrMenuId(vo.getId());
 			po.setSplitType(vo.getProductType());
 			po.setAmount(vo.getAmount()[0]);
 			
-			//po.setMarketId(marketId);
 			this.buyCartMapper.insert(po);
 		}else{  //修改购物车信息
 			po.setAmount(po.getAmount()+vo.getAmount()[0]);
@@ -102,7 +96,7 @@ public class CartServiceImpl extends AbstractBusinessObjectServiceMgr implements
 
 	@Override
 	public MsgResponse del(CartRequest vo) {
-		this.buyCartMapper.deletes(vo.getCartId());
+		this.buyCartMapper.deleteByIds(vo.getUserId(),vo.getCartId());
 		return new MsgResponse(MsgResponse.SUCC, "删除购物车成功");
 	}
 

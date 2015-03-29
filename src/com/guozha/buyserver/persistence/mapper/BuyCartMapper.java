@@ -52,10 +52,10 @@ public interface BuyCartMapper extends BaseMapper<BuyCart, Integer> {
 	void deleteNotIn(@Param("userId") int userId,@Param("cartId") Integer [] cardId);
 	
 	/**
-	 * 多购物车信息删除
+	 * 用户多购物车信息删除
 	 * @param cardId
 	 */
-	void deletes(@Param("cartId") Integer [] cardId);
+	void deleteByIds(@Param("userId") int userId,@Param("cartId") Integer [] cardId);
 	
 	/**
 	 * 查询验证购物车中是否已存在该产品
@@ -63,6 +63,6 @@ public interface BuyCartMapper extends BaseMapper<BuyCart, Integer> {
 	 * @param goodsOrMenuId
 	 * @return
 	 */
-	BuyCart selectByGoodsOrMenuId(@Param("userId") Integer userId,@Param("goodsOrMenuId") Integer goodsOrMenuId,@Param("splitType") String splitType);
+	BuyCart loadByGoodsOrMenuId(@Param("userId") Integer userId,@Param("goodsOrMenuId") Integer goodsOrMenuId,@Param("splitType") String splitType);
 	
 }

@@ -8,7 +8,6 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.Random;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -43,6 +42,7 @@ import com.guozha.buyserver.persistence.mapper.MnuMenuGoodsMapper;
 import com.guozha.buyserver.persistence.mapper.MnuMenuMapper;
 import com.guozha.buyserver.persistence.mapper.SysSellerMapper;
 import com.guozha.buyserver.service.common.CommonService;
+import com.guozha.buyserver.service.common.MenuUnitPriceBo;
 import com.guozha.buyserver.service.order.OrderService;
 import com.guozha.buyserver.web.controller.MsgResponse;
 import com.guozha.buyserver.web.controller.order.CancelOrderRequest;
@@ -299,7 +299,9 @@ public class OrderServiceImpl extends AbstractBusinessObjectServiceMgr implement
 			buyOrderMenu.setMenuId(mnuMenu.getMenuId());
 			buyOrderMenu.setMenuName(mnuMenu.getMenuName());
 			buyOrderMenu.setMenuImg(mnuMenu.getMenuImg());
-			int menuUnitPrice = commonService.getMenuUnitPrice(marketId, mnuMenu.getMenuId());
+			MenuUnitPriceBo menuUnitPriceBO = commonService.getMenuUnitPrice(marketId, mnuMenu.getMenuId());
+			if("0".equals(menuUnitPriceBO.getStatus())) continue;
+			int menuUnitPrice = menuUnitPriceBO.getUnitPrice();
 			buyOrderMenu.setUnitPrice(menuUnitPrice);
 			buyOrderMenu.setAmount(buyCart.getAmount());
 			buyOrderMenu.setPrice(menuUnitPrice * buyCart.getAmount());
@@ -315,7 +317,7 @@ public class OrderServiceImpl extends AbstractBusinessObjectServiceMgr implement
 			for (MenuGoodsInfo menuGoodsInfo : menuGoodsInfoList) {
 
 				int goodsUnitPrice = marketGoodsPriceMap.get(menuGoodsInfo.getGoodsId());
-				int amount = commonService.getMenuGoodsAmount(menuGoodsInfo.getGoodsId(), menuGoodsInfo.getAmount());
+				int amount = commonService.getMenuGoodsAmount(menuGoodsInfo.getGoodsId(), menuGoodsInfo.getAmount(), menuGoodsInfo.getUnit());
 
 				BuyOrderMenuGoods orderMenuGoods = new BuyOrderMenuGoods();
 				orderMenuGoods.setOrderId(buyOrder.getOrderId());
@@ -569,6 +571,62 @@ public class OrderServiceImpl extends AbstractBusinessObjectServiceMgr implement
 			}
 		}
 		return response;
+	}
+	
+	public AccAddressMapper getAccAddressMapper() {
+		return accAddressMapper;
+	}
+
+	public void setAccAddressMapper(AccAddressMapper accAddressMapper) {
+		this.accAddressMapper = accAddressMapper;
+	}
+
+	public CommonService getCommonService() {
+		return commonService;
+	}
+
+	public void setCommonService(CommonService commonService) {
+		this.commonService = commonService;
+	}
+
+	public BuyCartMapper getBuyCartMapper() {
+		return buyCartMapper;
+	}
+
+	public void setBuyCartMapper(BuyCartMapper buyCartMapper) {
+		this.buyCartMapper = buyCartMapper;
+	}
+
+	public MarMarketGoodsMapper getMarMarketGoodsMapper() {
+		return marMarketGoodsMapper;
+	}
+
+	public void setMarMarketGoodsMapper(MarMarketGoodsMapper marMarketGoodsMapper) {
+		this.marMarketGoodsMapper = marMarketGoodsMapper;
+	}
+
+	public MnuMenuMapper getMnuMenuMapper() {
+		return mnuMenuMapper;
+	}
+
+	public void setMnuMenuMapper(MnuMenuMapper mnuMenuMapper) {
+		this.mnuMenuMapper = mnuMenuMapper;
+	}
+
+	public GooGoodsMapper getGooGoodsMapper() {
+		return gooGoodsMapper;
+	}
+
+	public void setGooGoodsMapper(GooGoodsMapper gooGoodsMapper) {
+		this.gooGoodsMapper = gooGoodsMapper;
+	}
+
+	public MnuMenuGoodsMapper getMnuMenuGoodsMapper() {
+		return mnuMenuGoodsMapper;
+	}
+
+	public void setMnuMenuGoodsMapper(MnuMenuGoodsMapper mnuMenuGoodsMapper) {
+		this.mnuMenuGoodsMapper = mnuMenuGoodsMapper;
 	}
 
 }
