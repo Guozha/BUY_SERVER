@@ -74,6 +74,7 @@ public class GeneralServiceImpl extends AbstractBusinessObjectServiceMgr impleme
 	
 	@Override
 	public GeneralResponse findGoods(GoodsRequest vo) {
+		
 		vo.setPageSize(4);
 		int marketId= this.commonService.getMaketId(vo.getAddressId());
 		GeneralResponse response = new GeneralResponse();
@@ -86,9 +87,10 @@ public class GeneralServiceImpl extends AbstractBusinessObjectServiceMgr impleme
 		}
 		int totalCount = basFrontTypeMapper.findFirstTotalCount();
 		response.setTotalCount(totalCount);
-		response.setPageCount(totalCount);
+		response.setPageCount(vo.getPageCount(totalCount));
 		response.setPageNum(vo.getPageNum());
 		response.setPageSize(vo.getPageSize());
+		System.out.println("pageNum="+vo.getPageNum()+" pageCount="+response.getPageCount());
 		return response;
 	}
 	

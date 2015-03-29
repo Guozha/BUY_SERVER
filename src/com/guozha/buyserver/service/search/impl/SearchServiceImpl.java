@@ -36,6 +36,7 @@ public class SearchServiceImpl  extends AbstractBusinessObjectServiceMgr impleme
 	@Override
 	public SearchResponse findGoodsAndMenu(SearchRequest vo) {
 		SearchResponse response = new SearchResponse();
+		System.out.println(vo.getWord());
 		if(StringUtils.isEmpty(vo.getWord())){
 			return response;
 		}
