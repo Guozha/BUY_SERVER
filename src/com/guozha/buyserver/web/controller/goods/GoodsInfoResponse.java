@@ -9,7 +9,7 @@ public class GoodsInfoResponse {
 	private Integer goodsId;   //商品ID
 	private String goodsName;  //商品名
 	private String goodsProp;   //商品性质
-	private byte[] goodsImg;//商品图片
+	private String goodsImg;//商品图片
 	
 	private Integer unitPrice;//单价
 	
@@ -58,10 +58,10 @@ public class GoodsInfoResponse {
 	public void setGoodsProp(String goodsProp) {
 		this.goodsProp = goodsProp;
 	}
-	public byte[] getGoodsImg() {
+	public String getGoodsImg() {
 		return goodsImg;
 	}
-	public void setGoodsImg(byte[] goodsImg) {
+	public void setGoodsImg(String goodsImg) {
 		this.goodsImg = goodsImg;
 	}
 	public String getUnit() {

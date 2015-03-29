@@ -6,14 +6,14 @@ public class SeasonGoods {
 
 	private Integer goodsId;   //商品ID
 	private String goodsName;  //商品名
-	private byte[] goodsImg;//商品图片URL
+	private String goodsImg;//商品图片URL
 	private String memo;
 	
 	public SeasonGoods(GooGoods po) {
 		super();
 		this.goodsId = po.getGoodsId();
 		this.goodsName = po.getGoodsName();
-	//	this.goodsImg = po.getGoodsImg();
+	    this.goodsImg = po.getGoodsImg();
 		this.memo = po.getMemo();
 	}
 	public Integer getGoodsId() {
@@ -28,10 +28,10 @@ public class SeasonGoods {
 	public void setGoodsName(String goodsName) {
 		this.goodsName = goodsName;
 	}
-	public byte[] getGoodsImg() {
+	public String getGoodsImg() {
 		return goodsImg;
 	}
-	public void setGoodsImg(byte[] goodsImg) {
+	public void setGoodsImg(String goodsImg) {
 		this.goodsImg = goodsImg;
 	}
 	public String getMemo() {

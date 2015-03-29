@@ -28,7 +28,7 @@ public class GooGoods extends AbstractDO {
 	private Integer firstFrontTypeId; //前台一级类目ID
 	private Integer secondFrontTypeId;//前台二级类目ID
 	private Integer backTypeId;//后台类目ID
-	private byte[] goodsImg;//商品图片 
+	private String goodsImg;//商品图片 
 
 	private String unit;//计量单位
 	private String memo;//商品备注
@@ -81,10 +81,10 @@ public class GooGoods extends AbstractDO {
 	public void setBackTypeId(Integer backTypeId) {
 		this.backTypeId = backTypeId;
 	}
-	public byte[]  getGoodsImg() {
+	public String  getGoodsImg() {
 		return goodsImg;
 	}
-	public void setGoodsImg(byte[] goodsImg) {
+	public void setGoodsImg(String goodsImg) {
 		this.goodsImg = goodsImg;
 	}
 	public String getUnit() {

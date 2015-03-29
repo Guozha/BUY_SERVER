@@ -13,7 +13,7 @@ PUBLIC "-//ibatis.apache.org//DTD Mapper 3.0//EN"
         <result property="firstFrontTypeId" jdbcType="INTEGER" column="FIRST_FRONT_TYPE_ID"/>
         <result property="secondFrontTypeId" jdbcType="INTEGER" column="SECOND_FRONT_TYPE_ID"/>
         <result property="backTypeId" jdbcType="INTEGER" column="BACK_TYPE_ID"/>
-        <result property="goodsImg" jdbcType="BLOB" column="GOODS_IMG"/>
+        <result property="goodsImg" jdbcType="VARCHAR" column="GOODS_IMG"/>
         <result property="unit" jdbcType="VARCHAR" column="UNIT"/>
         <result property="memo" jdbcType="VARCHAR" column="MEMO"/>
         <result property="prepareEndDate" jdbcType="TIMESTAMP" column="PREPARE_END_DATE"/>
@@ -36,7 +36,7 @@ PUBLIC "-//ibatis.apache.org//DTD Mapper 3.0//EN"
        <result property="goodsId" jdbcType="INTEGER" column="GOODS_ID"/>
        <result property="goodsName" jdbcType="VARCHAR" column="GOODS_NAME"/>
        <result property="goodsProp" jdbcType="VARCHAR" column="GOODS_PROP"/>
-       <result property="goodsImg" jdbcType="BLOB" column="GOODS_IMG"/>
+       <result property="goodsImg" jdbcType="VARCHAR" column="GOODS_IMG"/>
        <result property="unit" jdbcType="VARCHAR" column="UNIT"/>
        <result property="unitPrice" jdbcType="INTEGER" column="UNIT_PRICE"/>
    </resultMap>
@@ -53,7 +53,7 @@ PUBLIC "-//ibatis.apache.org//DTD Mapper 3.0//EN"
     <!-- 所有一级类目商品 个取6条-->
 	<select id="findLimit6ByFirstFrontTypeId" parameterType="map" resultMap="goodsResponseRm" >
 		SELECT 
-			 T.GOODS_ID,T.GOODS_NAME,T.GOODS_PROP,T.UNIT,B.UNIT_PRICE 
+			 T.GOODS_ID,T.GOODS_NAME,T.GOODS_PROP,T.UNIT,T.GOODS_IMG,B.UNIT_PRICE 
 		FROM GOO_GOODS T,MAR_MARKET_GOODS B
 		WHERE T.GOODS_ID = B.GOODS_ID 
 			AND B.OPEN_BUY_FLAG='1'
@@ -66,7 +66,7 @@ PUBLIC "-//ibatis.apache.org//DTD Mapper 3.0//EN"
 	<!-- 查询类目商品列表 (不区分特供等类型) -->
 	<select id="findPagerByFrontTypeId"  parameterType="map" resultMap="goodsResponseRm" >
 		SELECT 
-			T.GOODS_ID,T.GOODS_NAME,T.GOODS_PROP,T.UNIT,B.UNIT_PRICE
+			T.GOODS_ID,T.GOODS_NAME,T.GOODS_PROP,T.UNIT,T.GOODS_IMG,B.UNIT_PRICE
 		FROM GOO_GOODS T,MAR_MARKET_GOODS B
 		WHERE
 		    T.GOODS_ID = B.GOODS_ID 
