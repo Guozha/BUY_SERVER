@@ -84,7 +84,9 @@ public class GeneralServiceImpl extends AbstractBusinessObjectServiceMgr impleme
 			response.getFrontTypeList().add(ft);
 			response.getFrontTypeList().get(i).setGoodsList(this.gooGoodsMapper.findLimit6ByFirstFrontTypeId(marketId, frontType.getFrontTypeId()));
 		}
-		response.setPageCount(vo.getPageCount(basFrontTypeMapper.findFirstTotalCount()));
+		int totalCount = basFrontTypeMapper.findFirstTotalCount();
+		response.setTotalCount(totalCount);
+		response.setPageCount(totalCount);
 		return response;
 	}
 	
@@ -114,6 +116,7 @@ public class GeneralServiceImpl extends AbstractBusinessObjectServiceMgr impleme
 			break;
 		}
 		response.setGoodsList(goodsList);
+		response.setTotalCount(totalCount);
 		response.setPageCount(vo.getPageCount(totalCount));
 		return response;
 	}

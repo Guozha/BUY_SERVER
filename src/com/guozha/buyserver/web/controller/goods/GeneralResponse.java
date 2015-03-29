@@ -6,10 +6,18 @@ import java.util.List;
 public class GeneralResponse {
 	
 	private Integer pageCount;
+	private Integer totalCount;
+
 	private List<FrontTypeResponse> frontTypeList= new ArrayList<FrontTypeResponse>();
 	private List<Goods> goodsList = new ArrayList<Goods>();
 	public List<Goods> getGoodsList() {
 		return goodsList;
+	}
+	public Integer getTotalCount() {
+		return totalCount;
+	}
+	public void setTotalCount(Integer totalCount) {
+		this.totalCount = totalCount;
 	}
 	public void setGoodsList(List<Goods> goodsList) {
 		this.goodsList = goodsList;
