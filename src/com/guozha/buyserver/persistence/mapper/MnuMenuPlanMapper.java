@@ -26,7 +26,7 @@ public interface MnuMenuPlanMapper extends BaseMapper<MnuMenuPlan, Integer> {
 	int insertUserMenuPlan(MnuUserMenuPlan menuUserPlan);
 
 	// 菜谱推荐
-	MenuPlanResponse listMenuPlan(String planDate);
+	List<MenuPlanResponse> listMenuPlan();
 
 	// 查询菜谱详情
 	MenuResponse menuDetail(int menuId);

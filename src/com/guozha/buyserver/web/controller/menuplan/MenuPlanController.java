@@ -42,8 +42,8 @@ public class MenuPlanController extends BaseController {
 	 * @param response
 	 */
 	@RequestMapping(value = "/list")
-	public void list(String planDate, HttpServletResponse response) {
-		responseJson(menuPlanService.listMenuPlan(planDate), response);
+	public void list(HttpServletResponse response) {
+		responseJson(menuPlanService.listMenuPlan(), response);
 	}
 
 	/**

@@ -13,7 +13,7 @@ public class MnuMenu extends AbstractDO {
 	
 	private Integer menuId;
 	private String menuName;
-	private byte[] menuImg;
+	private String menuImg;
 	
 	private String menuDesc;
 	private Integer cookieTime;
@@ -43,10 +43,10 @@ public class MnuMenu extends AbstractDO {
 	public void setMenuName(String menuName) {
 		this.menuName = menuName;
 	}
-	public byte[] getMenuImg() {
+	public String getMenuImg() {
 		return menuImg;
 	}
-	public void setMenuImg(byte[] menuImg) {
+	public void setMenuImg(String menuImg) {
 		this.menuImg = menuImg;
 	}
 	public String getMenuDesc() {

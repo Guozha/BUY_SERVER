@@ -90,105 +90,105 @@ public class MenuPlanServiceImpl extends AbstractBusinessObjectServiceMgr implem
 	 * @author sunhanbin
 	 * @date 2015-03-15
 	 */
-	// public List<MenuPlanResponse> listMenuPlan() {
-	// List<MenuPlanResponse> menuPlans = menuPlanMapper.listMenuPlan();
-	// Set<Integer> menuIds = new HashSet<Integer>();
-	// Map<Integer, MnuMenu> menuMap = new HashMap<Integer, MnuMenu>();
-	// for (MenuPlanResponse plan : menuPlans) {
-	// if (plan != null) {
-	// menuIds.add(plan.getFirstMenuId());
-	// menuIds.add(plan.getSecondMenuId());
-	// menuIds.add(plan.getThirdMenuId());
-	// menuIds.add(plan.getFourMenuId());
-	// menuIds.add(plan.getFiveMenuId());
-	// menuIds.add(plan.getSixMenuId());
-	// }
-	// }
-	// // 查找菜谱信息
-	// menuMap = listMenuByIds(menuIds);
-	// int menuId = 0;
-	// MnuMenu menu = null;
-	// // 每个菜谱设置菜谱信息
-	// for (MenuPlanResponse plan : menuPlans) {
-	// if (plan != null) {
-	// menuId = plan.getFirstMenuId();
-	// if (menuMap.containsKey(menuId)) {
-	// menu = menuMap.get(menuId);
-	// plan.setFirstMenuImg(menu.getMenuImg());
-	// plan.setFirstMenuName(menu.getMenuName());
-	// }
-	// menuId = plan.getSecondMenuId();
-	// if (menuMap.containsKey(menuId)) {
-	// menu = menuMap.get(menuId);
-	// plan.setSecondMenuImg(menu.getMenuImg());
-	// plan.setSecondMenuName(menu.getMenuName());
-	// }
-	// menuId = plan.getThirdMenuId();
-	// if (menuMap.containsKey(menuId)) {
-	// menu = menuMap.get(menuId);
-	// plan.setThirdMenuImg(menu.getMenuImg());
-	// plan.setThirdMenuName(menu.getMenuName());
-	// }
-	// menuId = plan.getFourMenuId();
-	// if (menuMap.containsKey(menuId)) {
-	// menu = menuMap.get(menuId);
-	// plan.setFourMenuImg(menu.getMenuImg());
-	// plan.setFourMenuName(menu.getMenuName());
-	// }
-	// menuId = plan.getFiveMenuId();
-	// if (menuMap.containsKey(menuId)) {
-	// menu = menuMap.get(menuId);
-	// plan.setFiveMenuImg(menu.getMenuImg());
-	// plan.setFiveMenuName(menu.getMenuName());
-	// }
-	// menuId = plan.getSixMenuId();
-	// if (menuMap.containsKey(menuId)) {
-	// menu = menuMap.get(menuId);
-	// plan.setSixMenuImg(menu.getMenuImg());
-	// plan.setSixMenuName(menu.getMenuName());
-	// }
-	// menu = null;
-	// }
-	// }
-	// return menuPlans;
-	// }
-
-	public MenuPlanResponse listMenuPlan(String planDate) {
-		MenuPlanResponse menuPlan = menuPlanMapper.listMenuPlan(planDate);
+	public List<MenuPlanResponse> listMenuPlan() {
+		List<MenuPlanResponse> menuPlans = menuPlanMapper.listMenuPlan();
 		Set<Integer> menuIds = new HashSet<Integer>();
-		int firstMenuId = menuPlan.getFirstMenuId();
-		int secondMenuId = menuPlan.getSecondMenuId();
-		int thirdMenuId = menuPlan.getThirdMenuId();
-		int fourMenuId = menuPlan.getFourMenuId();
-		int fiveMenuId = menuPlan.getFiveMenuId();
-		int sixMenuId = menuPlan.getSixMenuId();
-		menuIds.add(firstMenuId);
-		menuIds.add(secondMenuId);
-		menuIds.add(thirdMenuId);
-		menuIds.add(fourMenuId);
-		menuIds.add(fiveMenuId);
-		menuIds.add(sixMenuId);
-		Map<Integer, MnuMenu> menuMap = listMenuByIds(menuIds);
-		MnuMenu menu = menuMap.get(firstMenuId);
-		menuPlan.setFirstMenuImg(menu.getMenuImg());
-		menuPlan.setFirstMenuName(menu.getMenuName());
-		menu = menuMap.get(secondMenuId);
-		menuPlan.setSecondMenuImg(menu.getMenuImg());
-		menuPlan.setSecondMenuName(menu.getMenuName());
-		menu = menuMap.get(thirdMenuId);
-		menuPlan.setThirdMenuImg(menu.getMenuImg());
-		menuPlan.setThirdMenuName(menu.getMenuName());
-		menu = menuMap.get(fourMenuId);
-		menuPlan.setFourMenuImg(menu.getMenuImg());
-		menuPlan.setFourMenuName(menu.getMenuName());
-		menu = menuMap.get(fiveMenuId);
-		menuPlan.setFiveMenuImg(menu.getMenuImg());
-		menuPlan.setFiveMenuName(menu.getMenuName());
-		menu = menuMap.get(sixMenuId);
-		menuPlan.setSixMenuImg(menu.getMenuImg());
-		menuPlan.setSixMenuName(menu.getMenuName());
-		return menuPlan;
+		Map<Integer, MnuMenu> menuMap = new HashMap<Integer, MnuMenu>();
+		for (MenuPlanResponse plan : menuPlans) {
+			if (plan != null) {
+				menuIds.add(plan.getFirstMenuId());
+				menuIds.add(plan.getSecondMenuId());
+				menuIds.add(plan.getThirdMenuId());
+				menuIds.add(plan.getFourMenuId());
+				menuIds.add(plan.getFiveMenuId());
+				menuIds.add(plan.getSixMenuId());
+			}
+		}
+		// 查找菜谱信息
+		menuMap = listMenuByIds(menuIds);
+		int menuId = 0;
+		MnuMenu menu = null;
+		// 每个菜谱设置菜谱信息
+		for (MenuPlanResponse plan : menuPlans) {
+			if (plan != null) {
+				menuId = plan.getFirstMenuId();
+				if (menuMap.containsKey(menuId)) {
+					menu = menuMap.get(menuId);
+					plan.setFirstMenuImg(menu.getMenuImg());
+					plan.setFirstMenuName(menu.getMenuName());
+				}
+				menuId = plan.getSecondMenuId();
+				if (menuMap.containsKey(menuId)) {
+					menu = menuMap.get(menuId);
+					plan.setSecondMenuImg(menu.getMenuImg());
+					plan.setSecondMenuName(menu.getMenuName());
+				}
+				menuId = plan.getThirdMenuId();
+				if (menuMap.containsKey(menuId)) {
+					menu = menuMap.get(menuId);
+					plan.setThirdMenuImg(menu.getMenuImg());
+					plan.setThirdMenuName(menu.getMenuName());
+				}
+				menuId = plan.getFourMenuId();
+				if (menuMap.containsKey(menuId)) {
+					menu = menuMap.get(menuId);
+					plan.setFourMenuImg(menu.getMenuImg());
+					plan.setFourMenuName(menu.getMenuName());
+				}
+				menuId = plan.getFiveMenuId();
+				if (menuMap.containsKey(menuId)) {
+					menu = menuMap.get(menuId);
+					plan.setFiveMenuImg(menu.getMenuImg());
+					plan.setFiveMenuName(menu.getMenuName());
+				}
+				menuId = plan.getSixMenuId();
+				if (menuMap.containsKey(menuId)) {
+					menu = menuMap.get(menuId);
+					plan.setSixMenuImg(menu.getMenuImg());
+					plan.setSixMenuName(menu.getMenuName());
+				}
+				menu = null;
+			}
+		}
+		return menuPlans;
 	}
+
+	// public MenuPlanResponse listMenuPlan(String planDate) {
+	// MenuPlanResponse menuPlan = menuPlanMapper.listMenuPlan(planDate);
+	// Set<Integer> menuIds = new HashSet<Integer>();
+	// int firstMenuId = menuPlan.getFirstMenuId();
+	// int secondMenuId = menuPlan.getSecondMenuId();
+	// int thirdMenuId = menuPlan.getThirdMenuId();
+	// int fourMenuId = menuPlan.getFourMenuId();
+	// int fiveMenuId = menuPlan.getFiveMenuId();
+	// int sixMenuId = menuPlan.getSixMenuId();
+	// menuIds.add(firstMenuId);
+	// menuIds.add(secondMenuId);
+	// menuIds.add(thirdMenuId);
+	// menuIds.add(fourMenuId);
+	// menuIds.add(fiveMenuId);
+	// menuIds.add(sixMenuId);
+	// Map<Integer, MnuMenu> menuMap = listMenuByIds(menuIds);
+	// MnuMenu menu = menuMap.get(firstMenuId);
+	// menuPlan.setFirstMenuImg(menu.getMenuImg());
+	// menuPlan.setFirstMenuName(menu.getMenuName());
+	// menu = menuMap.get(secondMenuId);
+	// menuPlan.setSecondMenuImg(menu.getMenuImg());
+	// menuPlan.setSecondMenuName(menu.getMenuName());
+	// menu = menuMap.get(thirdMenuId);
+	// menuPlan.setThirdMenuImg(menu.getMenuImg());
+	// menuPlan.setThirdMenuName(menu.getMenuName());
+	// menu = menuMap.get(fourMenuId);
+	// menuPlan.setFourMenuImg(menu.getMenuImg());
+	// menuPlan.setFourMenuName(menu.getMenuName());
+	// menu = menuMap.get(fiveMenuId);
+	// menuPlan.setFiveMenuImg(menu.getMenuImg());
+	// menuPlan.setFiveMenuName(menu.getMenuName());
+	// menu = menuMap.get(sixMenuId);
+	// menuPlan.setSixMenuImg(menu.getMenuImg());
+	// menuPlan.setSixMenuName(menu.getMenuName());
+	// return menuPlan;
+	// }
 
 	/**
 	 * 菜谱菜品详情
