@@ -87,6 +87,8 @@ public class GeneralServiceImpl extends AbstractBusinessObjectServiceMgr impleme
 		int totalCount = basFrontTypeMapper.findFirstTotalCount();
 		response.setTotalCount(totalCount);
 		response.setPageCount(totalCount);
+		response.setPageNum(vo.getPageNum());
+		response.setPageSize(vo.getPageSize());
 		return response;
 	}
 	
@@ -118,6 +120,8 @@ public class GeneralServiceImpl extends AbstractBusinessObjectServiceMgr impleme
 		response.setGoodsList(goodsList);
 		response.setTotalCount(totalCount);
 		response.setPageCount(vo.getPageCount(totalCount));
+		response.setPageNum(vo.getPageNum());
+		response.setPageSize(vo.getPageSize());
 		return response;
 	}
 	
