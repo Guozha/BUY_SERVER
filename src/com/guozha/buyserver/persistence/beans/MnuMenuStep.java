@@ -14,7 +14,7 @@ public class MnuMenuStep extends AbstractDO{
 	private Integer menuStepId;//步骤ID
 	private Integer menuId;//菜谱ID
 	private String stepDesc;//步骤描述
-	private byte[] stepImg;//步骤图片
+	private String stepImg;//步骤图片
 	private Integer sortFlag;//排序
 	
 	public Integer getMenuStepId() {
@@ -29,10 +29,10 @@ public class MnuMenuStep extends AbstractDO{
 	public void setMenuId(Integer menuId) {
 		this.menuId = menuId;
 	}
-	public byte[] getStepImg() {
+	public String getStepImg() {
 		return stepImg;
 	}
-	public void setStepImg(byte[] stepImg) {
+	public void setStepImg(String stepImg) {
 		this.stepImg = stepImg;
 	}
 	public Integer getSortFlag() {

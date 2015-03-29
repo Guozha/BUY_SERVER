@@ -12,7 +12,7 @@ PUBLIC "-//ibatis.apache.org//DTD Mapper 3.0//EN"
         <result property="marketId" jdbcType="INTEGER" column="MARKET_ID"/>
         <result property="goodsId" jdbcType="INTEGER" column="GOODS_ID"/>
         <result property="goodsName" jdbcType="VARCHAR" column="GOODS_NAME"/>
-        <result property="goodsImg" jdbcType="BLOB" column="GOODS_IMG"/>
+        <result property="goodsImg" jdbcType="VARCHAR" column="GOODS_IMG"/>
         <result property="backTypeId" jdbcType="INTEGER" column="BACK_TYPE_ID"/>
         <result property="unit" jdbcType="VARCHAR" column="UNIT"/>
         <result property="unitPrice" jdbcType="INTEGER" column="UNIT_PRICE"/>

@@ -7,7 +7,7 @@ public class SearchMenuFavoResponse {
 	private String dirFlag;
 	private Integer menuId;
 	private String favoName;
-	private byte[] menuImg;
+	private String menuImg;
 	private Integer cookieTime;
 	private String cookieWay;
 	
@@ -35,10 +35,10 @@ public class SearchMenuFavoResponse {
 	public void setFavoName(String favoName) {
 		this.favoName = favoName;
 	}
-	public byte[] getMenuImg() {
+	public String getMenuImg() {
 		return menuImg;
 	}
-	public void setMenuImg(byte[] menuImg) {
+	public void setMenuImg(String menuImg) {
 		this.menuImg = menuImg;
 	}
 	public Integer getCookieTime() {

@@ -6,7 +6,7 @@ public class SearchMySellerResponse {
 	private Integer mySellerId;
 	private Integer sellerId;
 	private String sellerName;
-	private byte[] logo;
+	private String logo;
 	private String mainBusi;
 	private String sellerTag;
 	private Integer transCount;
@@ -39,12 +39,14 @@ public class SearchMySellerResponse {
 	public void setSellerName(String sellerName) {
 		this.sellerName = sellerName;
 	}
-	public byte[] getLogo() {
+	public String getLogo() {
 		return logo;
 	}
-	public void setLogo(byte[] logo) {
+
+	public void setLogo(String logo) {
 		this.logo = logo;
 	}
+
 	public String getMainBusi() {
 		return mainBusi;
 	}

@@ -8,7 +8,7 @@ PUBLIC "-//ibatis.apache.org//DTD Mapper 3.0//EN"
     <resultMap id="payWayRM" type="com.guozha.buyserver.persistence.beans.GooGoods">
         <result property="payWayId" jdbcType="INTEGER" column="PAY_WAY_ID"/>
         <result property="payWayName" jdbcType="VARCHAR" column="PAY_WAY_NAME"/>
-        <result property="icon" jdbcType="BLOB" column="ICON"/>
+        <result property="icon" jdbcType="VARCHAR" column="ICON"/>
 	</resultMap>
 
     <select id="findPayWayByStatus" parameterType="java.lang.String" resultMap="payWayRM">

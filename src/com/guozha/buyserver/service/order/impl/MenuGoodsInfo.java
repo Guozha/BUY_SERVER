@@ -5,7 +5,7 @@ public class MenuGoodsInfo {
 	private Integer amount;
 	private Integer goodsId;
 	private String goodsName;
-	private byte[] goodsImg;
+	private String goodsImg;
 	private Integer backTypeId;
 	private String unit;
 	
@@ -27,10 +27,10 @@ public class MenuGoodsInfo {
 	public void setAmount(Integer amount) {
 		this.amount = amount;
 	}
-	public byte[] getGoodsImg() {
+	public String getGoodsImg() {
 		return goodsImg;
 	}
-	public void setGoodsImg(byte[] goodsImg) {
+	public void setGoodsImg(String goodsImg) {
 		this.goodsImg = goodsImg;
 	}
 	public Integer getBackTypeId() {

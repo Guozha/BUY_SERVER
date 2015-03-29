@@ -4,7 +4,7 @@ public class GoodsInfo {
 	
 	private Integer goodsId;
 	private String goodsName;
-	private byte[] goodsImg;
+	private String goodsImg;
 	private Integer unitPrice;
 	private Integer amount;
 	private Integer price;
@@ -22,10 +22,10 @@ public class GoodsInfo {
 	public void setGoodsName(String goodsName) {
 		this.goodsName = goodsName;
 	}
-	public byte[] getGoodsImg() {
+	public String getGoodsImg() {
 		return goodsImg;
 	}
-	public void setGoodsImg(byte[] goodsImg) {
+	public void setGoodsImg(String goodsImg) {
 		this.goodsImg = goodsImg;
 	}
 	public Integer getUnitPrice() {

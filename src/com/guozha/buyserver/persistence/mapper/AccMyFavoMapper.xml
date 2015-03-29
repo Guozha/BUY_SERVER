@@ -10,7 +10,7 @@ PUBLIC "-//ibatis.apache.org//DTD Mapper 3.0//EN"
         <result property="dirFlag" jdbcType="VARCHAR" column="DIR_FLAG"/>
         <result property="menuId" jdbcType="INTEGER" column="MENU_OR_GOODS_ID"/>
         <result property="favoName" jdbcType="VARCHAR" column="FAVO_NAME"/>
-        <result property="menuImg" jdbcType="BLOB" column="MENU_IMG"/>
+        <result property="menuImg" jdbcType="VARCHAR" column="MENU_IMG"/>
         <result property="cookieTime" jdbcType="INTEGER" column="COOKIE_TIME"/>
         <result property="cookieWay" jdbcType="VARCHAR" column="COOKIE_WAY"/>
 	</resultMap>
@@ -25,7 +25,7 @@ PUBLIC "-//ibatis.apache.org//DTD Mapper 3.0//EN"
         <result property="myFavoId" jdbcType="INTEGER" column="MY_FAVO_ID"/>
         <result property="goodsId" jdbcType="INTEGER" column="GOODS_ID"/>
         <result property="goodsName" jdbcType="VARCHAR" column="GOODS_NAME"/>
-        <result property="goodsImg" jdbcType="BLOB" column="GOODS_IMG"/>
+        <result property="goodsImg" jdbcType="VARCHAR" column="GOODS_IMG"/>
         <result property="price" jdbcType="INTEGER" column="PRICE"/>
         <result property="unit" jdbcType="VARCHAR" column="UNIT"/>
 	</resultMap>

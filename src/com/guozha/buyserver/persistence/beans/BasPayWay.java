@@ -7,7 +7,7 @@ public class BasPayWay extends AbstractDO{
 	private Integer payWayId;
 	private String payWay;
 	private String payWayName;
-	private byte[] icon;
+	private String icon;
 	private String status;
 	
 	public Integer getPayWayId() {
@@ -28,10 +28,10 @@ public class BasPayWay extends AbstractDO{
 	public void setPayWayName(String payWayName) {
 		this.payWayName = payWayName;
 	}
-	public byte[] getIcon() {
+	public String getIcon() {
 		return icon;
 	}
-	public void setIcon(byte[] icon) {
+	public void setIcon(String icon) {
 		this.icon = icon;
 	}
 	public String getStatus() {

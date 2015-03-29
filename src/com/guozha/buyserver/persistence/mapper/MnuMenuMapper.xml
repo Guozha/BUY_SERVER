@@ -7,7 +7,7 @@ PUBLIC "-//ibatis.apache.org//DTD Mapper 3.0//EN"
 	<resultMap id="rm" type="com.guozha.buyserver.persistence.beans.MnuMenu">
         <result property="menuId" jdbcType="INTEGER" column="MENU_ID"/>
         <result property="menuName" jdbcType="VARCHAR" column="MENU_NAME"/>
-        <result property="menuImg" jdbcType="BLOB" column="MENU_IMG"/>
+        <result property="menuImg" jdbcType="VARCHAR" column="MENU_IMG"/>
         <result property="menuDesc" jdbcType="VARCHAR" column="MENU_DESC"/>
         <result property="cookieTime" jdbcType="INTEGER" column="COOKIE_TIME"/>
         <result property="cookieWay" jdbcType="VARCHAR" column="COOKIE_WAY"/>

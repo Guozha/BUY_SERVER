@@ -4,7 +4,7 @@ public class PayWayResponse {
 	
 	private String payWayId;
 	private String payWayName;
-	private byte[] icon;
+	private String icon;
 	
 	public String getPayWayId() {
 		return payWayId;
@@ -18,10 +18,10 @@ public class PayWayResponse {
 	public void setPayWayName(String payWayName) {
 		this.payWayName = payWayName;
 	}
-	public byte[] getIcon() {
+	public String getIcon() {
 		return icon;
 	}
-	public void setIcon(byte[] icon) {
+	public void setIcon(String icon) {
 		this.icon = icon;
 	}
 

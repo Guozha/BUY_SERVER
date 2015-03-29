@@ -10,7 +10,7 @@ public class SysSeller extends AbstractDO {
 	private String mobileNo;
 	private String passwd;
 	private String sellerName;
-	private byte[] logo;
+	private String logo;
 	private String mainBusi;
 	private Integer transCount;
 	private Date lastPayDate;
@@ -42,10 +42,10 @@ public class SysSeller extends AbstractDO {
 	public void setSellerName(String sellerName) {
 		this.sellerName = sellerName;
 	}
-	public byte[] getLogo() {
+	public String getLogo() {
 		return logo;
 	}
-	public void setLogo(byte[] logo) {
+	public void setLogo(String logo) {
 		this.logo = logo;
 	}
 	public Integer getTransCount() {

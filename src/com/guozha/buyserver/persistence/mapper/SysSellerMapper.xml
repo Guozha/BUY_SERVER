@@ -8,7 +8,7 @@ PUBLIC "-//ibatis.apache.org//DTD Mapper 3.0//EN"
     <resultMap id="findByUserIdRM" type="com.guozha.buyserver.web.controller.account.SearchMySellerResponse">
         <result property="sellerId" jdbcType="INTEGER" column="SELLER_ID"/>
         <result property="sellerName" jdbcType="VARCHAR" column="SELLER_NAME"/>
-        <result property="logo" jdbcType="BLOB" column="LOGO"/>
+        <result property="logo" jdbcType="VARCHAR" column="LOGO"/>
         <result property="mainBusi" jdbcType="VARCHAR" column="MAIN_BUSI"/>
         <result property="transCount" jdbcType="INTEGER" column="TRANS_COUNT"/>
         <result property="mySellerId" jdbcType="INTEGER" column="MY_SELLER_ID"/>
@@ -38,7 +38,7 @@ PUBLIC "-//ibatis.apache.org//DTD Mapper 3.0//EN"
         <result property="mobileNo" jdbcType="VARCHAR" column="MOBILE_NO"/>
         <result property="passwd" jdbcType="VARCHAR" column="PASSWD"/>
         <result property="sellerName" jdbcType="VARCHAR" column="SELLER_NAME"/>
-        <result property="logo" jdbcType="BLOB" column="LOGO"/>
+        <result property="logo" jdbcType="VARCHAR" column="LOGO"/>
         <result property="mainBusi" jdbcType="VARCHAR" column="MAIN_BUSI"/>
         <result property="lastPayDate" jdbcType="DATE" column="LAST_PAY_DATE"/>
         <result property="marketId" jdbcType="INTEGER" column="MARKET_ID"/>

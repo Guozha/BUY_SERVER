@@ -11,7 +11,7 @@ PUBLIC "-//ibatis.apache.org//DTD Mapper 3.0//EN"
         <result property="marketId" jdbcType="INTEGER" column="MARKET_ID"/>
         <result property="menuId" jdbcType="INTEGER" column="MENU_ID"/>
         <result property="menuName" jdbcType="VARCHAR" column="MENU_NAME"/>
-        <result property="menuImg" jdbcType="BLOB" column="MENU_IMG"/>
+        <result property="menuImg" jdbcType="VARCHAR" column="MENU_IMG"/>
         <result property="unitPrice" jdbcType="INTEGER" column="UNIT_PRICE"/>
         <result property="amount" jdbcType="INTEGER" column="AMOUNT"/>
         <result property="price" jdbcType="INTEGER" column="PRICE"/>
