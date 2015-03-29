@@ -491,4 +491,18 @@ public class AccountServiceImpl extends AbstractBusinessObjectServiceMgr impleme
 		return response;
 	}
 
+	public SysUserMapper getSysUserMapper() {
+		return sysUserMapper;
+	}
+
+	@Override
+	public AccountMapper getAccountMapper() {
+		return accountMapper;
+	}
+
+	@Override
+	public CommonService getCommonService() {
+		return commonService;
+	}
+
 }

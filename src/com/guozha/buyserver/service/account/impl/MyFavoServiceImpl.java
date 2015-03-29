@@ -131,4 +131,20 @@ public class MyFavoServiceImpl extends AbstractBusinessObjectServiceMgr
 		return accMyFavoMapper.findMenuByDir(parentId);
 	}
 
+	public GooGoodsMapper getGooGoodsMapper() {
+		return gooGoodsMapper;
+	}
+
+	public void setGooGoodsMapper(GooGoodsMapper gooGoodsMapper) {
+		this.gooGoodsMapper = gooGoodsMapper;
+	}
+
+	public MnuMenuMapper getMnuMenuMapper() {
+		return mnuMenuMapper;
+	}
+
+	public void setMnuMenuMapper(MnuMenuMapper mnuMenuMapper) {
+		this.mnuMenuMapper = mnuMenuMapper;
+	}
+
 }
