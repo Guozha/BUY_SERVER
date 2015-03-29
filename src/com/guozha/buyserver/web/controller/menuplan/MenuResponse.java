@@ -15,7 +15,7 @@ public class MenuResponse {
 
 	private Integer menuId;// 菜谱ID
 	private String menuName;// 菜谱名称
-	private byte[] menuImg;// 菜谱图片
+	private String menuImg;// 菜谱图片
 	private String menuDesc;// 菜谱描述
 	private Integer cookieTime;// 烹饪时间
 	private String cookieWay;// 制作方式
@@ -40,11 +40,11 @@ public class MenuResponse {
 		this.menuName = menuName;
 	}
 
-	public byte[] getMenuImg() {
+	public String getMenuImg() {
 		return menuImg;
 	}
 
-	public void setMenuImg(byte[] menuImg) {
+	public void setMenuImg(String menuImg) {
 		this.menuImg = menuImg;
 	}
 
