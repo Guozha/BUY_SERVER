@@ -20,6 +20,12 @@ public interface SeasonService extends BusinessObjectServiceMgr{
 	 */
 	List<SeasonResponse> find();
 	
+	/**
+	 * 获得当前节气
+	 * @return
+	 */
+	public SeasonResponse findCurr();
+	
 	
 
 }

@@ -55,12 +55,13 @@ PUBLIC "-//ibatis.apache.org//DTD Mapper 3.0//EN"
 	</delete>
 	
 	<!-- 多购物车信息删除 -->
-	<delete id="deletes" parameterType="map">
+	<delete id="deleteByIds" parameterType="map">
 	   DELETE FROM BUY_CART 
 	   WHERE CART_ID IN
 	   <foreach item="item" index="index" collection="cartId" open="(" separator="," close=")">  
 		  #{item}  
 	   </foreach>
+	   AND USER_ID = #{userId}
 	</delete>
 	
 	<!-- 删除已被用户移除的购物车信息 -->
@@ -85,7 +86,7 @@ PUBLIC "-//ibatis.apache.org//DTD Mapper 3.0//EN"
 	</update>
 	
 	<!-- 验证是否已存在购物车中 -->
-	<select id="selectByGoodsOrMenuId" parameterType="map" resultMap="rm">
+	<select id="loadByGoodsOrMenuId" parameterType="map" resultMap="rm">
 	   SELECT 
 			<include refid="BASE_COLUMN_LIST" />
 		FROM BUY_CART
