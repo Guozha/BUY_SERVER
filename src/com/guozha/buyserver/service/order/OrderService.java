@@ -3,6 +3,13 @@ package com.guozha.buyserver.service.order;
 import java.util.List;
 
 import com.guozha.buyserver.framework.sys.business.BusinessObjectServiceMgr;
+import com.guozha.buyserver.persistence.mapper.AccAddressMapper;
+import com.guozha.buyserver.persistence.mapper.BuyCartMapper;
+import com.guozha.buyserver.persistence.mapper.GooGoodsMapper;
+import com.guozha.buyserver.persistence.mapper.MarMarketGoodsMapper;
+import com.guozha.buyserver.persistence.mapper.MnuMenuGoodsMapper;
+import com.guozha.buyserver.persistence.mapper.MnuMenuMapper;
+import com.guozha.buyserver.service.common.CommonService;
 import com.guozha.buyserver.web.controller.MsgResponse;
 import com.guozha.buyserver.web.controller.order.CancelOrderRequest;
 import com.guozha.buyserver.web.controller.order.InsertOrderRequest;
@@ -37,5 +44,33 @@ public interface OrderService extends BusinessObjectServiceMgr {
 	
 	// 订单商品评价
 	MsgResponse goodsMark(MarkRequest mark);
+	
+	AccAddressMapper getAccAddressMapper();
+
+	void setAccAddressMapper(AccAddressMapper accAddressMapper);
+	
+	CommonService getCommonService();
+
+	void setCommonService(CommonService commonService);
+	
+	BuyCartMapper getBuyCartMapper();
+
+	void setBuyCartMapper(BuyCartMapper buyCartMapper);
+
+	MarMarketGoodsMapper getMarMarketGoodsMapper();
+
+	void setMarMarketGoodsMapper(MarMarketGoodsMapper marMarketGoodsMapper);
+	
+	MnuMenuMapper getMnuMenuMapper();
+
+	void setMnuMenuMapper(MnuMenuMapper mnuMenuMapper);
+	
+	GooGoodsMapper getGooGoodsMapper();
+
+	void setGooGoodsMapper(GooGoodsMapper gooGoodsMapper);
+	
+	MnuMenuGoodsMapper getMnuMenuGoodsMapper();
+
+	void setMnuMenuGoodsMapper(MnuMenuGoodsMapper mnuMenuGoodsMapper);
 
 }

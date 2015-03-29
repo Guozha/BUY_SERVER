@@ -3,6 +3,8 @@ package com.guozha.buyserver.service.account;
 import java.util.List;
 
 import com.guozha.buyserver.framework.sys.business.BusinessObjectServiceMgr;
+import com.guozha.buyserver.persistence.mapper.GooGoodsMapper;
+import com.guozha.buyserver.persistence.mapper.MnuMenuMapper;
 import com.guozha.buyserver.web.controller.MsgResponse;
 import com.guozha.buyserver.web.controller.account.AdjustFavoRequest;
 import com.guozha.buyserver.web.controller.account.DeleteFavoRequest;
@@ -33,5 +35,13 @@ public interface MyFavoService extends BusinessObjectServiceMgr {
 	MsgResponse deleteFavo(DeleteFavoRequest vo);
 	
 	List<SearchMenuFavoResponse> findMenuByDir(int parentId);
+	
+	public GooGoodsMapper getGooGoodsMapper();
+
+	public void setGooGoodsMapper(GooGoodsMapper gooGoodsMapper);
+	
+	public MnuMenuMapper getMnuMenuMapper();
+
+	public void setMnuMenuMapper(MnuMenuMapper mnuMenuMapper);
 
 }
