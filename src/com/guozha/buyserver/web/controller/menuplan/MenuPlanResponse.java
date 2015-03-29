@@ -12,22 +12,22 @@ public class MenuPlanResponse implements java.io.Serializable{
 	private static final long serialVersionUID = 1L;
 	private Integer firstMenuId;// 菜谱1
 	private String firstMenuName;
-	private byte[] firstMenuImg;
+	private String firstMenuImg;
 	private Integer secondMenuId;// 菜谱2
 	private String secondMenuName;
-	private byte[] secondMenuImg;
+	private String secondMenuImg;
 	private Integer thirdMenuId;// 菜谱3
 	private String thirdMenuName;
-	private byte[] thirdMenuImg;
+	private String thirdMenuImg;
 	private Integer fourMenuId;// 菜谱4
 	private String fourMenuName;
-	private byte[] fourMenuImg;
+	private String fourMenuImg;
 	private Integer fiveMenuId;// 菜谱5
 	private String fiveMenuName;
-	private byte[] fiveMenuImg;
+	private String fiveMenuImg;
 	private Integer sixMenuId;// 菜谱6
 	private String sixMenuName;
-	private byte[] sixMenuImg;
+	private String sixMenuImg;
 	private String planDate;
 	
 	public Integer getFirstMenuId() {
@@ -42,10 +42,10 @@ public class MenuPlanResponse implements java.io.Serializable{
 	public void setFirstMenuName(String firstMenuName) {
 		this.firstMenuName = firstMenuName;
 	}
-	public byte[] getFirstMenuImg() {
+	public String getFirstMenuImg() {
 		return firstMenuImg;
 	}
-	public void setFirstMenuImg(byte[] firstMenuImg) {
+	public void setFirstMenuImg(String firstMenuImg) {
 		this.firstMenuImg = firstMenuImg;
 	}
 	public Integer getSecondMenuId() {
@@ -60,10 +60,10 @@ public class MenuPlanResponse implements java.io.Serializable{
 	public void setSecondMenuName(String secondMenuName) {
 		this.secondMenuName = secondMenuName;
 	}
-	public byte[] getSecondMenuImg() {
+	public String getSecondMenuImg() {
 		return secondMenuImg;
 	}
-	public void setSecondMenuImg(byte[] secondMenuImg) {
+	public void setSecondMenuImg(String secondMenuImg) {
 		this.secondMenuImg = secondMenuImg;
 	}
 	public Integer getThirdMenuId() {
@@ -78,10 +78,10 @@ public class MenuPlanResponse implements java.io.Serializable{
 	public void setThirdMenuName(String thirdMenuName) {
 		this.thirdMenuName = thirdMenuName;
 	}
-	public byte[] getThirdMenuImg() {
+	public String getThirdMenuImg() {
 		return thirdMenuImg;
 	}
-	public void setThirdMenuImg(byte[] thirdMenuImg) {
+	public void setThirdMenuImg(String thirdMenuImg) {
 		this.thirdMenuImg = thirdMenuImg;
 	}
 	public Integer getFourMenuId() {
@@ -96,10 +96,10 @@ public class MenuPlanResponse implements java.io.Serializable{
 	public void setFourMenuName(String fourMenuName) {
 		this.fourMenuName = fourMenuName;
 	}
-	public byte[] getFourMenuImg() {
+	public String getFourMenuImg() {
 		return fourMenuImg;
 	}
-	public void setFourMenuImg(byte[] fourMenuImg) {
+	public void setFourMenuImg(String fourMenuImg) {
 		this.fourMenuImg = fourMenuImg;
 	}
 	public Integer getFiveMenuId() {
@@ -114,10 +114,10 @@ public class MenuPlanResponse implements java.io.Serializable{
 	public void setFiveMenuName(String fiveMenuName) {
 		this.fiveMenuName = fiveMenuName;
 	}
-	public byte[] getFiveMenuImg() {
+	public String getFiveMenuImg() {
 		return fiveMenuImg;
 	}
-	public void setFiveMenuImg(byte[] fiveMenuImg) {
+	public void setFiveMenuImg(String fiveMenuImg) {
 		this.fiveMenuImg = fiveMenuImg;
 	}
 	public Integer getSixMenuId() {
@@ -132,10 +132,10 @@ public class MenuPlanResponse implements java.io.Serializable{
 	public void setSixMenuName(String sixMenuName) {
 		this.sixMenuName = sixMenuName;
 	}
-	public byte[] getSixMenuImg() {
+	public String getSixMenuImg() {
 		return sixMenuImg;
 	}
-	public void setSixMenuImg(byte[] sixMenuImg) {
+	public void setSixMenuImg(String sixMenuImg) {
 		this.sixMenuImg = sixMenuImg;
 	}
 	public String getPlanDate() {
